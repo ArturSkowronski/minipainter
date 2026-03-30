@@ -1,7 +1,7 @@
 # Warpaint Inventory CLI Design
 
 Date: 2026-03-30
-Status: Draft approved in chat, pending spec review and user review
+Status: Approved and implemented on `feature/warpaint-inventory`
 
 ## Goal
 
@@ -342,3 +342,7 @@ The design intentionally leaves these choices for the implementation plan:
 - catalog data acquisition process for Citadel and Army Painter
 
 Those are implementation decisions, not product-design blockers, as long as the resulting system preserves the boundaries and behaviors in this spec.
+
+## Implementation Notes
+
+The first implementation on `feature/warpaint-inventory` uses local JSON starter catalogs under `data/catalog/` rather than a complete upstream provider sync. The search, inventory, CLI, and TUI boundaries in this spec were implemented as designed, and the catalog-loading layer remains isolated so fuller provider catalogs can replace the starter assets later without restructuring the rest of the application.

@@ -1,0 +1,12 @@
+{
+  "name": "warpaint-cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "warpaint": "./src/cli.mjs"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}
