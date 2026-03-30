@@ -1,7 +1,7 @@
 # Warpaint MCP Server Design
 
 Date: 2026-03-30
-Status: Approved in chat, pending implementation
+Status: Approved in chat and implemented on `feature/mcp-server`
 
 ## Goal
 

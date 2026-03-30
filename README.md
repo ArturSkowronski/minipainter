@@ -125,6 +125,12 @@ Launch the TUI:
 node src/cli.mjs tui
 ```
 
+Run the MCP server locally:
+
+```bash
+node src/mcp-server.mjs
+```
+
 ## TUI Workflow
 
 The TUI is centered around three presentation areas:
@@ -157,6 +163,7 @@ Implemented now:
 - owned / missing inventory tracking
 - deterministic search and color matching
 - grimdark terminal presentation
+- local MCP server for Claude Desktop
 
 Planned later:
 
@@ -170,8 +177,43 @@ Planned later:
 - Registry path: `.warpaint/registry.json`
 - Built-in provider data lives in `data/catalog/`
 - RGB values are approximate reference colors for matching, not a guarantee of final painted appearance
+- MCP entrypoint: `node src/mcp-server.mjs`
+- MCP helper script: `npm run mcp`
 - README demo captures are reproducible via:
 
 ```bash
 npm run generate:demo
 ```
+
+## Claude Desktop MCP Setup
+
+`warpaint-cli` now includes a local MCP server so Claude Desktop can use your paint registry directly.
+
+Example local MCP config:
+
+```json
+{
+  "mcpServers": {
+    "warpaint": {
+      "command": "node",
+      "args": ["/absolute/path/to/warpaint-cli/src/mcp-server.mjs"]
+    }
+  }
+}
+```
+
+After adding the server, Claude Desktop can call tools such as:
+
+- `paint_search`
+- `paint_show`
+- `inventory_list`
+- `inventory_mark_owned`
+- `inventory_mark_unowned`
+- `match_color`
+- `match_describe`
+
+Suggested local flow:
+
+1. initialize your registry once with `node src/cli.mjs catalog sync`
+2. add the MCP server to Claude Desktop
+3. ask Claude to search paints or update ownership through the exposed tools
