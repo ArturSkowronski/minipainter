@@ -1,0 +1,63 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+
+import { runCli } from '../src/cli.mjs';
+
+async function makeWorkspace() {
+  return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-cli-'));
+}
+
+test('catalog sync creates the project-local registry file', async () => {
+  const cwd = await makeWorkspace();
+
+  const result = await runCli(['catalog', 'sync'], { cwd });
+  const registryPath = path.join(cwd, '.warpaint', 'registry.json');
+  const registry = JSON.parse(await fs.readFile(registryPath, 'utf8'));
+
+  assert.equal(result.exitCode, 0);
+  assert.match(result.stdout, /initialized/i);
+  assert.equal(registry.version, 1);
+});
+
+test('paint search, show, inventory own/unown, and inventory list support json output', async () => {
+  const cwd = await makeWorkspace();
+  await runCli(['catalog', 'sync'], { cwd });
+
+  const search = await runCli(['paint', 'search', 'black', '--json'], { cwd });
+  const show = await runCli(['paint', 'show', 'Abaddon Black', '--json'], { cwd });
+  const own = await runCli(['inventory', 'own', 'Abaddon Black', '--json'], { cwd });
+  const listOwned = await runCli(['inventory', 'list', '--json'], { cwd });
+  const unown = await runCli(['inventory', 'unown', 'Abaddon Black', '--json'], { cwd });
+
+  const searchPayload = JSON.parse(search.stdout);
+  const showPayload = JSON.parse(show.stdout);
+  const ownPayload = JSON.parse(own.stdout);
+  const listPayload = JSON.parse(listOwned.stdout);
+  const unownPayload = JSON.parse(unown.stdout);
+
+  assert.equal(search.exitCode, 0);
+  assert.equal(searchPayload.items[0].id, 'citadel/abaddon-black');
+  assert.equal(showPayload.item.id, 'citadel/abaddon-black');
+  assert.equal(ownPayload.item.owned, true);
+  assert.deepEqual(listPayload.items.map((item) => item.id), ['citadel/abaddon-black']);
+  assert.equal(unownPayload.item.owned, false);
+});
+
+test('match color and match describe return ranked results', async () => {
+  const cwd = await makeWorkspace();
+  await runCli(['catalog', 'sync'], { cwd });
+  await runCli(['inventory', 'own', 'Abaddon Black'], { cwd });
+
+  const color = await runCli(['match', 'color', '#151515', '--json'], { cwd });
+  const describe = await runCli(['match', 'describe', 'bone', '--json'], { cwd });
+
+  const colorPayload = JSON.parse(color.stdout);
+  const describePayload = JSON.parse(describe.stdout);
+
+  assert.equal(color.exitCode, 0);
+  assert.equal(colorPayload.items[0].id, 'citadel/abaddon-black');
+  assert.equal(describePayload.items[0].id, 'army_painter/pallid-bone');
+});
