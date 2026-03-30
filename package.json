@@ -4,10 +4,16 @@
   "private": true,
   "type": "module",
   "bin": {
-    "warpaint": "./src/cli.mjs"
+    "warpaint": "./src/cli.mjs",
+    "warpaint-mcp": "./src/mcp-server.mjs"
   },
   "scripts": {
     "test": "node --test",
-    "generate:demo": "node scripts/render-demo-output.mjs docs/assets"
+    "generate:demo": "node scripts/render-demo-output.mjs docs/assets",
+    "mcp": "node src/mcp-server.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.28.0",
+    "zod": "^4.3.6"
   }
 }
