@@ -1,5 +1,45 @@
 import { normalizeText } from './normalize.mjs';
 
+function levenshteinDistance(left, right) {
+  const rows = Array.from({ length: left.length + 1 }, () => []);
+
+  for (let row = 0; row <= left.length; row += 1) {
+    rows[row][0] = row;
+  }
+
+  for (let column = 0; column <= right.length; column += 1) {
+    rows[0][column] = column;
+  }
+
+  for (let row = 1; row <= left.length; row += 1) {
+    for (let column = 1; column <= right.length; column += 1) {
+      const cost = left[row - 1] === right[column - 1] ? 0 : 1;
+      rows[row][column] = Math.min(
+        rows[row - 1][column] + 1,
+        rows[row][column - 1] + 1,
+        rows[row - 1][column - 1] + cost,
+      );
+    }
+  }
+
+  return rows[left.length][right.length];
+}
+
+function isFuzzyTokenMatch(paint, query) {
+  if (!query) {
+    return false;
+  }
+
+  const candidates = [
+    ...paint.normalized_name.split(' '),
+    ...paint.aliases.flatMap((alias) => normalizeText(alias).split(' ')),
+    ...paint.color_families.map((family) => normalizeText(family)),
+    ...paint.usage_roles.map((role) => normalizeText(role)),
+  ].filter(Boolean);
+
+  return candidates.some((candidate) => levenshteinDistance(candidate, query) <= 2);
+}
+
 function matchesFilters(paint, options = {}) {
   if (options.provider && paint.provider !== options.provider) {
     return false;
@@ -51,6 +91,10 @@ function scorePaint(paint, query) {
     return 55;
   }
 
+  if (isFuzzyTokenMatch(paint, query)) {
+    return 40;
+  }
+
   return -1;
 }
 
@@ -97,9 +141,16 @@ export function resolvePaint(registry, query, options = {}) {
     };
   }
 
+  if (exactMatches.length === 0) {
+    return {
+      status: 'not_found',
+      matches: results.slice(0, 5).map((result) => result.paint),
+    };
+  }
+
   return {
     status: 'resolved',
-    paint: (exactMatches[0] || results[0]).paint,
+    paint: exactMatches[0].paint,
   };
 }
 
