@@ -1,0 +1,74 @@
+{
+  "provider": {
+    "id": "citadel",
+    "name": "Citadel"
+  },
+  "paints": [
+    {
+      "id": "citadel/abaddon-black",
+      "provider": "citadel",
+      "name": "Abaddon Black",
+      "normalized_name": "abaddon black",
+      "aliases": ["black"],
+      "usage_roles": ["base"],
+      "color_families": ["black"],
+      "rgb": { "r": 20, "g": 20, "b": 20 },
+      "owned": false
+    },
+    {
+      "id": "citadel/corax-white",
+      "provider": "citadel",
+      "name": "Corax White",
+      "normalized_name": "corax white",
+      "aliases": ["white"],
+      "usage_roles": ["base"],
+      "color_families": ["white"],
+      "rgb": { "r": 227, "g": 228, "b": 222 },
+      "owned": false
+    },
+    {
+      "id": "citadel/mephiston-red",
+      "provider": "citadel",
+      "name": "Mephiston Red",
+      "normalized_name": "mephiston red",
+      "aliases": [],
+      "usage_roles": ["base"],
+      "color_families": ["red"],
+      "rgb": { "r": 146, "g": 27, "b": 41 },
+      "owned": false
+    },
+    {
+      "id": "citadel/leadbelcher",
+      "provider": "citadel",
+      "name": "Leadbelcher",
+      "normalized_name": "leadbelcher",
+      "aliases": [],
+      "usage_roles": ["metallic"],
+      "color_families": ["steel", "metallic", "silver"],
+      "rgb": { "r": 120, "g": 124, "b": 128 },
+      "owned": false
+    },
+    {
+      "id": "citadel/agrax-earthshade",
+      "provider": "citadel",
+      "name": "Agrax Earthshade",
+      "normalized_name": "agrax earthshade",
+      "aliases": [],
+      "usage_roles": ["shade"],
+      "color_families": ["brown"],
+      "rgb": { "r": 93, "g": 68, "b": 49 },
+      "owned": false
+    },
+    {
+      "id": "citadel/skeleton-horde",
+      "provider": "citadel",
+      "name": "Skeleton Horde",
+      "normalized_name": "skeleton horde",
+      "aliases": [],
+      "usage_roles": ["contrast"],
+      "color_families": ["bone", "brown"],
+      "rgb": { "r": 170, "g": 135, "b": 88 },
+      "owned": false
+    }
+  ]
+}

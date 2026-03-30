@@ -1,0 +1,74 @@
+{
+  "provider": {
+    "id": "army_painter",
+    "name": "Army Painter"
+  },
+  "paints": [
+    {
+      "id": "army_painter/matt-black",
+      "provider": "army_painter",
+      "name": "Matt Black",
+      "normalized_name": "matt black",
+      "aliases": ["black"],
+      "usage_roles": ["base"],
+      "color_families": ["black"],
+      "rgb": { "r": 28, "g": 28, "b": 28 },
+      "owned": false
+    },
+    {
+      "id": "army_painter/matt-white",
+      "provider": "army_painter",
+      "name": "Matt White",
+      "normalized_name": "matt white",
+      "aliases": ["white"],
+      "usage_roles": ["base"],
+      "color_families": ["white"],
+      "rgb": { "r": 234, "g": 234, "b": 229 },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dragon-red",
+      "provider": "army_painter",
+      "name": "Dragon Red",
+      "normalized_name": "dragon red",
+      "aliases": [],
+      "usage_roles": ["base"],
+      "color_families": ["red"],
+      "rgb": { "r": 170, "g": 33, "b": 31 },
+      "owned": false
+    },
+    {
+      "id": "army_painter/greedy-gold",
+      "provider": "army_painter",
+      "name": "Greedy Gold",
+      "normalized_name": "greedy gold",
+      "aliases": [],
+      "usage_roles": ["metallic"],
+      "color_families": ["gold", "metallic"],
+      "rgb": { "r": 176, "g": 136, "b": 55 },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dark-tone",
+      "provider": "army_painter",
+      "name": "Dark Tone",
+      "normalized_name": "dark tone",
+      "aliases": [],
+      "usage_roles": ["shade"],
+      "color_families": ["black", "brown"],
+      "rgb": { "r": 61, "g": 50, "b": 41 },
+      "owned": false
+    },
+    {
+      "id": "army_painter/pallid-bone",
+      "provider": "army_painter",
+      "name": "Pallid Bone",
+      "normalized_name": "pallid bone",
+      "aliases": [],
+      "usage_roles": ["layer"],
+      "color_families": ["bone", "white"],
+      "rgb": { "r": 209, "g": 193, "b": 157 },
+      "owned": false
+    }
+  ]
+}
