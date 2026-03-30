@@ -7,6 +7,7 @@
     "warpaint": "./src/cli.mjs"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "generate:demo": "node scripts/render-demo-output.mjs docs/assets"
   }
 }
