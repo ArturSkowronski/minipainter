@@ -19,6 +19,7 @@ test('catalog sync creates the project-local registry file', async () => {
 
   assert.equal(result.exitCode, 0);
   assert.match(result.stdout, /initialized/i);
+  assert.doesNotMatch(result.stdout, /undefined/);
   assert.equal(registry.version, 1);
 });
 
@@ -60,4 +61,16 @@ test('match color and match describe return ranked results', async () => {
   assert.equal(color.exitCode, 0);
   assert.equal(colorPayload.items[0].id, 'citadel/abaddon-black');
   assert.equal(describePayload.items[0].id, 'army_painter/pallid-bone');
+});
+
+test('human-readable output includes listed paints, not just summary headers', async () => {
+  const cwd = await makeWorkspace();
+  await runCli(['catalog', 'sync'], { cwd });
+  await runCli(['inventory', 'own', 'Abaddon Black'], { cwd });
+
+  const search = await runCli(['paint', 'search', 'black'], { cwd });
+  const listOwned = await runCli(['inventory', 'list'], { cwd });
+
+  assert.match(search.stdout, /Abaddon Black/);
+  assert.match(listOwned.stdout, /Abaddon Black/);
 });
