@@ -1,7 +1,7 @@
 # Warpaint Forge Ledger TUI And README Design
 
 Date: 2026-03-30
-Status: Approved in chat, pending spec review and user review
+Status: Approved in chat and implemented on `feature/forge-ledger`
 
 ## Goal
 
