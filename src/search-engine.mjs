@@ -26,7 +26,7 @@ function levenshteinDistance(left, right) {
 }
 
 function isFuzzyTokenMatch(paint, query) {
-  if (!query) {
+  if (!query || query.length < 5) {
     return false;
   }
 
@@ -37,7 +37,8 @@ function isFuzzyTokenMatch(paint, query) {
     ...paint.usage_roles.map((role) => normalizeText(role)),
   ].filter(Boolean);
 
-  return candidates.some((candidate) => levenshteinDistance(candidate, query) <= 2);
+  return candidates.some((candidate) => candidate.length >= 5
+    && levenshteinDistance(candidate, query) <= 2);
 }
 
 function matchesFilters(paint, options = {}) {

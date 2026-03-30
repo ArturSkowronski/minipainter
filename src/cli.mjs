@@ -9,12 +9,25 @@ import { runCatalogCommand } from './commands/catalog.mjs';
 import { runPaintCommand } from './commands/paint.mjs';
 import { runInventoryCommand } from './commands/inventory.mjs';
 import { runMatchCommand } from './commands/match.mjs';
+import { loadRegistry, saveRegistry } from './registry-store.mjs';
+import { runTui } from './tui.mjs';
+
+async function runTuiCommand(_args, context) {
+  const registry = await loadRegistry(context.registryPath);
+  const result = await runTui(registry);
+  await saveRegistry(context.registryPath, result.registry);
+
+  return {
+    message: 'TUI session ended',
+  };
+}
 
 const COMMANDS = {
   catalog: runCatalogCommand,
   paint: runPaintCommand,
   inventory: runInventoryCommand,
   match: runMatchCommand,
+  tui: runTuiCommand,
 };
 
 function splitJsonFlag(args) {
