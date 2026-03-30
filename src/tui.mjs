@@ -2,6 +2,8 @@ import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 
 import { searchPaints } from './search-engine.mjs';
+import { renderBanner } from './tui-banner.mjs';
+import { renderSection, renderSeparator } from './tui-frame.mjs';
 
 function applyFilters(registry, view, query) {
   const paints = view === 'owned'
@@ -107,28 +109,40 @@ export function applyTuiAction(state, action) {
 
 export function renderTui(state) {
   const selectedPaint = state.filteredPaints[state.selectedIndex];
-  const rows = state.filteredPaints
-    .map((paint, index) => `${index === state.selectedIndex ? '>' : ' '} ${paint.name} (${paint.provider})${paint.owned ? ' [owned]' : ''}`)
-    .join('\n');
+  const listRows = state.filteredPaints.length > 0
+    ? state.filteredPaints.map((paint, index) => [
+      `${index === state.selectedIndex ? '>' : ' '} ${paint.name}`,
+      `  ${paint.provider}`,
+      `  ${paint.owned ? 'BOUND TO INVENTORY' : 'MISSING FROM STORES'}`,
+    ].join(' :: '))
+    : ['No pigments match the current query.'];
 
-  const detail = selectedPaint
+  const detailRows = selectedPaint
     ? [
-      `Selected: ${selectedPaint.name}`,
+      `Name: ${selectedPaint.name}`,
       `Provider: ${selectedPaint.provider}`,
-      `Owned: ${selectedPaint.owned ? 'yes' : 'no'}`,
+      `Status: ${selectedPaint.owned ? 'OWNED' : 'MISSING'}`,
       `Usage: ${selectedPaint.usage_roles.join(', ')}`,
       `Families: ${selectedPaint.color_families.join(', ')}`,
-      `RGB: ${selectedPaint.rgb.r},${selectedPaint.rgb.g},${selectedPaint.rgb.b}`,
-    ].join('\n')
-    : 'Selected: none';
+      `RGB: ${selectedPaint.rgb.r}, ${selectedPaint.rgb.g}, ${selectedPaint.rgb.b}`,
+    ]
+    : ['No pigment selected.'];
+
+  const commands = [
+    'search <text>   owned   catalog',
+    'toggle          quit',
+  ];
 
   return [
-    `View: ${state.view}`,
-    `Search: ${state.query || '(none)'}`,
+    renderBanner(),
+    renderSeparator('FORGE STATUS'),
+    `View: ${state.view.toUpperCase()}  |  Visible: ${state.filteredPaints.length}  |  Owned: ${state.registry.catalog.paints.filter((paint) => paint.owned).length}  |  Search Query: ${state.query || '(none)'}`,
     '',
-    rows || '(no paints)',
+    renderSection(state.view === 'owned' ? 'OWNED VIALS' : 'FORGE CATALOG', listRows, 78),
     '',
-    detail,
+    renderSection('SELECTED PIGMENT', detailRows, 78),
+    '',
+    renderSection('RITUAL COMMANDS', commands, 78),
   ].join('\n');
 }
 

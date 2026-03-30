@@ -1,0 +1,14 @@
+$ node src/cli.mjs paint search bone
+Found paint matches
+Pallid Bone [army_painter/pallid-bone] owned
+Skeleton Horde [citadel/skeleton-horde]
+
+$ node src/cli.mjs inventory own "Skeleton Horde"
+Skeleton Horde ownership updated
+Skeleton Horde [citadel/skeleton-horde] owned
+
+$ node src/cli.mjs match color "#d2c29b"
+Color matches
+Pallid Bone [army_painter/pallid-bone] owned
+Skeleton Horde [citadel/skeleton-horde] owned
+Leadbelcher [citadel/leadbelcher] owned
