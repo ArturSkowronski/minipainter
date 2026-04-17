@@ -1,5 +1,7 @@
 import { loadRegistry } from '../registry-store.mjs';
 import { resolvePaint, searchPaints } from '../search-engine.mjs';
+import { findEquivalents } from '../equivalents-service.mjs';
+import { formatEquivalentsText } from '../output.mjs';
 
 function stripResult(result) {
   return {
@@ -24,6 +26,20 @@ function stripPaint(paint) {
     usage_roles: paint.usage_roles,
     color_families: paint.color_families,
     rgb: paint.rgb,
+  };
+}
+
+function stripEntry(entry) {
+  return { paint: stripPaint(entry.paint), distance: entry.distance };
+}
+
+function stripEquivalents(equivalents) {
+  return {
+    source: stripPaint(equivalents.source),
+    owned: equivalents.owned.map(stripEntry),
+    alternatives: equivalents.alternatives.map(stripEntry),
+    thresholds: equivalents.thresholds,
+    ...(equivalents.reason ? { reason: equivalents.reason } : {}),
   };
 }
 
@@ -52,9 +68,15 @@ export async function runPaintCommand(args, context) {
       };
     }
 
+    const equivalentsRaw = findEquivalents(registry, result.paint);
+    const equivalents = stripEquivalents(equivalentsRaw);
+    const equivalentsText = formatEquivalentsText(equivalents, { includeAlternatives: false });
+
     return {
       message: `Showing ${result.paint.name}`,
       item: stripPaint(result.paint),
+      equivalents,
+      equivalents_text: equivalentsText || undefined,
     };
   }
 

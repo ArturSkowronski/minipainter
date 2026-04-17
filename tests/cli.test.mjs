@@ -155,3 +155,40 @@ test('match equivalents rejects non-numeric --max-distance value', async () => {
   assert.equal(result.exitCode, 1);
   assert.match(result.stderr, /--max-distance requires a numeric value/);
 });
+
+test('paint show includes equivalents you own block when owned qualifies', async () => {
+  const cwd = await makeWorkspace();
+  await runCli(['catalog', 'sync'], { cwd });
+  await runCli(['inventory', 'own', 'Matt Black'], { cwd });
+
+  const result = await runCli(['paint', 'show', 'Abaddon Black'], { cwd });
+
+  assert.match(result.stdout, /Abaddon Black \[citadel\/abaddon-black\]/);
+  assert.match(result.stdout, /Equivalents you own:/);
+  assert.match(result.stdout, /Matt Black \(army_painter\)/);
+});
+
+test('paint show omits equivalents block when nothing owned qualifies', async () => {
+  const cwd = await makeWorkspace();
+  await runCli(['catalog', 'sync'], { cwd });
+
+  const result = await runCli(['paint', 'show', 'Abaddon Black'], { cwd });
+
+  assert.doesNotMatch(result.stdout, /Equivalents you own:/);
+  assert.doesNotMatch(result.stdout, /Alternatives:/);
+});
+
+test('paint show --json includes full equivalents shape regardless of owned state', async () => {
+  const cwd = await makeWorkspace();
+  await runCli(['catalog', 'sync'], { cwd });
+
+  const result = await runCli(['paint', 'show', 'Abaddon Black', '--json'], { cwd });
+  const payload = JSON.parse(result.stdout);
+
+  assert.equal(payload.item.id, 'citadel/abaddon-black');
+  assert.ok(payload.equivalents);
+  assert.equal(payload.equivalents.source.id, 'citadel/abaddon-black');
+  assert.ok(Array.isArray(payload.equivalents.owned));
+  assert.ok(Array.isArray(payload.equivalents.alternatives));
+  assert.ok(payload.equivalents.thresholds);
+});
