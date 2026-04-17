@@ -2,6 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import * as z from 'zod/v4';
 
 import {
+  findPaintEquivalents,
   initPaintRegistry,
   listInventory,
   markInventoryOwned,
@@ -61,6 +62,10 @@ export function createMcpToolHandlers(baseOptions = {}) {
     match_describe: async (args = {}) => withRegistryInit(
       { ...baseOptions, ...args },
       (options) => matchPaintByDescription(options),
+    ),
+    paint_equivalents: async (args = {}) => withRegistryInit(
+      { ...baseOptions, ...args },
+      (options) => findPaintEquivalents(options),
     ),
   };
 }
@@ -139,6 +144,17 @@ export function getMcpToolDefinitions() {
         owned: z.boolean().optional().describe('Optional owned filter'),
         usage_role: z.string().optional().describe('Optional usage role filter'),
         color_family: z.string().optional().describe('Optional color family filter'),
+        initialize_registry: z.boolean().optional().describe('Initialize the registry if it does not exist'),
+      },
+    },
+    {
+      name: 'paint_equivalents',
+      description: 'Find cross-provider equivalents for a paint. Returns owned substitutes first; falls back to unowned alternatives only when nothing owned qualifies. Shade and contrast roles are treated as equivalent. Same provider is excluded by default.',
+      inputSchema: {
+        paint: z.string().describe('Paint name, alias, or id'),
+        max_distance: z.number().optional().describe('Maximum RGB Euclidean distance (default 60)'),
+        limit: z.number().optional().describe('Maximum results per section (default 3)'),
+        include_same_provider: z.boolean().optional().describe('Include paints from the same provider as the source'),
         initialize_registry: z.boolean().optional().describe('Initialize the registry if it does not exist'),
       },
     },

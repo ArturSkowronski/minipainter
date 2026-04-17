@@ -119,6 +119,12 @@ node src/cli.mjs match describe bone
 node src/cli.mjs match color "#d2c29b"
 ```
 
+Find owned equivalents from another brand:
+
+```bash
+node src/cli.mjs match equivalents "Mephiston Red"
+```
+
 Launch the TUI:
 
 ```bash
@@ -211,6 +217,7 @@ After adding the server, Claude Desktop can call tools such as:
 - `inventory_mark_unowned`
 - `match_color`
 - `match_describe`
+- `paint_equivalents`
 
 Suggested local flow:
 

@@ -26,6 +26,7 @@ test('getMcpToolDefinitions exposes the expected tool names', () => {
       'inventory_mark_unowned',
       'match_color',
       'match_describe',
+      'paint_equivalents',
     ],
   );
 });
@@ -65,10 +66,60 @@ test('MCP handlers expose match tools', async () => {
   assert.ok(describeResult.items.length >= 1);
 });
 
-test('README documents local Claude Desktop MCP setup', async () => {
+test('paint_equivalents tool returns owned-first structured results', async () => {
+  const cwd = await makeWorkspace();
+  const handlers = createMcpToolHandlers({ cwd });
+
+  await handlers.inventory_mark_owned({ paint: 'Matt Black', initialize_registry: true });
+  const result = await handlers.paint_equivalents({ paint: 'Abaddon Black' });
+
+  assert.equal(result.status, 'ok');
+  assert.equal(result.source.id, 'citadel/abaddon-black');
+  assert.deepEqual(
+    result.owned.map((entry) => entry.paint.id),
+    ['army_painter/matt-black'],
+  );
+  assert.deepEqual(result.alternatives, []);
+  assert.equal(result.thresholds.includeSameProvider, false);
+});
+
+test('paint_equivalents tool reports not_found for unknown paint', async () => {
+  const cwd = await makeWorkspace();
+  const handlers = createMcpToolHandlers({ cwd });
+
+  const result = await handlers.paint_equivalents({ paint: 'Nonexistent', initialize_registry: true });
+
+  assert.equal(result.status, 'not_found');
+});
+
+test('paint_equivalents tool reports ambiguous for alias that resolves to multiple paints', async () => {
+  const cwd = await makeWorkspace();
+  const handlers = createMcpToolHandlers({ cwd });
+
+  const result = await handlers.paint_equivalents({ paint: 'black', initialize_registry: true });
+
+  assert.equal(result.status, 'ambiguous');
+  assert.ok(result.matches.length >= 2);
+});
+
+test('paint_show tool response includes equivalents field', async () => {
+  const cwd = await makeWorkspace();
+  const handlers = createMcpToolHandlers({ cwd });
+
+  const result = await handlers.paint_show({ paint: 'Abaddon Black', initialize_registry: true });
+
+  assert.equal(result.status, 'resolved');
+  assert.ok(result.equivalents);
+  assert.equal(result.equivalents.source.id, 'citadel/abaddon-black');
+  assert.ok(Array.isArray(result.equivalents.owned));
+  assert.ok(Array.isArray(result.equivalents.alternatives));
+});
+
+test('README documents local Claude Desktop MCP setup and new tools', async () => {
   const readme = await fs.readFile(new URL('../README.md', import.meta.url), 'utf8');
 
   assert.match(readme, /## Claude Desktop MCP Setup/);
   assert.match(readme, /node src\/mcp-server\.mjs/);
   assert.match(readme, /paint_search/);
+  assert.match(readme, /paint_equivalents/);
 });
