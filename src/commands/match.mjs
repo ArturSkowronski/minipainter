@@ -1,5 +1,7 @@
 import { loadRegistry } from '../registry-store.mjs';
 import { matchByColor, searchPaints } from '../search-engine.mjs';
+import { findEquivalents } from '../equivalents-service.mjs';
+import { formatEquivalentsText } from '../output.mjs';
 
 function stripMatch(result) {
   return {
@@ -15,6 +17,33 @@ function stripMatch(result) {
   };
 }
 
+function stripPaint(paint) {
+  return {
+    id: paint.id,
+    provider: paint.provider,
+    name: paint.name,
+    owned: paint.owned,
+    aliases: paint.aliases,
+    usage_roles: paint.usage_roles,
+    color_families: paint.color_families,
+    rgb: paint.rgb,
+  };
+}
+
+function stripEntry(entry) {
+  return { paint: stripPaint(entry.paint), distance: entry.distance };
+}
+
+function stripEquivalents(equivalents) {
+  return {
+    source: stripPaint(equivalents.source),
+    owned: equivalents.owned.map(stripEntry),
+    alternatives: equivalents.alternatives.map(stripEntry),
+    thresholds: equivalents.thresholds,
+    ...(equivalents.reason ? { reason: equivalents.reason } : {}),
+  };
+}
+
 function parseHexColor(value) {
   const normalized = value.replace('#', '');
 
@@ -27,6 +56,37 @@ function parseHexColor(value) {
     g: Number.parseInt(normalized.slice(2, 4), 16),
     b: Number.parseInt(normalized.slice(4, 6), 16),
   };
+}
+
+function parseEquivalentsFlags(args) {
+  const positional = [];
+  const options = {};
+  let index = 0;
+
+  while (index < args.length) {
+    const arg = args[index];
+    if (arg === '--include-same-provider') {
+      options.includeSameProvider = true;
+      index += 1;
+    } else if (arg === '--max-distance') {
+      options.maxDistance = Number.parseFloat(args[index + 1]);
+      index += 2;
+    } else if (arg === '--limit') {
+      options.limit = Number.parseInt(args[index + 1], 10);
+      index += 2;
+    } else {
+      positional.push(arg);
+      index += 1;
+    }
+  }
+
+  return { positional, options };
+}
+
+function formatHeader(source) {
+  const role = source.usage_roles?.[0] ?? '';
+  const rgb = source.rgb ? `${source.rgb.r},${source.rgb.g},${source.rgb.b}` : 'n/a';
+  return `Equivalents for: ${source.name} (${source.provider}) • role: ${role} • rgb: ${rgb}`;
 }
 
 export async function runMatchCommand(args, context) {
@@ -45,6 +105,36 @@ export async function runMatchCommand(args, context) {
     return {
       message: 'Described paint matches',
       items: searchPaints(registry, rest[0] || '').map(stripMatch),
+    };
+  }
+
+  if (subcommand === 'equivalents') {
+    const { positional, options } = parseEquivalentsFlags(rest);
+    const target = positional[0];
+
+    if (!target) {
+      throw new Error('match equivalents requires a paint name');
+    }
+
+    const result = findEquivalents(registry, target, options);
+
+    if (result.status === 'not_found' || result.status === 'ambiguous') {
+      return {
+        status: result.status,
+        message: result.status === 'not_found' ? 'Paint not found' : 'Paint is ambiguous',
+        items: (result.matches || []).map(stripPaint),
+      };
+    }
+
+    const equivalents = stripEquivalents(result);
+    const header = formatHeader(equivalents.source);
+    const body = formatEquivalentsText(equivalents, { includeAlternatives: true });
+    const message = body ? `${header}\n\n${body}` : header;
+
+    return {
+      message,
+      equivalents,
+      equivalents_text: '',
     };
   }
 
