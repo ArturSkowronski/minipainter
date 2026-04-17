@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  colorDistance,
   matchByColor,
   resolvePaint,
   searchPaints,
@@ -130,4 +131,54 @@ test('matchByColor ranks nearest paints with owned-first tie breaking', () => {
 
   assert.equal(matches[0].paint.id, 'citadel/abaddon-black');
   assert.equal(matches[1].paint.id, 'army_painter/matt-black');
+});
+
+test('searchPaints usageRole filter treats shade and contrast as equivalent', () => {
+  const registry = {
+    version: 1,
+    catalog: {
+      providers: [{ id: 'citadel', name: 'Citadel' }],
+      paints: [
+        {
+          id: 'citadel/agrax',
+          provider: 'citadel',
+          name: 'Agrax Earthshade',
+          normalized_name: 'agrax earthshade',
+          aliases: [],
+          usage_roles: ['shade'],
+          color_families: ['brown'],
+          rgb: { r: 93, g: 68, b: 49 },
+          owned: false,
+        },
+        {
+          id: 'citadel/skeleton-horde',
+          provider: 'citadel',
+          name: 'Skeleton Horde',
+          normalized_name: 'skeleton horde',
+          aliases: [],
+          usage_roles: ['contrast'],
+          color_families: ['bone'],
+          rgb: { r: 170, g: 135, b: 88 },
+          owned: false,
+        },
+      ],
+    },
+  };
+
+  const filteredByShade = searchPaints(registry, '', { usageRole: 'shade' });
+  const filteredByContrast = searchPaints(registry, '', { usageRole: 'contrast' });
+
+  assert.deepEqual(
+    filteredByShade.map((result) => result.paint.id).sort(),
+    ['citadel/agrax', 'citadel/skeleton-horde'],
+  );
+  assert.deepEqual(
+    filteredByContrast.map((result) => result.paint.id).sort(),
+    ['citadel/agrax', 'citadel/skeleton-horde'],
+  );
+});
+
+test('colorDistance is exported and computes Euclidean RGB distance', () => {
+  const d = colorDistance({ r: 0, g: 0, b: 0 }, { r: 3, g: 4, b: 0 });
+  assert.equal(d, 5);
 });

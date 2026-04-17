@@ -1,4 +1,5 @@
 import { normalizeText } from './normalize.mjs';
+import { rolesMatch } from './roles.mjs';
 
 function levenshteinDistance(left, right) {
   const rows = Array.from({ length: left.length + 1 }, () => []);
@@ -50,7 +51,8 @@ function matchesFilters(paint, options = {}) {
     return false;
   }
 
-  if (options.usageRole && !paint.usage_roles.includes(options.usageRole)) {
+  if (options.usageRole
+    && !paint.usage_roles.some((role) => rolesMatch(role, options.usageRole))) {
     return false;
   }
 
@@ -155,7 +157,7 @@ export function resolvePaint(registry, query, options = {}) {
   };
 }
 
-function colorDistance(left, right) {
+export function colorDistance(left, right) {
   return Math.sqrt(
     ((left.r - right.r) ** 2)
       + ((left.g - right.g) ** 2)
