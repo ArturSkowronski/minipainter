@@ -62,7 +62,9 @@ This matches the user's decision: owned-first with a fallback to unowned only wh
 ### Modified files
 
 - `src/search-engine.mjs` — `matchesFilters` uses `rolesMatch` for the `usageRole` filter instead of direct `Array.includes`. Retrofit so existing CLI, MCP, and TUI paths that filter by role honor the shade↔contrast equivalence automatically. The `colorDistance` helper is exported so `equivalents-service.mjs` can reuse it without duplication.
-- `src/commands/` — new file for the `match equivalents` subcommand; dispatch wired into `src/cli.mjs`. The existing `paint show` command handler is extended to append an "Equivalents you own" block when the source paint has owned equivalents, and to include `equivalents` in the `--json` payload.
+- `src/commands/match.mjs` — extend to register the `equivalents` subcommand alongside the existing `color` and `describe` match subcommands.
+- `src/commands/paint.mjs` — extend the `show` handler to append an "Equivalents you own" block when the source paint has owned equivalents, and to include `equivalents` in the `--json` payload.
+- `src/cli.mjs` — no new dispatch wiring beyond what `match.mjs` registers.
 - `src/mcp-tools.mjs` — register new `paint_equivalents` tool; extend the `paint_show` handler to attach `equivalents` to its response payload.
 - `src/output.mjs` — one new renderer helper for the equivalents block, reusing the existing style (provider, role, distance, short hex).
 
