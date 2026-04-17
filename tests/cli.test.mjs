@@ -142,3 +142,16 @@ test('match equivalents include-same-provider flag widens the candidate pool', a
     payload.equivalents.owned.some((entry) => entry.paint.id === 'citadel/corax-white'),
   );
 });
+
+test('match equivalents rejects non-numeric --max-distance value', async () => {
+  const cwd = await makeWorkspace();
+  await runCli(['catalog', 'sync'], { cwd });
+
+  const result = await runCli(
+    ['match', 'equivalents', 'Abaddon Black', '--max-distance', 'abc'],
+    { cwd },
+  );
+
+  assert.equal(result.exitCode, 1);
+  assert.match(result.stderr, /--max-distance requires a numeric value/);
+});

@@ -69,10 +69,20 @@ function parseEquivalentsFlags(args) {
       options.includeSameProvider = true;
       index += 1;
     } else if (arg === '--max-distance') {
-      options.maxDistance = Number.parseFloat(args[index + 1]);
+      const raw = args[index + 1];
+      const value = Number.parseFloat(raw);
+      if (!Number.isFinite(value)) {
+        throw new Error(`--max-distance requires a numeric value (got ${raw ?? 'nothing'})`);
+      }
+      options.maxDistance = value;
       index += 2;
     } else if (arg === '--limit') {
-      options.limit = Number.parseInt(args[index + 1], 10);
+      const raw = args[index + 1];
+      const value = Number.parseInt(raw, 10);
+      if (!Number.isFinite(value)) {
+        throw new Error(`--limit requires a numeric value (got ${raw ?? 'nothing'})`);
+      }
+      options.limit = value;
       index += 2;
     } else {
       positional.push(arg);
@@ -131,6 +141,10 @@ export async function runMatchCommand(args, context) {
     const body = formatEquivalentsText(equivalents, { includeAlternatives: true });
     const message = body ? `${header}\n\n${body}` : header;
 
+    // `equivalents_text` is intentionally empty: `message` already contains
+    // the rendered header + body. Setting `equivalents_text: ''` lets
+    // renderResult skip its fallback append in text mode, and the field
+    // is stripped from --json output by renderResult's destructuring.
     return {
       message,
       equivalents,
