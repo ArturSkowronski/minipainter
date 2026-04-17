@@ -2,6 +2,7 @@ import { resolveRegistryPath } from './config.mjs';
 import { initRegistryIfMissing, loadRegistry, saveRegistry } from './registry-store.mjs';
 import { markOwned, markUnowned } from './inventory-service.mjs';
 import { matchByColor, resolvePaint, searchPaints } from './search-engine.mjs';
+import { findEquivalents } from './equivalents-service.mjs';
 
 function toPaintRecord(paint) {
   return {
@@ -21,6 +22,22 @@ function toSearchRecord(result) {
     ...toPaintRecord(result.paint),
     score: result.score ?? null,
     distance: result.distance ?? null,
+  };
+}
+
+function toEquivalentsRecord(equivalents) {
+  return {
+    source: toPaintRecord(equivalents.source),
+    owned: equivalents.owned.map((entry) => ({
+      paint: toPaintRecord(entry.paint),
+      distance: entry.distance,
+    })),
+    alternatives: equivalents.alternatives.map((entry) => ({
+      paint: toPaintRecord(entry.paint),
+      distance: entry.distance,
+    })),
+    thresholds: equivalents.thresholds,
+    ...(equivalents.reason ? { reason: equivalents.reason } : {}),
   };
 }
 
@@ -57,7 +74,12 @@ export async function showPaint(options = {}) {
   });
 
   if (result.status === 'resolved') {
-    return { status: 'resolved', item: toPaintRecord(result.paint) };
+    const equivalents = findEquivalents(registry, result.paint);
+    return {
+      status: 'resolved',
+      item: toPaintRecord(result.paint),
+      equivalents: toEquivalentsRecord(equivalents),
+    };
   }
 
   return {
@@ -124,4 +146,22 @@ export async function matchPaintByColor(options = {}) {
 
 export async function matchPaintByDescription(options = {}) {
   return searchPaintCatalog(options);
+}
+
+export async function findPaintEquivalents(options = {}) {
+  const registry = await loadExistingRegistry(options);
+  const result = findEquivalents(registry, options.paint, {
+    maxDistance: options.max_distance,
+    limit: options.limit,
+    includeSameProvider: options.include_same_provider,
+  });
+
+  if (result.status === 'not_found' || result.status === 'ambiguous') {
+    return {
+      status: result.status,
+      matches: (result.matches || []).map(toPaintRecord),
+    };
+  }
+
+  return { status: 'ok', ...toEquivalentsRecord(result) };
 }
