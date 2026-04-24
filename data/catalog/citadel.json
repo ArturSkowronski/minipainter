@@ -5,47 +5,100 @@
   },
   "paints": [
     {
+      "id": "citadel/ardcoat",
+      "provider": "citadel",
+      "name": "'Ardcoat",
+      "normalized_name": " ardcoat",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 232,
+        "b": 230
+      },
+      "owned": false
+    },
+    {
       "id": "citadel/abaddon-black",
       "provider": "citadel",
       "name": "Abaddon Black",
       "normalized_name": "abaddon black",
-      "aliases": ["black"],
-      "usage_roles": ["base"],
-      "color_families": ["black"],
-      "rgb": { "r": 20, "g": 20, "b": 20 },
+      "aliases": [
+        "black"
+      ],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 20,
+        "g": 20,
+        "b": 20
+      },
       "owned": false
     },
     {
-      "id": "citadel/corax-white",
+      "id": "citadel/administratum-grey",
       "provider": "citadel",
-      "name": "Corax White",
-      "normalized_name": "corax white",
-      "aliases": ["white"],
-      "usage_roles": ["base"],
-      "color_families": ["white"],
-      "rgb": { "r": 227, "g": 228, "b": 222 },
-      "owned": false
-    },
-    {
-      "id": "citadel/mephiston-red",
-      "provider": "citadel",
-      "name": "Mephiston Red",
-      "normalized_name": "mephiston red",
+      "name": "Administratum Grey",
+      "normalized_name": "administratum grey",
       "aliases": [],
-      "usage_roles": ["base"],
-      "color_families": ["red"],
-      "rgb": { "r": 146, "g": 27, "b": 41 },
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 168,
+        "b": 166
+      },
       "owned": false
     },
     {
-      "id": "citadel/leadbelcher",
+      "id": "citadel/aethermatic-blue",
       "provider": "citadel",
-      "name": "Leadbelcher",
-      "normalized_name": "leadbelcher",
+      "name": "Aethermatic Blue",
+      "normalized_name": "aethermatic blue",
       "aliases": [],
-      "usage_roles": ["metallic"],
-      "color_families": ["steel", "metallic", "silver"],
-      "rgb": { "r": 120, "g": 124, "b": 128 },
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 106,
+        "b": 184
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/aggaros-dunes",
+      "provider": "citadel",
+      "name": "Aggaros Dunes",
+      "normalized_name": "aggaros dunes",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 106,
+        "b": 58
+      },
       "owned": false
     },
     {
@@ -54,9 +107,2977 @@
       "name": "Agrax Earthshade",
       "normalized_name": "agrax earthshade",
       "aliases": [],
-      "usage_roles": ["shade"],
-      "color_families": ["brown"],
-      "rgb": { "r": 93, "g": 68, "b": 49 },
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 42,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/agrellan-badland",
+      "provider": "citadel",
+      "name": "Agrellan Badland",
+      "normalized_name": "agrellan badland",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 120,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/agrellan-earth",
+      "provider": "citadel",
+      "name": "Agrellan Earth",
+      "normalized_name": "agrellan earth",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 152,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ahriman-blue",
+      "provider": "citadel",
+      "name": "Ahriman Blue",
+      "normalized_name": "ahriman blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 42,
+        "g": 124,
+        "b": 184
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/akhelian-green",
+      "provider": "citadel",
+      "name": "Akhelian Green",
+      "normalized_name": "akhelian green",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 122,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/altdorf-guard-blue",
+      "provider": "citadel",
+      "name": "Altdorf Guard Blue",
+      "normalized_name": "altdorf guard blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 42,
+        "g": 78,
+        "b": 158
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/apothecary-white",
+      "provider": "citadel",
+      "name": "Apothecary White",
+      "normalized_name": "apothecary white",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 216,
+        "b": 208
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/armageddon-dunes",
+      "provider": "citadel",
+      "name": "Armageddon Dunes",
+      "normalized_name": "armageddon dunes",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 106,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/armageddon-dust",
+      "provider": "citadel",
+      "name": "Armageddon Dust",
+      "normalized_name": "armageddon dust",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 146,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/astorath-red",
+      "provider": "citadel",
+      "name": "Astorath Red",
+      "normalized_name": "astorath red",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 72,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/astrogranite",
+      "provider": "citadel",
+      "name": "Astrogranite",
+      "normalized_name": "astrogranite",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 90,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/astrogranite-debris",
+      "provider": "citadel",
+      "name": "Astrogranite Debris",
+      "normalized_name": "astrogranite debris",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 106,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/athonian-camoshade",
+      "provider": "citadel",
+      "name": "Athonian Camoshade",
+      "normalized_name": "athonian camoshade",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 90,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/averland-sunset",
+      "provider": "citadel",
+      "name": "Averland Sunset",
+      "normalized_name": "averland sunset",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 217,
+        "g": 160,
+        "b": 34
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/baharroth-blue",
+      "provider": "citadel",
+      "name": "Baharroth Blue",
+      "normalized_name": "baharroth blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 126,
+        "g": 200,
+        "b": 216
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/balthasar-gold",
+      "provider": "citadel",
+      "name": "Balthasar Gold",
+      "normalized_name": "balthasar gold",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 165,
+        "g": 124,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/barak-nar-burgundy",
+      "provider": "citadel",
+      "name": "Barak-Nar Burgundy",
+      "normalized_name": "barak nar burgundy",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 30,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/basilicanum-grey",
+      "provider": "citadel",
+      "name": "Basilicanum Grey",
+      "normalized_name": "basilicanum grey",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 64,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/berserker-bloodshade",
+      "provider": "citadel",
+      "name": "Berserker Bloodshade",
+      "normalized_name": "berserker bloodshade",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 26,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/biel-tan-green",
+      "provider": "citadel",
+      "name": "Biel-Tan Green",
+      "normalized_name": "biel tan green",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 74,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/black-legion",
+      "provider": "citadel",
+      "name": "Black Legion",
+      "normalized_name": "black legion",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 26,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/black-templar",
+      "provider": "citadel",
+      "name": "Black Templar",
+      "normalized_name": "black templar",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 26,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blackfire-earth",
+      "provider": "citadel",
+      "name": "Blackfire Earth",
+      "normalized_name": "blackfire earth",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 42,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blood-angels-red",
+      "provider": "citadel",
+      "name": "Blood Angels Red",
+      "normalized_name": "blood angels red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 36,
+        "b": 44
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blood-for-the-blood-god",
+      "provider": "citadel",
+      "name": "Blood for the Blood God",
+      "normalized_name": "blood for the blood god",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 26,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blood-reaver",
+      "provider": "citadel",
+      "name": "Blood Reaver",
+      "normalized_name": "blood reaver",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 68,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/brass-scorpion",
+      "provider": "citadel",
+      "name": "Brass Scorpion",
+      "normalized_name": "brass scorpion",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 106,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/bugman-s-glow",
+      "provider": "citadel",
+      "name": "Bugman's Glow",
+      "normalized_name": "bugman s glow",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "brown",
+        "skin"
+      ],
+      "rgb": {
+        "r": 139,
+        "g": 90,
+        "b": 60
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/cadian-fleshtone",
+      "provider": "citadel",
+      "name": "Cadian Fleshtone",
+      "normalized_name": "cadian fleshtone",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone",
+        "skin"
+      ],
+      "rgb": {
+        "r": 196,
+        "g": 138,
+        "b": 108
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/caledor-sky",
+      "provider": "citadel",
+      "name": "Caledor Sky",
+      "normalized_name": "caledor sky",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 28,
+        "g": 78,
+        "b": 142
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/calgar-blue",
+      "provider": "citadel",
+      "name": "Calgar Blue",
+      "normalized_name": "calgar blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 90,
+        "b": 168
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/canoptek-alloy",
+      "provider": "citadel",
+      "name": "Canoptek Alloy",
+      "normalized_name": "canoptek alloy",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 138,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carroburg-crimson",
+      "provider": "citadel",
+      "name": "Carroburg Crimson",
+      "normalized_name": "carroburg crimson",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 26,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/castellan-green",
+      "provider": "citadel",
+      "name": "Castellan Green",
+      "normalized_name": "castellan green",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 90,
+        "b": 44
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/castellax-bronze",
+      "provider": "citadel",
+      "name": "Castellax Bronze",
+      "normalized_name": "castellax bronze",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 176,
+        "g": 138,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/catachan-flesh",
+      "provider": "citadel",
+      "name": "Catachan Flesh",
+      "normalized_name": "catachan flesh",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "brown",
+        "skin"
+      ],
+      "rgb": {
+        "r": 107,
+        "g": 74,
+        "b": 50
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/celestra-grey",
+      "provider": "citadel",
+      "name": "Celestra Grey",
+      "normalized_name": "celestra grey",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 155,
+        "g": 164,
+        "b": 168
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ceramite-white",
+      "provider": "citadel",
+      "name": "Ceramite White",
+      "normalized_name": "ceramite white",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 238,
+        "g": 238,
+        "b": 236
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/changeling-pink",
+      "provider": "citadel",
+      "name": "Changeling Pink",
+      "normalized_name": "changeling pink",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 162,
+        "b": 196
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/chronus-blue",
+      "provider": "citadel",
+      "name": "Chronus Blue",
+      "normalized_name": "chronus blue",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 138,
+        "b": 200
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/coelia-greenshade",
+      "provider": "citadel",
+      "name": "Coelia Greenshade",
+      "normalized_name": "coelia greenshade",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 74,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/contrast-medium",
+      "provider": "citadel",
+      "name": "Contrast Medium",
+      "normalized_name": "contrast medium",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 232,
+        "b": 230
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/corax-white",
+      "provider": "citadel",
+      "name": "Corax White",
+      "normalized_name": "corax white",
+      "aliases": [
+        "white"
+      ],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 216,
+        "b": 214
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/creed-camo",
+      "provider": "citadel",
+      "name": "Creed Camo",
+      "normalized_name": "creed camo",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 122,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/cryptek-armourshade-gloss",
+      "provider": "citadel",
+      "name": "Cryptek Armourshade Gloss",
+      "normalized_name": "cryptek armourshade gloss",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 42,
+        "g": 42,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/cygor-brown",
+      "provider": "citadel",
+      "name": "Cygor Brown",
+      "normalized_name": "cygor brown",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 74,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/daemonette-hide",
+      "provider": "citadel",
+      "name": "Daemonette Hide",
+      "normalized_name": "daemonette hide",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "purple",
+        "brown",
+        "leather"
+      ],
+      "rgb": {
+        "r": 92,
+        "g": 74,
+        "b": 102
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dark-angels-green",
+      "provider": "citadel",
+      "name": "Dark Angels Green",
+      "normalized_name": "dark angels green",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 58,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/darkoath-flesh",
+      "provider": "citadel",
+      "name": "Darkoath Flesh",
+      "normalized_name": "darkoath flesh",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "skin"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 138,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dawnstone",
+      "provider": "citadel",
+      "name": "Dawnstone",
+      "normalized_name": "dawnstone",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 124,
+        "b": 126
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/death-korps-drab",
+      "provider": "citadel",
+      "name": "Death Korps Drab",
+      "normalized_name": "death korps drab",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 92,
+        "g": 81,
+        "b": 64
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/deathclaw-brown",
+      "provider": "citadel",
+      "name": "Deathclaw Brown",
+      "normalized_name": "deathclaw brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 120,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/deathfang-pelt",
+      "provider": "citadel",
+      "name": "Deathfang Pelt",
+      "normalized_name": "deathfang pelt",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 106,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/deathworld-forest",
+      "provider": "citadel",
+      "name": "Deathworld Forest",
+      "normalized_name": "deathworld forest",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 106,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dechala-lilac",
+      "provider": "citadel",
+      "name": "Dechala Lilac",
+      "normalized_name": "dechala lilac",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 201,
+        "g": 166,
+        "b": 212
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/disciple-bronze",
+      "provider": "citadel",
+      "name": "Disciple Bronze",
+      "normalized_name": "disciple bronze",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 130,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dorn-yellow",
+      "provider": "citadel",
+      "name": "Dorn Yellow",
+      "normalized_name": "dorn yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 200,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/drakenhof-nightshade",
+      "provider": "citadel",
+      "name": "Drakenhof Nightshade",
+      "normalized_name": "drakenhof nightshade",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 42,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/druchii-violet",
+      "provider": "citadel",
+      "name": "Druchii Violet",
+      "normalized_name": "druchii violet",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 26,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dryad-bark",
+      "provider": "citadel",
+      "name": "Dryad Bark",
+      "normalized_name": "dryad bark",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 62,
+        "g": 42,
+        "b": 30
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/eldar-flesh",
+      "provider": "citadel",
+      "name": "Eldar Flesh",
+      "normalized_name": "eldar flesh",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "skin"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 168,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/elysian-green",
+      "provider": "citadel",
+      "name": "Elysian Green",
+      "normalized_name": "elysian green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 168,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/emperor-s-children",
+      "provider": "citadel",
+      "name": "Emperor's Children",
+      "normalized_name": "emperor s children",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 180,
+        "g": 74,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/eshin-grey",
+      "provider": "citadel",
+      "name": "Eshin Grey",
+      "normalized_name": "eshin grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 76,
+        "b": 78
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/etherium-blue",
+      "provider": "citadel",
+      "name": "Etherium Blue",
+      "normalized_name": "etherium blue",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 200,
+        "b": 216
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/evil-sunz-scarlet",
+      "provider": "citadel",
+      "name": "Evil Sunz Scarlet",
+      "normalized_name": "evil sunz scarlet",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 40,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/fenrisian-grey",
+      "provider": "citadel",
+      "name": "Fenrisian Grey",
+      "normalized_name": "fenrisian grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 168,
+        "b": 184
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/flash-gitz-yellow",
+      "provider": "citadel",
+      "name": "Flash Gitz Yellow",
+      "normalized_name": "flash gitz yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 245,
+        "g": 216,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/flayed-one-flesh",
+      "provider": "citadel",
+      "name": "Flayed One Flesh",
+      "normalized_name": "flayed one flesh",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone",
+        "skin"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 200,
+        "b": 154
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/flesh-tearers-red",
+      "provider": "citadel",
+      "name": "Flesh Tearers Red",
+      "normalized_name": "flesh tearers red",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 26,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/frostheart",
+      "provider": "citadel",
+      "name": "Frostheart",
+      "normalized_name": "frostheart",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 184,
+        "b": 200
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/fuegan-orange",
+      "provider": "citadel",
+      "name": "Fuegan Orange",
+      "normalized_name": "fuegan orange",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 58,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/fyreslayer-flesh",
+      "provider": "citadel",
+      "name": "Fyreslayer Flesh",
+      "normalized_name": "fyreslayer flesh",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "skin"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 138,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/garaghak-s-sewer",
+      "provider": "citadel",
+      "name": "Garaghak's Sewer",
+      "normalized_name": "garaghak s sewer",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 90,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gauss-blaster-green",
+      "provider": "citadel",
+      "name": "Gauss Blaster Green",
+      "normalized_name": "gauss blaster green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 142,
+        "g": 200,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gehenna-s-gold",
+      "provider": "citadel",
+      "name": "Gehenna's Gold",
+      "normalized_name": "gehenna s gold",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 154,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/genestealer-purple",
+      "provider": "citadel",
+      "name": "Genestealer Purple",
+      "normalized_name": "genestealer purple",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 74,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/golgfag-brown",
+      "provider": "citadel",
+      "name": "Golgfag Brown",
+      "normalized_name": "golgfag brown",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 120,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gore-grunta-fur",
+      "provider": "citadel",
+      "name": "Gore-Grunta Fur",
+      "normalized_name": "gore grunta fur",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 58,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/grey-seer",
+      "provider": "citadel",
+      "name": "Grey Seer",
+      "normalized_name": "grey seer",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 184,
+        "b": 180
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gryph-charger-grey",
+      "provider": "citadel",
+      "name": "Gryph-Charger Grey",
+      "normalized_name": "gryph charger grey",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 154,
+        "g": 154,
+        "b": 152
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gryph-hound-orange",
+      "provider": "citadel",
+      "name": "Gryph-Hound Orange",
+      "normalized_name": "gryph hound orange",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 224,
+        "g": 120,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/guilliman-flesh",
+      "provider": "citadel",
+      "name": "Guilliman Flesh",
+      "normalized_name": "guilliman flesh",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "skin"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 168,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gutrippa-flesh",
+      "provider": "citadel",
+      "name": "Gutrippa Flesh",
+      "normalized_name": "gutrippa flesh",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 168,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hashut-copper",
+      "provider": "citadel",
+      "name": "Hashut Copper",
+      "normalized_name": "hashut copper",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 180,
+        "g": 120,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hellion-green",
+      "provider": "citadel",
+      "name": "Hellion Green",
+      "normalized_name": "hellion green",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 200,
+        "b": 184
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hexos-palesun",
+      "provider": "citadel",
+      "name": "Hexos Palesun",
+      "normalized_name": "hexos palesun",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 216,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hexwraith-flame",
+      "provider": "citadel",
+      "name": "Hexwraith Flame",
+      "normalized_name": "hexwraith flame",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 168,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hoeth-blue",
+      "provider": "citadel",
+      "name": "Hoeth Blue",
+      "normalized_name": "hoeth blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 140,
+        "b": 200
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/imrik-blue",
+      "provider": "citadel",
+      "name": "Imrik Blue",
+      "normalized_name": "imrik blue",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 170,
+        "b": 216
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/incubi-darkness",
+      "provider": "citadel",
+      "name": "Incubi Darkness",
+      "normalized_name": "incubi darkness",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 30,
+        "g": 58,
+        "b": 60
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ironbreaker",
+      "provider": "citadel",
+      "name": "Ironbreaker",
+      "normalized_name": "ironbreaker",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 140,
+        "b": 142
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/iyanden-yellow",
+      "provider": "citadel",
+      "name": "Iyanden Yellow",
+      "normalized_name": "iyanden yellow",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 192,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/jokaero-orange",
+      "provider": "citadel",
+      "name": "Jokaero Orange",
+      "normalized_name": "jokaero orange",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 212,
+        "g": 90,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kabalite-green",
+      "provider": "citadel",
+      "name": "Kabalite Green",
+      "normalized_name": "kabalite green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 24,
+        "g": 106,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kantor-blue",
+      "provider": "citadel",
+      "name": "Kantor Blue",
+      "normalized_name": "kantor blue",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 46,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/karandras-green",
+      "provider": "citadel",
+      "name": "Karandras Green",
+      "normalized_name": "karandras green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 122,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/khorne-red",
+      "provider": "citadel",
+      "name": "Khorne Red",
+      "normalized_name": "khorne red",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 26,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kislev-flesh",
+      "provider": "citadel",
+      "name": "Kislev Flesh",
+      "normalized_name": "kislev flesh",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "skin"
+      ],
+      "rgb": {
+        "r": 228,
+        "g": 180,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/krieg-khaki",
+      "provider": "citadel",
+      "name": "Krieg Khaki",
+      "normalized_name": "krieg khaki",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 168,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kroxigor-scales",
+      "provider": "citadel",
+      "name": "Kroxigor Scales",
+      "normalized_name": "kroxigor scales",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 106,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/krystaline-blue",
+      "provider": "citadel",
+      "name": "Krystaline Blue",
+      "normalized_name": "krystaline blue",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 154,
+        "b": 200
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/lahmian-medium",
+      "provider": "citadel",
+      "name": "Lahmian Medium",
+      "normalized_name": "lahmian medium",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 232,
+        "b": 230
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/lamenters-yellow",
+      "provider": "citadel",
+      "name": "Lamenters Yellow",
+      "normalized_name": "lamenters yellow",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 200,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/leadbelcher",
+      "provider": "citadel",
+      "name": "Leadbelcher",
+      "normalized_name": "leadbelcher",
+      "aliases": [
+        "silver metallic"
+      ],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 92,
+        "g": 94,
+        "b": 96
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/leviadon-blue",
+      "provider": "citadel",
+      "name": "Leviadon Blue",
+      "normalized_name": "leviadon blue",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 74,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/longbeard-grey",
+      "provider": "citadel",
+      "name": "Longbeard Grey",
+      "normalized_name": "longbeard grey",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 168,
+        "b": 166
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/lothern-blue",
+      "provider": "citadel",
+      "name": "Lothern Blue",
+      "normalized_name": "lothern blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 188,
+        "b": 232
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/lucius-lilac",
+      "provider": "citadel",
+      "name": "Lucius Lilac",
+      "normalized_name": "lucius lilac",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 154,
+        "b": 202
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/luxion-purple",
+      "provider": "citadel",
+      "name": "Luxion Purple",
+      "normalized_name": "luxion purple",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 42,
+        "b": 122
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/macragge-blue",
+      "provider": "citadel",
+      "name": "Macragge Blue",
+      "normalized_name": "macragge blue",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 31,
+        "g": 58,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/magmadroth-flame",
+      "provider": "citadel",
+      "name": "Magmadroth Flame",
+      "normalized_name": "magmadroth flame",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 224,
+        "g": 74,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/magos-purple",
+      "provider": "citadel",
+      "name": "Magos Purple",
+      "normalized_name": "magos purple",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 42,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/martian-ironcrust",
+      "provider": "citadel",
+      "name": "Martian Ironcrust",
+      "normalized_name": "martian ironcrust",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 74,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/martian-ironearth",
+      "provider": "citadel",
+      "name": "Martian Ironearth",
+      "normalized_name": "martian ironearth",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 88,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/mechanicus-standard-grey",
+      "provider": "citadel",
+      "name": "Mechanicus Standard Grey",
+      "normalized_name": "mechanicus standard grey",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 59,
+        "g": 64,
+        "b": 68
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/mephiston-red",
+      "provider": "citadel",
+      "name": "Mephiston Red",
+      "normalized_name": "mephiston red",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 154,
+        "g": 28,
+        "b": 28
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/militarum-green",
+      "provider": "citadel",
+      "name": "Militarum Green",
+      "normalized_name": "militarum green",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 106,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/moot-green",
+      "provider": "citadel",
+      "name": "Moot Green",
+      "normalized_name": "moot green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 202,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/mordant-earth",
+      "provider": "citadel",
+      "name": "Mordant Earth",
+      "normalized_name": "mordant earth",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 74,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/morghast-bone",
+      "provider": "citadel",
+      "name": "Morghast Bone",
+      "normalized_name": "morghast bone",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "yellow",
+        "bone"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 164,
+        "b": 116
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/munitorum-varnish",
+      "provider": "citadel",
+      "name": "Munitorum Varnish",
+      "normalized_name": "munitorum varnish",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 200,
+        "b": 168
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/naggaroth-night",
+      "provider": "citadel",
+      "name": "Naggaroth Night",
+      "normalized_name": "naggaroth night",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 59,
+        "g": 42,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/nazdreg-yellow",
+      "provider": "citadel",
+      "name": "Nazdreg Yellow",
+      "normalized_name": "nazdreg yellow",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 176,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/necron-compound",
+      "provider": "citadel",
+      "name": "Necron Compound",
+      "normalized_name": "necron compound",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 168,
+        "b": 160
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/nighthaunt-gloom",
+      "provider": "citadel",
+      "name": "Nighthaunt Gloom",
+      "normalized_name": "nighthaunt gloom",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 138,
+        "b": 154
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/nihilakh-oxide",
+      "provider": "citadel",
+      "name": "Nihilakh Oxide",
+      "normalized_name": "nihilakh oxide",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 200,
+        "b": 184
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/nuln-oil",
+      "provider": "citadel",
+      "name": "Nuln Oil",
+      "normalized_name": "nuln oil",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 26,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/nuln-oil-gloss",
+      "provider": "citadel",
+      "name": "Nuln Oil Gloss",
+      "normalized_name": "nuln oil gloss",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 26,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/nurgle-s-rot",
+      "provider": "citadel",
+      "name": "Nurgle's Rot",
+      "normalized_name": "nurgle s rot",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 184,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/nurgling-green",
+      "provider": "citadel",
+      "name": "Nurgling Green",
+      "normalized_name": "nurgling green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 186,
+        "g": 202,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ogryn-camo",
+      "provider": "citadel",
+      "name": "Ogryn Camo",
+      "normalized_name": "ogryn camo",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 138,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ork-flesh",
+      "provider": "citadel",
+      "name": "Ork Flesh",
+      "normalized_name": "ork flesh",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 138,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/pallid-wych-flesh",
+      "provider": "citadel",
+      "name": "Pallid Wych Flesh",
+      "normalized_name": "pallid wych flesh",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 212,
+        "b": 184
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/phoenician-purple",
+      "provider": "citadel",
+      "name": "Phoenician Purple",
+      "normalized_name": "phoenician purple",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 42,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/pink-horror",
+      "provider": "citadel",
+      "name": "Pink Horror",
+      "normalized_name": "pink horror",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 88,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/plaguebearer-flesh",
+      "provider": "citadel",
+      "name": "Plaguebearer Flesh",
+      "normalized_name": "plaguebearer flesh",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 168,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/praxeti-white",
+      "provider": "citadel",
+      "name": "Praxeti White",
+      "normalized_name": "praxeti white",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 232,
+        "b": 230
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/rakarth-flesh",
+      "provider": "citadel",
+      "name": "Rakarth Flesh",
+      "normalized_name": "rakarth flesh",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "bone",
+        "skin"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 168,
+        "b": 144
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ratling-grime",
+      "provider": "citadel",
+      "name": "Ratling Grime",
+      "normalized_name": "ratling grime",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 74,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/reikland-fleshshade",
+      "provider": "citadel",
+      "name": "Reikland Fleshshade",
+      "normalized_name": "reikland fleshshade",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "brown",
+        "skin"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 74,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/reikland-fleshshade-gloss",
+      "provider": "citadel",
+      "name": "Reikland Fleshshade Gloss",
+      "normalized_name": "reikland fleshshade gloss",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "brown",
+        "skin"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 74,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/retributor-armour",
+      "provider": "citadel",
+      "name": "Retributor Armour",
+      "normalized_name": "retributor armour",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 176,
+        "g": 136,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/rhinox-hide",
+      "provider": "citadel",
+      "name": "Rhinox Hide",
+      "normalized_name": "rhinox hide",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "brown",
+        "leather"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 36,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/runefang-steel",
+      "provider": "citadel",
+      "name": "Runefang Steel",
+      "normalized_name": "runefang steel",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 202,
+        "b": 204
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/russ-grey",
+      "provider": "citadel",
+      "name": "Russ Grey",
+      "normalized_name": "russ grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 106,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ryza-rust",
+      "provider": "citadel",
+      "name": "Ryza Rust",
+      "normalized_name": "ryza rust",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 104,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/scar-white",
+      "provider": "citadel",
+      "name": "Scar White",
+      "normalized_name": "scar white",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 244,
+        "g": 244,
+        "b": 240
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/screamer-pink",
+      "provider": "citadel",
+      "name": "Screamer Pink",
+      "normalized_name": "screamer pink",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 26,
+        "b": 60
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/screaming-skull",
+      "provider": "citadel",
+      "name": "Screaming Skull",
+      "normalized_name": "screaming skull",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 212,
+        "g": 200,
+        "b": 154
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/seraphim-sepia",
+      "provider": "citadel",
+      "name": "Seraphim Sepia",
+      "normalized_name": "seraphim sepia",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 138,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/shyish-purple",
+      "provider": "citadel",
+      "name": "Shyish Purple",
+      "normalized_name": "shyish purple",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 26,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/sigmarite",
+      "provider": "citadel",
+      "name": "Sigmarite",
+      "normalized_name": "sigmarite",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 190,
+        "g": 192,
+        "b": 194
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/sigrun-yellow",
+      "provider": "citadel",
+      "name": "Sigrun Yellow",
+      "normalized_name": "sigrun yellow",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 216,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/skarsnik-green",
+      "provider": "citadel",
+      "name": "Skarsnik Green",
+      "normalized_name": "skarsnik green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 202,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/skavenblight-dinge",
+      "provider": "citadel",
+      "name": "Skavenblight Dinge",
+      "normalized_name": "skavenblight dinge",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 74,
+        "b": 58
+      },
       "owned": false
     },
     {
@@ -65,9 +3086,1011 @@
       "name": "Skeleton Horde",
       "normalized_name": "skeleton horde",
       "aliases": [],
-      "usage_roles": ["contrast"],
-      "color_families": ["bone", "brown"],
-      "rgb": { "r": 170, "g": 135, "b": 88 },
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 138,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/skink-blue",
+      "provider": "citadel",
+      "name": "Skink Blue",
+      "normalized_name": "skink blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 186,
+        "b": 202
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/slaanesh-grey",
+      "provider": "citadel",
+      "name": "Slaanesh Grey",
+      "normalized_name": "slaanesh grey",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 170,
+        "b": 186
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/snakebite-leather",
+      "provider": "citadel",
+      "name": "Snakebite Leather",
+      "normalized_name": "snakebite leather",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "brown",
+        "leather"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 90,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/sotek-green",
+      "provider": "citadel",
+      "name": "Sotek Green",
+      "normalized_name": "sotek green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 24,
+        "g": 106,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/soulblight-gravemist",
+      "provider": "citadel",
+      "name": "Soulblight Gravemist",
+      "normalized_name": "soulblight gravemist",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 154,
+        "b": 170
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/space-wolves-grey",
+      "provider": "citadel",
+      "name": "Space Wolves Grey",
+      "normalized_name": "space wolves grey",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 138,
+        "b": 168
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/spiritstone-red",
+      "provider": "citadel",
+      "name": "Spiritstone Red",
+      "normalized_name": "spiritstone red",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 40,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/squig-orange",
+      "provider": "citadel",
+      "name": "Squig Orange",
+      "normalized_name": "squig orange",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 88,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stegadon-scale-green",
+      "provider": "citadel",
+      "name": "Stegadon Scale Green",
+      "normalized_name": "stegadon scale green",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 30,
+        "g": 74,
+        "b": 82
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stirland-battlemire",
+      "provider": "citadel",
+      "name": "Stirland Battlemire",
+      "normalized_name": "stirland battlemire",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 58,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stirland-mud",
+      "provider": "citadel",
+      "name": "Stirland Mud",
+      "normalized_name": "stirland mud",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 74,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stormhost-silver",
+      "provider": "citadel",
+      "name": "Stormhost Silver",
+      "normalized_name": "stormhost silver",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 218,
+        "b": 220
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stormshield",
+      "provider": "citadel",
+      "name": "Stormshield",
+      "normalized_name": "stormshield",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 232,
+        "b": 230
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/straken-green",
+      "provider": "citadel",
+      "name": "Straken Green",
+      "normalized_name": "straken green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 138,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/striking-scorpion-green",
+      "provider": "citadel",
+      "name": "Striking Scorpion Green",
+      "normalized_name": "striking scorpion green",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 42,
+        "g": 138,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/sybarite-green",
+      "provider": "citadel",
+      "name": "Sybarite Green",
+      "normalized_name": "sybarite green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 202,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/talassar-blue",
+      "provider": "citadel",
+      "name": "Talassar Blue",
+      "normalized_name": "talassar blue",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 74,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/tallarn-sand",
+      "provider": "citadel",
+      "name": "Tallarn Sand",
+      "normalized_name": "tallarn sand",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 138,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/targor-rageshade",
+      "provider": "citadel",
+      "name": "Targor Rageshade",
+      "normalized_name": "targor rageshade",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 26,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/tausept-ochre",
+      "provider": "citadel",
+      "name": "Tausept Ochre",
+      "normalized_name": "tausept ochre",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 154,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/teclis-blue",
+      "provider": "citadel",
+      "name": "Teclis Blue",
+      "normalized_name": "teclis blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 42,
+        "g": 138,
+        "b": 200
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/temple-guard-blue",
+      "provider": "citadel",
+      "name": "Temple Guard Blue",
+      "normalized_name": "temple guard blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 186,
+        "b": 184
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/terminatus-stone",
+      "provider": "citadel",
+      "name": "Terminatus Stone",
+      "normalized_name": "terminatus stone",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "yellow",
+        "skin"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 168,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/terradon-turquoise",
+      "provider": "citadel",
+      "name": "Terradon Turquoise",
+      "normalized_name": "terradon turquoise",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 138,
+        "b": 154
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/tesseract-glow",
+      "provider": "citadel",
+      "name": "Tesseract Glow",
+      "normalized_name": "tesseract glow",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 200,
+        "b": 168
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/the-fang",
+      "provider": "citadel",
+      "name": "The Fang",
+      "normalized_name": "the fang",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 90,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/thorn-grey",
+      "provider": "citadel",
+      "name": "Thorn Grey",
+      "normalized_name": "thorn grey",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 154,
+        "b": 170
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/thousand-sons-blue",
+      "provider": "citadel",
+      "name": "Thousand Sons Blue",
+      "normalized_name": "thousand sons blue",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 30,
+        "g": 92,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/thundercloud-blue",
+      "provider": "citadel",
+      "name": "Thundercloud Blue",
+      "normalized_name": "thundercloud blue",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 42,
+        "g": 58,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/thunderhawk-blue",
+      "provider": "citadel",
+      "name": "Thunderhawk Blue",
+      "normalized_name": "thunderhawk blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 74,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/troll-slayer-orange",
+      "provider": "citadel",
+      "name": "Troll Slayer Orange",
+      "normalized_name": "troll slayer orange",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 104,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/tuskgor-fur",
+      "provider": "citadel",
+      "name": "Tuskgor Fur",
+      "normalized_name": "tuskgor fur",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 74,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/typhus-corrosion",
+      "provider": "citadel",
+      "name": "Typhus Corrosion",
+      "normalized_name": "typhus corrosion",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 42,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/tyrant-skull",
+      "provider": "citadel",
+      "name": "Tyrant Skull",
+      "normalized_name": "tyrant skull",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 200,
+        "b": 168
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ulthuan-grey",
+      "provider": "citadel",
+      "name": "Ulthuan Grey",
+      "normalized_name": "ulthuan grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 202,
+        "b": 196
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ultramarines-blue",
+      "provider": "citadel",
+      "name": "Ultramarines Blue",
+      "normalized_name": "ultramarines blue",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 58,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/underhive-ash",
+      "provider": "citadel",
+      "name": "Underhive Ash",
+      "normalized_name": "underhive ash",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 138,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ungor-flesh",
+      "provider": "citadel",
+      "name": "Ungor Flesh",
+      "normalized_name": "ungor flesh",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone",
+        "skin"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 154,
+        "b": 122
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/valhallan-blizzard",
+      "provider": "citadel",
+      "name": "Valhallan Blizzard",
+      "normalized_name": "valhallan blizzard",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 232,
+        "b": 230
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/verminlord-hide",
+      "provider": "citadel",
+      "name": "Verminlord Hide",
+      "normalized_name": "verminlord hide",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "brown",
+        "leather"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 74,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/volupus-pink",
+      "provider": "citadel",
+      "name": "Volupus Pink",
+      "normalized_name": "volupus pink",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 74,
+        "b": 122
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/waaagh-flesh",
+      "provider": "citadel",
+      "name": "Waaagh! Flesh",
+      "normalized_name": "waaagh flesh",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 74,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/warboss-green",
+      "provider": "citadel",
+      "name": "Warboss Green",
+      "normalized_name": "warboss green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 138,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/warpstone-glow",
+      "provider": "citadel",
+      "name": "Warpstone Glow",
+      "normalized_name": "warpstone glow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 138,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/white-scar",
+      "provider": "citadel",
+      "name": "White Scar",
+      "normalized_name": "white scar",
+      "aliases": [
+        "white"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 248,
+        "g": 248,
+        "b": 246
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/wild-rider-red",
+      "provider": "citadel",
+      "name": "Wild Rider Red",
+      "normalized_name": "wild rider red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 224,
+        "g": 40,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/wrack-white",
+      "provider": "citadel",
+      "name": "Wrack White",
+      "normalized_name": "wrack white",
+      "aliases": [],
+      "usage_roles": [
+        "dry"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 216,
+        "b": 212
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/wraithbone",
+      "provider": "citadel",
+      "name": "Wraithbone",
+      "normalized_name": "wraithbone",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 212,
+        "g": 200,
+        "b": 168
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/wyldwood",
+      "provider": "citadel",
+      "name": "Wyldwood",
+      "normalized_name": "wyldwood",
+      "aliases": [],
+      "usage_roles": [
+        "contrast"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 36,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/xv-88",
+      "provider": "citadel",
+      "name": "XV-88",
+      "normalized_name": "xv 88",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 74,
+        "b": 30
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/yriel-yellow",
+      "provider": "citadel",
+      "name": "Yriel Yellow",
+      "normalized_name": "yriel yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 168,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/zandri-dust",
+      "provider": "citadel",
+      "name": "Zandri Dust",
+      "normalized_name": "zandri dust",
+      "aliases": [],
+      "usage_roles": [
+        "base"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 152,
+        "b": 104
+      },
       "owned": false
     }
   ]
