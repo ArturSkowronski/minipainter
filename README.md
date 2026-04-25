@@ -2,6 +2,8 @@
 
 > Forge Ledger for the painting bench.
 
+Site: [arturskowronski.github.io/warpaint-cli](https://arturskowronski.github.io/warpaint-cli/)
+
 `warpaint-cli` is a local-first paint registry for Warhammer hobby workflows. It exists for one practical reason: AI paint suggestions are much more useful when they understand the paints you actually own.
 
 The project gives you:

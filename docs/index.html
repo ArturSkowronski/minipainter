@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WARPAINT — Forge Ledger for the painting bench</title>
+<meta name="description" content="warpaint-cli is a local-first paint registry for Warhammer hobby workflows. Owned-first matching, a grimdark TUI, and a local MCP server for Claude Desktop.">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="WARPAINT — Forge Ledger for the painting bench">
+<meta property="og:description" content="Local-first paint registry for Warhammer hobby workflows. Owned-first matching, grimdark TUI, MCP server.">
+<meta property="og:image" content="assets/hero.svg">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div class="legend-strip">
+  <span>search &lt;text&gt;</span> · <span>owned</span> · <span>catalog</span> · <span>toggle</span> · <em>quit</em>
+</div>
+
+<main>
+
+  <section class="hero">
+    <pre class="banner" role="img" aria-label="WARPAINT">
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║  ██╗    ██╗ █████╗ ██████╗ ██████╗  █████╗ ██╗███╗   ██╗████████╗            ║
+║  ██║    ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗██║████╗  ██║╚══██╔══╝            ║
+║  ██║ █╗ ██║███████║██████╔╝██████╔╝███████║██║██╔██╗ ██║   ██║               ║
+║  ██║███╗██║██╔══██║██╔══██╗██╔═══╝ ██╔══██║██║██║╚██╗██║   ██║               ║
+║  ╚███╔███╔╝██║  ██║██║  ██║██║     ██║  ██║██║██║ ╚████║   ██║               ║
+║   ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝               ║
+║                                                                              ║
+║                               WARPAINT                                       ║
+║                                                                              ║
+║                    FORGE LEDGER :: INVENTORY FOR THE PAINTING BENCH          ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝</pre>
+    <p class="tagline">Forge Ledger for the painting bench.</p>
+    <div class="cta">
+      <a class="primary" href="#quickstart">QUICKSTART</a>
+      <a href="https://github.com/arturskowronski/warpaint-cli">GITHUB ↗</a>
+      <a href="#mcp">CLAUDE DESKTOP MCP</a>
+    </div>
+  </section>
+
+  <div class="separator">═══════════════════════════════ <b>WHY THIS EXISTS</b> ═══════════════════════════════</div>
+
+  <p>
+    Most paint-advice workflows break at the same point: they recommend paints you do not have on hand.
+    <code>warpaint-cli</code> is a local-first paint registry built to fix exactly that — keep a deterministic
+    record of what is in your rack, search it by name, role, family, and approximate color, and prepare a stable
+    inventory foundation for AI tools that should reason from your <em>actual</em> shelf first.
+  </p>
+  <p class="muted">
+    The long-term goal isn't "AI picks random colors for miniatures." It's "AI reasons from your actual inventory
+    first, then suggests stronger alternatives only when useful."
+  </p>
+
+  <div class="separator">═══════════════════════════════ <b>FORGE CATALOG</b> ═══════════════════════════════</div>
+
+  <div class="cards">
+    <article class="card">
+      <h3>Owned-first matching</h3>
+      <p>Lookups and recommendations prioritize paints already bound to your inventory before suggesting alternatives.</p>
+    </article>
+    <article class="card">
+      <h3>Local registry</h3>
+      <p>Everything lives in a project-local <code>.warpaint/registry.json</code>. No cloud, no account, no telemetry.</p>
+    </article>
+    <article class="card">
+      <h3>RGB-aware search</h3>
+      <p>Approximate RGB values back nearest-color matching, so <code>match color "#d2c29b"</code> returns useful pigments.</p>
+    </article>
+    <article class="card">
+      <h3>Grimdark TUI</h3>
+      <p>A terminal UI styled as a workshop ledger: heavy ASCII frames, bold banners, paint data presented as inventory.</p>
+    </article>
+    <article class="card">
+      <h3>Agent-friendly CLI</h3>
+      <p>Deterministic <code>--json</code> output on every command, designed to be wired into future AI workflows.</p>
+    </article>
+    <article class="card">
+      <h3>Local MCP server</h3>
+      <p>Drop-in MCP endpoint exposes search, inspect, ownership, and color-match tools to Claude Desktop.</p>
+    </article>
+  </div>
+
+  <div class="separator">═══════════════════════════════ <b>SELECTED PIGMENT</b> ═══════════════════════════════</div>
+
+  <p class="muted">Captured from the live TUI. Reproduce locally with <code>npm run generate:demo</code>.</p>
+
+  <figure class="shot">
+    <div class="chrome"><i></i><i></i><i></i></div>
+    <img src="assets/hero.svg" alt="WARPAINT TUI hero screen with banner, catalog, selected pigment panel, and command strip">
+    <figcaption>HERO SCREEN — banner, catalog, detail panel, ritual commands</figcaption>
+  </figure>
+
+  <figure class="shot">
+    <div class="chrome"><i></i><i></i><i></i></div>
+    <img src="assets/search.svg" alt="WARPAINT TUI search view filtering for the query 'bone'">
+    <figcaption>SEARCH VIEW — filtered lookup for <code>bone</code></figcaption>
+  </figure>
+
+  <figure class="shot">
+    <div class="chrome"><i></i><i></i><i></i></div>
+    <img src="assets/owned.svg" alt="WARPAINT TUI owned view showing only paints bound to inventory">
+    <figcaption>OWNED VIEW — only what is bound to your collection</figcaption>
+  </figure>
+
+  <div class="separator">═══════════════════════════════ <b>RITUAL COMMANDS</b> ═══════════════════════════════</div>
+
+  <figure class="shot">
+    <div class="chrome"><i></i><i></i><i></i></div>
+    <img src="assets/cli.svg" alt="warpaint-cli command line flow showing search, ownership, and color match">
+    <figcaption>CLI FLOW — search, ownership, color matching</figcaption>
+  </figure>
+
+  <h2 id="quickstart" class="subhead">Quickstart</h2>
+
+<pre class="code"><span class="comment"># initialize the local registry</span>
+<span class="prompt">$</span> node src/cli.mjs catalog sync
+
+<span class="comment"># search paints</span>
+<span class="prompt">$</span> node src/cli.mjs paint search black
+<span class="prompt">$</span> node src/cli.mjs paint search bone --json
+
+<span class="comment"># inspect one paint</span>
+<span class="prompt">$</span> node src/cli.mjs paint show "Abaddon Black" --json
+
+<span class="comment"># mark paints as owned or missing</span>
+<span class="prompt">$</span> node src/cli.mjs inventory own "Abaddon Black"
+<span class="prompt">$</span> node src/cli.mjs inventory unown "Abaddon Black"
+<span class="prompt">$</span> node src/cli.mjs inventory list
+
+<span class="comment"># semantic and color matching</span>
+<span class="prompt">$</span> node src/cli.mjs match describe bone
+<span class="prompt">$</span> node src/cli.mjs match color "#d2c29b"
+
+<span class="comment"># launch the forge ledger TUI</span>
+<span class="prompt">$</span> node src/cli.mjs tui</pre>
+
+  <div class="separator" id="mcp">═══════════════════════════ <b>CLAUDE DESKTOP MCP</b> ═══════════════════════════</div>
+
+  <p>
+    <code>warpaint-cli</code> ships a local MCP server so Claude Desktop can read and update your paint registry directly.
+    Drop this into your local MCP config:
+  </p>
+
+<pre class="code">{
+  "mcpServers": {
+    "warpaint": {
+      "command": "node",
+      "args": ["/absolute/path/to/warpaint-cli/src/mcp-server.mjs"]
+    }
+  }
+}</pre>
+
+  <p class="muted">After registering, the following tools become callable from Claude Desktop:</p>
+
+  <ul class="tools">
+    <li>paint_search</li>
+    <li>paint_show</li>
+    <li>inventory_list</li>
+    <li>inventory_mark_owned</li>
+    <li>inventory_mark_unowned</li>
+    <li>match_color</li>
+    <li>match_describe</li>
+  </ul>
+
+  <div class="separator">═══════════════════════════════ <b>PROJECT DIRECTION</b> ═══════════════════════════════</div>
+
+  <div class="roadmap">
+    <section class="implemented">
+      <h3>Implemented</h3>
+      <ul>
+        <li>local JSON registry</li>
+        <li>starter catalogs for Citadel and Army Painter</li>
+        <li>owned / missing inventory tracking</li>
+        <li>deterministic search and color matching</li>
+        <li>grimdark terminal presentation</li>
+        <li>local MCP server for Claude Desktop</li>
+      </ul>
+    </section>
+    <section class="planned">
+      <h3>Planned</h3>
+      <ul>
+        <li>parser skill for paint-set links</li>
+        <li>image-driven inventory fill from bottle photos</li>
+        <li>model-photo analysis recommending owned paints first</li>
+        <li>stronger cross-provider equivalents and matching hints</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>
+    <div>warpaint-cli — Forge Ledger :: <a href="https://github.com/arturskowronski/warpaint-cli">arturskowronski/warpaint-cli</a></div>
+    <span class="easter">» node src/cli.mjs tui «</span>
+  </footer>
+
+</main>
+
+</body>
+</html>
