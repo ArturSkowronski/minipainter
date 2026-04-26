@@ -24,6 +24,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/absolution-green",
+      "provider": "army_painter",
+      "name": "Absolution Green",
+      "normalized_name": "absolution green",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 11,
+        "g": 70,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/abyssal-blue",
       "provider": "army_painter",
       "name": "Abyssal Blue",
@@ -39,6 +58,63 @@
         "r": 26,
         "g": 40,
         "b": 70
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/aegis-aqua",
+      "provider": "army_painter",
+      "name": "Aegis Aqua",
+      "normalized_name": "aegis aqua",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 179,
+        "b": 212
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/afterglow",
+      "provider": "army_painter",
+      "name": "Afterglow",
+      "normalized_name": "afterglow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 198,
+        "g": 229,
+        "b": 128
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/agate-skin",
+      "provider": "army_painter",
+      "name": "Agate Skin",
+      "normalized_name": "agate skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 236,
+        "g": 212,
+        "b": 192
       },
       "owned": false
     },
@@ -62,6 +138,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/aged-hide",
+      "provider": "army_painter",
+      "name": "Aged Hide",
+      "normalized_name": "aged hide",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 220,
+        "g": 108,
+        "b": 78
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/airbrush-medium",
       "provider": "army_painter",
       "name": "Airbrush Medium",
@@ -77,6 +172,25 @@
         "r": 208,
         "g": 208,
         "b": 208
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/algae-green",
+      "provider": "army_painter",
+      "name": "Algae Green",
+      "normalized_name": "algae green",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 152,
+        "g": 174,
+        "b": 82
       },
       "owned": false
     },
@@ -119,6 +233,63 @@
       "owned": false
     },
     {
+      "id": "army_painter/alpha-blue",
+      "provider": "army_painter",
+      "name": "Alpha Blue",
+      "normalized_name": "alpha blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 102,
+        "g": 126,
+        "b": 190
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/amber-skin",
+      "provider": "army_painter",
+      "name": "Amber Skin",
+      "normalized_name": "amber skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 140,
+        "g": 112,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/amulet-aqua",
+      "provider": "army_painter",
+      "name": "Amulet Aqua",
+      "normalized_name": "amulet aqua",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 125,
+        "g": 208,
+        "b": 196
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/ancient-bronze",
       "provider": "army_painter",
       "name": "Ancient Bronze",
@@ -135,6 +306,44 @@
         "r": 122,
         "g": 90,
         "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ancient-honey",
+      "provider": "army_painter",
+      "name": "Ancient Honey",
+      "normalized_name": "ancient honey",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 244,
+        "g": 194,
+        "b": 2
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ancient-stone",
+      "provider": "army_painter",
+      "name": "Ancient Stone",
+      "normalized_name": "ancient stone",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 220,
+        "g": 213,
+        "b": 188
       },
       "owned": false
     },
@@ -158,6 +367,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/angelic-red",
+      "provider": "army_painter",
+      "name": "Angelic Red",
+      "normalized_name": "angelic red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 164,
+        "g": 26,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/anti-shine-matt-varnish",
       "provider": "army_painter",
       "name": "Anti-Shine Matt Varnish",
@@ -173,6 +401,44 @@
         "r": 214,
         "g": 214,
         "b": 214
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/aqua-alchemy",
+      "provider": "army_painter",
+      "name": "Aqua Alchemy",
+      "normalized_name": "aqua alchemy",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 56,
+        "g": 184,
+        "b": 168
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/aquamarine",
+      "provider": "army_painter",
+      "name": "Aquamarine",
+      "normalized_name": "aquamarine",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 109,
+        "g": 199,
+        "b": 193
       },
       "owned": false
     },
@@ -196,6 +462,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/archangel-red",
+      "provider": "army_painter",
+      "name": "Archangel Red",
+      "normalized_name": "archangel red",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 41,
+        "b": 21
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/arctic-blue",
       "provider": "army_painter",
       "name": "Arctic Blue",
@@ -211,6 +496,25 @@
         "r": 188,
         "g": 216,
         "b": 227
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/arctic-gem",
+      "provider": "army_painter",
+      "name": "Arctic Gem",
+      "normalized_name": "arctic gem",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 17,
+        "g": 149,
+        "b": 211
       },
       "owned": false
     },
@@ -310,6 +614,83 @@
       "owned": false
     },
     {
+      "id": "army_painter/augur-blue",
+      "provider": "army_painter",
+      "name": "Augur Blue",
+      "normalized_name": "augur blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 171,
+        "g": 191,
+        "b": 226
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/autumn-sage",
+      "provider": "army_painter",
+      "name": "Autumn Sage",
+      "normalized_name": "autumn sage",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 120,
+        "g": 139,
+        "b": 117
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/aztec-gold",
+      "provider": "army_painter",
+      "name": "Aztec Gold",
+      "normalized_name": "aztec gold",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "green"
+      ],
+      "rgb": {
+        "r": 213,
+        "g": 221,
+        "b": 70
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/azure-magic",
+      "provider": "army_painter",
+      "name": "Azure Magic",
+      "normalized_name": "azure magic",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 44,
+        "g": 90,
+        "b": 87
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/barbarian-brown",
       "provider": "army_painter",
       "name": "Barbarian Brown",
@@ -368,6 +749,63 @@
       "owned": false
     },
     {
+      "id": "army_painter/baron-blue",
+      "provider": "army_painter",
+      "name": "Baron Blue",
+      "normalized_name": "baron blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 125,
+        "g": 150,
+        "b": 205
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/barren-dune",
+      "provider": "army_painter",
+      "name": "Barren Dune",
+      "normalized_name": "barren dune",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 176,
+        "b": 112
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/barren-yellow",
+      "provider": "army_painter",
+      "name": "Barren Yellow",
+      "normalized_name": "barren yellow",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 159,
+        "g": 106,
+        "b": 31
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/basic-flesh-shade",
       "provider": "army_painter",
       "name": "Basic Flesh Shade",
@@ -406,6 +844,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/basilisk-red",
+      "provider": "army_painter",
+      "name": "Basilisk Red",
+      "normalized_name": "basilisk red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 112,
+        "g": 28,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/battlefield-grey",
       "provider": "army_painter",
       "name": "Battlefield Grey",
@@ -421,6 +878,101 @@
         "r": 122,
         "g": 119,
         "b": 112
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/battleship-grey",
+      "provider": "army_painter",
+      "name": "Battleship Grey",
+      "normalized_name": "battleship grey",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 186,
+        "g": 206,
+        "b": 215
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/beowulf-blue",
+      "provider": "army_painter",
+      "name": "Beowulf Blue",
+      "normalized_name": "beowulf blue",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 62,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/bleached-bone",
+      "provider": "army_painter",
+      "name": "Bleached Bone",
+      "normalized_name": "bleached bone",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 234,
+        "g": 226,
+        "b": 197
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/blinding-light",
+      "provider": "army_painter",
+      "name": "Blinding Light",
+      "normalized_name": "blinding light",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/blood-chalice",
+      "provider": "army_painter",
+      "name": "Blood Chalice",
+      "normalized_name": "blood chalice",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 188,
+        "g": 72,
+        "b": 72
       },
       "owned": false
     },
@@ -482,6 +1034,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/blue-flux",
+      "provider": "army_painter",
+      "name": "Blue Flux",
+      "normalized_name": "blue flux",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 188,
+        "g": 228,
+        "b": 248
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/blue-tone",
       "provider": "army_painter",
       "name": "Blue Tone",
@@ -501,6 +1072,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/bogey-green",
+      "provider": "army_painter",
+      "name": "Bogey Green",
+      "normalized_name": "bogey green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 149,
+        "g": 176,
+        "b": 103
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/bone-chilling",
       "provider": "army_painter",
       "name": "Bone Chilling",
@@ -516,6 +1106,63 @@
         "r": 200,
         "g": 192,
         "b": 162
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/bony-matter",
+      "provider": "army_painter",
+      "name": "Bony Matter",
+      "normalized_name": "bony matter",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 183,
+        "g": 149,
+        "b": 114
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/bony-spikes",
+      "provider": "army_painter",
+      "name": "Bony Spikes",
+      "normalized_name": "bony spikes",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 224,
+        "b": 198
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/bootstrap-brown",
+      "provider": "army_painter",
+      "name": "Bootstrap Brown",
+      "normalized_name": "bootstrap brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 69,
+        "b": 52
       },
       "owned": false
     },
@@ -558,6 +1205,83 @@
       "owned": false
     },
     {
+      "id": "army_painter/brazen-copper",
+      "provider": "army_painter",
+      "name": "Brazen Copper",
+      "normalized_name": "brazen copper",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "red"
+      ],
+      "rgb": {
+        "r": 182,
+        "g": 105,
+        "b": 91
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/brethil-blush",
+      "provider": "army_painter",
+      "name": "Brethil Blush",
+      "normalized_name": "brethil blush",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 218,
+        "g": 156,
+        "b": 92
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/brigade-grey",
+      "provider": "army_painter",
+      "name": "Brigade Grey",
+      "normalized_name": "brigade grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 208,
+        "g": 209,
+        "b": 211
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/brigandine-brown",
+      "provider": "army_painter",
+      "name": "Brigandine Brown",
+      "normalized_name": "brigandine brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 62,
+        "g": 46,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/bright-gold",
       "provider": "army_painter",
       "name": "Bright Gold",
@@ -578,6 +1302,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/bright-red",
+      "provider": "army_painter",
+      "name": "Bright Red",
+      "normalized_name": "bright red",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 236,
+        "g": 88,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/bright-sapphire",
       "provider": "army_painter",
       "name": "Bright Sapphire",
@@ -593,6 +1336,197 @@
         "r": 30,
         "g": 111,
         "b": 191
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/broadsword-silver",
+      "provider": "army_painter",
+      "name": "Broadsword Silver",
+      "normalized_name": "broadsword silver",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "grey"
+      ],
+      "rgb": {
+        "r": 156,
+        "g": 158,
+        "b": 158
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/broodmother-purple",
+      "provider": "army_painter",
+      "name": "Broodmother Purple",
+      "normalized_name": "broodmother purple",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 45,
+        "g": 36,
+        "b": 70
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/brownish-decay",
+      "provider": "army_painter",
+      "name": "Brownish Decay",
+      "normalized_name": "brownish decay",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 99,
+        "g": 85,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/buffed-hide",
+      "provider": "army_painter",
+      "name": "Buffed Hide",
+      "normalized_name": "buffed hide",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 192,
+        "g": 138,
+        "b": 96
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/bullwhack-brown",
+      "provider": "army_painter",
+      "name": "Bullwhack Brown",
+      "normalized_name": "bullwhack brown",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 166,
+        "g": 114,
+        "b": 76
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/burning-ore",
+      "provider": "army_painter",
+      "name": "Burning Ore",
+      "normalized_name": "burning ore",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 208,
+        "g": 72,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/burnished-red",
+      "provider": "army_painter",
+      "name": "Burnished Red",
+      "normalized_name": "burnished red",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 100,
+        "g": 58,
+        "b": 46
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/burnt-moss",
+      "provider": "army_painter",
+      "name": "Burnt Moss",
+      "normalized_name": "burnt moss",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 73,
+        "g": 92,
+        "b": 80
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/burnt-turf",
+      "provider": "army_painter",
+      "name": "Burnt Turf",
+      "normalized_name": "burnt turf",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 122,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/cadre-grey",
+      "provider": "army_painter",
+      "name": "Cadre Grey",
+      "normalized_name": "cadre grey",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 158,
+        "g": 170,
+        "b": 173
       },
       "owned": false
     },
@@ -617,6 +1551,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/camouflage-green",
+      "provider": "army_painter",
+      "name": "Camouflage Green",
+      "normalized_name": "camouflage green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 122,
+        "b": 85
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/candy-pink",
       "provider": "army_painter",
       "name": "Candy Pink",
@@ -632,6 +1585,82 @@
         "r": 242,
         "g": 168,
         "b": 196
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/canopy-green",
+      "provider": "army_painter",
+      "name": "Canopy Green",
+      "normalized_name": "canopy green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 177,
+        "g": 199,
+        "b": 75
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/caribbean-ocean",
+      "provider": "army_painter",
+      "name": "Caribbean Ocean",
+      "normalized_name": "caribbean ocean",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 172,
+        "b": 190
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/carmine-dragon",
+      "provider": "army_painter",
+      "name": "Carmine Dragon",
+      "normalized_name": "carmine dragon",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 45,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/carnelian-skin",
+      "provider": "army_painter",
+      "name": "Carnelian Skin",
+      "normalized_name": "carnelian skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 196,
+        "g": 144,
+        "b": 128
       },
       "owned": false
     },
@@ -732,6 +1761,102 @@
       "owned": false
     },
     {
+      "id": "army_painter/charming-chartreuse",
+      "provider": "army_painter",
+      "name": "Charming Chartreuse",
+      "normalized_name": "charming chartreuse",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 214,
+        "g": 220,
+        "b": 51
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/charred-bone",
+      "provider": "army_painter",
+      "name": "Charred Bone",
+      "normalized_name": "charred bone",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 165,
+        "g": 135,
+        "b": 98
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/chimera-red",
+      "provider": "army_painter",
+      "name": "Chimera Red",
+      "normalized_name": "chimera red",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 108,
+        "g": 34,
+        "b": 51
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/cloudburst-blue",
+      "provider": "army_painter",
+      "name": "Cloudburst Blue",
+      "normalized_name": "cloudburst blue",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 56,
+        "g": 65,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/cobalt-metal",
+      "provider": "army_painter",
+      "name": "Cobalt Metal",
+      "normalized_name": "cobalt metal",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "blue"
+      ],
+      "rgb": {
+        "r": 72,
+        "g": 96,
+        "b": 160
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/combat-fatigues",
       "provider": "army_painter",
       "name": "Combat Fatigues",
@@ -747,6 +1872,25 @@
         "r": 108,
         "g": 123,
         "b": 75
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/command-khaki",
+      "provider": "army_painter",
+      "name": "Command Khaki",
+      "normalized_name": "command khaki",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 120,
+        "b": 90
       },
       "owned": false
     },
@@ -770,6 +1914,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/company-grey",
+      "provider": "army_painter",
+      "name": "Company Grey",
+      "normalized_name": "company grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 187,
+        "g": 188,
+        "b": 193
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/conflagration-orange",
       "provider": "army_painter",
       "name": "Conflagration Orange",
@@ -785,6 +1948,25 @@
         "r": 224,
         "g": 122,
         "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/consul-blue",
+      "provider": "army_painter",
+      "name": "Consul Blue",
+      "normalized_name": "consul blue",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 87,
+        "g": 121,
+        "b": 172
       },
       "owned": false
     },
@@ -824,6 +2006,63 @@
         "r": 207,
         "g": 200,
         "b": 180
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/cosmic-dust",
+      "provider": "army_painter",
+      "name": "Cosmic Dust",
+      "normalized_name": "cosmic dust",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 248,
+        "g": 232,
+        "b": 127
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/coven-purple",
+      "provider": "army_painter",
+      "name": "Coven Purple",
+      "normalized_name": "coven purple",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 149,
+        "g": 106,
+        "b": 155
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/crow-hue",
+      "provider": "army_painter",
+      "name": "Crow Hue",
+      "normalized_name": "crow hue",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 86,
+        "b": 84
       },
       "owned": false
     },
@@ -886,6 +2125,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/cultist-purple",
+      "provider": "army_painter",
+      "name": "Cultist Purple",
+      "normalized_name": "cultist purple",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 88,
+        "g": 62,
+        "b": 112
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/cultist-robe",
       "provider": "army_painter",
       "name": "Cultist Robe",
@@ -924,6 +2182,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/cypress-brown",
+      "provider": "army_painter",
+      "name": "Cypress Brown",
+      "normalized_name": "cypress brown",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 102,
+        "g": 78,
+        "b": 66
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/daemonic-yellow",
       "provider": "army_painter",
       "name": "Daemonic Yellow",
@@ -939,6 +2216,25 @@
         "r": 242,
         "g": 200,
         "b": 64
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dark-blue-tone",
+      "provider": "army_painter",
+      "name": "Dark Blue Tone",
+      "normalized_name": "dark blue tone",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 16,
+        "g": 40,
+        "b": 80
       },
       "owned": false
     },
@@ -997,6 +2293,82 @@
         "r": 74,
         "g": 58,
         "b": 36
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dark-red-tone",
+      "provider": "army_painter",
+      "name": "Dark Red Tone",
+      "normalized_name": "dark red tone",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 96,
+        "g": 32,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dark-rust",
+      "provider": "army_painter",
+      "name": "Dark Rust",
+      "normalized_name": "dark rust",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 112,
+        "g": 64,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dark-skin-shade",
+      "provider": "army_painter",
+      "name": "Dark Skin Shade",
+      "normalized_name": "dark skin shade",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 80,
+        "g": 64,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dark-sky",
+      "provider": "army_painter",
+      "name": "Dark Sky",
+      "normalized_name": "dark sky",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 41,
+        "g": 55,
+        "b": 84
       },
       "owned": false
     },
@@ -1077,6 +2449,64 @@
       "owned": false
     },
     {
+      "id": "army_painter/data-system-glow",
+      "provider": "army_painter",
+      "name": "Data System Glow",
+      "normalized_name": "data system glow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 64,
+        "g": 240,
+        "b": 128
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/death-metal",
+      "provider": "army_painter",
+      "name": "Death Metal",
+      "normalized_name": "death metal",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "grey"
+      ],
+      "rgb": {
+        "r": 44,
+        "g": 44,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/deep-azure",
+      "provider": "army_painter",
+      "name": "Deep Azure",
+      "normalized_name": "deep azure",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 73,
+        "b": 84
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/deep-blue",
       "provider": "army_painter",
       "name": "Deep Blue",
@@ -1115,6 +2545,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/deep-grey",
+      "provider": "army_painter",
+      "name": "Deep Grey",
+      "normalized_name": "deep grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 77,
+        "g": 82,
+        "b": 101
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/deep-ocean-blue",
+      "provider": "army_painter",
+      "name": "Deep Ocean Blue",
+      "normalized_name": "deep ocean blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 28,
+        "g": 50,
+        "b": 68
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/deep-orange",
       "provider": "army_painter",
       "name": "Deep Orange",
@@ -1130,6 +2598,25 @@
         "r": 216,
         "g": 106,
         "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/demigod-flames",
+      "provider": "army_painter",
+      "name": "Demigod Flames",
+      "normalized_name": "demigod flames",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 192,
+        "g": 120,
+        "b": 24
       },
       "owned": false
     },
@@ -1229,6 +2716,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/desolate-brown",
+      "provider": "army_painter",
+      "name": "Desolate Brown",
+      "normalized_name": "desolate brown",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 119,
+        "g": 114,
+        "b": 55
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/diabolic-plum",
+      "provider": "army_painter",
+      "name": "Diabolic Plum",
+      "normalized_name": "diabolic plum",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 84,
+        "g": 48,
+        "b": 92
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/dirt-spatter",
       "provider": "army_painter",
       "name": "Dirt Spatter",
@@ -1263,6 +2788,101 @@
         "r": 138,
         "g": 90,
         "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/disgusting-slime",
+      "provider": "army_painter",
+      "name": "Disgusting Slime",
+      "normalized_name": "disgusting slime",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 204,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/diviner-light",
+      "provider": "army_painter",
+      "name": "Diviner Light",
+      "normalized_name": "diviner light",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 220,
+        "g": 152,
+        "b": 198
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/doomfire-drab",
+      "provider": "army_painter",
+      "name": "Doomfire Drab",
+      "normalized_name": "doomfire drab",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 108,
+        "g": 76,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dorado-skin",
+      "provider": "army_painter",
+      "name": "Dorado Skin",
+      "normalized_name": "dorado skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 156,
+        "g": 128,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/drab-green",
+      "provider": "army_painter",
+      "name": "Drab Green",
+      "normalized_name": "drab green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 98,
+        "g": 109,
+        "b": 36
       },
       "owned": false
     },
@@ -1324,6 +2944,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/dry-blood",
+      "provider": "army_painter",
+      "name": "Dry Blood",
+      "normalized_name": "dry blood",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 96,
+        "g": 16,
+        "b": 16
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/dry-rust",
       "provider": "army_painter",
       "name": "Dry Rust",
@@ -1339,6 +2978,25 @@
         "r": 138,
         "g": 74,
         "b": 34
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dryad-brown",
+      "provider": "army_painter",
+      "name": "Dryad Brown",
+      "normalized_name": "dryad brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 74,
+        "b": 44
       },
       "owned": false
     },
@@ -1359,6 +3017,25 @@
         "r": 90,
         "g": 106,
         "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/dusk-red",
+      "provider": "army_painter",
+      "name": "Dusk Red",
+      "normalized_name": "dusk red",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 111,
+        "g": 59,
+        "b": 59
       },
       "owned": false
     },
@@ -1402,6 +3079,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/elder-flower",
+      "provider": "army_painter",
+      "name": "Elder Flower",
+      "normalized_name": "elder flower",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 100,
+        "g": 72,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/electric-blue",
       "provider": "army_painter",
       "name": "Electric Blue",
@@ -1440,6 +3136,45 @@
       "owned": false
     },
     {
+      "id": "army_painter/elemental-bolt",
+      "provider": "army_painter",
+      "name": "Elemental Bolt",
+      "normalized_name": "elemental bolt",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 141,
+        "b": 119
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/elven-armour",
+      "provider": "army_painter",
+      "name": "Elven Armour",
+      "normalized_name": "elven armour",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "blue"
+      ],
+      "rgb": {
+        "r": 32,
+        "g": 50,
+        "b": 86
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/elven-flesh",
       "provider": "army_painter",
       "name": "Elven Flesh",
@@ -1455,6 +3190,121 @@
         "r": 231,
         "g": 194,
         "b": 163
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/emerald-forest",
+      "provider": "army_painter",
+      "name": "Emerald Forest",
+      "normalized_name": "emerald forest",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 66,
+        "b": 37
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/encarmine-red",
+      "provider": "army_painter",
+      "name": "Encarmine Red",
+      "normalized_name": "encarmine red",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 146,
+        "g": 6,
+        "b": 34
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/enchanted-pink",
+      "provider": "army_painter",
+      "name": "Enchanted Pink",
+      "normalized_name": "enchanted pink",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 204,
+        "g": 112,
+        "b": 170
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/enchanted-steel",
+      "provider": "army_painter",
+      "name": "Enchanted Steel",
+      "normalized_name": "enchanted steel",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "blue"
+      ],
+      "rgb": {
+        "r": 136,
+        "g": 156,
+        "b": 165
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/eternal-hunt",
+      "provider": "army_painter",
+      "name": "Eternal Hunt",
+      "normalized_name": "eternal hunt",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 158,
+        "b": 89
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/evergreen-fog",
+      "provider": "army_painter",
+      "name": "Evergreen Fog",
+      "normalized_name": "evergreen fog",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 75,
+        "g": 87,
+        "b": 75
       },
       "owned": false
     },
@@ -1479,6 +3329,82 @@
       "owned": false
     },
     {
+      "id": "army_painter/exile-green",
+      "provider": "army_painter",
+      "name": "Exile Green",
+      "normalized_name": "exile green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 78,
+        "g": 119,
+        "b": 107
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/fairy-dust",
+      "provider": "army_painter",
+      "name": "Fairy Dust",
+      "normalized_name": "fairy dust",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 135,
+        "g": 135,
+        "b": 135
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/fairy-pink",
+      "provider": "army_painter",
+      "name": "Fairy Pink",
+      "normalized_name": "fairy pink",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 160,
+        "g": 67,
+        "b": 112
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/familiar-pink",
+      "provider": "army_painter",
+      "name": "Familiar Pink",
+      "normalized_name": "familiar pink",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 223,
+        "g": 41,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/fanatic-pink",
       "provider": "army_painter",
       "name": "Fanatic Pink",
@@ -1494,6 +3420,158 @@
         "r": 224,
         "g": 74,
         "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/feral-green",
+      "provider": "army_painter",
+      "name": "Feral Green",
+      "normalized_name": "feral green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 97,
+        "g": 150,
+        "b": 101
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ferocious-green",
+      "provider": "army_painter",
+      "name": "Ferocious Green",
+      "normalized_name": "ferocious green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 126,
+        "g": 207,
+        "b": 153
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/fey-pink",
+      "provider": "army_painter",
+      "name": "Fey Pink",
+      "normalized_name": "fey pink",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 220,
+        "g": 148,
+        "b": 185
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/feywild-glow",
+      "provider": "army_painter",
+      "name": "Feywild Glow",
+      "normalized_name": "feywild glow",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 253,
+        "g": 216,
+        "b": 169
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/fiendish-yellow",
+      "provider": "army_painter",
+      "name": "Fiendish Yellow",
+      "normalized_name": "fiendish yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 152,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/figgy-pink",
+      "provider": "army_painter",
+      "name": "Figgy Pink",
+      "normalized_name": "figgy pink",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 140,
+        "g": 112,
+        "b": 128
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/fire-drake",
+      "provider": "army_painter",
+      "name": "Fire Drake",
+      "normalized_name": "fire drake",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 203,
+        "g": 107,
+        "b": 62
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/fire-giant-orange",
+      "provider": "army_painter",
+      "name": "Fire Giant Orange",
+      "normalized_name": "fire giant orange",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 122,
+        "b": 26
       },
       "owned": false
     },
@@ -1533,6 +3611,82 @@
         "r": 168,
         "g": 90,
         "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/flickering-flame",
+      "provider": "army_painter",
+      "name": "Flickering Flame",
+      "normalized_name": "flickering flame",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 120,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/forbidden-fruit",
+      "provider": "army_painter",
+      "name": "Forbidden Fruit",
+      "normalized_name": "forbidden fruit",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 116,
+        "g": 86,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/forest-faun",
+      "provider": "army_painter",
+      "name": "Forest Faun",
+      "normalized_name": "forest faun",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 142,
+        "g": 164,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/forest-sprite",
+      "provider": "army_painter",
+      "name": "Forest Sprite",
+      "normalized_name": "forest sprite",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 105,
+        "g": 163,
+        "b": 67
       },
       "owned": false
     },
@@ -1613,6 +3767,82 @@
       "owned": false
     },
     {
+      "id": "army_painter/gargoyle-grey",
+      "provider": "army_painter",
+      "name": "Gargoyle Grey",
+      "normalized_name": "gargoyle grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 162,
+        "b": 148
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/gauss-green",
+      "provider": "army_painter",
+      "name": "Gauss Green",
+      "normalized_name": "gauss green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 210,
+        "g": 227,
+        "b": 182
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/gemstone-red",
+      "provider": "army_painter",
+      "name": "Gemstone Red",
+      "normalized_name": "gemstone red",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 89,
+        "g": 20,
+        "b": 25
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ghillie-dew",
+      "provider": "army_painter",
+      "name": "Ghillie Dew",
+      "normalized_name": "ghillie dew",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 189,
+        "b": 13
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/ghost-tint",
       "provider": "army_painter",
       "name": "Ghost Tint",
@@ -1628,6 +3858,25 @@
         "r": 207,
         "g": 227,
         "b": 227
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ghoul-green",
+      "provider": "army_painter",
+      "name": "Ghoul Green",
+      "normalized_name": "ghoul green",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 59,
+        "g": 174,
+        "b": 101
       },
       "owned": false
     },
@@ -1708,6 +3957,45 @@
       "owned": false
     },
     {
+      "id": "army_painter/glittering-green",
+      "provider": "army_painter",
+      "name": "Glittering Green",
+      "normalized_name": "glittering green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 55,
+        "g": 87,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/glittering-loot",
+      "provider": "army_painter",
+      "name": "Glittering Loot",
+      "normalized_name": "glittering loot",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "red"
+      ],
+      "rgb": {
+        "r": 229,
+        "g": 177,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/gloss-varnish",
       "provider": "army_painter",
       "name": "Gloss Varnish",
@@ -1723,6 +4011,44 @@
         "r": 234,
         "g": 234,
         "b": 234
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/glowing-inferno",
+      "provider": "army_painter",
+      "name": "Glowing Inferno",
+      "normalized_name": "glowing inferno",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 248,
+        "g": 160,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/gnome-cheeks",
+      "provider": "army_painter",
+      "name": "Gnome Cheeks",
+      "normalized_name": "gnome cheeks",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 143,
+        "b": 127
       },
       "owned": false
     },
@@ -1784,6 +4110,64 @@
       "owned": false
     },
     {
+      "id": "army_painter/goddess-glow",
+      "provider": "army_painter",
+      "name": "Goddess Glow",
+      "normalized_name": "goddess glow",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 155,
+        "g": 86,
+        "b": 81
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/golden-armour",
+      "provider": "army_painter",
+      "name": "Golden Armour",
+      "normalized_name": "golden armour",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "red"
+      ],
+      "rgb": {
+        "r": 197,
+        "g": 124,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/gothic-blue",
+      "provider": "army_painter",
+      "name": "Gothic Blue",
+      "normalized_name": "gothic blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 45,
+        "g": 63,
+        "b": 119
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/gravelord-grey",
       "provider": "army_painter",
       "name": "Gravelord Grey",
@@ -1799,6 +4183,25 @@
         "r": 74,
         "g": 74,
         "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/great-hall-grey",
+      "provider": "army_painter",
+      "name": "Great Hall Grey",
+      "normalized_name": "great hall grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 188,
+        "g": 180,
+        "b": 167
       },
       "owned": false
     },
@@ -1861,6 +4264,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/gremlin-green",
+      "provider": "army_painter",
+      "name": "Gremlin Green",
+      "normalized_name": "gremlin green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 82,
+        "g": 103,
+        "b": 43
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/grey-castle",
+      "provider": "army_painter",
+      "name": "Grey Castle",
+      "normalized_name": "grey castle",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 145,
+        "g": 144,
+        "b": 135
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/grim-black",
       "provider": "army_painter",
       "name": "Grim Black",
@@ -1878,6 +4319,44 @@
         "r": 20,
         "g": 20,
         "b": 20
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/grotesque-green",
+      "provider": "army_painter",
+      "name": "Grotesque Green",
+      "normalized_name": "grotesque green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 152,
+        "g": 168,
+        "b": 122
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/guardian-green",
+      "provider": "army_painter",
+      "name": "Guardian Green",
+      "normalized_name": "guardian green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 97,
+        "b": 71
       },
       "owned": false
     },
@@ -1921,6 +4400,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/gunner-camo",
+      "provider": "army_painter",
+      "name": "Gunner Camo",
+      "normalized_name": "gunner camo",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 44,
+        "g": 81,
+        "b": 61
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/hammered-copper",
       "provider": "army_painter",
       "name": "Hammered Copper",
@@ -1937,6 +4435,44 @@
         "r": 165,
         "g": 106,
         "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/hardened-leather",
+      "provider": "army_painter",
+      "name": "Hardened Leather",
+      "normalized_name": "hardened leather",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 148,
+        "g": 82,
+        "b": 1
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/hazardous-smog",
+      "provider": "army_painter",
+      "name": "Hazardous Smog",
+      "normalized_name": "hazardous smog",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 47,
+        "g": 197,
+        "b": 173
       },
       "owned": false
     },
@@ -1979,6 +4515,63 @@
       "owned": false
     },
     {
+      "id": "army_painter/hexed-violet",
+      "provider": "army_painter",
+      "name": "Hexed Violet",
+      "normalized_name": "hexed violet",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 108,
+        "g": 80,
+        "b": 130
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/highlord-blue",
+      "provider": "army_painter",
+      "name": "Highlord Blue",
+      "normalized_name": "highlord blue",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 85,
+        "b": 135
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/hive-dweller",
+      "provider": "army_painter",
+      "name": "Hive Dweller",
+      "normalized_name": "hive dweller",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 81,
+        "g": 51,
+        "b": 114
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/hive-dweller-purple",
       "provider": "army_painter",
       "name": "Hive Dweller Purple",
@@ -1998,6 +4591,26 @@
       "owned": false
     },
     {
+      "id": "army_painter/hoard-bronze",
+      "provider": "army_painter",
+      "name": "Hoard Bronze",
+      "normalized_name": "hoard bronze",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "red"
+      ],
+      "rgb": {
+        "r": 234,
+        "g": 200,
+        "b": 110
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/hobbit-glow",
       "provider": "army_painter",
       "name": "Hobbit Glow",
@@ -2013,6 +4626,25 @@
         "r": 242,
         "g": 194,
         "b": 148
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/hobgoblin-hue",
+      "provider": "army_painter",
+      "name": "Hobgoblin Hue",
+      "normalized_name": "hobgoblin hue",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 250,
+        "g": 227,
+        "b": 205
       },
       "owned": false
     },
@@ -2038,6 +4670,26 @@
       "owned": false
     },
     {
+      "id": "army_painter/hoplite-gold",
+      "provider": "army_painter",
+      "name": "Hoplite Gold",
+      "normalized_name": "hoplite gold",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "red"
+      ],
+      "rgb": {
+        "r": 254,
+        "g": 201,
+        "b": 2
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/hot-orange",
       "provider": "army_painter",
       "name": "Hot Orange",
@@ -2057,6 +4709,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/hot-pink",
+      "provider": "army_painter",
+      "name": "Hot Pink",
+      "normalized_name": "hot pink",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 192,
+        "b": 216
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/howling-sand",
+      "provider": "army_painter",
+      "name": "Howling Sand",
+      "normalized_name": "howling sand",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 209,
+        "g": 213,
+        "b": 183
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/human-flesh",
       "provider": "army_painter",
       "name": "Human Flesh",
@@ -2072,6 +4762,25 @@
         "r": 217,
         "g": 166,
         "b": 132
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/husk-brown",
+      "provider": "army_painter",
+      "name": "Husk Brown",
+      "normalized_name": "husk brown",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 109,
+        "g": 53,
+        "b": 35
       },
       "owned": false
     },
@@ -2114,6 +4823,63 @@
       "owned": false
     },
     {
+      "id": "army_painter/ice-yellow",
+      "provider": "army_painter",
+      "name": "Ice Yellow",
+      "normalized_name": "ice yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 252,
+        "g": 245,
+        "b": 208
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/imp-yellow",
+      "provider": "army_painter",
+      "name": "Imp Yellow",
+      "normalized_name": "imp yellow",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 245,
+        "g": 201,
+        "b": 110
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/imperial-navy",
+      "provider": "army_painter",
+      "name": "Imperial Navy",
+      "normalized_name": "imperial navy",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 54,
+        "b": 99
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/imperial-purple",
       "provider": "army_painter",
       "name": "Imperial Purple",
@@ -2129,6 +4895,121 @@
         "r": 74,
         "g": 42,
         "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/impish-rouge",
+      "provider": "army_painter",
+      "name": "Impish Rouge",
+      "normalized_name": "impish rouge",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 120,
+        "b": 144
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/incursion-orange",
+      "provider": "army_painter",
+      "name": "Incursion Orange",
+      "normalized_name": "incursion orange",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 254,
+        "g": 132,
+        "b": 1
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/inner-light",
+      "provider": "army_painter",
+      "name": "Inner Light",
+      "normalized_name": "inner light",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 250,
+        "g": 192,
+        "b": 128
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ionic-blue",
+      "provider": "army_painter",
+      "name": "Ionic Blue",
+      "normalized_name": "ionic blue",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 161,
+        "b": 216
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/iron-wolf",
+      "provider": "army_painter",
+      "name": "Iron Wolf",
+      "normalized_name": "iron wolf",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "blue"
+      ],
+      "rgb": {
+        "r": 54,
+        "g": 86,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/jasper-skin",
+      "provider": "army_painter",
+      "name": "Jasper Skin",
+      "normalized_name": "jasper skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 220,
+        "g": 190,
+        "b": 172
       },
       "owned": false
     },
@@ -2168,6 +5049,25 @@
         "r": 168,
         "g": 90,
         "b": 66
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/kraken-lavender",
+      "provider": "army_painter",
+      "name": "Kraken Lavender",
+      "normalized_name": "kraken lavender",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 162,
+        "g": 144,
+        "b": 184
       },
       "owned": false
     },
@@ -2229,6 +5129,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/leafy-green",
+      "provider": "army_painter",
+      "name": "Leafy Green",
+      "normalized_name": "leafy green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 105,
+        "b": 54
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/leather-brown",
       "provider": "army_painter",
       "name": "Leather Brown",
@@ -2249,6 +5168,63 @@
       "owned": false
     },
     {
+      "id": "army_painter/legendary-red",
+      "provider": "army_painter",
+      "name": "Legendary Red",
+      "normalized_name": "legendary red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 196,
+        "g": 32,
+        "b": 36
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/lens-flare-glow",
+      "provider": "army_painter",
+      "name": "Lens Flare Glow",
+      "normalized_name": "lens flare glow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 80,
+        "b": 144
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/leopard-stone-skin",
+      "provider": "army_painter",
+      "name": "Leopard Stone Skin",
+      "normalized_name": "leopard stone skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 168,
+        "b": 138
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/leprous-paleness",
       "provider": "army_painter",
       "name": "Leprous Paleness",
@@ -2264,6 +5240,25 @@
         "r": 200,
         "g": 210,
         "b": 168
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/leviathan-light",
+      "provider": "army_painter",
+      "name": "Leviathan Light",
+      "normalized_name": "leviathan light",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 188,
+        "g": 218,
+        "b": 199
       },
       "owned": false
     },
@@ -2348,6 +5343,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/lizardfolk-cyan",
+      "provider": "army_painter",
+      "name": "Lizardfolk Cyan",
+      "normalized_name": "lizardfolk cyan",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 51,
+        "g": 157,
+        "b": 163
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/mage-robe-purple",
       "provider": "army_painter",
       "name": "Mage Robe Purple",
@@ -2363,6 +5377,25 @@
         "r": 74,
         "g": 42,
         "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/magecast-magenta",
+      "provider": "army_painter",
+      "name": "Magecast Magenta",
+      "normalized_name": "magecast magenta",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 124,
+        "g": 64,
+        "b": 112
       },
       "owned": false
     },
@@ -2386,6 +5419,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/maggot-skin",
+      "provider": "army_painter",
+      "name": "Maggot Skin",
+      "normalized_name": "maggot skin",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 204,
+        "g": 207,
+        "b": 96
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/magic-blue",
       "provider": "army_painter",
       "name": "Magic Blue",
@@ -2401,6 +5453,44 @@
         "r": 43,
         "g": 80,
         "b": 191
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/magnolia-brown",
+      "provider": "army_painter",
+      "name": "Magnolia Brown",
+      "normalized_name": "magnolia brown",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 51,
+        "g": 50,
+        "b": 44
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/maize-yellow",
+      "provider": "army_painter",
+      "name": "Maize Yellow",
+      "normalized_name": "maize yellow",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 220,
+        "b": 0
       },
       "owned": false
     },
@@ -2424,6 +5514,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/majestic-fortress",
+      "provider": "army_painter",
+      "name": "Majestic Fortress",
+      "normalized_name": "majestic fortress",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 119,
+        "b": 99
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/malevolent-fire",
       "provider": "army_painter",
       "name": "Malevolent Fire",
@@ -2439,6 +5548,44 @@
         "r": 242,
         "g": 164,
         "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/malignant-green",
+      "provider": "army_painter",
+      "name": "Malignant Green",
+      "normalized_name": "malignant green",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 202,
+        "g": 216,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/marine-mist",
+      "provider": "army_painter",
+      "name": "Marine Mist",
+      "normalized_name": "marine mist",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 192,
+        "g": 232,
+        "b": 228
       },
       "owned": false
     },
@@ -2542,6 +5689,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/medieval-forest",
+      "provider": "army_painter",
+      "name": "Medieval Forest",
+      "normalized_name": "medieval forest",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 91,
+        "g": 107,
+        "b": 90
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/medieval-grey",
       "provider": "army_painter",
       "name": "Medieval Grey",
@@ -2557,6 +5723,25 @@
         "r": 134,
         "g": 132,
         "b": 126
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/meteor-rock",
+      "provider": "army_painter",
+      "name": "Meteor Rock",
+      "normalized_name": "meteor rock",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 236,
+        "g": 187,
+        "b": 0
       },
       "owned": false
     },
@@ -2580,6 +5765,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/military-shade",
+      "provider": "army_painter",
+      "name": "Military Shade",
+      "normalized_name": "military shade",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 64,
+        "g": 92,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/military-shader",
       "provider": "army_painter",
       "name": "Military Shader",
@@ -2595,6 +5799,121 @@
         "r": 58,
         "g": 58,
         "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/militia-green",
+      "provider": "army_painter",
+      "name": "Militia Green",
+      "normalized_name": "militia green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 45,
+        "g": 57,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/mithril",
+      "provider": "army_painter",
+      "name": "Mithril",
+      "normalized_name": "mithril",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "white"
+      ],
+      "rgb": {
+        "r": 224,
+        "g": 224,
+        "b": 224
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/mocca-skin",
+      "provider": "army_painter",
+      "name": "Mocca Skin",
+      "normalized_name": "mocca skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 124,
+        "g": 96,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/moldy-wine",
+      "provider": "army_painter",
+      "name": "Moldy Wine",
+      "normalized_name": "moldy wine",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 92,
+        "g": 58,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/molten-lava",
+      "provider": "army_painter",
+      "name": "Molten Lava",
+      "normalized_name": "molten lava",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 186,
+        "g": 50,
+        "b": 16
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/molten-orange",
+      "provider": "army_painter",
+      "name": "Molten Orange",
+      "normalized_name": "molten orange",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 156,
+        "g": 57,
+        "b": 31
       },
       "owned": false
     },
@@ -2637,6 +5956,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/moody-mauve",
+      "provider": "army_painter",
+      "name": "Moody Mauve",
+      "normalized_name": "moody mauve",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 161,
+        "g": 77,
+        "b": 128
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/moon-dust",
+      "provider": "army_painter",
+      "name": "Moon Dust",
+      "normalized_name": "moon dust",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 245,
+        "g": 217,
+        "b": 89
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/moon-goddess",
       "provider": "army_painter",
       "name": "Moon Goddess",
@@ -2652,6 +6009,44 @@
         "r": 217,
         "g": 232,
         "b": 198
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/moonlake-coral",
+      "provider": "army_painter",
+      "name": "Moonlake Coral",
+      "normalized_name": "moonlake coral",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 52,
+        "b": 113
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/moonstone-skin",
+      "provider": "army_painter",
+      "name": "Moonstone Skin",
+      "normalized_name": "moonstone skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 228,
+        "g": 200,
+        "b": 176
       },
       "owned": false
     },
@@ -2751,6 +6146,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/mulled-berry",
+      "provider": "army_painter",
+      "name": "Mulled Berry",
+      "normalized_name": "mulled berry",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 78,
+        "g": 48,
+        "b": 60
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/mummified-grime",
+      "provider": "army_painter",
+      "name": "Mummified Grime",
+      "normalized_name": "mummified grime",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 99,
+        "g": 94,
+        "b": 65
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/mummy-robes",
       "provider": "army_painter",
       "name": "Mummy Robes",
@@ -2766,6 +6199,25 @@
         "r": 199,
         "g": 180,
         "b": 138
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/murder-scene",
+      "provider": "army_painter",
+      "name": "Murder Scene",
+      "normalized_name": "murder scene",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 110,
+        "g": 37,
+        "b": 55
       },
       "owned": false
     },
@@ -2827,6 +6279,83 @@
       "owned": false
     },
     {
+      "id": "army_painter/neon-yellow",
+      "provider": "army_painter",
+      "name": "Neon Yellow",
+      "normalized_name": "neon yellow",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 220,
+        "g": 212,
+        "b": 157
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/neptune-glow",
+      "provider": "army_painter",
+      "name": "Neptune Glow",
+      "normalized_name": "neptune glow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 163,
+        "g": 218,
+        "b": 213
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/night-scales",
+      "provider": "army_painter",
+      "name": "Night Scales",
+      "normalized_name": "night scales",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "black"
+      ],
+      "rgb": {
+        "r": 27,
+        "g": 32,
+        "b": 36
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/night-sky",
+      "provider": "army_painter",
+      "name": "Night Sky",
+      "normalized_name": "night sky",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 34,
+        "g": 31,
+        "b": 31
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/nightshade-purple",
       "provider": "army_painter",
       "name": "Nightshade Purple",
@@ -2842,6 +6371,63 @@
         "r": 42,
         "g": 26,
         "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/noble-skin",
+      "provider": "army_painter",
+      "name": "Noble Skin",
+      "normalized_name": "noble skin",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 75,
+        "g": 71,
+        "b": 54
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/nomad-flesh",
+      "provider": "army_painter",
+      "name": "Nomad Flesh",
+      "normalized_name": "nomad flesh",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 209,
+        "g": 114,
+        "b": 85
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/nuclear-sunrise",
+      "provider": "army_painter",
+      "name": "Nuclear Sunrise",
+      "normalized_name": "nuclear sunrise",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 239,
+        "g": 111,
+        "b": 26
       },
       "owned": false
     },
@@ -2943,6 +6529,63 @@
       "owned": false
     },
     {
+      "id": "army_painter/obsidian-skin",
+      "provider": "army_painter",
+      "name": "Obsidian Skin",
+      "normalized_name": "obsidian skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 92,
+        "g": 64,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/occultist-cloak",
+      "provider": "army_painter",
+      "name": "Occultist Cloak",
+      "normalized_name": "occultist cloak",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 45,
+        "g": 47,
+        "b": 59
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ocean-depths",
+      "provider": "army_painter",
+      "name": "Ocean Depths",
+      "normalized_name": "ocean depths",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 85,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/ocher-yellow",
       "provider": "army_painter",
       "name": "Ocher Yellow",
@@ -2958,6 +6601,44 @@
         "r": 197,
         "g": 154,
         "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ochre-clay",
+      "provider": "army_painter",
+      "name": "Ochre Clay",
+      "normalized_name": "ochre clay",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 179,
+        "g": 164,
+        "b": 10
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/oil-stains",
+      "provider": "army_painter",
+      "name": "Oil Stains",
+      "normalized_name": "oil stains",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 32,
+        "g": 32,
+        "b": 32
       },
       "owned": false
     },
@@ -2981,6 +6662,63 @@
       "owned": false
     },
     {
+      "id": "army_painter/olive-drab",
+      "provider": "army_painter",
+      "name": "Olive Drab",
+      "normalized_name": "olive drab",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 138,
+        "b": 96
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/omega-blue",
+      "provider": "army_painter",
+      "name": "Omega Blue",
+      "normalized_name": "omega blue",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 11,
+        "g": 66,
+        "b": 118
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/onyx-skin",
+      "provider": "army_painter",
+      "name": "Onyx Skin",
+      "normalized_name": "onyx skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 108,
+        "g": 80,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/oozing-purple",
       "provider": "army_painter",
       "name": "Oozing Purple",
@@ -2996,6 +6734,82 @@
         "r": 90,
         "g": 42,
         "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/oozing-vomit",
+      "provider": "army_painter",
+      "name": "Oozing Vomit",
+      "normalized_name": "oozing vomit",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 160,
+        "g": 160,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/opal-skin",
+      "provider": "army_painter",
+      "name": "Opal Skin",
+      "normalized_name": "opal skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 244,
+        "g": 220,
+        "b": 208
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/orange-magma",
+      "provider": "army_painter",
+      "name": "Orange Magma",
+      "normalized_name": "orange magma",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 164,
+        "b": 80
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/orange-tone",
+      "provider": "army_painter",
+      "name": "Orange Tone",
+      "normalized_name": "orange tone",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 140,
+        "g": 64,
+        "b": 32
       },
       "owned": false
     },
@@ -3098,6 +6912,139 @@
       "owned": false
     },
     {
+      "id": "army_painter/paratrooper-tan",
+      "provider": "army_painter",
+      "name": "Paratrooper Tan",
+      "normalized_name": "paratrooper tan",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 98,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/pastel-indigo",
+      "provider": "army_painter",
+      "name": "Pastel Indigo",
+      "normalized_name": "pastel indigo",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 159,
+        "g": 192,
+        "b": 228
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/pastel-lavender",
+      "provider": "army_painter",
+      "name": "Pastel Lavender",
+      "normalized_name": "pastel lavender",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 217,
+        "g": 195,
+        "b": 222
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/pastel-salmon",
+      "provider": "army_painter",
+      "name": "Pastel Salmon",
+      "normalized_name": "pastel salmon",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 250,
+        "g": 200,
+        "b": 154
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/pastel-seafoam",
+      "provider": "army_painter",
+      "name": "Pastel Seafoam",
+      "normalized_name": "pastel seafoam",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 223,
+        "b": 209
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/pastel-yellow",
+      "provider": "army_painter",
+      "name": "Pastel Yellow",
+      "normalized_name": "pastel yellow",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 234,
+        "b": 123
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/patagon-pine",
+      "provider": "army_painter",
+      "name": "Patagon Pine",
+      "normalized_name": "patagon pine",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 106,
+        "g": 125,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/peachy-flesh",
       "provider": "army_painter",
       "name": "Peachy Flesh",
@@ -3117,6 +7064,26 @@
       "owned": false
     },
     {
+      "id": "army_painter/pearl-skin",
+      "provider": "army_painter",
+      "name": "Pearl Skin",
+      "normalized_name": "pearl skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "skin",
+        "pink"
+      ],
+      "rgb": {
+        "r": 248,
+        "g": 230,
+        "b": 220
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/pegasus-yellow",
       "provider": "army_painter",
       "name": "Pegasus Yellow",
@@ -3132,6 +7099,101 @@
         "r": 242,
         "g": 216,
         "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/periwinkle-purple",
+      "provider": "army_painter",
+      "name": "Periwinkle Purple",
+      "normalized_name": "periwinkle purple",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 86,
+        "g": 83,
+        "b": 158
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/pestilent-flesh",
+      "provider": "army_painter",
+      "name": "Pestilent Flesh",
+      "normalized_name": "pestilent flesh",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 131,
+        "g": 131,
+        "b": 63
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/phalanx-blue",
+      "provider": "army_painter",
+      "name": "Phalanx Blue",
+      "normalized_name": "phalanx blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 4,
+        "g": 137,
+        "b": 174
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/phantasmal-blue",
+      "provider": "army_painter",
+      "name": "Phantasmal Blue",
+      "normalized_name": "phantasmal blue",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 189,
+        "b": 197
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/pharaoh-guard",
+      "provider": "army_painter",
+      "name": "Pharaoh Guard",
+      "normalized_name": "pharaoh guard",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 133,
+        "b": 119
       },
       "owned": false
     },
@@ -3174,6 +7236,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/pink-potion",
+      "provider": "army_painter",
+      "name": "Pink Potion",
+      "normalized_name": "pink potion",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 184,
+        "b": 204
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/pixie-pink",
       "provider": "army_painter",
       "name": "Pixie Pink",
@@ -3189,6 +7270,25 @@
         "r": 242,
         "g": 194,
         "b": 210
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/plasma-coil-glow",
+      "provider": "army_painter",
+      "name": "Plasma Coil Glow",
+      "normalized_name": "plasma coil glow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 64,
+        "g": 192,
+        "b": 240
       },
       "owned": false
     },
@@ -3252,6 +7352,120 @@
       "owned": false
     },
     {
+      "id": "army_painter/poppy-red",
+      "provider": "army_painter",
+      "name": "Poppy Red",
+      "normalized_name": "poppy red",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 207,
+        "g": 67,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/potion-green",
+      "provider": "army_painter",
+      "name": "Potion Green",
+      "normalized_name": "potion green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 97,
+        "g": 155,
+        "b": 130
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/power-node-glow",
+      "provider": "army_painter",
+      "name": "Power Node Glow",
+      "normalized_name": "power node glow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 128,
+        "g": 80,
+        "b": 240
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/prairie-ochre",
+      "provider": "army_painter",
+      "name": "Prairie Ochre",
+      "normalized_name": "prairie ochre",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 141,
+        "g": 129,
+        "b": 93
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/princess-pink",
+      "provider": "army_painter",
+      "name": "Princess Pink",
+      "normalized_name": "princess pink",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 234,
+        "g": 162,
+        "b": 183
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/psychic-shock",
+      "provider": "army_painter",
+      "name": "Psychic Shock",
+      "normalized_name": "psychic shock",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 71,
+        "g": 177,
+        "b": 160
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/pure-blue",
       "provider": "army_painter",
       "name": "Pure Blue",
@@ -3309,6 +7523,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/purple-alchemy",
+      "provider": "army_painter",
+      "name": "Purple Alchemy",
+      "normalized_name": "purple alchemy",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 174,
+        "g": 58,
+        "b": 108
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/purple-swarm",
+      "provider": "army_painter",
+      "name": "Purple Swarm",
+      "normalized_name": "purple swarm",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 98,
+        "g": 48,
+        "b": 137
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/purple-tentacle",
       "provider": "army_painter",
       "name": "Purple Tentacle",
@@ -3347,6 +7599,120 @@
       "owned": false
     },
     {
+      "id": "army_painter/quartz-skin",
+      "provider": "army_painter",
+      "name": "Quartz Skin",
+      "normalized_name": "quartz skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 172,
+        "g": 144,
+        "b": 144
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/radiation-glow",
+      "provider": "army_painter",
+      "name": "Radiation Glow",
+      "normalized_name": "radiation glow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 128,
+        "g": 240,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/raging-rose",
+      "provider": "army_painter",
+      "name": "Raging Rose",
+      "normalized_name": "raging rose",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 220,
+        "g": 106,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/raging-rouge",
+      "provider": "army_painter",
+      "name": "Raging Rouge",
+      "normalized_name": "raging rouge",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 136,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/raging-sea",
+      "provider": "army_painter",
+      "name": "Raging Sea",
+      "normalized_name": "raging sea",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 153,
+        "b": 170
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/rainforest",
+      "provider": "army_painter",
+      "name": "Rainforest",
+      "normalized_name": "rainforest",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 134,
+        "b": 65
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/ratskin-flesh",
       "provider": "army_painter",
       "name": "Ratskin Flesh",
@@ -3363,6 +7729,83 @@
         "r": 138,
         "g": 90,
         "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/raven-black",
+      "provider": "army_painter",
+      "name": "Raven Black",
+      "normalized_name": "raven black",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 45,
+        "g": 56,
+        "b": 59
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/rawhide-brown",
+      "provider": "army_painter",
+      "name": "Rawhide Brown",
+      "normalized_name": "rawhide brown",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 99,
+        "g": 65,
+        "b": 41
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/rebel-red",
+      "provider": "army_painter",
+      "name": "Rebel Red",
+      "normalized_name": "rebel red",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 149,
+        "g": 20,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/red-copper",
+      "provider": "army_painter",
+      "name": "Red Copper",
+      "normalized_name": "red copper",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "red"
+      ],
+      "rgb": {
+        "r": 160,
+        "g": 88,
+        "b": 72
       },
       "owned": false
     },
@@ -3424,6 +7867,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/regiment-grey",
+      "provider": "army_painter",
+      "name": "Regiment Grey",
+      "normalized_name": "regiment grey",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 75,
+        "g": 85,
+        "b": 89
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/resplendent-red",
+      "provider": "army_painter",
+      "name": "Resplendent Red",
+      "normalized_name": "resplendent red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 140,
+        "g": 18,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/righteous-bronze",
       "provider": "army_painter",
       "name": "Righteous Bronze",
@@ -3439,6 +7920,25 @@
         "r": 138,
         "g": 106,
         "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/rigor-mortis",
+      "provider": "army_painter",
+      "name": "Rigor Mortis",
+      "normalized_name": "rigor mortis",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 173,
+        "g": 177,
+        "b": 111
       },
       "owned": false
     },
@@ -3502,6 +8002,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/royal-blue",
+      "provider": "army_painter",
+      "name": "Royal Blue",
+      "normalized_name": "royal blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 98,
+        "b": 176
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/royal-crest",
       "provider": "army_painter",
       "name": "Royal Crest",
@@ -3517,6 +8036,120 @@
         "r": 232,
         "g": 216,
         "b": 154
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/royal-purple",
+      "provider": "army_painter",
+      "name": "Royal Purple",
+      "normalized_name": "royal purple",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 60,
+        "g": 8,
+        "b": 54
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/royal-robes",
+      "provider": "army_painter",
+      "name": "Royal Robes",
+      "normalized_name": "royal robes",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 56,
+        "g": 104,
+        "b": 174
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ruby-skin",
+      "provider": "army_painter",
+      "name": "Ruby Skin",
+      "normalized_name": "ruby skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 228,
+        "g": 192,
+        "b": 176
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ruddy-fur",
+      "provider": "army_painter",
+      "name": "Ruddy Fur",
+      "normalized_name": "ruddy fur",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 161,
+        "g": 73,
+        "b": 29
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ruddy-umber",
+      "provider": "army_painter",
+      "name": "Ruddy Umber",
+      "normalized_name": "ruddy umber",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 170,
+        "g": 112,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/ruinous-spell",
+      "provider": "army_painter",
+      "name": "Ruinous Spell",
+      "normalized_name": "ruinous spell",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 93,
+        "b": 81
       },
       "owned": false
     },
@@ -3541,6 +8174,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/runic-cobalt",
+      "provider": "army_painter",
+      "name": "Runic Cobalt",
+      "normalized_name": "runic cobalt",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 80,
+        "g": 121,
+        "b": 163
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/runic-grey",
       "provider": "army_painter",
       "name": "Runic Grey",
@@ -3556,6 +8208,82 @@
         "r": 106,
         "g": 106,
         "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/rust-tone",
+      "provider": "army_painter",
+      "name": "Rust Tone",
+      "normalized_name": "rust tone",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 124,
+        "g": 72,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/sacred-scarlet",
+      "provider": "army_painter",
+      "name": "Sacred Scarlet",
+      "normalized_name": "sacred scarlet",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 212,
+        "g": 64,
+        "b": 52
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/safety-orange",
+      "provider": "army_painter",
+      "name": "Safety Orange",
+      "normalized_name": "safety orange",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 243,
+        "g": 219,
+        "b": 185
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/sand-golem",
+      "provider": "army_painter",
+      "name": "Sand Golem",
+      "normalized_name": "sand golem",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 206,
+        "g": 151,
+        "b": 0
       },
       "owned": false
     },
@@ -3579,6 +8307,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/sapphire-gem",
+      "provider": "army_painter",
+      "name": "Sapphire Gem",
+      "normalized_name": "sapphire gem",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 78,
+        "b": 154
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/satchel-brown",
+      "provider": "army_painter",
+      "name": "Satchel Brown",
+      "normalized_name": "satchel brown",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 92,
+        "g": 55,
+        "b": 41
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/satin-varnish",
       "provider": "army_painter",
       "name": "Satin Varnish",
@@ -3598,6 +8364,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/savage-green",
+      "provider": "army_painter",
+      "name": "Savage Green",
+      "normalized_name": "savage green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 93,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/savage-orange",
       "provider": "army_painter",
       "name": "Savage Orange",
@@ -3613,6 +8398,25 @@
         "r": 224,
         "g": 122,
         "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/scarab-green",
+      "provider": "army_painter",
+      "name": "Scarab Green",
+      "normalized_name": "scarab green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 75,
+        "b": 67
       },
       "owned": false
     },
@@ -3671,6 +8475,63 @@
         "r": 53,
         "g": 106,
         "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/shamrock-green",
+      "provider": "army_painter",
+      "name": "Shamrock Green",
+      "normalized_name": "shamrock green",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 174,
+        "b": 35
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/shark-white",
+      "provider": "army_painter",
+      "name": "Shark White",
+      "normalized_name": "shark white",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 159,
+        "g": 171,
+        "b": 167
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/shieldwall-blue",
+      "provider": "army_painter",
+      "name": "Shieldwall Blue",
+      "normalized_name": "shieldwall blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 7,
+        "g": 161,
+        "b": 200
       },
       "owned": false
     },
@@ -3926,6 +8787,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/space-dust",
+      "provider": "army_painter",
+      "name": "Space Dust",
+      "normalized_name": "space dust",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 250,
+        "g": 234,
+        "b": 144
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/space-wolf-grey",
       "provider": "army_painter",
       "name": "Space Wolf Grey",
@@ -4003,6 +8883,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/spellbound-fuchsia",
+      "provider": "army_painter",
+      "name": "Spellbound Fuchsia",
+      "normalized_name": "spellbound fuchsia",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 160,
+        "g": 72,
+        "b": 128
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/starship-blue",
       "provider": "army_painter",
       "name": "Starship Blue",
@@ -4056,6 +8955,63 @@
         "r": 138,
         "g": 138,
         "b": 130
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/storm-wolf",
+      "provider": "army_painter",
+      "name": "Storm Wolf",
+      "normalized_name": "storm wolf",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 164,
+        "g": 188,
+        "b": 225
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/stratos-blue",
+      "provider": "army_painter",
+      "name": "Stratos Blue",
+      "normalized_name": "stratos blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 54,
+        "g": 86,
+        "b": 121
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/strong-skin-shade",
+      "provider": "army_painter",
+      "name": "Strong Skin Shade",
+      "normalized_name": "strong skin shade",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 96,
+        "g": 72,
+        "b": 64
       },
       "owned": false
     },
@@ -4119,6 +9075,64 @@
       "owned": false
     },
     {
+      "id": "army_painter/talisman-purple",
+      "provider": "army_painter",
+      "name": "Talisman Purple",
+      "normalized_name": "talisman purple",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 230,
+        "g": 148,
+        "b": 172
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/talisman-teal",
+      "provider": "army_painter",
+      "name": "Talisman Teal",
+      "normalized_name": "talisman teal",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 159,
+        "b": 140
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/talos-bronze",
+      "provider": "army_painter",
+      "name": "Talos Bronze",
+      "normalized_name": "talos bronze",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "red"
+      ],
+      "rgb": {
+        "r": 221,
+        "g": 122,
+        "b": 85
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/tanned-flesh",
       "provider": "army_painter",
       "name": "Tanned Flesh",
@@ -4134,6 +9148,44 @@
         "r": 183,
         "g": 114,
         "b": 82
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/temple-gate-teal",
+      "provider": "army_painter",
+      "name": "Temple Gate Teal",
+      "normalized_name": "temple gate teal",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 107,
+        "b": 96
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/terrestrial-titan",
+      "provider": "army_painter",
+      "name": "Terrestrial Titan",
+      "normalized_name": "terrestrial titan",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 60,
+        "g": 48,
+        "b": 72
       },
       "owned": false
     },
@@ -4176,6 +9228,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/thunder-storm",
+      "provider": "army_painter",
+      "name": "Thunder Storm",
+      "normalized_name": "thunder storm",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 28,
+        "b": 45
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/thunderbird-blue",
+      "provider": "army_painter",
+      "name": "Thunderbird Blue",
+      "normalized_name": "thunderbird blue",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 97,
+        "g": 188,
+        "b": 157
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/thunderous-blue",
       "provider": "army_painter",
       "name": "Thunderous Blue",
@@ -4191,6 +9281,120 @@
         "r": 58,
         "g": 85,
         "b": 110
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/tidal-blue",
+      "provider": "army_painter",
+      "name": "Tidal Blue",
+      "normalized_name": "tidal blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 108,
+        "b": 148
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/tidal-wave",
+      "provider": "army_painter",
+      "name": "Tidal Wave",
+      "normalized_name": "tidal wave",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 122,
+        "b": 190
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/tigers-eye-skin",
+      "provider": "army_painter",
+      "name": "Tiger's Eye Skin",
+      "normalized_name": "tiger s eye skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 204,
+        "g": 170,
+        "b": 160
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/tomb-king-tan",
+      "provider": "army_painter",
+      "name": "Tomb King Tan",
+      "normalized_name": "tomb king tan",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 204,
+        "g": 186,
+        "b": 146
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/topaz-skin",
+      "provider": "army_painter",
+      "name": "Topaz Skin",
+      "normalized_name": "topaz skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 212,
+        "g": 184,
+        "b": 160
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/tourmaline-skin",
+      "provider": "army_painter",
+      "name": "Tourmaline Skin",
+      "normalized_name": "tourmaline skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 208,
+        "b": 192
       },
       "owned": false
     },
@@ -4233,6 +9437,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/traitor-red",
+      "provider": "army_painter",
+      "name": "Traitor Red",
+      "normalized_name": "traitor red",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 63,
+        "g": 40,
+        "b": 36
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/tree-ancient",
+      "provider": "army_painter",
+      "name": "Tree Ancient",
+      "normalized_name": "tree ancient",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 58,
+        "b": 34
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/triumphant-blue",
       "provider": "army_painter",
       "name": "Triumphant Blue",
@@ -4248,6 +9490,25 @@
         "r": 42,
         "g": 63,
         "b": 122
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/triumphant-navy",
+      "provider": "army_painter",
+      "name": "Triumphant Navy",
+      "normalized_name": "triumphant navy",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 24,
+        "g": 44,
+        "b": 85
       },
       "owned": false
     },
@@ -4286,6 +9547,65 @@
         "r": 154,
         "g": 163,
         "b": 154
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/true-blood",
+      "provider": "army_painter",
+      "name": "True Blood",
+      "normalized_name": "true blood",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 144,
+        "g": 16,
+        "b": 20
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/true-brass",
+      "provider": "army_painter",
+      "name": "True Brass",
+      "normalized_name": "true brass",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "red"
+      ],
+      "rgb": {
+        "r": 160,
+        "g": 128,
+        "b": 80
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/true-copper",
+      "provider": "army_painter",
+      "name": "True Copper",
+      "normalized_name": "true copper",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "red"
+      ],
+      "rgb": {
+        "r": 96,
+        "g": 68,
+        "b": 46
       },
       "owned": false
     },
@@ -4348,6 +9668,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/turquoise-siren",
+      "provider": "army_painter",
+      "name": "Turquoise Siren",
+      "normalized_name": "turquoise siren",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 161,
+        "b": 154
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/turquoise-tone",
       "provider": "army_painter",
       "name": "Turquoise Tone",
@@ -4363,6 +9702,44 @@
         "r": 26,
         "g": 74,
         "b": 90
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/twilight-sky",
+      "provider": "army_painter",
+      "name": "Twilight Sky",
+      "normalized_name": "twilight sky",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 80,
+        "b": 113
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/tyrian-navy",
+      "provider": "army_painter",
+      "name": "Tyrian Navy",
+      "normalized_name": "tyrian navy",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 35,
+        "g": 63,
+        "b": 77
       },
       "owned": false
     },
@@ -4405,6 +9782,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/undergrowth-green",
+      "provider": "army_painter",
+      "name": "Undergrowth Green",
+      "normalized_name": "undergrowth green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 80,
+        "g": 141,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/unforgiven-green",
+      "provider": "army_painter",
+      "name": "Unforgiven Green",
+      "normalized_name": "unforgiven green",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 39,
+        "g": 45,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/uniform-brown",
       "provider": "army_painter",
       "name": "Uniform Brown",
@@ -4439,6 +9854,25 @@
         "r": 110,
         "g": 111,
         "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/urban-buff",
+      "provider": "army_painter",
+      "name": "Urban Buff",
+      "normalized_name": "urban buff",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 158,
+        "g": 140,
+        "b": 117
       },
       "owned": false
     },
@@ -4502,6 +9936,101 @@
       "owned": false
     },
     {
+      "id": "army_painter/violent-vermillion",
+      "provider": "army_painter",
+      "name": "Violent Vermillion",
+      "normalized_name": "violent vermillion",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 96,
+        "b": 80
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/violet-coven",
+      "provider": "army_painter",
+      "name": "Violet Coven",
+      "normalized_name": "violet coven",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 124,
+        "g": 100,
+        "b": 152
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/violet-volt",
+      "provider": "army_painter",
+      "name": "Violet Volt",
+      "normalized_name": "violet volt",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 203,
+        "g": 178,
+        "b": 210
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/viper-brown",
+      "provider": "army_painter",
+      "name": "Viper Brown",
+      "normalized_name": "viper brown",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 186,
+        "g": 110,
+        "b": 86
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/vivid-volt",
+      "provider": "army_painter",
+      "name": "Vivid Volt",
+      "normalized_name": "vivid volt",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 163,
+        "g": 210,
+        "b": 74
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/war-horse-brown",
       "provider": "army_painter",
       "name": "War Horse Brown",
@@ -4521,6 +10050,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/warlock-magenta",
+      "provider": "army_painter",
+      "name": "Warlock Magenta",
+      "normalized_name": "warlock magenta",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 90,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/warlock-purple",
+      "provider": "army_painter",
+      "name": "Warlock Purple",
+      "normalized_name": "warlock purple",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 175,
+        "g": 60,
+        "b": 109
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/warlord-purple",
       "provider": "army_painter",
       "name": "Warlord Purple",
@@ -4536,6 +10103,63 @@
         "r": 74,
         "g": 42,
         "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/warped-yellow",
+      "provider": "army_painter",
+      "name": "Warped Yellow",
+      "normalized_name": "warped yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 248,
+        "g": 224,
+        "b": 64
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/warrior-skin",
+      "provider": "army_painter",
+      "name": "Warrior Skin",
+      "normalized_name": "warrior skin",
+      "aliases": [],
+      "usage_roles": [
+        "speedpaint"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 165,
+        "g": 114,
+        "b": 81
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/wasteland-clay",
+      "provider": "army_painter",
+      "name": "Wasteland Clay",
+      "normalized_name": "wasteland clay",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 144,
+        "b": 88
       },
       "owned": false
     },
@@ -4560,6 +10184,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/weird-elixir",
+      "provider": "army_painter",
+      "name": "Weird Elixir",
+      "normalized_name": "weird elixir",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 224,
+        "g": 152,
+        "b": 176
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/werewolf-fur",
       "provider": "army_painter",
       "name": "Werewolf Fur",
@@ -4575,6 +10218,82 @@
         "r": 106,
         "g": 90,
         "b": 74
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/wicked-pink",
+      "provider": "army_painter",
+      "name": "Wicked Pink",
+      "normalized_name": "wicked pink",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 204,
+        "g": 88,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/wild-green",
+      "provider": "army_painter",
+      "name": "Wild Green",
+      "normalized_name": "wild green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 64,
+        "g": 180,
+        "b": 113
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/wildling-flesh",
+      "provider": "army_painter",
+      "name": "Wildling Flesh",
+      "normalized_name": "wildling flesh",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 166,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/wilted-rose",
+      "provider": "army_painter",
+      "name": "Wilted Rose",
+      "normalized_name": "wilted rose",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 160,
+        "g": 136,
+        "b": 148
       },
       "owned": false
     },
@@ -4598,6 +10317,44 @@
       "owned": false
     },
     {
+      "id": "army_painter/witchbane-plum",
+      "provider": "army_painter",
+      "name": "Witchbane Plum",
+      "normalized_name": "witchbane plum",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 126,
+        "g": 25,
+        "b": 78
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/wizards-orb",
+      "provider": "army_painter",
+      "name": "Wizards Orb",
+      "normalized_name": "wizards orb",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 122,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/wolf-grey",
       "provider": "army_painter",
       "name": "Wolf Grey",
@@ -4613,6 +10370,101 @@
         "r": 143,
         "g": 145,
         "b": 149
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/woodland-camo",
+      "provider": "army_painter",
+      "name": "Woodland Camo",
+      "normalized_name": "woodland camo",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 88,
+        "b": 57
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/worn-stone",
+      "provider": "army_painter",
+      "name": "Worn Stone",
+      "normalized_name": "worn stone",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 195,
+        "g": 191,
+        "b": 176
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/wyrmling-red",
+      "provider": "army_painter",
+      "name": "Wyrmling Red",
+      "normalized_name": "wyrmling red",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 215,
+        "g": 63,
+        "b": 80
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/wyvern-fury",
+      "provider": "army_painter",
+      "name": "Wyvern Fury",
+      "normalized_name": "wyvern fury",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 30,
+        "b": 30
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/yellow-dune",
+      "provider": "army_painter",
+      "name": "Yellow Dune",
+      "normalized_name": "yellow dune",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 211,
+        "g": 164,
+        "b": 71
       },
       "owned": false
     },
@@ -4636,6 +10488,25 @@
       "owned": false
     },
     {
+      "id": "army_painter/yeti-white",
+      "provider": "army_painter",
+      "name": "Yeti White",
+      "normalized_name": "yeti white",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 192,
+        "g": 196,
+        "b": 200
+      },
+      "owned": false
+    },
+    {
       "id": "army_painter/zealot-yellow",
       "provider": "army_painter",
       "name": "Zealot Yellow",
@@ -4651,6 +10522,25 @@
         "r": 243,
         "g": 200,
         "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "army_painter/zephyr-pink",
+      "provider": "army_painter",
+      "name": "Zephyr Pink",
+      "normalized_name": "zephyr pink",
+      "aliases": [],
+      "usage_roles": [
+        "air"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 107,
+        "g": 57,
+        "b": 69
       },
       "owned": false
     },
