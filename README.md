@@ -38,7 +38,7 @@ The long-term goal is not “AI picks random colors for miniatures.” The goal 
 ## Feature Highlights
 
 - `Owned-first matching`: lookups and recommendations can prioritize paints you already have.
-- `Local registry`: everything lives in a project-local `.warpaint/registry.json`.
+- `Catalog in repo, inventory in your home`: paint records live in `data/catalog/`; what you own lives in `~/.warpaint/inventory.json` and follows you across projects.
 - `RGB-aware search`: approximate RGB values help with nearest-color matching.
 - `Forge Ledger TUI`: terminal UI styled as a grimdark inventory ledger.
 - `Agent-friendly CLI`: deterministic command output for future AI integration.
@@ -87,7 +87,7 @@ See: docs/assets/cli.txt
 
 ## Quickstart
 
-Initialize the local registry:
+Initialize the local inventory at `~/.warpaint/inventory.json`:
 
 ```bash
 node src/cli.mjs catalog sync
@@ -176,8 +176,12 @@ Planned later:
 
 ## Technical Notes
 
-- Registry path: `.warpaint/registry.json`
-- Built-in provider data lives in `data/catalog/`
+- Built-in catalog data lives in `data/catalog/` (Citadel and Army Painter, kept in version control)
+- Inventory file: `~/.warpaint/inventory.json` — stores only owned paint ids in the form `{ "version": 1, "owned": ["citadel/abaddon-black", ...] }`
+- The catalog and inventory are composed at runtime; saving never rewrites the catalog
+- IDs are stable by convention (provider + name slug); on load, owned ids missing from the catalog are reported as warnings instead of being silently dropped
+- A pre-existing project-local `.warpaint/registry.json` next to the inventory path is auto-migrated on first run
+- Override the inventory location at the API surface with `{ inventoryPath }` or `{ cwd }` (the latter resolves to `<cwd>/.warpaint/inventory.json`, which is what the test suite uses for isolation)
 - RGB values are approximate reference colors for matching, not a guarantee of final painted appearance
 - MCP entrypoint: `node src/mcp-server.mjs`
 - MCP helper script: `npm run mcp`
