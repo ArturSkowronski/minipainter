@@ -54,7 +54,7 @@ export async function runCli(argv, options = {}) {
   try {
     const result = await handler(rest, {
       cwd,
-      registryPath: resolveRegistryPath({ cwd }),
+      registryPath: resolveRegistryPath(options.cwd ? { cwd: options.cwd } : {}),
     });
 
     return {

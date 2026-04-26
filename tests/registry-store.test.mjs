@@ -25,41 +25,74 @@ test('loadBuiltInCatalog returns both supported providers with paints', async ()
   assert.ok(catalog.paints.length >= 8);
 });
 
-test('initRegistryIfMissing creates a registry seeded from built-in catalogs', async () => {
+test('initRegistryIfMissing creates an empty inventory composed against the catalog', async () => {
   const dir = await makeTempDir();
-  const registryPath = path.join(dir, '.warpaint', 'registry.json');
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
 
-  const created = await initRegistryIfMissing(registryPath);
-  const registry = await loadRegistry(registryPath);
+  const created = await initRegistryIfMissing(inventoryPath);
+  const registry = await loadRegistry(inventoryPath);
 
   assert.equal(created.created, true);
   assert.equal(registry.version, 1);
   assert.equal(registry.catalog.providers.length, 2);
   assert.ok(registry.catalog.paints.every((paint) => paint.owned === false));
+
+  const inventory = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
+  assert.deepEqual(inventory, { version: 1, owned: [] });
 });
 
-test('saveRegistry preserves owned state changes', async () => {
+test('saveRegistry persists owned ids only and preserves them on reload', async () => {
   const dir = await makeTempDir();
-  const registryPath = path.join(dir, '.warpaint', 'registry.json');
-  const initial = await initRegistryIfMissing(registryPath);
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const initial = await initRegistryIfMissing(inventoryPath);
 
-  initial.registry.catalog.paints[0].owned = true;
-  await saveRegistry(registryPath, initial.registry);
+  const target = initial.registry.catalog.paints[0];
+  target.owned = true;
+  await saveRegistry(inventoryPath, initial.registry);
 
-  const reloaded = await loadRegistry(registryPath);
+  const inventory = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
+  assert.deepEqual(inventory, { version: 1, owned: [target.id] });
 
-  assert.equal(reloaded.catalog.paints[0].owned, true);
+  const reloaded = await loadRegistry(inventoryPath);
+  const reloadedTarget = reloaded.catalog.paints.find((paint) => paint.id === target.id);
+  assert.equal(reloadedTarget.owned, true);
 });
 
-test('loadRegistry rejects malformed registry shape', async () => {
+test('loadRegistry rejects malformed inventory shape', async () => {
   const dir = await makeTempDir();
-  const registryPath = path.join(dir, '.warpaint', 'registry.json');
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
 
-  await fs.mkdir(path.dirname(registryPath), { recursive: true });
+  await fs.mkdir(path.dirname(inventoryPath), { recursive: true });
   await fs.writeFile(
-    registryPath,
-    JSON.stringify({ version: 1, catalog: { providers: [], paints: [{}] } }, null, 2),
+    inventoryPath,
+    JSON.stringify({ version: 1, owned: [{ not: 'a string' }] }, null, 2),
   );
 
-  await assert.rejects(() => loadRegistry(registryPath), /Invalid paint record/);
+  await assert.rejects(() => loadRegistry(inventoryPath), /Invalid inventory shape/);
+});
+
+test('initRegistryIfMissing migrates owned state from a legacy registry.json', async () => {
+  const dir = await makeTempDir();
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const legacyPath = path.join(dir, '.warpaint', 'registry.json');
+
+  await fs.mkdir(path.dirname(legacyPath), { recursive: true });
+  const catalog = await loadBuiltInCatalog();
+  const ownedTarget = catalog.paints.find((paint) => paint.id === 'citadel/abaddon-black');
+  await fs.writeFile(legacyPath, JSON.stringify({
+    version: 1,
+    catalog: {
+      providers: catalog.providers,
+      paints: catalog.paints.map((paint) => ({
+        ...paint,
+        owned: paint.id === ownedTarget.id,
+      })),
+    },
+  }, null, 2));
+
+  const result = await initRegistryIfMissing(inventoryPath);
+  const inventory = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
+
+  assert.equal(result.migratedFromLegacy, true);
+  assert.deepEqual(inventory.owned, ['citadel/abaddon-black']);
 });

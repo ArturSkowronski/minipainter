@@ -10,17 +10,17 @@ async function makeWorkspace() {
   return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-cli-'));
 }
 
-test('catalog sync creates the project-local registry file', async () => {
+test('catalog sync creates the inventory file under the working directory', async () => {
   const cwd = await makeWorkspace();
 
   const result = await runCli(['catalog', 'sync'], { cwd });
-  const registryPath = path.join(cwd, '.warpaint', 'registry.json');
-  const registry = JSON.parse(await fs.readFile(registryPath, 'utf8'));
+  const inventoryPath = path.join(cwd, '.warpaint', 'inventory.json');
+  const inventory = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
 
   assert.equal(result.exitCode, 0);
   assert.match(result.stdout, /initialized/i);
   assert.doesNotMatch(result.stdout, /undefined/);
-  assert.equal(registry.version, 1);
+  assert.deepEqual(inventory, { version: 1, owned: [] });
 });
 
 test('paint search, show, inventory own/unown, and inventory list support json output', async () => {

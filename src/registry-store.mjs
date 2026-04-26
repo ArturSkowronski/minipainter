@@ -27,38 +27,88 @@ function validatePaint(paint) {
   }
 }
 
-function validateRegistry(registry) {
+function validateInventory(inventory) {
   if (
-    !registry
-    || registry.version !== 1
-    || !registry.catalog
-    || !Array.isArray(registry.catalog.providers)
-    || !Array.isArray(registry.catalog.paints)
+    !inventory
+    || inventory.version !== 1
+    || !Array.isArray(inventory.owned)
+    || !inventory.owned.every((id) => typeof id === 'string')
   ) {
-    throw new Error('Invalid registry shape');
+    throw new Error('Invalid inventory shape');
   }
+}
+
+function composeRegistry(catalog, ownedIds) {
+  const ownedSet = new Set(ownedIds);
+  const registry = {
+    version: 1,
+    catalog: {
+      providers: catalog.providers,
+      paints: catalog.paints.map((paint) => ({
+        ...paint,
+        aliases: [...paint.aliases],
+        usage_roles: [...paint.usage_roles],
+        color_families: [...paint.color_families],
+        rgb: { ...paint.rgb },
+        owned: ownedSet.has(paint.id),
+      })),
+    },
+  };
 
   for (const paint of registry.catalog.paints) {
     validatePaint(paint);
   }
-}
 
-export async function loadRegistry(registryPath) {
-  const raw = await fs.readFile(registryPath, 'utf8');
-  const registry = JSON.parse(raw);
-  validateRegistry(registry);
   return registry;
 }
 
-export async function saveRegistry(registryPath, registry) {
-  validateRegistry(registry);
-  await fs.mkdir(path.dirname(registryPath), { recursive: true });
-  await fs.writeFile(`${registryPath}`, JSON.stringify(registry, null, 2));
+async function readInventoryFile(inventoryPath) {
+  const raw = await fs.readFile(inventoryPath, 'utf8');
+  const inventory = JSON.parse(raw);
+  validateInventory(inventory);
+  return inventory;
 }
 
-export async function initRegistryIfMissing(registryPath) {
+async function tryMigrateLegacyRegistry(inventoryPath) {
+  const legacyPath = path.join(path.dirname(inventoryPath), 'registry.json');
+  if (legacyPath === inventoryPath) return null;
+
   try {
-    const registry = await loadRegistry(registryPath);
+    const raw = await fs.readFile(legacyPath, 'utf8');
+    const legacy = JSON.parse(raw);
+    if (!legacy?.catalog?.paints) return null;
+    return legacy.catalog.paints
+      .filter((paint) => paint.owned)
+      .map((paint) => paint.id)
+      .sort();
+  } catch (error) {
+    if (error && error.code !== 'ENOENT') throw error;
+    return null;
+  }
+}
+
+export async function loadRegistry(inventoryPath) {
+  const catalog = await loadBuiltInCatalog();
+  const inventory = await readInventoryFile(inventoryPath);
+  return composeRegistry(catalog, inventory.owned);
+}
+
+export async function saveRegistry(inventoryPath, registry) {
+  const owned = registry.catalog.paints
+    .filter((paint) => paint.owned)
+    .map((paint) => paint.id)
+    .sort();
+
+  const inventory = { version: 1, owned };
+  validateInventory(inventory);
+
+  await fs.mkdir(path.dirname(inventoryPath), { recursive: true });
+  await fs.writeFile(inventoryPath, JSON.stringify(inventory, null, 2));
+}
+
+export async function initRegistryIfMissing(inventoryPath) {
+  try {
+    const registry = await loadRegistry(inventoryPath);
     return { created: false, registry };
   } catch (error) {
     if (error && error.code !== 'ENOENT') {
@@ -66,13 +116,15 @@ export async function initRegistryIfMissing(registryPath) {
     }
   }
 
-  const catalog = await loadBuiltInCatalog();
-  const registry = {
-    version: 1,
-    catalog,
-  };
+  const migrated = await tryMigrateLegacyRegistry(inventoryPath);
+  const owned = migrated || [];
 
-  await saveRegistry(registryPath, registry);
+  await fs.mkdir(path.dirname(inventoryPath), { recursive: true });
+  await fs.writeFile(
+    inventoryPath,
+    JSON.stringify({ version: 1, owned }, null, 2),
+  );
 
-  return { created: true, registry };
+  const registry = await loadRegistry(inventoryPath);
+  return { created: true, registry, migratedFromLegacy: Boolean(migrated) };
 }
