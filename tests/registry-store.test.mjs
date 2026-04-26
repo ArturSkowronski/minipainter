@@ -71,6 +71,28 @@ test('loadRegistry rejects malformed inventory shape', async () => {
   await assert.rejects(() => loadRegistry(inventoryPath), /Invalid inventory shape/);
 });
 
+test('loadRegistry warns about owned ids that no longer exist in the catalog', async () => {
+  const dir = await makeTempDir();
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+
+  await fs.mkdir(path.dirname(inventoryPath), { recursive: true });
+  await fs.writeFile(
+    inventoryPath,
+    JSON.stringify({
+      version: 1,
+      owned: ['citadel/abaddon-black', 'citadel/this-paint-was-removed'],
+    }, null, 2),
+  );
+
+  const warnings = [];
+  const registry = await loadRegistry(inventoryPath, { onWarn: (m) => warnings.push(m) });
+
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /citadel\/this-paint-was-removed/);
+  const abaddon = registry.catalog.paints.find((p) => p.id === 'citadel/abaddon-black');
+  assert.equal(abaddon.owned, true);
+});
+
 test('initRegistryIfMissing migrates owned state from a legacy registry.json', async () => {
   const dir = await makeTempDir();
   const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');

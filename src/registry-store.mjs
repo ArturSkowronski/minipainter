@@ -87,9 +87,23 @@ async function tryMigrateLegacyRegistry(inventoryPath) {
   }
 }
 
-export async function loadRegistry(inventoryPath) {
+function findOrphanedOwnedIds(catalog, ownedIds) {
+  const known = new Set(catalog.paints.map((paint) => paint.id));
+  return ownedIds.filter((id) => !known.has(id));
+}
+
+export async function loadRegistry(inventoryPath, options = {}) {
   const catalog = await loadBuiltInCatalog();
   const inventory = await readInventoryFile(inventoryPath);
+  const orphans = findOrphanedOwnedIds(catalog, inventory.owned);
+
+  if (orphans.length > 0) {
+    const warn = options.onWarn || ((message) => console.warn(message));
+    warn(
+      `warpaint: inventory references ${orphans.length} unknown paint id(s) not present in the catalog: ${orphans.join(', ')}`,
+    );
+  }
+
   return composeRegistry(catalog, inventory.owned);
 }
 
