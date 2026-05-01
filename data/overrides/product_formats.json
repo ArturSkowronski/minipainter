@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "description": "Overlay that maps each paint id from data/catalog/* to a normalized product_format. Catalog files are an upstream mirror and must not be edited directly. To correct an upstream-mistagged paint, add a per-id entry to `overrides`. Brand-level mappings live in `rules` and are matched in order; the first match wins. Per-id `overrides` always take priority over rules.",
+  "formats": [
+    "opaque_base",
+    "opaque_layer",
+    "wash",
+    "contrast",
+    "technical",
+    "drybrush",
+    "metallic"
+  ],
+  "rules": [
+    { "match": { "provider": "citadel", "usage_role": "base" }, "format": "opaque_base" },
+    { "match": { "provider": "citadel", "usage_role": "layer" }, "format": "opaque_layer" },
+    { "match": { "provider": "citadel", "usage_role": "shade" }, "format": "wash" },
+    { "match": { "provider": "citadel", "usage_role": "contrast" }, "format": "contrast" },
+    { "match": { "provider": "citadel", "usage_role": "technical" }, "format": "technical" },
+    { "match": { "provider": "citadel", "usage_role": "dry" }, "format": "drybrush" },
+
+    { "match": { "provider": "army_painter", "usage_role": "speedpaint" }, "format": "contrast" },
+    { "match": { "provider": "army_painter", "usage_role": "shade" }, "format": "wash" },
+    { "match": { "provider": "army_painter", "usage_role": "metallic" }, "format": "metallic" },
+    { "match": { "provider": "army_painter", "usage_role": "technical" }, "format": "technical" },
+    { "match": { "provider": "army_painter", "usage_role": "base" }, "format": "opaque_base" },
+    { "match": { "provider": "army_painter", "usage_role": "layer" }, "format": "opaque_layer" },
+    { "match": { "provider": "army_painter", "usage_role": "air" }, "format": "opaque_layer" }
+  ],
+  "overrides": {
+    "army_painter/grim-black": {
+      "format": "contrast",
+      "note": "Upstream tags this as `layer`, but the product is Speedpaint 2.0 Grim Black (transparent one-coat)."
+    }
+  }
+}

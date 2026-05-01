@@ -8,6 +8,7 @@ function stripMatch(result) {
     name: result.paint.name,
     owned: result.paint.owned,
     usage_roles: result.paint.usage_roles,
+    product_format: result.paint.product_format ?? null,
     color_families: result.paint.color_families,
     rgb: result.paint.rgb,
     distance: result.distance ?? null,

@@ -8,6 +8,7 @@ function stripPaint(paint) {
     name: paint.name,
     owned: paint.owned,
     usage_roles: paint.usage_roles,
+    product_format: paint.product_format ?? null,
     color_families: paint.color_families,
     rgb: paint.rgb,
   };

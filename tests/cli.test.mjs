@@ -63,6 +63,17 @@ test('match color and match describe return ranked results', async () => {
   assert.equal(describePayload.items[0].id, 'army_painter/pallid-bone');
 });
 
+test('catalog lint passes when every paint resolves a product_format', async () => {
+  const cwd = await makeWorkspace();
+
+  const result = await runCli(['catalog', 'lint', '--json'], { cwd });
+  const payload = JSON.parse(result.stdout);
+
+  assert.equal(result.exitCode, 0);
+  assert.equal(payload.item.unresolved, 0);
+  assert.ok(payload.item.total > 0);
+});
+
 test('human-readable output includes listed paints, not just summary headers', async () => {
   const cwd = await makeWorkspace();
   await runCli(['catalog', 'sync'], { cwd });

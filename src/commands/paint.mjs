@@ -8,6 +8,7 @@ function stripResult(result) {
     name: result.paint.name,
     owned: result.paint.owned,
     usage_roles: result.paint.usage_roles,
+    product_format: result.paint.product_format ?? null,
     color_families: result.paint.color_families,
     rgb: result.paint.rgb,
     score: result.score,
@@ -22,6 +23,7 @@ function stripPaint(paint) {
     owned: paint.owned,
     aliases: paint.aliases,
     usage_roles: paint.usage_roles,
+    product_format: paint.product_format ?? null,
     color_families: paint.color_families,
     rgb: paint.rgb,
   };
