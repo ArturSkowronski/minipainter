@@ -11,6 +11,7 @@ function toPaintRecord(paint) {
     owned: paint.owned,
     aliases: paint.aliases,
     usage_roles: paint.usage_roles,
+    product_format: paint.product_format ?? null,
     color_families: paint.color_families,
     rgb: paint.rgb,
   };
