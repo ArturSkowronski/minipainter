@@ -1,0 +1,2506 @@
+{
+  "provider": {
+    "id": "vallejo",
+    "name": "Vallejo"
+  },
+  "paints": [
+    {
+      "id": "vallejo/dead-white",
+      "provider": "vallejo",
+      "name": "Dead White",
+      "normalized_name": "dead white",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/pale-flesh",
+      "provider": "vallejo",
+      "name": "Pale Flesh",
+      "normalized_name": "pale flesh",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 207,
+        "g": 154,
+        "b": 123
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/elf-skin-tone",
+      "provider": "vallejo",
+      "name": "Elf Skin Tone",
+      "normalized_name": "elf skin tone",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 197,
+        "g": 126,
+        "b": 82
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/moon-yellow",
+      "provider": "vallejo",
+      "name": "Moon Yellow",
+      "normalized_name": "moon yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 238,
+        "g": 184,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sun-yellow",
+      "provider": "vallejo",
+      "name": "Sun Yellow",
+      "normalized_name": "sun yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 244,
+        "g": 147,
+        "b": 4
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/gold-yellow",
+      "provider": "vallejo",
+      "name": "Gold Yellow",
+      "normalized_name": "gold yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "metallic",
+        "orange"
+      ],
+      "rgb": {
+        "r": 231,
+        "g": 119,
+        "b": 19
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/orange-fire",
+      "provider": "vallejo",
+      "name": "Orange Fire",
+      "normalized_name": "orange fire",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 233,
+        "g": 83,
+        "b": 30
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/hot-orange",
+      "provider": "vallejo",
+      "name": "Hot Orange",
+      "normalized_name": "hot orange",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 216,
+        "g": 49,
+        "b": 30
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/bloody-red",
+      "provider": "vallejo",
+      "name": "Bloody Red",
+      "normalized_name": "bloody red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 170,
+        "g": 31,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/gory-red",
+      "provider": "vallejo",
+      "name": "Gory Red",
+      "normalized_name": "gory red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 97,
+        "g": 23,
+        "b": 22
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/scarlet-red",
+      "provider": "vallejo",
+      "name": "Scarlet Red",
+      "normalized_name": "scarlet red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 87,
+        "g": 26,
+        "b": 34
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/squid-pink",
+      "provider": "vallejo",
+      "name": "Squid Pink",
+      "normalized_name": "squid pink",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 203,
+        "g": 111,
+        "b": 158
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/warlord-purple",
+      "provider": "vallejo",
+      "name": "Warlord Purple",
+      "normalized_name": "warlord purple",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 127,
+        "g": 34,
+        "b": 61
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/hexed-lichen",
+      "provider": "vallejo",
+      "name": "Hexed Lichen",
+      "normalized_name": "hexed lichen",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 52,
+        "g": 25,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/royal-purple",
+      "provider": "vallejo",
+      "name": "Royal Purple",
+      "normalized_name": "royal purple",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 37,
+        "g": 25,
+        "b": 47
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/night-blue",
+      "provider": "vallejo",
+      "name": "Night Blue",
+      "normalized_name": "night blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 15,
+        "g": 15,
+        "b": 27
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/imperial-blue",
+      "provider": "vallejo",
+      "name": "Imperial Blue",
+      "normalized_name": "imperial blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 19,
+        "g": 32,
+        "b": 51
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/magic-blue",
+      "provider": "vallejo",
+      "name": "Magic Blue",
+      "normalized_name": "magic blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 20,
+        "g": 61,
+        "b": 125
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/ultramarine-blue",
+      "provider": "vallejo",
+      "name": "Ultramarine Blue",
+      "normalized_name": "ultramarine blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 27,
+        "g": 34,
+        "b": 76
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/electric-blue",
+      "provider": "vallejo",
+      "name": "Electric Blue",
+      "normalized_name": "electric blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 108,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/turquoise",
+      "provider": "vallejo",
+      "name": "Turquoise",
+      "normalized_name": "turquoise",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 65,
+        "b": 69
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/foul-green",
+      "provider": "vallejo",
+      "name": "Foul Green",
+      "normalized_name": "foul green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 21,
+        "g": 109,
+        "b": 84
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/jade-green",
+      "provider": "vallejo",
+      "name": "Jade Green",
+      "normalized_name": "jade green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 73,
+        "b": 56
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/scurvy-green",
+      "provider": "vallejo",
+      "name": "Scurvy Green",
+      "normalized_name": "scurvy green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 52,
+        "b": 39
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/dark-green",
+      "provider": "vallejo",
+      "name": "Dark Green",
+      "normalized_name": "dark green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 18,
+        "g": 36,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sick-green",
+      "provider": "vallejo",
+      "name": "Sick Green",
+      "normalized_name": "sick green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 59,
+        "g": 91,
+        "b": 50
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/goblin-green",
+      "provider": "vallejo",
+      "name": "Goblin Green",
+      "normalized_name": "goblin green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 68,
+        "g": 80,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/camouflage-green",
+      "provider": "vallejo",
+      "name": "Camouflage Green",
+      "normalized_name": "camouflage green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 109,
+        "g": 97,
+        "b": 39
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/scorpy-green",
+      "provider": "vallejo",
+      "name": "Scorpy Green",
+      "normalized_name": "scorpy green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 65,
+        "g": 122,
+        "b": 51
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/bone-white",
+      "provider": "vallejo",
+      "name": "Bone White",
+      "normalized_name": "bone white",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 212,
+        "g": 201,
+        "b": 169
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/dead-flesh",
+      "provider": "vallejo",
+      "name": "Dead Flesh",
+      "normalized_name": "dead flesh",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 147,
+        "g": 127,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/bronze-brown",
+      "provider": "vallejo",
+      "name": "Bronze Brown",
+      "normalized_name": "bronze brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "metallic",
+        "orange"
+      ],
+      "rgb": {
+        "r": 152,
+        "g": 91,
+        "b": 28
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/scrofulous-brown",
+      "provider": "vallejo",
+      "name": "Scrofulous Brown",
+      "normalized_name": "scrofulous brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 94,
+        "b": 23
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/plague-brown",
+      "provider": "vallejo",
+      "name": "Plague Brown",
+      "normalized_name": "plague brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 143,
+        "g": 94,
+        "b": 36
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/leather-brown",
+      "provider": "vallejo",
+      "name": "Leather Brown",
+      "normalized_name": "leather brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 78,
+        "g": 52,
+        "b": 19
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/parasite-brown",
+      "provider": "vallejo",
+      "name": "Parasite Brown",
+      "normalized_name": "parasite brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 110,
+        "g": 60,
+        "b": 25
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/beasty-brown",
+      "provider": "vallejo",
+      "name": "Beasty Brown",
+      "normalized_name": "beasty brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 85,
+        "g": 55,
+        "b": 27
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/dark-fleshtone",
+      "provider": "vallejo",
+      "name": "Dark Fleshtone",
+      "normalized_name": "dark fleshtone",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 65,
+        "g": 31,
+        "b": 21
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/charred-brown",
+      "provider": "vallejo",
+      "name": "Charred Brown",
+      "normalized_name": "charred brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 40,
+        "g": 27,
+        "b": 21
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/wolf-grey",
+      "provider": "vallejo",
+      "name": "Wolf Grey",
+      "normalized_name": "wolf grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 150,
+        "g": 180,
+        "b": 188
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sombre-grey",
+      "provider": "vallejo",
+      "name": "Sombre Grey",
+      "normalized_name": "sombre grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 55,
+        "g": 62,
+        "b": 70
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/stonewall-grey",
+      "provider": "vallejo",
+      "name": "Stonewall Grey",
+      "normalized_name": "stonewall grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 98,
+        "g": 94,
+        "b": 91
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/neutral-grey",
+      "provider": "vallejo",
+      "name": "Neutral Grey",
+      "normalized_name": "neutral grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 72,
+        "g": 71,
+        "b": 67
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/black",
+      "provider": "vallejo",
+      "name": "Black",
+      "normalized_name": "black",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 0,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/silver",
+      "provider": "vallejo",
+      "name": "Silver",
+      "normalized_name": "silver",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 219,
+        "g": 222,
+        "b": 224
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/chainmail",
+      "provider": "vallejo",
+      "name": "Chainmail",
+      "normalized_name": "chainmail",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 205,
+        "g": 209,
+        "b": 212
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/dark-gunmetal",
+      "provider": "vallejo",
+      "name": "Dark Gunmetal",
+      "normalized_name": "dark gunmetal",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "metallic",
+        "blue"
+      ],
+      "rgb": {
+        "r": 188,
+        "g": 189,
+        "b": 191
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/polished-gold",
+      "provider": "vallejo",
+      "name": "Polished Gold",
+      "normalized_name": "polished gold",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "metallic",
+        "yellow"
+      ],
+      "rgb": {
+        "r": 244,
+        "g": 222,
+        "b": 153
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/glorious-gold",
+      "provider": "vallejo",
+      "name": "Glorious Gold",
+      "normalized_name": "glorious gold",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "metallic",
+        "bone"
+      ],
+      "rgb": {
+        "r": 236,
+        "g": 200,
+        "b": 156
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/bright-bronze",
+      "provider": "vallejo",
+      "name": "Bright Bronze",
+      "normalized_name": "bright bronze",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "metallic",
+        "bone"
+      ],
+      "rgb": {
+        "r": 214,
+        "g": 180,
+        "b": 143
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/brassy-brass",
+      "provider": "vallejo",
+      "name": "Brassy Brass",
+      "normalized_name": "brassy brass",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "metallic",
+        "bone"
+      ],
+      "rgb": {
+        "r": 217,
+        "g": 184,
+        "b": 165
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/hammered-copper",
+      "provider": "vallejo",
+      "name": "Hammered Copper",
+      "normalized_name": "hammered copper",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "metallic",
+        "skin"
+      ],
+      "rgb": {
+        "r": 192,
+        "g": 174,
+        "b": 161
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/tinny-tin",
+      "provider": "vallejo",
+      "name": "Tinny Tin",
+      "normalized_name": "tinny tin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "skin"
+      ],
+      "rgb": {
+        "r": 177,
+        "g": 160,
+        "b": 150
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/khaki",
+      "provider": "vallejo",
+      "name": "Khaki",
+      "normalized_name": "khaki",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 119,
+        "g": 98,
+        "b": 71
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/earth",
+      "provider": "vallejo",
+      "name": "Earth",
+      "normalized_name": "earth",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 86,
+        "g": 62,
+        "b": 38
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/desert-yellow",
+      "provider": "vallejo",
+      "name": "Desert Yellow",
+      "normalized_name": "desert yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 123,
+        "g": 91,
+        "b": 44
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/tan",
+      "provider": "vallejo",
+      "name": "Tan",
+      "normalized_name": "tan",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 125,
+        "g": 76,
+        "b": 62
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/cayman-green",
+      "provider": "vallejo",
+      "name": "Cayman Green",
+      "normalized_name": "cayman green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 66,
+        "g": 57,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/barbarian-skin",
+      "provider": "vallejo",
+      "name": "Barbarian Skin",
+      "normalized_name": "barbarian skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 120,
+        "g": 90,
+        "b": 62
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/alien-purple",
+      "provider": "vallejo",
+      "name": "Alien Purple",
+      "normalized_name": "alien purple",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 84,
+        "g": 64,
+        "b": 125
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/white",
+      "provider": "vallejo",
+      "name": "White",
+      "normalized_name": "white",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/magenta",
+      "provider": "vallejo",
+      "name": "Magenta",
+      "normalized_name": "magenta",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 155,
+        "g": 34,
+        "b": 65
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/dark-turquoise",
+      "provider": "vallejo",
+      "name": "Dark Turquoise",
+      "normalized_name": "dark turquoise",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 4,
+        "g": 63,
+        "b": 61
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/yellow",
+      "provider": "vallejo",
+      "name": "Yellow",
+      "normalized_name": "yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 233,
+        "g": 156,
+        "b": 18
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/red",
+      "provider": "vallejo",
+      "name": "Red",
+      "normalized_name": "red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 167,
+        "g": 21,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/violet",
+      "provider": "vallejo",
+      "name": "Violet",
+      "normalized_name": "violet",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 72,
+        "g": 49,
+        "b": 93
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/blue",
+      "provider": "vallejo",
+      "name": "Blue",
+      "normalized_name": "blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 21,
+        "g": 55,
+        "b": 103
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/green",
+      "provider": "vallejo",
+      "name": "Green",
+      "normalized_name": "green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 113,
+        "b": 51
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/black-green",
+      "provider": "vallejo",
+      "name": "Black Green",
+      "normalized_name": "black green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 37,
+        "g": 60,
+        "b": 44
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sepia",
+      "provider": "vallejo",
+      "name": "Sepia",
+      "normalized_name": "sepia",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 53,
+        "g": 38,
+        "b": 19
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/skin",
+      "provider": "vallejo",
+      "name": "Skin",
+      "normalized_name": "skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 70,
+        "g": 33,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/black",
+      "provider": "vallejo",
+      "name": "Black",
+      "normalized_name": "black",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 0,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/glacier-blue",
+      "provider": "vallejo",
+      "name": "Glacier Blue",
+      "normalized_name": "glacier blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 183,
+        "g": 209,
+        "b": 236
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/verdigris",
+      "provider": "vallejo",
+      "name": "Verdigris",
+      "normalized_name": "verdigris",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 134,
+        "g": 199,
+        "b": 169
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/elfic-flesh",
+      "provider": "vallejo",
+      "name": "Elfic Flesh",
+      "normalized_name": "elfic flesh",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 241,
+        "g": 213,
+        "b": 163
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/skin-tone",
+      "provider": "vallejo",
+      "name": "Skin Tone",
+      "normalized_name": "skin tone",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 246,
+        "g": 178,
+        "b": 129
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/rosy-flesh",
+      "provider": "vallejo",
+      "name": "Rosy Flesh",
+      "normalized_name": "rosy flesh",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 226,
+        "g": 115,
+        "b": 98
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/off-white",
+      "provider": "vallejo",
+      "name": "Off-White",
+      "normalized_name": "off-white",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "bone"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 240,
+        "b": 185
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/steel-grey",
+      "provider": "vallejo",
+      "name": "Steel Grey",
+      "normalized_name": "steel grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "metallic",
+        "blue"
+      ],
+      "rgb": {
+        "r": 73,
+        "g": 90,
+        "b": 98
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/fluorescent-yellow",
+      "provider": "vallejo",
+      "name": "Fluorescent Yellow",
+      "normalized_name": "fluorescent yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 251,
+        "g": 235,
+        "b": 61
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/fluorescent-green",
+      "provider": "vallejo",
+      "name": "Fluorescent Green",
+      "normalized_name": "fluorescent green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 90,
+        "g": 176,
+        "b": 49
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/scarlet-blood",
+      "provider": "vallejo",
+      "name": "Scarlet Blood",
+      "normalized_name": "scarlet blood",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 173,
+        "g": 31,
+        "b": 29
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/athena-skin",
+      "provider": "vallejo",
+      "name": "Athena Skin",
+      "normalized_name": "athena skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 178,
+        "g": 99,
+        "b": 84
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/succubus-skin",
+      "provider": "vallejo",
+      "name": "Succubus Skin",
+      "normalized_name": "succubus skin",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 114,
+        "g": 65,
+        "b": 60
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/toxic-yellow",
+      "provider": "vallejo",
+      "name": "Toxic Yellow",
+      "normalized_name": "toxic yellow",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 227,
+        "g": 195,
+        "b": 58
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sunset-orange",
+      "provider": "vallejo",
+      "name": "Sunset Orange",
+      "normalized_name": "sunset orange",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 131,
+        "b": 49
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/nocturnal-red",
+      "provider": "vallejo",
+      "name": "Nocturnal Red",
+      "normalized_name": "nocturnal red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 57,
+        "g": 25,
+        "b": 26
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/evil-red",
+      "provider": "vallejo",
+      "name": "Evil Red",
+      "normalized_name": "evil red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 52,
+        "g": 26,
+        "b": 35
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/deep-magenta",
+      "provider": "vallejo",
+      "name": "Deep Magenta",
+      "normalized_name": "deep magenta",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 75,
+        "g": 28,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/lustful-purple",
+      "provider": "vallejo",
+      "name": "Lustful Purple",
+      "normalized_name": "lustful purple",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 126,
+        "g": 96,
+        "b": 146
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/grunge-brown",
+      "provider": "vallejo",
+      "name": "Grunge Brown",
+      "normalized_name": "grunge brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 105,
+        "g": 54,
+        "b": 27
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/midnight-purple",
+      "provider": "vallejo",
+      "name": "Midnight Purple",
+      "normalized_name": "midnight purple",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 37,
+        "g": 21,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/elfic-blue",
+      "provider": "vallejo",
+      "name": "Elfic Blue",
+      "normalized_name": "elfic blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 60,
+        "g": 85,
+        "b": 116
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sunrise-blue",
+      "provider": "vallejo",
+      "name": "Sunrise Blue",
+      "normalized_name": "sunrise blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 96,
+        "g": 184,
+        "b": 224
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/aquamarine",
+      "provider": "vallejo",
+      "name": "Aquamarine",
+      "normalized_name": "aquamarine",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 116,
+        "b": 115
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/abyssal-turquoise",
+      "provider": "vallejo",
+      "name": "Abyssal Turquoise",
+      "normalized_name": "abyssal turquoise",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 19,
+        "g": 37,
+        "b": 51
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/ghost-green",
+      "provider": "vallejo",
+      "name": "Ghost Green",
+      "normalized_name": "ghost green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 91,
+        "g": 184,
+        "b": 137
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/bile-green",
+      "provider": "vallejo",
+      "name": "Bile Green",
+      "normalized_name": "bile green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 213,
+        "g": 217,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/angel-green",
+      "provider": "vallejo",
+      "name": "Angel Green",
+      "normalized_name": "angel green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 37,
+        "g": 56,
+        "b": 34
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/gorgon-brown",
+      "provider": "vallejo",
+      "name": "Gorgon Brown",
+      "normalized_name": "gorgon brown",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 62,
+        "g": 36,
+        "b": 23
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/dirty-grey",
+      "provider": "vallejo",
+      "name": "Dirty Grey",
+      "normalized_name": "dirty grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 73,
+        "g": 62,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/warm-grey",
+      "provider": "vallejo",
+      "name": "Warm Grey",
+      "normalized_name": "warm grey",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 128,
+        "g": 101,
+        "b": 94
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/charcoal",
+      "provider": "vallejo",
+      "name": "Charcoal",
+      "normalized_name": "charcoal",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 26,
+        "g": 23,
+        "b": 16
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/fluorescent-orange",
+      "provider": "vallejo",
+      "name": "Fluorescent Orange",
+      "normalized_name": "fluorescent orange",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 230,
+        "g": 59,
+        "b": 16
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/fluorescent-red",
+      "provider": "vallejo",
+      "name": "Fluorescent Red",
+      "normalized_name": "fluorescent red",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 228,
+        "g": 45,
+        "b": 63
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/fluorescent-magenta",
+      "provider": "vallejo",
+      "name": "Fluorescent Magenta",
+      "normalized_name": "fluorescent magenta",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 52,
+        "b": 139
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/fluorescent-violet",
+      "provider": "vallejo",
+      "name": "Fluorescent Violet",
+      "normalized_name": "fluorescent violet",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 111,
+        "g": 37,
+        "b": 122
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/fluorescent-blue",
+      "provider": "vallejo",
+      "name": "Fluorescent Blue",
+      "normalized_name": "fluorescent blue",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 122,
+        "b": 185
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/fluorescent-cold-green",
+      "provider": "vallejo",
+      "name": "Fluorescent Cold Green",
+      "normalized_name": "fluorescent cold green",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 1,
+        "g": 95,
+        "b": 77
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/vomit",
+      "provider": "vallejo",
+      "name": "Vomit",
+      "normalized_name": "vomit",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 252,
+        "g": 190,
+        "b": 109
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/fresh-blood",
+      "provider": "vallejo",
+      "name": "Fresh Blood",
+      "normalized_name": "fresh blood",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 240,
+        "g": 131,
+        "b": 117
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/thick-blood",
+      "provider": "vallejo",
+      "name": "Thick Blood",
+      "normalized_name": "thick blood",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 167,
+        "g": 97,
+        "b": 82
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/demon-blood",
+      "provider": "vallejo",
+      "name": "Demon Blood",
+      "normalized_name": "demon blood",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 138,
+        "g": 105,
+        "b": 151
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/frost",
+      "provider": "vallejo",
+      "name": "Frost",
+      "normalized_name": "frost",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 86,
+        "g": 175,
+        "b": 223
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/green-rust",
+      "provider": "vallejo",
+      "name": "Green Rust",
+      "normalized_name": "green rust",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "teal"
+      ],
+      "rgb": {
+        "r": 169,
+        "g": 207,
+        "b": 190
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/bile",
+      "provider": "vallejo",
+      "name": "Bile",
+      "normalized_name": "bile",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 230,
+        "g": 232,
+        "b": 65
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/acid",
+      "provider": "vallejo",
+      "name": "Acid",
+      "normalized_name": "acid",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 133,
+        "g": 175,
+        "b": 119
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/corrosion",
+      "provider": "vallejo",
+      "name": "Corrosion",
+      "normalized_name": "corrosion",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 78,
+        "b": 68
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/rust",
+      "provider": "vallejo",
+      "name": "Rust",
+      "normalized_name": "rust",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 132,
+        "g": 110,
+        "b": 102
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/galvanic-corrosion",
+      "provider": "vallejo",
+      "name": "Galvanic Corrosion",
+      "normalized_name": "galvanic corrosion",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 213,
+        "g": 106,
+        "b": 33
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/moss-and-lichen",
+      "provider": "vallejo",
+      "name": "Moss And Lichen",
+      "normalized_name": "moss and lichen",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 208,
+        "g": 201,
+        "b": 87
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sepia-wash",
+      "provider": "vallejo",
+      "name": "Sepia Wash",
+      "normalized_name": "sepia wash",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 140,
+        "g": 117,
+        "b": 85
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/black-wash",
+      "provider": "vallejo",
+      "name": "Black Wash",
+      "normalized_name": "black wash",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 102,
+        "g": 100,
+        "b": 103
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/umber-wash",
+      "provider": "vallejo",
+      "name": "Umber Wash",
+      "normalized_name": "umber wash",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 140,
+        "g": 122,
+        "b": 108
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/flesh-wash",
+      "provider": "vallejo",
+      "name": "Flesh Wash",
+      "normalized_name": "flesh wash",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "skin"
+      ],
+      "rgb": {
+        "r": 179,
+        "g": 137,
+        "b": 121
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/red-wash",
+      "provider": "vallejo",
+      "name": "Red Wash",
+      "normalized_name": "red wash",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 206,
+        "g": 87,
+        "b": 83
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/blue-wash",
+      "provider": "vallejo",
+      "name": "Blue Wash",
+      "normalized_name": "blue wash",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 79,
+        "g": 146,
+        "b": 199
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/yellow-wash",
+      "provider": "vallejo",
+      "name": "Yellow Wash",
+      "normalized_name": "yellow wash",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 247,
+        "g": 236,
+        "b": 64
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/violet-wash",
+      "provider": "vallejo",
+      "name": "Violet Wash",
+      "normalized_name": "violet wash",
+      "aliases": [],
+      "usage_roles": [
+        "shade"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 144,
+        "g": 93,
+        "b": 159
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sepia",
+      "provider": "vallejo",
+      "name": "Sepia",
+      "normalized_name": "sepia",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 168,
+        "g": 136,
+        "b": 95
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/negro",
+      "provider": "vallejo",
+      "name": "Negro",
+      "normalized_name": "negro",
+      "aliases": [],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 102,
+        "g": 100,
+        "b": 103
+      },
+      "owned": false
+    }
+  ]
+}

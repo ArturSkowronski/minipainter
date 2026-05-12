@@ -1,16 +1,24 @@
 import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { loadOverlay, enrichPaint } from './overrides.mjs';
 
-const CATALOG_FILES = [
-  new URL('../data/catalog/army_painter.json', import.meta.url),
-  new URL('../data/catalog/citadel.json', import.meta.url),
-];
+const CATALOG_DIR = new URL('../data/catalog/', import.meta.url);
+
+async function discoverCatalogFiles() {
+  const entries = await fs.readdir(fileURLToPath(CATALOG_DIR));
+  return entries
+    .filter((f) => f.endsWith('.json'))
+    .sort()
+    .map((f) => new URL(f, CATALOG_DIR));
+}
 
 export async function loadBuiltInCatalog() {
+  const catalogFiles = await discoverCatalogFiles();
   const [overlay, ...entries] = await Promise.all([
     loadOverlay(),
-    ...CATALOG_FILES.map(async (fileUrl) => JSON.parse(await fs.readFile(fileUrl, 'utf8'))),
+    ...catalogFiles.map(async (fileUrl) => JSON.parse(await fs.readFile(fileUrl, 'utf8'))),
   ]);
 
   return {
