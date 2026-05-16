@@ -5,12 +5,14 @@
   "type": "module",
   "bin": {
     "warpaint": "./src/cli.mjs",
-    "warpaint-mcp": "./src/mcp-server.mjs"
+    "warpaint-mcp": "./src/mcp-server.mjs",
+    "warpaint-mcp-http": "./src/mcp-http-server.mjs"
   },
   "scripts": {
     "test": "node --test",
     "generate:demo": "node scripts/render-demo-output.mjs docs/assets",
-    "mcp": "node src/mcp-server.mjs"
+    "mcp": "node src/mcp-server.mjs",
+    "mcp:http": "node src/mcp-http-server.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.28.0",

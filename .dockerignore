@@ -1,0 +1,11 @@
+.git
+.github
+node_modules
+docs
+tests
+scripts
+*.md
+.gitignore
+Dockerfile
+.dockerignore
+fly.toml
