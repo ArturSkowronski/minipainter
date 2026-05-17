@@ -85,6 +85,40 @@ See: docs/assets/cli.txt
 
 ![CLI Flow](docs/assets/cli.svg)
 
+## Install
+
+`warpaint-cli` is not published to npm. Clone the repo and install dependencies:
+
+```bash
+git clone https://github.com/ArturSkowronski/warpaint-cli.git
+cd warpaint-cli
+npm install
+```
+
+Requirements:
+
+- Node.js 20 or newer
+- POSIX-ish shell (Linux, macOS, WSL)
+
+Optional: expose the binaries on your `PATH` so you can call `warpaint` from anywhere:
+
+```bash
+npm link
+warpaint --help
+```
+
+Initialize the local inventory once (creates `~/.warpaint/inventory.json`):
+
+```bash
+node src/cli.mjs catalog sync
+```
+
+After that you have three usage modes:
+
+- **CLI / TUI** — see Quickstart below
+- **Local MCP for Claude Desktop** — see [Claude Desktop MCP Setup](#claude-desktop-mcp-setup)
+- **Remote MCP for Claude mobile/web** — see [Remote MCP](#remote-mcp-claude-mobile)
+
 ## Quickstart
 
 Initialize the local inventory at `~/.warpaint/inventory.json`:
@@ -223,3 +257,65 @@ Suggested local flow:
 1. initialize your registry once with `node src/cli.mjs catalog sync`
 2. add the MCP server to Claude Desktop
 3. ask Claude to search paints or update ownership through the exposed tools
+
+## Remote MCP (Claude Mobile)
+
+For Claude mobile or web, the stdio MCP server above is not reachable. Run
+`warpaint-mcp-http` instead — a Streamable HTTP MCP transport exposing the
+same tools behind a bearer token.
+
+### Local smoke test
+
+```bash
+export WARPAINT_TOKEN=$(openssl rand -hex 32)
+export PORT=8080
+export WARPAINT_INVENTORY_PATH=$HOME/.warpaint/inventory.json
+npm run mcp:http
+```
+
+Then in another shell:
+
+```bash
+curl -s http://localhost:8080/health
+curl -s -X POST http://localhost:8080/mcp \
+  -H "Authorization: Bearer $WARPAINT_TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
+
+### Deploy to Fly.io
+
+The repo ships a `Dockerfile` and `fly.toml`. Full recipe in
+[docs/deploy-fly.md](docs/deploy-fly.md). Short version:
+
+```bash
+fly launch --no-deploy --copy-config --name <your-app-name>
+fly volumes create warpaint_data --region fra --size 1
+fly secrets set WARPAINT_TOKEN="$(openssl rand -hex 32)"
+fly deploy
+```
+
+### Connect Claude
+
+In Claude (mobile or web), add a custom connector:
+
+- URL: `https://<your-app-name>.fly.dev/mcp`
+- Header: `Authorization: Bearer <your token>`
+
+### Environment variables
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `WARPAINT_TOKEN` | yes | Bearer token; the server refuses to start without it |
+| `PORT` | no (default `8080`) | TCP port to listen on |
+| `HOST` | no (default `0.0.0.0`) | Bind address |
+| `WARPAINT_INVENTORY_PATH` | no | Path to `inventory.json`; defaults to `~/.warpaint/inventory.json` |
+
+### Known limitations
+
+- Single user, one shared token. Anyone with the token has full read/write.
+- No sync yet between the remote inventory and your local
+  `~/.warpaint/inventory.json` — they are independent files.
+- Stateless transport: no long-running SSE tool streams (warpaint tools are
+  fast so this is fine).
