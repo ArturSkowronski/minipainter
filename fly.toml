@@ -1,39 +1,23 @@
-# Minimal Fly.io config for warpaint-mcp HTTP server.
-# Before first deploy run: fly launch --no-deploy (to claim an app name)
-# then: fly secrets set WARPAINT_TOKEN=$(openssl rand -hex 32)
-# then: fly volumes create warpaint_data --region fra --size 1
-# then: fly deploy
-
-app = "warpaint-mcp"
-primary_region = "fra"
+app = 'warpaint-mcp'
+primary_region = 'arn'
 
 [build]
 
-[env]
-  PORT = "8080"
-  HOST = "0.0.0.0"
-  WARPAINT_INVENTORY_PATH = "/data/inventory.json"
-
 [http_service]
-  internal_port = 8080
+  internal_port = 3000
   force_https = true
-  auto_stop_machines = "stop"
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
 
-  [http_service.checks]
-    [http_service.checks.health]
-      grace_period = "10s"
-      interval = "30s"
-      method = "GET"
-      path = "/health"
-      timeout = "5s"
-
-[[mounts]]
-  source = "warpaint_data"
-  destination = "/data"
+  [[http_service.checks]]
+    interval = '30s'
+    timeout = '5s'
+    grace_period = '10s'
+    method = 'GET'
+    path = '/health'
 
 [[vm]]
-  cpu_kind = "shared"
+  memory = '256mb'
+  cpu_kind = 'shared'
   cpus = 1
-  memory_mb = 512

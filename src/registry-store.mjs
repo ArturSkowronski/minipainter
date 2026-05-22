@@ -62,7 +62,17 @@ function composeRegistry(catalog, ownedIds) {
   return registry;
 }
 
+function readInventoryFromEnv() {
+  const raw = process.env.WARPAINT_INVENTORY_JSON;
+  if (!raw) return null;
+  const inventory = JSON.parse(raw);
+  validateInventory(inventory);
+  return inventory;
+}
+
 async function readInventoryFile(inventoryPath) {
+  const fromEnv = readInventoryFromEnv();
+  if (fromEnv) return fromEnv;
   const raw = await fs.readFile(inventoryPath, 'utf8');
   const inventory = JSON.parse(raw);
   validateInventory(inventory);
@@ -108,6 +118,8 @@ export async function loadRegistry(inventoryPath, options = {}) {
 }
 
 export async function saveRegistry(inventoryPath, registry) {
+  if (process.env.WARPAINT_INVENTORY_JSON) return;
+
   const owned = registry.catalog.paints
     .filter((paint) => paint.owned)
     .map((paint) => paint.id)
