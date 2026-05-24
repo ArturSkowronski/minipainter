@@ -1,22 +1,27 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { timingSafeEqual } from 'node:crypto';
 
-function validateInventory(inventory) {
-  if (
-    !inventory
-    || inventory.version !== 1
-    || !Array.isArray(inventory.owned)
-    || !inventory.owned.every((id) => typeof id === 'string')
-  ) {
-    throw new Error('invalid inventory shape');
-  }
+import { normalizeInventory } from './inventory-schema.mjs';
+
+async function writeAtomic(targetPath, contents) {
+  const tmpPath = `${targetPath}.tmp`;
+  await fs.writeFile(tmpPath, contents);
+  await fs.rename(tmpPath, targetPath);
+}
+
+function safeEqual(a, b) {
+  const ab = Buffer.from(a);
+  const bb = Buffer.from(b);
+  if (ab.length !== bb.length) return false;
+  return timingSafeEqual(ab, bb);
 }
 
 function authorized(headers, expectedToken) {
   if (!expectedToken) return false;
-  const header = headers.authorization || headers.Authorization;
+  const header = headers.authorization;
   if (!header || !header.startsWith('Bearer ')) return false;
-  return header.slice('Bearer '.length) === expectedToken;
+  return safeEqual(header.slice('Bearer '.length), expectedToken);
 }
 
 export async function handleInventorySync({ method, headers = {}, body, context }) {
@@ -41,15 +46,31 @@ export async function handleInventorySync({ method, headers = {}, body, context 
   }
 
   if (method === 'POST') {
+    let normalized;
     try {
-      validateInventory(body);
+      normalized = normalizeInventory(body);
     } catch (error) {
       return { status: 400, body: { error: error.message } };
     }
+
     await fs.mkdir(path.dirname(context.inventoryPath), { recursive: true });
-    await fs.writeFile(context.inventoryPath, JSON.stringify(body, null, 2));
-    if (context.onReload) await context.onReload();
-    return { status: 200, body };
+    await writeAtomic(context.inventoryPath, JSON.stringify(normalized, null, 2));
+
+    if (context.onReload) {
+      try {
+        await context.onReload();
+      } catch (error) {
+        return {
+          status: 500,
+          body: {
+            error: 'inventory persisted but registry reload failed; restart the server',
+            detail: error.message,
+          },
+        };
+      }
+    }
+
+    return { status: 200, body: normalized };
   }
 
   return { status: 405, body: { error: 'method not allowed' } };

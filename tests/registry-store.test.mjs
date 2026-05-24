@@ -85,7 +85,7 @@ test('loadRegistry rejects malformed inventory shape', async () => {
     JSON.stringify({ version: 1, owned: [{ not: 'a string' }] }, null, 2),
   );
 
-  await assert.rejects(() => loadRegistry(inventoryPath), /Invalid inventory shape/);
+  await assert.rejects(() => loadRegistry(inventoryPath), /invalid inventory shape/i);
 });
 
 test('loadRegistry warns about owned ids that no longer exist in the catalog', async () => {

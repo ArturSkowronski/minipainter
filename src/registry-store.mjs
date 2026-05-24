@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import { loadBuiltInCatalog } from './catalog-data.mjs';
+import { validateInventory } from './inventory-schema.mjs';
 
 function isRgb(value) {
   return value
@@ -24,17 +25,6 @@ function validatePaint(paint) {
     || !isRgb(paint.rgb)
   ) {
     throw new Error('Invalid paint record');
-  }
-}
-
-function validateInventory(inventory) {
-  if (
-    !inventory
-    || inventory.version !== 1
-    || !Array.isArray(inventory.owned)
-    || !inventory.owned.every((id) => typeof id === 'string')
-  ) {
-    throw new Error('Invalid inventory shape');
   }
 }
 
