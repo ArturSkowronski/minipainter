@@ -85,3 +85,15 @@ test('human-readable output includes listed paints, not just summary headers', a
   assert.match(search.stdout, /Abaddon Black/);
   assert.match(listOwned.stdout, /Abaddon Black/);
 });
+
+test('cli routes "sync add" to the sync command', async () => {
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-cli-sync-'));
+  const result = await runCli(
+    ['sync', 'add', 'default', '--url', 'https://example.fly.dev', '--token', 'tk', '--json'],
+    { cwd: dir },
+  );
+  assert.equal(result.exitCode, 0);
+  const remotesFile = path.join(dir, '.warpaint', 'remotes.json');
+  const onDisk = JSON.parse(await fs.readFile(remotesFile, 'utf8'));
+  assert.deepEqual(onDisk.remotes.default, { url: 'https://example.fly.dev', token: 'tk' });
+});

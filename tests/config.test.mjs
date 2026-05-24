@@ -1,4 +1,4 @@
-import test from 'node:test';
+import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import os from 'node:os';
 import path from 'node:path';
@@ -7,6 +7,18 @@ import {
   getDefaultInventoryPath,
   resolveInventoryPath,
 } from '../src/config.mjs';
+
+let savedInventoryPath;
+
+before(() => {
+  savedInventoryPath = process.env.INVENTORY_PATH;
+  delete process.env.INVENTORY_PATH;
+});
+
+after(() => {
+  if (savedInventoryPath === undefined) delete process.env.INVENTORY_PATH;
+  else process.env.INVENTORY_PATH = savedInventoryPath;
+});
 
 test('default inventory path lives in the user home .warpaint directory', () => {
   assert.equal(
@@ -34,4 +46,28 @@ test('resolveInventoryPath falls back to home when no overrides are provided', (
     resolveInventoryPath(),
     path.join(os.homedir(), '.warpaint', 'inventory.json'),
   );
+});
+
+test('resolveInventoryPath honors INVENTORY_PATH env var over defaults', () => {
+  const before = process.env.INVENTORY_PATH;
+  process.env.INVENTORY_PATH = '/custom/inv.json';
+  try {
+    assert.equal(resolveInventoryPath(), '/custom/inv.json');
+    assert.equal(resolveInventoryPath({ cwd: '/tmp/foo' }), '/custom/inv.json');
+  } finally {
+    if (before === undefined) delete process.env.INVENTORY_PATH;
+    else process.env.INVENTORY_PATH = before;
+  }
+});
+
+test('resolveInventoryPath without INVENTORY_PATH prefers inventoryPath option, then cwd, then home', () => {
+  const before = process.env.INVENTORY_PATH;
+  delete process.env.INVENTORY_PATH;
+  try {
+    assert.equal(resolveInventoryPath({ inventoryPath: '/explicit' }), '/explicit');
+    assert.equal(resolveInventoryPath({ cwd: '/tmp/foo' }), '/tmp/foo/.warpaint/inventory.json');
+    assert.ok(resolveInventoryPath().endsWith('/.warpaint/inventory.json'));
+  } finally {
+    if (before !== undefined) process.env.INVENTORY_PATH = before;
+  }
 });

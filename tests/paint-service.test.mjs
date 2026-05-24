@@ -9,6 +9,7 @@ import {
   listInventory,
   markInventoryOwned,
   markInventoryUnowned,
+  reloadPaintRegistry,
   searchPaintCatalog,
   showPaint,
   matchPaintByColor,
@@ -59,6 +60,16 @@ test('inventory mutations persist and inventory list reflects them', async () =>
   assert.equal(ownResult.status, 'updated');
   assert.deepEqual(listResult.items.map((item) => item.id), ['citadel/abaddon-black']);
   assert.equal(unownResult.status, 'updated');
+});
+
+test('reloadPaintRegistry returns the freshly loaded registry', async () => {
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-'));
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  await initPaintRegistry({ registryPath: inventoryPath });
+
+  const reloaded = await reloadPaintRegistry({ registryPath: inventoryPath });
+  assert.ok(reloaded.registry);
+  assert.equal(reloaded.registry.version, 1);
 });
 
 test('match services return owned-first structured results', async () => {

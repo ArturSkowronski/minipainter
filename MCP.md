@@ -119,88 +119,133 @@ Rank paints from a semantic description such as `bone` or `silver metallic`.
    server.
 
 To point the stdio server at a non-default inventory file, pass `cwd` in the
-MCP server entry or set the `WARPAINT_INVENTORY_PATH` env var on the spawned
-process.
+MCP server entry or set the `INVENTORY_PATH` env var on the spawned process.
 
 ## Remote (HTTP) — Claude mobile / web
 
-The HTTP transport is a single endpoint:
+The HTTP transport exposes three paths:
 
-- `POST /mcp` — Streamable HTTP MCP, requires `Authorization: Bearer <token>`
-- `GET /health` — returns `warpaint-mcp ok`, no auth
+- `POST /mcp` — Streamable HTTP MCP. **No auth yet** — anyone with the URL
+  can call tools. Use URL obscurity and network controls until per-user auth
+  lands.
+- `GET /health` — returns `{"status":"ok"}`, no auth.
+- `GET`/`POST /inventory` — bearer-token-protected inventory sync. Requires
+  `Authorization: Bearer <INVENTORY_SYNC_TOKEN>`. Returns `503` when the
+  token env is not set on the server (sync is opt-in).
 
-The server is stateless: each request creates a fresh transport and server
-pair. There is no session ID and no SSE replay.
+The MCP server is stateless: each request creates a fresh transport and
+server pair. There is no session ID and no SSE replay.
 
 ### Run locally
 
 ```bash
-export WARPAINT_TOKEN=$(openssl rand -hex 32)
-export PORT=8080
+export INVENTORY_SYNC_TOKEN=$(openssl rand -hex 32)
+export PORT=3000
+export INVENTORY_PATH=$HOME/.warpaint/inventory.json
 npm run mcp:http
 ```
 
 Smoke test:
 
 ```bash
-curl -s -X POST http://localhost:8080/mcp \
-  -H "Authorization: Bearer $WARPAINT_TOKEN" \
+# MCP tools/list (no auth)
+curl -s -X POST http://localhost:3000/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+
+# Read inventory
+curl -s -H "Authorization: Bearer $INVENTORY_SYNC_TOKEN" \
+     http://localhost:3000/inventory
+
+# Push a new inventory
+curl -s -X POST http://localhost:3000/inventory \
+     -H "Authorization: Bearer $INVENTORY_SYNC_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{"version":1,"owned":["army_painter/holy-white"]}'
 ```
+
+### Sync from the CLI
+
+The `warpaint` CLI ships a sync subcommand that pushes/pulls inventory to/from
+the deployed MCP. One-time setup:
+
+```bash
+warpaint sync add default \
+  --url https://<your-host> \
+  --token <INVENTORY_SYNC_TOKEN>
+```
+
+Then:
+
+```bash
+warpaint sync push              # upload local → remote
+warpaint sync pull --force      # overwrite local from remote
+```
+
+Remote config lives in `~/.warpaint/remotes.json`.
 
 ### Deploy
 
-A minimal Fly.io recipe lives in [docs/deploy-fly.md](docs/deploy-fly.md). The
+The Fly.io recipe lives in [docs/deploy-fly.md](docs/deploy-fly.md). The
 shipped `Dockerfile` and `fly.toml` mount a volume at `/data` so
-`inventory.json` survives restarts.
+`inventory.json` survives restarts. `INVENTORY_PATH` is preset to
+`/data/inventory.json` in the image.
 
 ### Connect Claude
 
 In Claude (mobile, web, or desktop), add a custom MCP connector:
 
 - URL: `https://<your-host>/mcp`
-- Header: `Authorization: Bearer <your token>`
+
+No `Authorization` header is needed for `/mcp` at the moment.
 
 ## Environment variables (HTTP server)
 
 | Variable | Required | Default | Purpose |
 |---|---|---|---|
-| `WARPAINT_TOKEN` | yes | — | Bearer token; the server refuses to start without it |
-| `PORT` | no | `8080` | TCP port |
-| `HOST` | no | `0.0.0.0` | Bind address |
-| `WARPAINT_INVENTORY_PATH` | no | `~/.warpaint/inventory.json` | Path to the inventory file |
+| `INVENTORY_SYNC_TOKEN` | for `/inventory` | — | Bearer token protecting `GET`/`POST /inventory`; when unset, the endpoint returns 503 (sync disabled) |
+| `INVENTORY_PATH` | no | `~/.warpaint/inventory.json` locally, `/data/inventory.json` in the Docker image | Path to the inventory file |
+| `INVENTORY_JSON` | no | — | One-time seed JSON; written to disk only if `INVENTORY_PATH` is absent on boot, ignored on subsequent loads (a warning is logged) |
+| `WARPAINT_INVENTORY_JSON` | no | — | Legacy alias for `INVENTORY_JSON` |
+| `MCP_SERVER_NAME` | no | `paint-inventory` | Name shown in MCP handshake and startup log |
+| `PORT` | no | `3000` | TCP port |
 
 ## Auth model
 
-The HTTP server enforces one static bearer token (`WARPAINT_TOKEN`). There is
-no per-user identity yet — anyone with the token reads and writes the same
-inventory. Treat the token like a password: rotate via `fly secrets set
-WARPAINT_TOKEN=...` (or your hosting equivalent).
+- `/mcp` — currently unauthenticated. Per-user OAuth is planned, out of scope
+  for this iteration.
+- `/inventory` — single shared bearer token via `INVENTORY_SYNC_TOKEN`. Anyone
+  with the token reads and writes the same inventory. Treat the token like a
+  password: rotate via `fly secrets set INVENTORY_SYNC_TOKEN=...`.
 
-OAuth and per-user storage are planned but out of scope for the current
-iteration.
+## Persistence model
 
-## Sync vs. local CLI
+`INVENTORY_PATH` is the source of truth. `INVENTORY_JSON` is a seed used only
+when the file doesn't exist on boot — once the file is written, the env var
+is ignored on subsequent loads (a warning is logged). Tool calls
+(`inventory_mark_owned`, `inventory_mark_unowned`) and `POST /inventory` both
+write to `INVENTORY_PATH` atomically (tmp + rename).
 
-The remote HTTP server and the local CLI each write to their own
-`inventory.json`. They are not synced. If you toggle ownership on the
-deployed instance from Claude mobile, your laptop's
-`~/.warpaint/inventory.json` will not see the change until a sync layer is
-added.
-
-A proposed sync design (per-paint `updatedAt`, last-write-wins, tombstones for
-unowned) is sketched in conversation notes — not yet implemented.
+`POST /inventory` triggers a server-side reload of the registry after the
+write. If the reload fails (schema problem in the pushed body), the response
+is 500 with a clear message — the disk has the new data but the live server
+sees a stale registry until restart.
 
 ## Troubleshooting
 
-- `401 unauthorized` — `Authorization` header missing or token mismatch.
-  Compare with the value of `WARPAINT_TOKEN` on the server.
-- `404 not_found` on a path other than `/mcp` / `/health` — only those two
-  paths are served.
-- `invalid_json` on `POST /mcp` — request body is not valid JSON.
+- `401 unauthorized` on `/inventory` — `Authorization` header missing or
+  token mismatch. Compare with `INVENTORY_SYNC_TOKEN` on the server.
+- `503 sync disabled` on `/inventory` — `INVENTORY_SYNC_TOKEN` is not set on
+  the server. Set it (and redeploy / restart) to enable sync.
+- `404 Not Found` on a path other than `/mcp` / `/health` / `/inventory` —
+  only those three paths are served.
+- `400 invalid JSON body` on `POST /inventory` — request body is not valid
+  JSON. Validate with `jq` first.
+- `400 invalid inventory shape` on `POST /inventory` — body parses but
+  doesn't match `{ version: 1, owned: string[] }`.
+- `500 inventory persisted but registry reload failed; restart the server` —
+  POST wrote the file successfully, but reloading it into the live registry
+  failed. Disk is the source of truth; restart the server to recover.
 - Claude shows no tools after connecting — confirm the URL ends with `/mcp`
   and that `GET /health` returns 200 from the same host.
-- `WARPAINT_TOKEN is required. Refusing to start without auth.` — set the env
-  var before starting `warpaint-mcp-http`.

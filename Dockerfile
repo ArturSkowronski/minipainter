@@ -4,5 +4,6 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 COPY src/ ./src/
 COPY data/ ./data/
+ENV INVENTORY_PATH=/data/inventory.json
 EXPOSE 3000
 CMD ["node", "src/mcp-http-server.mjs"]

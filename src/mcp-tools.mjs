@@ -145,9 +145,13 @@ export function getMcpToolDefinitions() {
   ];
 }
 
+export function resolveMcpServerName() {
+  return process.env.MCP_SERVER_NAME || 'paint-inventory';
+}
+
 export function createMcpServer(baseOptions = {}) {
   const server = new McpServer({
-    name: 'warpaint',
+    name: resolveMcpServerName(),
     version: '0.1.0',
   });
   const handlers = createMcpToolHandlers(baseOptions);

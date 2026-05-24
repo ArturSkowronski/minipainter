@@ -1,4 +1,4 @@
-import test from 'node:test';
+import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
@@ -14,6 +14,23 @@ import {
 async function makeTempDir() {
   return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-'));
 }
+
+let savedInventoryJson;
+let savedWarpaintInventoryJson;
+
+before(() => {
+  savedInventoryJson = process.env.INVENTORY_JSON;
+  savedWarpaintInventoryJson = process.env.WARPAINT_INVENTORY_JSON;
+  delete process.env.INVENTORY_JSON;
+  delete process.env.WARPAINT_INVENTORY_JSON;
+});
+
+after(() => {
+  if (savedInventoryJson === undefined) delete process.env.INVENTORY_JSON;
+  else process.env.INVENTORY_JSON = savedInventoryJson;
+  if (savedWarpaintInventoryJson === undefined) delete process.env.WARPAINT_INVENTORY_JSON;
+  else process.env.WARPAINT_INVENTORY_JSON = savedWarpaintInventoryJson;
+});
 
 test('loadBuiltInCatalog returns both supported providers with paints', async () => {
   const catalog = await loadBuiltInCatalog();
@@ -68,7 +85,7 @@ test('loadRegistry rejects malformed inventory shape', async () => {
     JSON.stringify({ version: 1, owned: [{ not: 'a string' }] }, null, 2),
   );
 
-  await assert.rejects(() => loadRegistry(inventoryPath), /Invalid inventory shape/);
+  await assert.rejects(() => loadRegistry(inventoryPath), /invalid inventory shape/i);
 });
 
 test('loadRegistry warns about owned ids that no longer exist in the catalog', async () => {
@@ -117,4 +134,76 @@ test('initRegistryIfMissing migrates owned state from a legacy registry.json', a
 
   assert.equal(result.migratedFromLegacy, true);
   assert.deepEqual(inventory.owned, ['citadel/abaddon-black']);
+});
+
+test('seeds inventory from INVENTORY_JSON when file is absent, then disk wins', async () => {
+  const before = process.env.INVENTORY_JSON;
+  const dir = await makeTempDir();
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const seed = JSON.stringify({ version: 1, owned: ['army_painter/holy-white'] });
+
+  process.env.INVENTORY_JSON = seed;
+  try {
+    const first = await initRegistryIfMissing(inventoryPath);
+    assert.equal(first.created, true);
+
+    const owned = first.registry.catalog.paints.filter((p) => p.owned).map((p) => p.id);
+    assert.deepEqual(owned, ['army_painter/holy-white']);
+
+    const onDisk = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
+    assert.deepEqual(onDisk, { version: 1, owned: ['army_painter/holy-white'] });
+
+    // Change the env to something else; on re-init the existing disk file must win.
+    process.env.INVENTORY_JSON = JSON.stringify({ version: 1, owned: [] });
+    const second = await initRegistryIfMissing(inventoryPath);
+    assert.equal(second.created, false);
+    const stillOwned = second.registry.catalog.paints
+      .filter((p) => p.owned)
+      .map((p) => p.id);
+    assert.deepEqual(stillOwned, ['army_painter/holy-white']);
+  } finally {
+    if (before === undefined) delete process.env.INVENTORY_JSON;
+    else process.env.INVENTORY_JSON = before;
+  }
+});
+
+test('saveRegistry writes to disk even when INVENTORY_JSON env was used as seed', async () => {
+  const before = process.env.INVENTORY_JSON;
+  const dir = await makeTempDir();
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  process.env.INVENTORY_JSON = JSON.stringify({ version: 1, owned: [] });
+  try {
+    const { registry } = await initRegistryIfMissing(inventoryPath);
+    const target = registry.catalog.paints.find((p) => p.id === 'army_painter/holy-white');
+    assert.ok(target);
+    target.owned = true;
+
+    await saveRegistry(inventoryPath, registry);
+
+    const onDisk = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
+    assert.deepEqual(onDisk.owned, ['army_painter/holy-white']);
+  } finally {
+    if (before === undefined) delete process.env.INVENTORY_JSON;
+    else process.env.INVENTORY_JSON = before;
+  }
+});
+
+test('WARPAINT_INVENTORY_JSON is honored as an alias for INVENTORY_JSON', async () => {
+  const beforeNew = process.env.INVENTORY_JSON;
+  const beforeOld = process.env.WARPAINT_INVENTORY_JSON;
+  delete process.env.INVENTORY_JSON;
+  process.env.WARPAINT_INVENTORY_JSON = JSON.stringify({ version: 1, owned: ['army_painter/holy-white'] });
+
+  const dir = await makeTempDir();
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+
+  try {
+    const { registry } = await initRegistryIfMissing(inventoryPath);
+    const owned = registry.catalog.paints.filter((p) => p.owned).map((p) => p.id);
+    assert.deepEqual(owned, ['army_painter/holy-white']);
+  } finally {
+    if (beforeNew !== undefined) process.env.INVENTORY_JSON = beforeNew;
+    if (beforeOld === undefined) delete process.env.WARPAINT_INVENTORY_JSON;
+    else process.env.WARPAINT_INVENTORY_JSON = beforeOld;
+  }
 });

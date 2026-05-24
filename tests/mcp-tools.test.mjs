@@ -5,8 +5,10 @@ import os from 'node:os';
 import path from 'node:path';
 
 import {
+  createMcpServer,
   createMcpToolHandlers,
   getMcpToolDefinitions,
+  resolveMcpServerName,
 } from '../src/mcp-tools.mjs';
 
 async function makeWorkspace() {
@@ -63,6 +65,34 @@ test('MCP handlers expose match tools', async () => {
 
   assert.equal(colorResult.items[0].id, 'citadel/abaddon-black');
   assert.ok(describeResult.items.length >= 1);
+});
+
+test('resolveMcpServerName reads MCP_SERVER_NAME env or defaults to paint-inventory', () => {
+  const before = process.env.MCP_SERVER_NAME;
+  try {
+    delete process.env.MCP_SERVER_NAME;
+    assert.equal(resolveMcpServerName(), 'paint-inventory');
+
+    process.env.MCP_SERVER_NAME = 'custom-name';
+    assert.equal(resolveMcpServerName(), 'custom-name');
+  } finally {
+    if (before === undefined) delete process.env.MCP_SERVER_NAME;
+    else process.env.MCP_SERVER_NAME = before;
+  }
+});
+
+test('createMcpServer instantiates without throwing under default and custom names', () => {
+  const before = process.env.MCP_SERVER_NAME;
+  try {
+    delete process.env.MCP_SERVER_NAME;
+    assert.doesNotThrow(() => createMcpServer());
+
+    process.env.MCP_SERVER_NAME = 'another-name';
+    assert.doesNotThrow(() => createMcpServer());
+  } finally {
+    if (before === undefined) delete process.env.MCP_SERVER_NAME;
+    else process.env.MCP_SERVER_NAME = before;
+  }
 });
 
 test('README documents local Claude Desktop MCP setup', async () => {
