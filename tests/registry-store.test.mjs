@@ -118,3 +118,52 @@ test('initRegistryIfMissing migrates owned state from a legacy registry.json', a
   assert.equal(result.migratedFromLegacy, true);
   assert.deepEqual(inventory.owned, ['citadel/abaddon-black']);
 });
+
+test('seeds inventory from INVENTORY_JSON when file is absent, then disk wins', async () => {
+  const before = process.env.INVENTORY_JSON;
+  const dir = await makeTempDir();
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const seed = JSON.stringify({ version: 1, owned: ['army_painter/holy-white'] });
+
+  process.env.INVENTORY_JSON = seed;
+  try {
+    const first = await initRegistryIfMissing(inventoryPath);
+    assert.equal(first.created, true);
+
+    const owned = first.registry.catalog.paints.filter((p) => p.owned).map((p) => p.id);
+    assert.deepEqual(owned, ['army_painter/holy-white']);
+
+    const onDisk = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
+    assert.deepEqual(onDisk, { version: 1, owned: ['army_painter/holy-white'] });
+
+    // Change the env to something else; disk file must win on subsequent load.
+    process.env.INVENTORY_JSON = JSON.stringify({ version: 1, owned: [] });
+    const second = await loadRegistry(inventoryPath);
+    const stillOwned = second.catalog.paints.filter((p) => p.owned).map((p) => p.id);
+    assert.deepEqual(stillOwned, ['army_painter/holy-white']);
+  } finally {
+    if (before === undefined) delete process.env.INVENTORY_JSON;
+    else process.env.INVENTORY_JSON = before;
+  }
+});
+
+test('saveRegistry writes to disk even when INVENTORY_JSON env was used as seed', async () => {
+  const before = process.env.INVENTORY_JSON;
+  const dir = await makeTempDir();
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  process.env.INVENTORY_JSON = JSON.stringify({ version: 1, owned: [] });
+  try {
+    const { registry } = await initRegistryIfMissing(inventoryPath);
+    const target = registry.catalog.paints.find((p) => p.id === 'army_painter/holy-white');
+    assert.ok(target);
+    target.owned = true;
+
+    await saveRegistry(inventoryPath, registry);
+
+    const onDisk = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
+    assert.deepEqual(onDisk.owned, ['army_painter/holy-white']);
+  } finally {
+    if (before === undefined) delete process.env.INVENTORY_JSON;
+    else process.env.INVENTORY_JSON = before;
+  }
+});

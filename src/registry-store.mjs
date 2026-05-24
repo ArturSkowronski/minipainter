@@ -63,7 +63,7 @@ function composeRegistry(catalog, ownedIds) {
 }
 
 function readInventoryFromEnv() {
-  const raw = process.env.WARPAINT_INVENTORY_JSON;
+  const raw = process.env.INVENTORY_JSON || process.env.WARPAINT_INVENTORY_JSON;
   if (!raw) return null;
   const inventory = JSON.parse(raw);
   validateInventory(inventory);
@@ -71,8 +71,6 @@ function readInventoryFromEnv() {
 }
 
 async function readInventoryFile(inventoryPath) {
-  const fromEnv = readInventoryFromEnv();
-  if (fromEnv) return fromEnv;
   const raw = await fs.readFile(inventoryPath, 'utf8');
   const inventory = JSON.parse(raw);
   validateInventory(inventory);
@@ -118,8 +116,6 @@ export async function loadRegistry(inventoryPath, options = {}) {
 }
 
 export async function saveRegistry(inventoryPath, registry) {
-  if (process.env.WARPAINT_INVENTORY_JSON) return;
-
   const owned = registry.catalog.paints
     .filter((paint) => paint.owned)
     .map((paint) => paint.id)
@@ -135,6 +131,11 @@ export async function saveRegistry(inventoryPath, registry) {
 export async function initRegistryIfMissing(inventoryPath) {
   try {
     const registry = await loadRegistry(inventoryPath);
+    if (process.env.INVENTORY_JSON || process.env.WARPAINT_INVENTORY_JSON) {
+      console.warn(
+        `warpaint: INVENTORY_JSON env is set but ${inventoryPath} already exists — env ignored, disk is source of truth.`,
+      );
+    }
     return { created: false, registry };
   } catch (error) {
     if (error && error.code !== 'ENOENT') {
@@ -142,8 +143,9 @@ export async function initRegistryIfMissing(inventoryPath) {
     }
   }
 
-  const migrated = await tryMigrateLegacyRegistry(inventoryPath);
-  const owned = migrated || [];
+  const seeded = readInventoryFromEnv();
+  const migrated = seeded ? null : await tryMigrateLegacyRegistry(inventoryPath);
+  const owned = seeded ? seeded.owned : (migrated || []);
 
   await fs.mkdir(path.dirname(inventoryPath), { recursive: true });
   await fs.writeFile(
@@ -152,5 +154,5 @@ export async function initRegistryIfMissing(inventoryPath) {
   );
 
   const registry = await loadRegistry(inventoryPath);
-  return { created: true, registry, migratedFromLegacy: Boolean(migrated) };
+  return { created: true, registry, migratedFromLegacy: Boolean(migrated && !seeded) };
 }
