@@ -3,12 +3,13 @@
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
-import { resolveRegistryPath } from './config.mjs';
+import { resolveRegistryPath, resolveRemotesPath } from './config.mjs';
 import { renderResult } from './output.mjs';
 import { runCatalogCommand } from './commands/catalog.mjs';
 import { runPaintCommand } from './commands/paint.mjs';
 import { runInventoryCommand } from './commands/inventory.mjs';
 import { runMatchCommand } from './commands/match.mjs';
+import { runSyncCommand } from './commands/sync.mjs';
 import { loadRegistry, saveRegistry } from './registry-store.mjs';
 import { runTui } from './tui.mjs';
 
@@ -28,6 +29,10 @@ const COMMANDS = {
   inventory: runInventoryCommand,
   match: runMatchCommand,
   tui: runTuiCommand,
+  sync: (args, context) => runSyncCommand(args, {
+    inventoryPath: context.registryPath,
+    remotesPath: context.remotesPath,
+  }),
 };
 
 function splitJsonFlag(args) {
@@ -55,6 +60,7 @@ export async function runCli(argv, options = {}) {
     const result = await handler(rest, {
       cwd,
       registryPath: resolveRegistryPath(options.cwd ? { cwd: options.cwd } : {}),
+      remotesPath: resolveRemotesPath(options.cwd ? { cwd: options.cwd } : {}),
     });
 
     return {

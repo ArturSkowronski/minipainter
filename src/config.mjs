@@ -15,3 +15,13 @@ export function resolveInventoryPath(options = {}) {
 
 export const getDefaultRegistryPath = getDefaultInventoryPath;
 export const resolveRegistryPath = resolveInventoryPath;
+
+export function getDefaultRemotesPath() {
+  return path.join(os.homedir(), '.warpaint', 'remotes.json');
+}
+
+export function resolveRemotesPath(options = {}) {
+  if (options.remotesPath) return options.remotesPath;
+  if (options.cwd) return path.join(options.cwd, '.warpaint', 'remotes.json');
+  return getDefaultRemotesPath();
+}
