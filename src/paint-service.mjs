@@ -39,6 +39,12 @@ export async function initPaintRegistry(options = {}) {
   return { created: result.created, registry: result.registry };
 }
 
+export async function reloadPaintRegistry(options = {}) {
+  const registryPath = getRegistryPath(options);
+  const registry = await loadRegistry(registryPath);
+  return { registry };
+}
+
 export async function searchPaintCatalog(options = {}) {
   const registry = await loadExistingRegistry(options);
   const items = searchPaints(registry, options.query || '', {
