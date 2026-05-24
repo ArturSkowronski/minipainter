@@ -315,7 +315,47 @@ In Claude (mobile or web), add a custom connector:
 ### Known limitations
 
 - Single user, one shared token. Anyone with the token has full read/write.
-- No sync yet between the remote inventory and your local
-  `~/.warpaint/inventory.json` — they are independent files.
 - Stateless transport: no long-running SSE tool streams (warpaint tools are
   fast so this is fine).
+
+## Self-hosting your own MCP
+
+The MCP server is generic — only the CLI (`warpaint`) is branded. To run your
+own instance:
+
+1. Fork or clone the repo.
+2. (Optional) rename your Fly app in `fly.toml`.
+3. Create a Fly volume and set secrets:
+
+   ```bash
+   fly volumes create inventory_data --size 1 --region <your-region>
+   fly secrets set INVENTORY_SYNC_TOKEN=$(openssl rand -hex 24)
+   # Optional one-time seed:
+   fly secrets set INVENTORY_JSON="$(cat ~/.warpaint/inventory.json)"
+   ```
+
+4. (Optional) name your MCP server (shown in the MCP handshake and startup
+   logs):
+
+   ```bash
+   fly secrets set MCP_SERVER_NAME=my-paints
+   ```
+
+5. Deploy:
+
+   ```bash
+   fly deploy
+   ```
+
+6. Register the remote in your local CLI and sync:
+
+   ```bash
+   warpaint sync add default \
+     --url https://my-app.fly.dev \
+     --token <token-from-step-3>
+   warpaint sync push
+   ```
+
+After this, your local inventory and the deployed MCP stay in sync via
+`warpaint sync push` (upload local → remote) and `warpaint sync pull --force`
+(overwrite local from remote).
