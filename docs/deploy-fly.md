@@ -85,3 +85,27 @@ In Claude (mobile or web) add a custom MCP connector:
   `inventory.json` on the Fly volume, separate from `~/.warpaint/inventory.json`.
 - Stateless transport: no SSE streaming of long-running tool results
   (warpaint tools are fast, so this is fine).
+
+## Persistent Inventory (v2)
+
+Inventory now lives on a Fly volume mounted at `/data`. Before the first deploy
+that uses persistent storage, create the volume:
+
+    fly volumes create inventory_data --size 1 --region arn
+
+Pick a single region matching `primary_region` in `fly.toml`. After the volume
+exists, deploy normally:
+
+    fly deploy
+
+The container reads `INVENTORY_PATH` (defaulted to `/data/inventory.json` in
+the Docker image). If the file is absent, the server seeds it from
+`INVENTORY_JSON` (or the legacy `WARPAINT_INVENTORY_JSON`) on first boot.
+
+To bootstrap from your local inventory:
+
+    fly secrets set INVENTORY_JSON="$(cat ~/.warpaint/inventory.json)"
+
+After the first boot, the volume is the source of truth — the env var is
+ignored on subsequent loads (a warning is logged). Use the sync CLI for
+ongoing updates (see `warpaint sync --help`).
