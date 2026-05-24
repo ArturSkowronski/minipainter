@@ -35,3 +35,27 @@ test('resolveInventoryPath falls back to home when no overrides are provided', (
     path.join(os.homedir(), '.warpaint', 'inventory.json'),
   );
 });
+
+test('resolveInventoryPath honors INVENTORY_PATH env var over defaults', () => {
+  const before = process.env.INVENTORY_PATH;
+  process.env.INVENTORY_PATH = '/custom/inv.json';
+  try {
+    assert.equal(resolveInventoryPath(), '/custom/inv.json');
+    assert.equal(resolveInventoryPath({ cwd: '/tmp/foo' }), '/custom/inv.json');
+  } finally {
+    if (before === undefined) delete process.env.INVENTORY_PATH;
+    else process.env.INVENTORY_PATH = before;
+  }
+});
+
+test('resolveInventoryPath falls back to inventoryPath option, then cwd, then home', () => {
+  const before = process.env.INVENTORY_PATH;
+  delete process.env.INVENTORY_PATH;
+  try {
+    assert.equal(resolveInventoryPath({ inventoryPath: '/explicit' }), '/explicit');
+    assert.equal(resolveInventoryPath({ cwd: '/tmp/foo' }), '/tmp/foo/.warpaint/inventory.json');
+    assert.ok(resolveInventoryPath().endsWith('/.warpaint/inventory.json'));
+  } finally {
+    if (before !== undefined) process.env.INVENTORY_PATH = before;
+  }
+});
