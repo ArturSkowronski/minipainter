@@ -187,3 +187,23 @@ test('saveRegistry writes to disk even when INVENTORY_JSON env was used as seed'
     else process.env.INVENTORY_JSON = before;
   }
 });
+
+test('WARPAINT_INVENTORY_JSON is honored as an alias for INVENTORY_JSON', async () => {
+  const beforeNew = process.env.INVENTORY_JSON;
+  const beforeOld = process.env.WARPAINT_INVENTORY_JSON;
+  delete process.env.INVENTORY_JSON;
+  process.env.WARPAINT_INVENTORY_JSON = JSON.stringify({ version: 1, owned: ['army_painter/holy-white'] });
+
+  const dir = await makeTempDir();
+  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+
+  try {
+    const { registry } = await initRegistryIfMissing(inventoryPath);
+    const owned = registry.catalog.paints.filter((p) => p.owned).map((p) => p.id);
+    assert.deepEqual(owned, ['army_painter/holy-white']);
+  } finally {
+    if (beforeNew !== undefined) process.env.INVENTORY_JSON = beforeNew;
+    if (beforeOld === undefined) delete process.env.WARPAINT_INVENTORY_JSON;
+    else process.env.WARPAINT_INVENTORY_JSON = beforeOld;
+  }
+});
