@@ -1,4 +1,4 @@
-import test from 'node:test';
+import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import os from 'node:os';
 import path from 'node:path';
@@ -7,6 +7,18 @@ import {
   getDefaultInventoryPath,
   resolveInventoryPath,
 } from '../src/config.mjs';
+
+let savedInventoryPath;
+
+before(() => {
+  savedInventoryPath = process.env.INVENTORY_PATH;
+  delete process.env.INVENTORY_PATH;
+});
+
+after(() => {
+  if (savedInventoryPath === undefined) delete process.env.INVENTORY_PATH;
+  else process.env.INVENTORY_PATH = savedInventoryPath;
+});
 
 test('default inventory path lives in the user home .warpaint directory', () => {
   assert.equal(
@@ -48,7 +60,7 @@ test('resolveInventoryPath honors INVENTORY_PATH env var over defaults', () => {
   }
 });
 
-test('resolveInventoryPath falls back to inventoryPath option, then cwd, then home', () => {
+test('resolveInventoryPath without INVENTORY_PATH prefers inventoryPath option, then cwd, then home', () => {
   const before = process.env.INVENTORY_PATH;
   delete process.env.INVENTORY_PATH;
   try {
