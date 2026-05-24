@@ -1,4 +1,4 @@
-import test from 'node:test';
+import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
@@ -14,6 +14,23 @@ import {
 async function makeTempDir() {
   return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-'));
 }
+
+let savedInventoryJson;
+let savedWarpaintInventoryJson;
+
+before(() => {
+  savedInventoryJson = process.env.INVENTORY_JSON;
+  savedWarpaintInventoryJson = process.env.WARPAINT_INVENTORY_JSON;
+  delete process.env.INVENTORY_JSON;
+  delete process.env.WARPAINT_INVENTORY_JSON;
+});
+
+after(() => {
+  if (savedInventoryJson === undefined) delete process.env.INVENTORY_JSON;
+  else process.env.INVENTORY_JSON = savedInventoryJson;
+  if (savedWarpaintInventoryJson === undefined) delete process.env.WARPAINT_INVENTORY_JSON;
+  else process.env.WARPAINT_INVENTORY_JSON = savedWarpaintInventoryJson;
+});
 
 test('loadBuiltInCatalog returns both supported providers with paints', async () => {
   const catalog = await loadBuiltInCatalog();
@@ -136,10 +153,13 @@ test('seeds inventory from INVENTORY_JSON when file is absent, then disk wins', 
     const onDisk = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
     assert.deepEqual(onDisk, { version: 1, owned: ['army_painter/holy-white'] });
 
-    // Change the env to something else; disk file must win on subsequent load.
+    // Change the env to something else; on re-init the existing disk file must win.
     process.env.INVENTORY_JSON = JSON.stringify({ version: 1, owned: [] });
-    const second = await loadRegistry(inventoryPath);
-    const stillOwned = second.catalog.paints.filter((p) => p.owned).map((p) => p.id);
+    const second = await initRegistryIfMissing(inventoryPath);
+    assert.equal(second.created, false);
+    const stillOwned = second.registry.catalog.paints
+      .filter((p) => p.owned)
+      .map((p) => p.id);
     assert.deepEqual(stillOwned, ['army_painter/holy-white']);
   } finally {
     if (before === undefined) delete process.env.INVENTORY_JSON;
