@@ -5,10 +5,11 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 
 import { resolveInventoryPath } from './config.mjs';
 import { initPaintRegistry, reloadPaintRegistry } from './paint-service.mjs';
-import { createMcpServer } from './mcp-tools.mjs';
+import { createMcpServer, resolveMcpServerName } from './mcp-tools.mjs';
 import { handleInventorySync } from './inventory-sync.mjs';
 
 const PORT = process.env.PORT || 3000;
+const SERVER_NAME = resolveMcpServerName();
 const INVENTORY_PATH = resolveInventoryPath();
 const SYNC_TOKEN = process.env.INVENTORY_SYNC_TOKEN || null;
 
@@ -102,5 +103,5 @@ const httpServer = http.createServer(async (req, res) => {
 });
 
 httpServer.listen(PORT, () => {
-  console.log(`Paint inventory MCP HTTP server on port ${PORT}`);
+  console.log(`${SERVER_NAME} MCP HTTP server on port ${PORT}`);
 });

@@ -2,7 +2,7 @@
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 
-import { createMcpServer } from './mcp-tools.mjs';
+import { createMcpServer, resolveMcpServerName } from './mcp-tools.mjs';
 
 async function main() {
   const server = createMcpServer();
@@ -11,6 +11,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error('Warpaint MCP server error:', error);
+  console.error(`${resolveMcpServerName()} MCP server error:`, error);
   process.exit(1);
 });
