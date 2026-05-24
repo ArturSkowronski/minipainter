@@ -262,26 +262,29 @@ Suggested local flow:
 
 For Claude mobile or web, the stdio MCP server above is not reachable. Run
 `warpaint-mcp-http` instead — a Streamable HTTP MCP transport exposing the
-same tools behind a bearer token.
+same tools, plus `GET`/`POST /inventory` for syncing the local inventory.
 
 ### Local smoke test
 
 ```bash
-export WARPAINT_TOKEN=$(openssl rand -hex 32)
-export PORT=8080
-export WARPAINT_INVENTORY_PATH=$HOME/.warpaint/inventory.json
+export INVENTORY_SYNC_TOKEN=$(openssl rand -hex 32)
+export PORT=3000
+export INVENTORY_PATH=$HOME/.warpaint/inventory.json
 npm run mcp:http
 ```
 
 Then in another shell:
 
 ```bash
-curl -s http://localhost:8080/health
-curl -s -X POST http://localhost:8080/mcp \
-  -H "Authorization: Bearer $WARPAINT_TOKEN" \
+curl -s http://localhost:3000/health
+curl -s -X POST http://localhost:3000/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+
+# Sync endpoint (bearer-token protected)
+curl -s -H "Authorization: Bearer $INVENTORY_SYNC_TOKEN" \
+     http://localhost:3000/inventory
 ```
 
 ### Deploy to Fly.io
@@ -291,8 +294,8 @@ The repo ships a `Dockerfile` and `fly.toml`. Full recipe in
 
 ```bash
 fly launch --no-deploy --copy-config --name <your-app-name>
-fly volumes create warpaint_data --region fra --size 1
-fly secrets set WARPAINT_TOKEN="$(openssl rand -hex 32)"
+fly volumes create inventory_data --region <your-region> --size 1
+fly secrets set INVENTORY_SYNC_TOKEN="$(openssl rand -hex 32)"
 fly deploy
 ```
 
@@ -301,20 +304,25 @@ fly deploy
 In Claude (mobile or web), add a custom connector:
 
 - URL: `https://<your-app-name>.fly.dev/mcp`
-- Header: `Authorization: Bearer <your token>`
+
+The `/mcp` endpoint currently has no authentication — anyone with the URL can
+call tools. Use the obscurity of the URL plus Fly's network controls for now;
+add per-user auth before sharing the URL.
 
 ### Environment variables
 
 | Variable | Required | Purpose |
 |---|---|---|
-| `WARPAINT_TOKEN` | yes | Bearer token; the server refuses to start without it |
-| `PORT` | no (default `8080`) | TCP port to listen on |
-| `HOST` | no (default `0.0.0.0`) | Bind address |
-| `WARPAINT_INVENTORY_PATH` | no | Path to `inventory.json`; defaults to `~/.warpaint/inventory.json` |
+| `INVENTORY_SYNC_TOKEN` | for `/inventory` | Bearer token protecting `GET`/`POST /inventory`; when unset, sync returns 503 |
+| `INVENTORY_PATH` | no | Path to `inventory.json`; default `~/.warpaint/inventory.json` locally, `/data/inventory.json` in the Docker image |
+| `INVENTORY_JSON` | no | One-time seed JSON; only used when `INVENTORY_PATH` is absent on first boot |
+| `WARPAINT_INVENTORY_JSON` | no | Legacy alias of `INVENTORY_JSON` |
+| `MCP_SERVER_NAME` | no | Server name in MCP handshake + startup log; default `paint-inventory` |
+| `PORT` | no (default `3000`) | TCP port to listen on |
 
 ### Known limitations
 
-- Single user, one shared token. Anyone with the token has full read/write.
+- `/mcp` has no authentication yet. The bearer token only protects `/inventory`.
 - Stateless transport: no long-running SSE tool streams (warpaint tools are
   fast so this is fine).
 
