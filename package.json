@@ -1,10 +1,10 @@
 {
-  "name": "warpaint-cli",
+  "name": "minipainting-cli",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "bin": {
-    "warpaint": "./src/cli.mjs",
+    "minipainting": "./src/cli.mjs",
     "warpaint-mcp": "./src/mcp-server.mjs",
     "warpaint-mcp-http": "./src/mcp-http-server.mjs"
   },

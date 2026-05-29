@@ -1,10 +1,10 @@
-# WARPAINT
+# MINIPAINTING
 
 > Forge Ledger for the painting bench.
 
 Site: [arturskowronski.github.io/warpaint-cli](https://arturskowronski.github.io/warpaint-cli/)
 
-`warpaint-cli` is a local-first paint registry for Warhammer hobby workflows. It exists for one practical reason: AI paint suggestions are much more useful when they understand the paints you actually own.
+`minipainting-cli` is a local-first paint registry for Warhammer hobby workflows. It exists for one practical reason: AI paint suggestions are much more useful when they understand the paints you actually own.
 
 The project gives you:
 
@@ -21,13 +21,13 @@ The TUI is designed as a `Forge Ledger`: heavy terminal framing, bold ASCII, and
 See: docs/assets/hero.txt
 ```
 
-![WARPAINT Forge Ledger Hero](docs/assets/hero.svg)
+![MINIPAINTING Forge Ledger Hero](docs/assets/hero.svg)
 
 ## Why This Exists
 
 Most paint advice workflows break at the same point: they recommend paints you do not have on hand.
 
-`warpaint-cli` is built to solve that exact problem:
+`minipainting-cli` is built to solve that exact problem:
 
 - keep a local record of what is in your paint rack
 - search it quickly by name, role, family, and approximate color
@@ -38,7 +38,7 @@ The long-term goal is not “AI picks random colors for miniatures.” The goal 
 ## Feature Highlights
 
 - `Owned-first matching`: lookups and recommendations can prioritize paints you already have.
-- `Catalog in repo, inventory in your home`: paint records live in `data/catalog/`; what you own lives in `~/.warpaint/inventory.json` and follows you across projects.
+- `Catalog in repo, inventory in your home`: paint records live in `data/catalog/`; what you own lives in `~/.minipainting/inventory.json` and follows you across projects.
 - `RGB-aware search`: approximate RGB values help with nearest-color matching.
 - `Forge Ledger TUI`: terminal UI styled as a grimdark inventory ledger.
 - `Agent-friendly CLI`: deterministic command output for future AI integration.
@@ -87,7 +87,7 @@ See: docs/assets/cli.txt
 
 ## Install
 
-`warpaint-cli` is not published to npm. Clone the repo and install dependencies:
+`minipainting-cli` is not published to npm. Clone the repo and install dependencies:
 
 ```bash
 git clone https://github.com/ArturSkowronski/warpaint-cli.git
@@ -100,14 +100,14 @@ Requirements:
 - Node.js 20 or newer
 - POSIX-ish shell (Linux, macOS, WSL)
 
-Optional: expose the binaries on your `PATH` so you can call `warpaint` from anywhere:
+Optional: expose the binaries on your `PATH` so you can call `minipainting` from anywhere:
 
 ```bash
 npm link
-warpaint --help
+minipainting --help
 ```
 
-Initialize the local inventory once (creates `~/.warpaint/inventory.json`):
+Initialize the local inventory once (creates `~/.minipainting/inventory.json`; legacy `~/.warpaint/` is auto-migrated on first run):
 
 ```bash
 node src/cli.mjs catalog sync
@@ -121,7 +121,7 @@ After that you have three usage modes:
 
 ## Quickstart
 
-Initialize the local inventory at `~/.warpaint/inventory.json`:
+Initialize the local inventory at `~/.minipainting/inventory.json`:
 
 ```bash
 node src/cli.mjs catalog sync
@@ -211,11 +211,12 @@ Planned later:
 ## Technical Notes
 
 - Built-in catalog data lives in `data/catalog/` (Citadel and Army Painter, kept in version control)
-- Inventory file: `~/.warpaint/inventory.json` — stores only owned paint ids in the form `{ "version": 1, "owned": ["citadel/abaddon-black", ...] }`
+- Inventory file: `~/.minipainting/inventory.json` — stores only owned paint ids in the form `{ "version": 1, "owned": ["citadel/abaddon-black", ...] }`
 - The catalog and inventory are composed at runtime; saving never rewrites the catalog
 - IDs are stable by convention (provider + name slug); on load, owned ids missing from the catalog are reported as warnings instead of being silently dropped
-- A pre-existing project-local `.warpaint/registry.json` next to the inventory path is auto-migrated on first run
-- Override the inventory location at the API surface with `{ inventoryPath }` or `{ cwd }` (the latter resolves to `<cwd>/.warpaint/inventory.json`, which is what the test suite uses for isolation)
+- A pre-existing project-local `.minipainting/registry.json` next to the inventory path is auto-migrated on first run
+- Legacy `.warpaint/` data directories are auto-renamed to `.minipainting/` on first run (both home and project-local variants)
+- Override the inventory location at the API surface with `{ inventoryPath }` or `{ cwd }` (the latter resolves to `<cwd>/.minipainting/inventory.json`, which is what the test suite uses for isolation)
 - RGB values are approximate reference colors for matching, not a guarantee of final painted appearance
 - MCP entrypoint: `node src/mcp-server.mjs`
 - MCP helper script: `npm run mcp`
@@ -227,7 +228,7 @@ npm run generate:demo
 
 ## Claude Desktop MCP Setup
 
-`warpaint-cli` now includes a local MCP server so Claude Desktop can use your paint registry directly.
+`minipainting-cli` now includes a local MCP server so Claude Desktop can use your paint registry directly.
 
 Example local MCP config:
 
@@ -269,7 +270,7 @@ same tools, plus `GET`/`POST /inventory` for syncing the local inventory.
 ```bash
 export INVENTORY_SYNC_TOKEN=$(openssl rand -hex 32)
 export PORT=3000
-export INVENTORY_PATH=$HOME/.warpaint/inventory.json
+export INVENTORY_PATH=$HOME/.minipainting/inventory.json
 npm run mcp:http
 ```
 
@@ -314,7 +315,7 @@ add per-user auth before sharing the URL.
 | Variable | Required | Purpose |
 |---|---|---|
 | `INVENTORY_SYNC_TOKEN` | for `/inventory` | Bearer token protecting `GET`/`POST /inventory`; when unset, sync returns 503 |
-| `INVENTORY_PATH` | no | Path to `inventory.json`; default `~/.warpaint/inventory.json` locally, `/data/inventory.json` in the Docker image |
+| `INVENTORY_PATH` | no | Path to `inventory.json`; default `~/.minipainting/inventory.json` locally, `/data/inventory.json` in the Docker image |
 | `INVENTORY_JSON` | no | One-time seed JSON; only used when `INVENTORY_PATH` is absent on first boot |
 | `WARPAINT_INVENTORY_JSON` | no | Legacy alias of `INVENTORY_JSON` |
 | `MCP_SERVER_NAME` | no | Server name in MCP handshake + startup log; default `paint-inventory` |
@@ -323,12 +324,12 @@ add per-user auth before sharing the URL.
 ### Known limitations
 
 - `/mcp` has no authentication yet. The bearer token only protects `/inventory`.
-- Stateless transport: no long-running SSE tool streams (warpaint tools are
+- Stateless transport: no long-running SSE tool streams (the tools are
   fast so this is fine).
 
 ## Self-hosting your own MCP
 
-The MCP server is generic — only the CLI (`warpaint`) is branded. To run your
+The MCP server is generic — only the CLI (`minipainting`) is branded. To run your
 own instance:
 
 1. Fork or clone the repo.
@@ -339,7 +340,7 @@ own instance:
    fly volumes create inventory_data --size 1 --region <your-region>
    fly secrets set INVENTORY_SYNC_TOKEN=$(openssl rand -hex 24)
    # Optional one-time seed:
-   fly secrets set INVENTORY_JSON="$(cat ~/.warpaint/inventory.json)"
+   fly secrets set INVENTORY_JSON="$(cat ~/.minipainting/inventory.json)"
    ```
 
 4. (Optional) name your MCP server (shown in the MCP handshake and startup
@@ -358,12 +359,12 @@ own instance:
 6. Register the remote in your local CLI and sync:
 
    ```bash
-   warpaint sync add default \
+   minipainting sync add default \
      --url https://my-app.fly.dev \
      --token <token-from-step-3>
-   warpaint sync push
+   minipainting sync push
    ```
 
 After this, your local inventory and the deployed MCP stay in sync via
-`warpaint sync push` (upload local → remote) and `warpaint sync pull --force`
+`minipainting sync push` (upload local → remote) and `minipainting sync pull --force`
 (overwrite local from remote).

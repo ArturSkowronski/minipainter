@@ -137,7 +137,7 @@ function renderTerminalSvg(content) {
     `<circle cx="28" cy="28" r="5" fill="#8a3b2e"/>`,
     `<circle cx="46" cy="28" r="5" fill="#a17a39"/>`,
     `<circle cx="64" cy="28" r="5" fill="#4f6b45"/>`,
-    `<text x="${paddingX}" y="56" fill="#d9ccb8" font-family="Menlo, Consolas, monospace" font-size="14">warpaint-cli :: forge ledger capture</text>`,
+    `<text x="${paddingX}" y="56" fill="#d9ccb8" font-family="Menlo, Consolas, monospace" font-size="14">minipainting-cli :: forge ledger capture</text>`,
     `<g fill="#efe0c8" font-family="Menlo, Consolas, monospace" font-size="16" xml:space="preserve">${text}</g>`,
     '</svg>',
   ].join('');

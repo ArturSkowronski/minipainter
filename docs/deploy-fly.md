@@ -87,7 +87,7 @@ Fly's network controls until per-user auth lands.
 - `/mcp` is unauthenticated — anyone with the URL can call tools.
 - `/inventory` is protected by a single shared bearer token.
 - Stateless transport: no SSE streaming of long-running tool results
-  (warpaint tools are fast, so this is fine).
+  (minipainting tools are fast, so this is fine).
 
 ## Persistent Inventory (v2)
 
@@ -107,8 +107,8 @@ the Docker image). If the file is absent, the server seeds it from
 
 To bootstrap from your local inventory:
 
-    fly secrets set INVENTORY_JSON="$(cat ~/.warpaint/inventory.json)"
+    fly secrets set INVENTORY_JSON="$(cat ~/.minipainting/inventory.json)"
 
 After the first boot, the volume is the source of truth — the env var is
 ignored on subsequent loads (a warning is logged). Use the sync CLI for
-ongoing updates (see `warpaint sync --help`).
+ongoing updates (see `minipainting sync --help`).

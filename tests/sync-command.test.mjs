@@ -8,7 +8,7 @@ import http from 'node:http';
 import { runSyncCommand } from '../src/commands/sync.mjs';
 
 async function makeTempDir() {
-  return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-sync-cmd-'));
+  return fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-sync-cmd-'));
 }
 
 function startMockServer(handler) {

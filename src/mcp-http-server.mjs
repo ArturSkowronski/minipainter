@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
 import http from 'node:http';
+import os from 'node:os';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 
-import { resolveInventoryPath } from './config.mjs';
+import { migrateLegacyDataDir, resolveInventoryPath } from './config.mjs';
+
+if (!process.env.INVENTORY_PATH) migrateLegacyDataDir(os.homedir());
 import { initPaintRegistry, reloadPaintRegistry } from './paint-service.mjs';
 import { createMcpServer, resolveMcpServerName } from './mcp-tools.mjs';
 import { handleInventorySync } from './inventory-sync.mjs';

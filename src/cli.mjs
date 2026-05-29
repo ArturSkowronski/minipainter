@@ -3,7 +3,9 @@
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
-import { resolveRegistryPath, resolveRemotesPath } from './config.mjs';
+import os from 'node:os';
+
+import { migrateLegacyDataDir, resolveRegistryPath, resolveRemotesPath } from './config.mjs';
 import { renderResult } from './output.mjs';
 import { runCatalogCommand } from './commands/catalog.mjs';
 import { runPaintCommand } from './commands/paint.mjs';
@@ -45,6 +47,7 @@ function splitJsonFlag(args) {
 export async function runCli(argv, options = {}) {
   const { json, args } = splitJsonFlag(argv);
   const cwd = options.cwd || process.cwd();
+  migrateLegacyDataDir(options.cwd ? options.cwd : os.homedir());
   const [command, ...rest] = args;
   const handler = COMMANDS[command];
 

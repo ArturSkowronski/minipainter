@@ -12,7 +12,7 @@ import {
 } from '../src/registry-store.mjs';
 
 async function makeTempDir() {
-  return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-'));
+  return fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-'));
 }
 
 let savedInventoryJson;
@@ -44,7 +44,7 @@ test('loadBuiltInCatalog returns both supported providers with paints', async ()
 
 test('initRegistryIfMissing creates an empty inventory composed against the catalog', async () => {
   const dir = await makeTempDir();
-  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const inventoryPath = path.join(dir, '.minipainting', 'inventory.json');
 
   const created = await initRegistryIfMissing(inventoryPath);
   const registry = await loadRegistry(inventoryPath);
@@ -60,7 +60,7 @@ test('initRegistryIfMissing creates an empty inventory composed against the cata
 
 test('saveRegistry persists owned ids only and preserves them on reload', async () => {
   const dir = await makeTempDir();
-  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const inventoryPath = path.join(dir, '.minipainting', 'inventory.json');
   const initial = await initRegistryIfMissing(inventoryPath);
 
   const target = initial.registry.catalog.paints[0];
@@ -77,7 +77,7 @@ test('saveRegistry persists owned ids only and preserves them on reload', async 
 
 test('loadRegistry rejects malformed inventory shape', async () => {
   const dir = await makeTempDir();
-  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const inventoryPath = path.join(dir, '.minipainting', 'inventory.json');
 
   await fs.mkdir(path.dirname(inventoryPath), { recursive: true });
   await fs.writeFile(
@@ -90,7 +90,7 @@ test('loadRegistry rejects malformed inventory shape', async () => {
 
 test('loadRegistry warns about owned ids that no longer exist in the catalog', async () => {
   const dir = await makeTempDir();
-  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const inventoryPath = path.join(dir, '.minipainting', 'inventory.json');
 
   await fs.mkdir(path.dirname(inventoryPath), { recursive: true });
   await fs.writeFile(
@@ -112,8 +112,8 @@ test('loadRegistry warns about owned ids that no longer exist in the catalog', a
 
 test('initRegistryIfMissing migrates owned state from a legacy registry.json', async () => {
   const dir = await makeTempDir();
-  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
-  const legacyPath = path.join(dir, '.warpaint', 'registry.json');
+  const inventoryPath = path.join(dir, '.minipainting', 'inventory.json');
+  const legacyPath = path.join(dir, '.minipainting', 'registry.json');
 
   await fs.mkdir(path.dirname(legacyPath), { recursive: true });
   const catalog = await loadBuiltInCatalog();
@@ -139,7 +139,7 @@ test('initRegistryIfMissing migrates owned state from a legacy registry.json', a
 test('seeds inventory from INVENTORY_JSON when file is absent, then disk wins', async () => {
   const before = process.env.INVENTORY_JSON;
   const dir = await makeTempDir();
-  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const inventoryPath = path.join(dir, '.minipainting', 'inventory.json');
   const seed = JSON.stringify({ version: 1, owned: ['army_painter/holy-white'] });
 
   process.env.INVENTORY_JSON = seed;
@@ -170,7 +170,7 @@ test('seeds inventory from INVENTORY_JSON when file is absent, then disk wins', 
 test('saveRegistry writes to disk even when INVENTORY_JSON env was used as seed', async () => {
   const before = process.env.INVENTORY_JSON;
   const dir = await makeTempDir();
-  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const inventoryPath = path.join(dir, '.minipainting', 'inventory.json');
   process.env.INVENTORY_JSON = JSON.stringify({ version: 1, owned: [] });
   try {
     const { registry } = await initRegistryIfMissing(inventoryPath);
@@ -195,7 +195,7 @@ test('WARPAINT_INVENTORY_JSON is honored as an alias for INVENTORY_JSON', async 
   process.env.WARPAINT_INVENTORY_JSON = JSON.stringify({ version: 1, owned: ['army_painter/holy-white'] });
 
   const dir = await makeTempDir();
-  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const inventoryPath = path.join(dir, '.minipainting', 'inventory.json');
 
   try {
     const { registry } = await initRegistryIfMissing(inventoryPath);

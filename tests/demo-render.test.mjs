@@ -7,7 +7,7 @@ import path from 'node:path';
 import { createDemoRegistry, renderDemoAssets } from '../scripts/render-demo-output.mjs';
 
 async function makeTempDir() {
-  return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-demo-'));
+  return fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-demo-'));
 }
 
 test('createDemoRegistry creates stable demo state with owned paints', () => {
@@ -51,13 +51,13 @@ test('generated assets include forge ledger presentation and command output', as
   const cli = await fs.readFile(path.join(outputDir, 'cli.txt'), 'utf8');
   const heroSvg = await fs.readFile(path.join(outputDir, 'hero.svg'), 'utf8');
 
-  assert.match(hero, /WARPAINT/);
+  assert.match(hero, /MINIPAINTING/);
   assert.match(hero, /FORGE CATALOG/);
   assert.match(search, /Search Query: bone/i);
   assert.match(owned, /OWNED VIALS/);
   assert.match(cli, /inventory own/i);
   assert.match(heroSvg, /<svg/);
-  assert.match(heroSvg, /WARPAINT/);
+  assert.match(heroSvg, /MINIPAINTING/);
 });
 
 test('README references all generated demo assets and showcase sections', async () => {

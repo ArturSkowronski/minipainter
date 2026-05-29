@@ -79,7 +79,7 @@ test('renderTui includes the current view, filters, and selected detail panel', 
   });
   const rendered = renderTui(state);
 
-  assert.match(rendered, /WARPAINT/);
+  assert.match(rendered, /MINIPAINTING/);
   assert.match(rendered, /FORGE CATALOG/);
   assert.match(rendered, /SELECTED PIGMENT/);
   assert.match(rendered, /Search Query: bone/i);

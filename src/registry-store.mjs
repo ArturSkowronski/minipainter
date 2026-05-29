@@ -98,7 +98,7 @@ export async function loadRegistry(inventoryPath, options = {}) {
   if (orphans.length > 0) {
     const warn = options.onWarn || ((message) => console.warn(message));
     warn(
-      `warpaint: inventory references ${orphans.length} unknown paint id(s) not present in the catalog: ${orphans.join(', ')}`,
+      `minipainting: inventory references ${orphans.length} unknown paint id(s) not present in the catalog: ${orphans.join(', ')}`,
     );
   }
 
@@ -123,7 +123,7 @@ export async function initRegistryIfMissing(inventoryPath) {
     const registry = await loadRegistry(inventoryPath);
     if (process.env.INVENTORY_JSON || process.env.WARPAINT_INVENTORY_JSON) {
       console.warn(
-        `warpaint: INVENTORY_JSON env is set but ${inventoryPath} already exists — env ignored, disk is source of truth.`,
+        `minipainting: INVENTORY_JSON env is set but ${inventoryPath} already exists — env ignored, disk is source of truth.`,
       );
     }
     return { created: false, registry };

@@ -1,6 +1,6 @@
-# WARPAINT MCP
+# MINIPAINTING MCP
 
-`warpaint-cli` exposes its paint catalog and inventory through the
+`minipainting-cli` exposes its paint catalog and inventory through the
 [Model Context Protocol](https://modelcontextprotocol.io) so Claude (and other
 MCP-aware clients) can search paints, inspect them, and update what you own.
 
@@ -101,7 +101,7 @@ Rank paints from a semantic description such as `bone` or `silver metallic`.
 
 1. Install dependencies once: `npm install` in this repo.
 2. Initialize the inventory: `node src/cli.mjs catalog sync` (creates
-   `~/.warpaint/inventory.json`).
+   `~/.minipainting/inventory.json`; legacy `~/.warpaint/` is auto-migrated on first run).
 3. Add the server to Claude Desktop's MCP config:
 
 ```json
@@ -109,7 +109,7 @@ Rank paints from a semantic description such as `bone` or `silver metallic`.
   "mcpServers": {
     "warpaint": {
       "command": "node",
-      "args": ["/absolute/path/to/warpaint-cli/src/mcp-server.mjs"]
+      "args": ["/absolute/path/to/minipainting-cli/src/mcp-server.mjs"]
     }
   }
 }
@@ -141,7 +141,7 @@ server pair. There is no session ID and no SSE replay.
 ```bash
 export INVENTORY_SYNC_TOKEN=$(openssl rand -hex 32)
 export PORT=3000
-export INVENTORY_PATH=$HOME/.warpaint/inventory.json
+export INVENTORY_PATH=$HOME/.minipainting/inventory.json
 npm run mcp:http
 ```
 
@@ -167,11 +167,11 @@ curl -s -X POST http://localhost:3000/inventory \
 
 ### Sync from the CLI
 
-The `warpaint` CLI ships a sync subcommand that pushes/pulls inventory to/from
+The `minipainting` CLI ships a sync subcommand that pushes/pulls inventory to/from
 the deployed MCP. One-time setup:
 
 ```bash
-warpaint sync add default \
+minipainting sync add default \
   --url https://<your-host> \
   --token <INVENTORY_SYNC_TOKEN>
 ```
@@ -179,11 +179,11 @@ warpaint sync add default \
 Then:
 
 ```bash
-warpaint sync push              # upload local → remote
-warpaint sync pull --force      # overwrite local from remote
+minipainting sync push              # upload local → remote
+minipainting sync pull --force      # overwrite local from remote
 ```
 
-Remote config lives in `~/.warpaint/remotes.json`.
+Remote config lives in `~/.minipainting/remotes.json`.
 
 ### Deploy
 
@@ -205,7 +205,7 @@ No `Authorization` header is needed for `/mcp` at the moment.
 | Variable | Required | Default | Purpose |
 |---|---|---|---|
 | `INVENTORY_SYNC_TOKEN` | for `/inventory` | — | Bearer token protecting `GET`/`POST /inventory`; when unset, the endpoint returns 503 (sync disabled) |
-| `INVENTORY_PATH` | no | `~/.warpaint/inventory.json` locally, `/data/inventory.json` in the Docker image | Path to the inventory file |
+| `INVENTORY_PATH` | no | `~/.minipainting/inventory.json` locally, `/data/inventory.json` in the Docker image | Path to the inventory file |
 | `INVENTORY_JSON` | no | — | One-time seed JSON; written to disk only if `INVENTORY_PATH` is absent on boot, ignored on subsequent loads (a warning is logged) |
 | `WARPAINT_INVENTORY_JSON` | no | — | Legacy alias for `INVENTORY_JSON` |
 | `MCP_SERVER_NAME` | no | `paint-inventory` | Name shown in MCP handshake and startup log |

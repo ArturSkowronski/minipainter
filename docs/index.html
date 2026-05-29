@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WARPAINT — Forge Ledger for the painting bench</title>
-<meta name="description" content="warpaint-cli is a local-first paint registry for Warhammer hobby workflows. Owned-first matching, a grimdark TUI, and a local MCP server for Claude Desktop.">
+<title>MINIPAINTING — Forge Ledger for the painting bench</title>
+<meta name="description" content="minipainting-cli is a local-first paint registry for Warhammer hobby workflows. Owned-first matching, a grimdark TUI, and a local MCP server for Claude Desktop.">
 <meta name="color-scheme" content="dark">
-<meta property="og:title" content="WARPAINT — Forge Ledger for the painting bench">
+<meta property="og:title" content="MINIPAINTING — Forge Ledger for the painting bench">
 <meta property="og:description" content="Local-first paint registry for Warhammer hobby workflows. Owned-first matching, grimdark TUI, MCP server.">
 <meta property="og:image" content="assets/hero.svg">
 <meta property="og:type" content="website">
@@ -21,17 +21,10 @@
 <main>
 
   <section class="hero">
-    <pre class="banner" role="img" aria-label="WARPAINT">
+    <pre class="banner" role="img" aria-label="MINIPAINTING">
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
-║  ██╗    ██╗ █████╗ ██████╗ ██████╗  █████╗ ██╗███╗   ██╗████████╗            ║
-║  ██║    ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗██║████╗  ██║╚══██╔══╝            ║
-║  ██║ █╗ ██║███████║██████╔╝██████╔╝███████║██║██╔██╗ ██║   ██║               ║
-║  ██║███╗██║██╔══██║██╔══██╗██╔═══╝ ██╔══██║██║██║╚██╗██║   ██║               ║
-║  ╚███╔███╔╝██║  ██║██║  ██║██║     ██║  ██║██║██║ ╚████║   ██║               ║
-║   ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝               ║
-║                                                                              ║
-║                               WARPAINT                                       ║
+║                     ░▒▓█  MINIPAINTING  █▓▒░                                 ║
 ║                                                                              ║
 ║                    FORGE LEDGER :: INVENTORY FOR THE PAINTING BENCH          ║
 ║                                                                              ║
@@ -48,7 +41,7 @@
 
   <p>
     Most paint-advice workflows break at the same point: they recommend paints you do not have on hand.
-    <code>warpaint-cli</code> is a local-first paint registry built to fix exactly that — keep a deterministic
+    <code>minipainting-cli</code> is a local-first paint registry built to fix exactly that — keep a deterministic
     record of what is in your rack, search it by name, role, family, and approximate color, and prepare a stable
     inventory foundation for AI tools that should reason from your <em>actual</em> shelf first.
   </p>
@@ -66,7 +59,7 @@
     </article>
     <article class="card">
       <h3>Local registry</h3>
-      <p>Everything lives in a project-local <code>.warpaint/registry.json</code>. No cloud, no account, no telemetry.</p>
+      <p>Everything lives in a project-local <code>.minipainting/registry.json</code>. No cloud, no account, no telemetry.</p>
     </article>
     <article class="card">
       <h3>RGB-aware search</h3>
@@ -92,19 +85,19 @@
 
   <figure class="shot">
     <div class="chrome"><i></i><i></i><i></i></div>
-    <img src="assets/hero.svg" alt="WARPAINT TUI hero screen with banner, catalog, selected pigment panel, and command strip">
+    <img src="assets/hero.svg" alt="MINIPAINTING TUI hero screen with banner, catalog, selected pigment panel, and command strip">
     <figcaption>HERO SCREEN — banner, catalog, detail panel, ritual commands</figcaption>
   </figure>
 
   <figure class="shot">
     <div class="chrome"><i></i><i></i><i></i></div>
-    <img src="assets/search.svg" alt="WARPAINT TUI search view filtering for the query 'bone'">
+    <img src="assets/search.svg" alt="MINIPAINTING TUI search view filtering for the query 'bone'">
     <figcaption>SEARCH VIEW — filtered lookup for <code>bone</code></figcaption>
   </figure>
 
   <figure class="shot">
     <div class="chrome"><i></i><i></i><i></i></div>
-    <img src="assets/owned.svg" alt="WARPAINT TUI owned view showing only paints bound to inventory">
+    <img src="assets/owned.svg" alt="MINIPAINTING TUI owned view showing only paints bound to inventory">
     <figcaption>OWNED VIEW — only what is bound to your collection</figcaption>
   </figure>
 
@@ -112,7 +105,7 @@
 
   <figure class="shot">
     <div class="chrome"><i></i><i></i><i></i></div>
-    <img src="assets/cli.svg" alt="warpaint-cli command line flow showing search, ownership, and color match">
+    <img src="assets/cli.svg" alt="minipainting-cli command line flow showing search, ownership, and color match">
     <figcaption>CLI FLOW — search, ownership, color matching</figcaption>
   </figure>
 
@@ -143,7 +136,7 @@
   <div class="separator" id="mcp">═══════════════════════════ <b>CLAUDE DESKTOP MCP</b> ═══════════════════════════</div>
 
   <p>
-    <code>warpaint-cli</code> ships a local MCP server so Claude Desktop can read and update your paint registry directly.
+    <code>minipainting-cli</code> ships a local MCP server so Claude Desktop can read and update your paint registry directly.
     Drop this into your local MCP config:
   </p>
 
@@ -194,7 +187,7 @@
   </div>
 
   <footer>
-    <div>warpaint-cli — Forge Ledger :: <a href="https://github.com/arturskowronski/warpaint-cli">arturskowronski/warpaint-cli</a></div>
+    <div>minipainting-cli — Forge Ledger :: <a href="https://github.com/arturskowronski/warpaint-cli">arturskowronski/warpaint-cli</a></div>
     <span class="easter">» node src/cli.mjs tui «</span>
   </footer>
 

@@ -7,7 +7,7 @@ import path from 'node:path';
 import { handleInventorySync } from '../src/inventory-sync.mjs';
 
 async function makeTempDir() {
-  return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-sync-'));
+  return fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-sync-'));
 }
 
 function buildContext(overrides = {}) {

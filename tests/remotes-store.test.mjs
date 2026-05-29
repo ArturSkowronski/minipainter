@@ -7,7 +7,7 @@ import path from 'node:path';
 import { loadRemotes, resolveRemote, saveRemote } from '../src/remotes-store.mjs';
 
 async function makeTempFile() {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-remotes-'));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-remotes-'));
   return path.join(dir, 'remotes.json');
 }
 

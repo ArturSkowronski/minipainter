@@ -7,14 +7,14 @@ import path from 'node:path';
 import { runCli } from '../src/cli.mjs';
 
 async function makeWorkspace() {
-  return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-cli-'));
+  return fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-cli-'));
 }
 
 test('catalog sync creates the inventory file under the working directory', async () => {
   const cwd = await makeWorkspace();
 
   const result = await runCli(['catalog', 'sync'], { cwd });
-  const inventoryPath = path.join(cwd, '.warpaint', 'inventory.json');
+  const inventoryPath = path.join(cwd, '.minipainting', 'inventory.json');
   const inventory = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
 
   assert.equal(result.exitCode, 0);
@@ -87,13 +87,13 @@ test('human-readable output includes listed paints, not just summary headers', a
 });
 
 test('cli routes "sync add" to the sync command', async () => {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-cli-sync-'));
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-cli-sync-'));
   const result = await runCli(
     ['sync', 'add', 'default', '--url', 'https://example.fly.dev', '--token', 'tk', '--json'],
     { cwd: dir },
   );
   assert.equal(result.exitCode, 0);
-  const remotesFile = path.join(dir, '.warpaint', 'remotes.json');
+  const remotesFile = path.join(dir, '.minipainting', 'remotes.json');
   const onDisk = JSON.parse(await fs.readFile(remotesFile, 'utf8'));
   assert.deepEqual(onDisk.remotes.default, { url: 'https://example.fly.dev', token: 'tk' });
 });

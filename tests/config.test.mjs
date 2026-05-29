@@ -20,10 +20,10 @@ after(() => {
   else process.env.INVENTORY_PATH = savedInventoryPath;
 });
 
-test('default inventory path lives in the user home .warpaint directory', () => {
+test('default inventory path lives in the user home .minipainting directory', () => {
   assert.equal(
     getDefaultInventoryPath(),
-    path.join(os.homedir(), '.warpaint', 'inventory.json'),
+    path.join(os.homedir(), '.minipainting', 'inventory.json'),
   );
 });
 
@@ -37,14 +37,14 @@ test('resolveInventoryPath honours an explicit inventoryPath override', () => {
 test('resolveInventoryPath uses cwd when provided (test/explicit isolation)', () => {
   assert.equal(
     resolveInventoryPath({ cwd: '/tmp/demo' }),
-    '/tmp/demo/.warpaint/inventory.json',
+    '/tmp/demo/.minipainting/inventory.json',
   );
 });
 
 test('resolveInventoryPath falls back to home when no overrides are provided', () => {
   assert.equal(
     resolveInventoryPath(),
-    path.join(os.homedir(), '.warpaint', 'inventory.json'),
+    path.join(os.homedir(), '.minipainting', 'inventory.json'),
   );
 });
 
@@ -65,8 +65,8 @@ test('resolveInventoryPath without INVENTORY_PATH prefers inventoryPath option, 
   delete process.env.INVENTORY_PATH;
   try {
     assert.equal(resolveInventoryPath({ inventoryPath: '/explicit' }), '/explicit');
-    assert.equal(resolveInventoryPath({ cwd: '/tmp/foo' }), '/tmp/foo/.warpaint/inventory.json');
-    assert.ok(resolveInventoryPath().endsWith('/.warpaint/inventory.json'));
+    assert.equal(resolveInventoryPath({ cwd: '/tmp/foo' }), '/tmp/foo/.minipainting/inventory.json');
+    assert.ok(resolveInventoryPath().endsWith('/.minipainting/inventory.json'));
   } finally {
     if (before !== undefined) process.env.INVENTORY_PATH = before;
   }

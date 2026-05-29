@@ -12,7 +12,7 @@ import {
 } from '../src/mcp-tools.mjs';
 
 async function makeWorkspace() {
-  return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-mcp-'));
+  return fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-mcp-'));
 }
 
 test('getMcpToolDefinitions exposes the expected tool names', () => {

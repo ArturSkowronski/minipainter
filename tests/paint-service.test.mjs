@@ -17,7 +17,7 @@ import {
 } from '../src/paint-service.mjs';
 
 async function makeWorkspace() {
-  return fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-service-'));
+  return fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-service-'));
 }
 
 test('initPaintRegistry initializes a new registry and reports creation', async () => {
@@ -63,8 +63,8 @@ test('inventory mutations persist and inventory list reflects them', async () =>
 });
 
 test('reloadPaintRegistry returns the freshly loaded registry', async () => {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'warpaint-'));
-  const inventoryPath = path.join(dir, '.warpaint', 'inventory.json');
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'minipainting-'));
+  const inventoryPath = path.join(dir, '.minipainting', 'inventory.json');
   await initPaintRegistry({ registryPath: inventoryPath });
 
   const reloaded = await reloadPaintRegistry({ registryPath: inventoryPath });
