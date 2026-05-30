@@ -1,3 +1,5 @@
+import { normalizeText } from '../src/normalize.mjs';
+
 export function slugify(name) {
   return String(name)
     .toLowerCase()
@@ -47,4 +49,36 @@ export function classifyColorFamily(rgb) {
   if (h < 320) return 'purple';
   if (h < 345) return 'pink';
   return l > 0.7 ? 'pink' : 'red';
+}
+
+export const TYPE_TO_ROLE = {
+  opaque: 'base',
+  air: 'air',
+  metallic: 'metallic',
+  technical: 'technical',
+  wash: 'shade',
+  contrast: 'contrast',
+  ink: 'shade',
+};
+
+export function buildPaint(source, id) {
+  if (!source.name) throw new Error('missing name');
+  if (!source.sku) throw new Error('missing sku');
+  const role = TYPE_TO_ROLE[source.type];
+  if (!role) throw new Error(`unknown ak type: ${JSON.stringify(source.type)}`);
+  const rgb = hexToRgb(source.hex);
+  const color_families = source.type === 'metallic'
+    ? ['metallic']
+    : [classifyColorFamily(rgb)];
+  return {
+    id,
+    provider: 'ak_interactive',
+    name: source.name,
+    normalized_name: normalizeText(source.name),
+    aliases: [],
+    usage_roles: [role],
+    color_families,
+    rgb,
+    owned: false,
+  };
 }

@@ -7,6 +7,17 @@ import {
   classifyColorFamily,
 } from '../scripts/ak-transform.mjs';
 
+import { buildPaint, TYPE_TO_ROLE } from '../scripts/ak-transform.mjs';
+
+const SRC = {
+  brand: 'AK Interactive',
+  name: 'Dark Grey-Blue',
+  sku: 'AK11201',
+  type: 'opaque',
+  hex: '#3B4A5A',
+  range: '3rd Generation',
+};
+
 test('slugify lowercases and dashes non-alphanumerics', () => {
   assert.equal(slugify('Dark Grey-Blue'), 'dark-grey-blue');
   assert.equal(slugify('  A-18f  Light/Grey '), 'a-18f-light-grey');
@@ -36,4 +47,51 @@ test('classifyColorFamily maps achromatic and hue regions', () => {
 test('classifyColorFamily distinguishes light reds (pink) from saturated red', () => {
   assert.equal(classifyColorFamily({ r: 255, g: 192, b: 203 }), 'pink');
   assert.equal(classifyColorFamily({ r: 220, g: 20, b: 20 }), 'red');
+});
+
+test('TYPE_TO_ROLE covers every in-scope AK type', () => {
+  assert.deepEqual(TYPE_TO_ROLE, {
+    opaque: 'base',
+    air: 'air',
+    metallic: 'metallic',
+    technical: 'technical',
+    wash: 'shade',
+    contrast: 'contrast',
+    ink: 'shade',
+  });
+});
+
+test('buildPaint maps a source record to our schema', () => {
+  const paint = buildPaint(SRC, 'ak_interactive/dark-grey-blue');
+  assert.deepEqual(paint, {
+    id: 'ak_interactive/dark-grey-blue',
+    provider: 'ak_interactive',
+    name: 'Dark Grey-Blue',
+    normalized_name: 'dark grey blue',
+    aliases: [],
+    usage_roles: ['base'],
+    color_families: ['blue'],
+    rgb: { r: 59, g: 74, b: 90 },
+    owned: false,
+  });
+});
+
+test('buildPaint uses metallic family for metallic type', () => {
+  const paint = buildPaint({ ...SRC, type: 'metallic', hex: '#B0A060' }, 'ak_interactive/x');
+  assert.deepEqual(paint.usage_roles, ['metallic']);
+  assert.deepEqual(paint.color_families, ['metallic']);
+});
+
+test('buildPaint maps ink type to shade role', () => {
+  const paint = buildPaint({ ...SRC, type: 'ink' }, 'ak_interactive/y');
+  assert.deepEqual(paint.usage_roles, ['shade']);
+});
+
+test('buildPaint throws on unknown type', () => {
+  assert.throws(() => buildPaint({ ...SRC, type: 'varnish' }, 'ak_interactive/z'), /unknown ak type/i);
+});
+
+test('buildPaint throws on missing name or sku', () => {
+  assert.throws(() => buildPaint({ ...SRC, name: '' }, 'id'), /missing name/i);
+  assert.throws(() => buildPaint({ ...SRC, sku: '' }, 'id'), /missing sku/i);
 });
