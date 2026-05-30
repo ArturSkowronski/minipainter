@@ -27,7 +27,7 @@ test('paint search, show, inventory own/unown, and inventory list support json o
   const cwd = await makeWorkspace();
   await runCli(['catalog', 'sync'], { cwd });
 
-  const search = await runCli(['paint', 'search', 'black', '--json'], { cwd });
+  const search = await runCli(['paint', 'search', 'abaddon black', '--json'], { cwd });
   const show = await runCli(['paint', 'show', 'Abaddon Black', '--json'], { cwd });
   const own = await runCli(['inventory', 'own', 'Abaddon Black', '--json'], { cwd });
   const listOwned = await runCli(['inventory', 'list', '--json'], { cwd });

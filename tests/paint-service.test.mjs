@@ -33,7 +33,7 @@ test('searchPaintCatalog returns structured paint records', async () => {
   const cwd = await makeWorkspace();
   await initPaintRegistry({ cwd });
 
-  const result = await searchPaintCatalog({ cwd, query: 'black' });
+  const result = await searchPaintCatalog({ cwd, query: 'abaddon black' });
 
   assert.equal(result.status, 'ok');
   assert.equal(result.items[0].id, 'citadel/abaddon-black');

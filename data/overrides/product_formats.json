@@ -24,7 +24,17 @@
     { "match": { "provider": "army_painter", "usage_role": "technical" }, "format": "technical" },
     { "match": { "provider": "army_painter", "usage_role": "base" }, "format": "opaque_base" },
     { "match": { "provider": "army_painter", "usage_role": "layer" }, "format": "opaque_layer" },
-    { "match": { "provider": "army_painter", "usage_role": "air" }, "format": "opaque_layer" }
+    { "match": { "provider": "army_painter", "usage_role": "air" }, "format": "opaque_layer" },
+
+    { "match": { "provider": "vallejo", "usage_role": "layer" }, "format": "opaque_layer" },
+    { "match": { "provider": "vallejo", "usage_role": "shade" }, "format": "wash" },
+
+    { "match": { "provider": "ak_interactive", "usage_role": "base" }, "format": "opaque_base" },
+    { "match": { "provider": "ak_interactive", "usage_role": "air" }, "format": "opaque_layer" },
+    { "match": { "provider": "ak_interactive", "usage_role": "metallic" }, "format": "metallic" },
+    { "match": { "provider": "ak_interactive", "usage_role": "technical" }, "format": "technical" },
+    { "match": { "provider": "ak_interactive", "usage_role": "shade" }, "format": "wash" },
+    { "match": { "provider": "ak_interactive", "usage_role": "contrast" }, "format": "contrast" }
   ],
   "overrides": {
     "army_painter/grim-black": {
