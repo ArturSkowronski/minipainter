@@ -32,3 +32,8 @@ test('classifyColorFamily maps achromatic and hue regions', () => {
   assert.equal(classifyColorFamily({ r: 40, g: 160, b: 60 }), 'green');
   assert.equal(classifyColorFamily({ r: 90, g: 55, b: 25 }), 'brown');
 });
+
+test('classifyColorFamily distinguishes light reds (pink) from saturated red', () => {
+  assert.equal(classifyColorFamily({ r: 255, g: 192, b: 203 }), 'pink');
+  assert.equal(classifyColorFamily({ r: 220, g: 20, b: 20 }), 'red');
+});

@@ -39,11 +39,12 @@ export function classifyColorFamily(rgb) {
   if (l < 0.12) return 'black';
   if (l > 0.88 && s < 0.15) return 'white';
   if (s < 0.12) return 'grey';
-  if (h < 15 || h >= 345) return 'red';
+  if (h < 15) return l > 0.7 ? 'pink' : 'red';
   if (h < 45) return l < 0.4 ? 'brown' : 'orange';
   if (h < 70) return l < 0.35 ? 'brown' : 'yellow';
   if (h < 170) return 'green';
   if (h < 260) return 'blue';
   if (h < 320) return 'purple';
-  return 'pink';
+  if (h < 345) return 'pink';
+  return l > 0.7 ? 'pink' : 'red';
 }
