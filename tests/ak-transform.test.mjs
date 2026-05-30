@@ -1,0 +1,34 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+import {
+  slugify,
+  hexToRgb,
+  classifyColorFamily,
+} from '../scripts/ak-transform.mjs';
+
+test('slugify lowercases and dashes non-alphanumerics', () => {
+  assert.equal(slugify('Dark Grey-Blue'), 'dark-grey-blue');
+  assert.equal(slugify('  A-18f  Light/Grey '), 'a-18f-light-grey');
+});
+
+test('hexToRgb parses #RRGGBB with or without hash', () => {
+  assert.deepEqual(hexToRgb('#1A6AB8'), { r: 26, g: 106, b: 184 });
+  assert.deepEqual(hexToRgb('FFFFFF'), { r: 255, g: 255, b: 255 });
+});
+
+test('hexToRgb throws on invalid input', () => {
+  assert.throws(() => hexToRgb('#12'), /invalid hex/i);
+  assert.throws(() => hexToRgb(''), /invalid hex/i);
+});
+
+test('classifyColorFamily maps achromatic and hue regions', () => {
+  assert.equal(classifyColorFamily({ r: 0, g: 0, b: 0 }), 'black');
+  assert.equal(classifyColorFamily({ r: 255, g: 255, b: 255 }), 'white');
+  assert.equal(classifyColorFamily({ r: 128, g: 128, b: 128 }), 'grey');
+  assert.equal(classifyColorFamily({ r: 220, g: 20, b: 20 }), 'red');
+  assert.equal(classifyColorFamily({ r: 30, g: 120, b: 220 }), 'blue');
+  assert.equal(classifyColorFamily({ r: 230, g: 200, b: 40 }), 'yellow');
+  assert.equal(classifyColorFamily({ r: 40, g: 160, b: 60 }), 'green');
+  assert.equal(classifyColorFamily({ r: 90, g: 55, b: 25 }), 'brown');
+});
