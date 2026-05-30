@@ -61,6 +61,31 @@ export const TYPE_TO_ROLE = {
   ink: 'shade',
 };
 
+export function transformCatalog(records) {
+  const kept = records.filter((r) => r.type !== 'primer');
+
+  const slugCounts = new Map();
+  for (const r of kept) {
+    const s = slugify(r.name);
+    slugCounts.set(s, (slugCounts.get(s) || 0) + 1);
+  }
+
+  const paints = kept.map((r) => {
+    const s = slugify(r.name);
+    const id = slugCounts.get(s) > 1
+      ? `ak_interactive/${s}-${String(r.sku).toLowerCase()}`
+      : `ak_interactive/${s}`;
+    return buildPaint(r, id);
+  });
+
+  paints.sort((a, b) => a.id.localeCompare(b.id));
+
+  return {
+    provider: { id: 'ak_interactive', name: 'AK Interactive' },
+    paints,
+  };
+}
+
 export function buildPaint(source, id) {
   if (!source.name) throw new Error('missing name');
   if (!source.sku) throw new Error('missing sku');

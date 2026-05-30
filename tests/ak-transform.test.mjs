@@ -5,9 +5,10 @@ import {
   slugify,
   hexToRgb,
   classifyColorFamily,
+  buildPaint,
+  TYPE_TO_ROLE,
+  transformCatalog,
 } from '../scripts/ak-transform.mjs';
-
-import { buildPaint, TYPE_TO_ROLE } from '../scripts/ak-transform.mjs';
 
 const SRC = {
   brand: 'AK Interactive',
@@ -94,4 +95,28 @@ test('buildPaint throws on unknown type', () => {
 test('buildPaint throws on missing name or sku', () => {
   assert.throws(() => buildPaint({ ...SRC, name: '' }, 'id'), /missing name/i);
   assert.throws(() => buildPaint({ ...SRC, sku: '' }, 'id'), /missing sku/i);
+});
+
+const RECORDS = [
+  { name: 'White', sku: 'AK11001', type: 'opaque', hex: '#FFFFFF' },
+  { name: 'Black', sku: 'AK11050', type: 'opaque', hex: '#101010' },   // collides
+  { name: 'Black', sku: 'AK17000', type: 'ink', hex: '#0A0A0A' },      // collides
+  { name: 'Primer Grey', sku: 'AK999', type: 'primer', hex: '#888888' }, // skipped
+];
+
+test('transformCatalog skips primers, disambiguates collisions, sorts by id', () => {
+  const catalog = transformCatalog(RECORDS);
+  assert.deepEqual(catalog.provider, { id: 'ak_interactive', name: 'AK Interactive' });
+  const ids = catalog.paints.map((p) => p.id);
+  assert.deepEqual(ids, [
+    'ak_interactive/black-ak11050',
+    'ak_interactive/black-ak17000',
+    'ak_interactive/white',
+  ]);
+  assert.equal(catalog.paints.some((p) => p.name === 'Primer Grey'), false);
+});
+
+test('transformCatalog keeps a clean slug when unique', () => {
+  const catalog = transformCatalog([{ name: 'Lime Green', sku: 'AK1', type: 'opaque', hex: '#7CB342' }]);
+  assert.equal(catalog.paints[0].id, 'ak_interactive/lime-green');
 });
