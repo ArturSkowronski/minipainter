@@ -73,7 +73,7 @@ export function transformCatalog(records) {
   const paints = kept.map((r) => {
     const s = slugify(r.name);
     const id = slugCounts.get(s) > 1
-      ? `ak_interactive/${s}-${String(r.sku).toLowerCase()}`
+      ? `ak_interactive/${s}-${slugify(r.sku)}`
       : `ak_interactive/${s}`;
     return buildPaint(r, id);
   });
