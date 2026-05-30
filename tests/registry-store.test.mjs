@@ -32,13 +32,19 @@ after(() => {
   else process.env.WARPAINT_INVENTORY_JSON = savedWarpaintInventoryJson;
 });
 
-test('loadBuiltInCatalog returns both supported providers with paints', async () => {
+test('loadBuiltInCatalog returns all supported providers with paints', async () => {
   const catalog = await loadBuiltInCatalog();
+  const providerIds = catalog.providers.map((provider) => provider.id);
 
-  assert.deepEqual(catalog.providers.map((provider) => provider.id), [
-    'army_painter',
-    'citadel',
-  ]);
+  for (const expected of ['ak_interactive', 'army_painter', 'citadel', 'vallejo']) {
+    assert.ok(providerIds.includes(expected), `missing provider ${expected}`);
+  }
+  for (const id of providerIds) {
+    assert.ok(
+      catalog.paints.some((paint) => paint.provider === id),
+      `provider ${id} has no paints`,
+    );
+  }
   assert.ok(catalog.paints.length >= 8);
 });
 
@@ -49,9 +55,10 @@ test('initRegistryIfMissing creates an empty inventory composed against the cata
   const created = await initRegistryIfMissing(inventoryPath);
   const registry = await loadRegistry(inventoryPath);
 
+  const builtIn = await loadBuiltInCatalog();
   assert.equal(created.created, true);
   assert.equal(registry.version, 1);
-  assert.equal(registry.catalog.providers.length, 2);
+  assert.equal(registry.catalog.providers.length, builtIn.providers.length);
   assert.ok(registry.catalog.paints.every((paint) => paint.owned === false));
 
   const inventory = JSON.parse(await fs.readFile(inventoryPath, 'utf8'));
