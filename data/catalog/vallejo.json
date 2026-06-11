@@ -2501,6 +2501,406 @@
         "b": 103
       },
       "owned": false
+    },
+    {
+      "id": "vallejo/aged-metal",
+      "provider": "vallejo",
+      "name": "Aged Metal",
+      "normalized_name": "aged metal",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "yellow"
+      ],
+      "rgb": {
+        "r": 182,
+        "g": 165,
+        "b": 111
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/amber-green",
+      "provider": "vallejo",
+      "name": "Amber Green",
+      "normalized_name": "amber green",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "yellow"
+      ],
+      "rgb": {
+        "r": 165,
+        "g": 175,
+        "b": 107
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/amethyst-purple",
+      "provider": "vallejo",
+      "name": "Amethyst Purple",
+      "normalized_name": "amethyst purple",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "purple"
+      ],
+      "rgb": {
+        "r": 197,
+        "g": 149,
+        "b": 196
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/ancient-copper",
+      "provider": "vallejo",
+      "name": "Ancient Copper",
+      "normalized_name": "ancient copper",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "orange"
+      ],
+      "rgb": {
+        "r": 226,
+        "g": 157,
+        "b": 118
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/arcane-gold",
+      "provider": "vallejo",
+      "name": "Arcane Gold",
+      "normalized_name": "arcane gold",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "orange"
+      ],
+      "rgb": {
+        "r": 225,
+        "g": 184,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/beetle-green",
+      "provider": "vallejo",
+      "name": "Beetle Green",
+      "normalized_name": "beetle green",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "green"
+      ],
+      "rgb": {
+        "r": 143,
+        "g": 202,
+        "b": 174
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/celestial-violet",
+      "provider": "vallejo",
+      "name": "Celestial Violet",
+      "normalized_name": "celestial violet",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "purple"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 164,
+        "b": 207
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/crimson-magenta",
+      "provider": "vallejo",
+      "name": "Crimson Magenta",
+      "normalized_name": "crimson magenta",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "pink"
+      ],
+      "rgb": {
+        "r": 226,
+        "g": 141,
+        "b": 181
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/dusken-green",
+      "provider": "vallejo",
+      "name": "Dusken Green",
+      "normalized_name": "dusken green",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "green"
+      ],
+      "rgb": {
+        "r": 119,
+        "g": 177,
+        "b": 126
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/forged-red",
+      "provider": "vallejo",
+      "name": "Forged Red",
+      "normalized_name": "forged red",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "orange"
+      ],
+      "rgb": {
+        "r": 228,
+        "g": 117,
+        "b": 44
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/greenish-gold",
+      "provider": "vallejo",
+      "name": "Greenish Gold",
+      "normalized_name": "greenish gold",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "yellow"
+      ],
+      "rgb": {
+        "r": 238,
+        "g": 209,
+        "b": 105
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/hydra-turquoise",
+      "provider": "vallejo",
+      "name": "Hydra Turquoise",
+      "normalized_name": "hydra turquoise",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "blue"
+      ],
+      "rgb": {
+        "r": 128,
+        "g": 202,
+        "b": 219
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/imperial-gold",
+      "provider": "vallejo",
+      "name": "Imperial Gold",
+      "normalized_name": "imperial gold",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "orange"
+      ],
+      "rgb": {
+        "r": 209,
+        "g": 169,
+        "b": 101
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/obsidian-black",
+      "provider": "vallejo",
+      "name": "Obsidian Black",
+      "normalized_name": "obsidian black",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "grey"
+      ],
+      "rgb": {
+        "r": 158,
+        "g": 156,
+        "b": 142
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/radiant-yellow",
+      "provider": "vallejo",
+      "name": "Radiant Yellow",
+      "normalized_name": "radiant yellow",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "yellow"
+      ],
+      "rgb": {
+        "r": 232,
+        "g": 210,
+        "b": 38
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/ruby-red",
+      "provider": "vallejo",
+      "name": "Ruby Red",
+      "normalized_name": "ruby red",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "pink"
+      ],
+      "rgb": {
+        "r": 238,
+        "g": 155,
+        "b": 135
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/rusty-metal",
+      "provider": "vallejo",
+      "name": "Rusty Metal",
+      "normalized_name": "rusty metal",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "orange"
+      ],
+      "rgb": {
+        "r": 195,
+        "g": 157,
+        "b": 134
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sapphire-blue",
+      "provider": "vallejo",
+      "name": "Sapphire Blue",
+      "normalized_name": "sapphire blue",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "blue"
+      ],
+      "rgb": {
+        "r": 80,
+        "g": 174,
+        "b": 226
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sterling-silver",
+      "provider": "vallejo",
+      "name": "Sterling Silver",
+      "normalized_name": "sterling silver",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "white"
+      ],
+      "rgb": {
+        "r": 245,
+        "g": 245,
+        "b": 244
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/ultramarine-blue-77-110",
+      "provider": "vallejo",
+      "name": "Ultramarine Blue",
+      "normalized_name": "ultramarine blue",
+      "aliases": [],
+      "usage_roles": [
+        "metallic"
+      ],
+      "color_families": [
+        "metallic",
+        "blue"
+      ],
+      "rgb": {
+        "r": 126,
+        "g": 176,
+        "b": 203
+      },
+      "owned": false
     }
   ]
 }
