@@ -2901,6 +2901,63 @@
         "b": 203
       },
       "owned": false
+    },
+    {
+      "id": "vallejo/gloss-varnish",
+      "provider": "vallejo",
+      "name": "Gloss Varnish",
+      "normalized_name": "gloss varnish",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/matt-varnish",
+      "provider": "vallejo",
+      "name": "Matt Varnish",
+      "normalized_name": "matt varnish",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/satin-varnish",
+      "provider": "vallejo",
+      "name": "Satin Varnish",
+      "normalized_name": "satin varnish",
+      "aliases": [],
+      "usage_roles": [
+        "technical"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "owned": false
     }
   ]
 }

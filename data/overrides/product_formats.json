@@ -29,6 +29,7 @@
     { "match": { "provider": "vallejo", "usage_role": "layer" }, "format": "opaque_layer" },
     { "match": { "provider": "vallejo", "usage_role": "shade" }, "format": "wash" },
     { "match": { "provider": "vallejo", "usage_role": "metallic" }, "format": "metallic" },
+    { "match": { "provider": "vallejo", "usage_role": "technical" }, "format": "technical" },
 
     { "match": { "provider": "ak_interactive", "usage_role": "base" }, "format": "opaque_base" },
     { "match": { "provider": "ak_interactive", "usage_role": "air" }, "format": "opaque_layer" },
