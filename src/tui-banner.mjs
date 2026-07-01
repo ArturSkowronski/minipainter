@@ -17,7 +17,7 @@ export function renderBanner(theme = plainTheme, width = 78) {
     line(''),
     line(theme.goldBold('░▒▓█  WARPAINT  █▓▒░')),
     line(''),
-    line(theme.dim('FORGE LEDGER :: INVENTORY FOR THE PAINTING BENCH')),
+    line(theme.dim('MINIATURE PAINT INVENTORY')),
     line(''),
     edge(`╚${'═'.repeat(width)}╝`),
   ].join('\n');

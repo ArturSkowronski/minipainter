@@ -2,22 +2,22 @@
 ║                                                                              ║
 ║                             ░▒▓█  WARPAINT  █▓▒░                             ║
 ║                                                                              ║
-║               FORGE LEDGER :: INVENTORY FOR THE PAINTING BENCH               ║
+║                          MINIATURE PAINT INVENTORY                           ║
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
-════════════════════════════════ FORGE STATUS ════════════════════════════════
+═══════════════════════════════════ STATUS ═══════════════════════════════════
 View: OWNED  |  Visible: 3  |  Owned: 3  |  Search Query: (none)
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║ OWNED VIALS                                                                  ║
+║ OWNED PAINTS                                                                 ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║    > Abaddon Black :: citadel :: BOUND TO INVENTORY                          ║
-║      Leadbelcher :: citadel :: BOUND TO INVENTORY                            ║
-║      Pallid Bone :: army_painter :: BOUND TO INVENTORY                       ║
+║    > Abaddon Black :: citadel :: OWNED                                       ║
+║      Leadbelcher :: citadel :: OWNED                                         ║
+║      Pallid Bone :: army_painter :: OWNED                                    ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║ SELECTED PIGMENT                                                             ║
+║ SELECTED PAINT                                                               ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
 ║ Name: Abaddon Black                                                          ║
 ║ Provider: citadel                                                            ║
@@ -28,7 +28,7 @@ View: OWNED  |  Visible: 3  |  Owned: 3  |  Search Query: (none)
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║ RITUAL COMMANDS                                                              ║
+║ COMMANDS                                                                     ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
 ║ search <text>   owned   catalog                                              ║
 ║ toggle          quit                                                         ║

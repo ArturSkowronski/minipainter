@@ -81,8 +81,8 @@ test('renderTui includes the current view, filters, and selected detail panel', 
   const rendered = renderTui(state);
 
   assert.match(rendered, /WARPAINT/);
-  assert.match(rendered, /FORGE CATALOG/);
-  assert.match(rendered, /SELECTED PIGMENT/);
+  assert.match(rendered, /CATALOG/);
+  assert.match(rendered, /SELECTED PAINT/);
   assert.match(rendered, /Search Query: bone/i);
   assert.match(rendered, /Pallid Bone/);
   assert.match(rendered, /Status: OWNED/i);
@@ -92,7 +92,7 @@ test('renderTui includes framed command legend and themed inventory labels', () 
   const state = createTuiState(makeRegistry());
   const rendered = renderTui(state);
 
-  assert.match(rendered, /RITUAL COMMANDS/);
+  assert.match(rendered, /COMMANDS/);
   assert.match(rendered, /MISSING|OWNED/);
   assert.match(rendered, /Visible:/);
 });

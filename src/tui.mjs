@@ -118,8 +118,8 @@ export function renderTui(state, options = {}) {
       const marker = selected ? theme.gold('>') : ' ';
       const name = selected ? theme.goldBold(paint.name) : theme.bone(paint.name);
       const status = paint.owned
-        ? theme.green('BOUND TO INVENTORY')
-        : theme.red('MISSING FROM STORES');
+        ? theme.green('OWNED')
+        : theme.red('MISSING');
       return `${theme.swatch(paint.rgb)} ${marker} ${name} :: ${theme.dim(paint.provider)} :: ${status}`;
     })
     : [theme.dim('No pigments match the current query.')];
@@ -150,14 +150,14 @@ export function renderTui(state, options = {}) {
 
   return [
     renderBanner(theme),
-    renderSeparator('FORGE STATUS', 78, theme),
+    renderSeparator('STATUS', 78, theme),
     statusLine,
     '',
-    renderSection(state.view === 'owned' ? 'OWNED VIALS' : 'FORGE CATALOG', listRows, 78, theme),
+    renderSection(state.view === 'owned' ? 'OWNED PAINTS' : 'CATALOG', listRows, 78, theme),
     '',
-    renderSection('SELECTED PIGMENT', detailRows, 78, theme),
+    renderSection('SELECTED PAINT', detailRows, 78, theme),
     '',
-    renderSection('RITUAL COMMANDS', commands, 78, theme),
+    renderSection('COMMANDS', commands, 78, theme),
   ].join('\n');
 }
 
