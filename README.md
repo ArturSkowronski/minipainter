@@ -1,27 +1,26 @@
-# MINIPAINTING
+# WARPAINT
 
-> Forge Ledger for the painting bench.
+> The paint bench, indexed.
 
 Site: [arturskowronski.github.io/warpaint-cli](https://arturskowronski.github.io/warpaint-cli/)
 
-`minipainting-cli` is a local-first paint registry for Warhammer hobby workflows. It exists for one practical reason: AI paint suggestions are much more useful when they understand the paints you actually own.
+`warpaint` is a local-first paint registry for miniature-painting workflows. It exists for one practical reason: AI paint suggestions are much more useful when they understand the paints you actually own.
 
 The project gives you:
 
-- a deterministic local catalog and inventory
-- owned-first paint lookup and color matching
-- a grimdark TUI with a strong ASCII presentation
-- a CLI surface designed for both humans and future agent workflows
+- a deterministic local catalog (1,607 paints across Citadel, Army Painter, Vallejo, AK) and inventory
+- owned-first paint lookup and cross-brand color matching
+- a colored terminal UI (TUI) that shows each paint's real RGB as a swatch
+- MCP servers for both Claude Desktop and ChatGPT
+- a CLI surface designed for both humans and agent workflows
 
-## Hero
+## New in v0.4 — colored UI
 
-The TUI is designed as a `Forge Ledger`: heavy terminal framing, bold ASCII, and paint data presented like a workshop inventory instead of a spreadsheet.
+The ledger TUI is now a real colored terminal app: a `WARPAINT` banner, gold section
+frames, green `OWNED` / red `MISSING` status, and a truecolor swatch of every paint's own
+RGB. Color turns on for a TTY and honors `NO_COLOR`.
 
-```text
-See: docs/assets/hero.txt
-```
-
-![MINIPAINTING Forge Ledger Hero](docs/assets/hero.svg)
+![WARPAINT terminal UI — catalog](docs/assets/hero.svg)
 
 ## Why This Exists
 
@@ -40,8 +39,8 @@ The long-term goal is not “AI picks random colors for miniatures.” The goal 
 - `Owned-first matching`: lookups and recommendations can prioritize paints you already have.
 - `Catalog in repo, inventory in your home`: paint records live in `data/catalog/`; what you own lives in `~/.minipainting/inventory.json` and follows you across projects.
 - `RGB-aware search`: approximate RGB values help with nearest-color matching.
-- `Forge Ledger TUI`: terminal UI styled as a grimdark inventory ledger.
-- `Agent-friendly CLI`: deterministic command output for future AI integration.
+- `Colored TUI`: terminal ledger with per-paint RGB swatches and OWNED/MISSING status.
+- `Agent-friendly CLI`: deterministic command output for AI integration (Claude + ChatGPT MCP).
 
 ## Screenshots
 
@@ -205,7 +204,7 @@ Implemented now:
 - starter provider catalogs for Citadel and Army Painter
 - owned / missing inventory tracking
 - deterministic search and color matching
-- grimdark terminal presentation
+- colored terminal presentation with per-paint swatches
 - local MCP server for Claude Desktop
 
 Planned later:

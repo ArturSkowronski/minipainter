@@ -57,7 +57,9 @@ test('generated assets include forge ledger presentation and command output', as
   assert.match(owned, /OWNED PAINTS/);
   assert.match(cli, /inventory own/i);
   assert.match(heroSvg, /<svg/);
-  assert.match(heroSvg, /WARPAINT/);
+  // colored capture: gold banner text + a truecolor swatch rect
+  assert.match(heroSvg, /fill="rgb\(204,162,76\)"/);
+  assert.match(heroSvg, /<rect[^>]*fill="rgb\(/);
 });
 
 test('README references all generated demo assets and showcase sections', async () => {
