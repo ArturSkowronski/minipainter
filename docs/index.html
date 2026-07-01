@@ -3,195 +3,195 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MINIPAINTING — Forge Ledger for the painting bench</title>
-<meta name="description" content="minipainting-cli is a local-first paint registry for Warhammer hobby workflows. Owned-first matching, a grimdark TUI, and a local MCP server for Claude Desktop.">
+<title>warpaint — the paint bench, indexed</title>
+<meta name="description" content="A local-first ledger for the miniature-paint bench: search 1,607 paints across Citadel, Army Painter, Vallejo and AK, find the closest match across brands owned-first, and hand the whole catalog to Claude or ChatGPT over MCP.">
 <meta name="color-scheme" content="dark">
-<meta property="og:title" content="MINIPAINTING — Forge Ledger for the painting bench">
-<meta property="og:description" content="Local-first paint registry for Warhammer hobby workflows. Owned-first matching, grimdark TUI, MCP server.">
-<meta property="og:image" content="assets/hero.svg">
+<meta property="og:title" content="warpaint — the paint bench, indexed">
+<meta property="og:description" content="Search 1,607 paints, match colors across brands owned-first, and connect the catalog to Claude and ChatGPT over MCP.">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2317161b'/%3E%3Ccircle cx='16' cy='16' r='8' fill='%23cca24c'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 
-<div class="legend-strip">
-  <span>search &lt;text&gt;</span> · <span>owned</span> · <span>catalog</span> · <span>toggle</span> · <em>quit</em>
-</div>
+<header class="topbar">
+  <a class="brandmark" href="#top"><span class="dot"></span>WARPAINT</a>
+  <nav>
+    <a href="#match">Match</a>
+    <a href="#rack">The rack</a>
+    <a href="#mcp">Claude &amp; ChatGPT</a>
+    <a href="#start">Quickstart</a>
+    <a class="gh" href="https://github.com/arturskowronski/warpaint-cli">GitHub ↗</a>
+  </nav>
+</header>
 
-<main>
+<main id="top">
 
+  <!-- HERO ------------------------------------------------------------- -->
   <section class="hero">
-    <pre class="banner" role="img" aria-label="MINIPAINTING">
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                                                                              ║
-║                     ░▒▓█  MINIPAINTING  █▓▒░                                 ║
-║                                                                              ║
-║                    FORGE LEDGER :: INVENTORY FOR THE PAINTING BENCH          ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝</pre>
-    <p class="tagline">Forge Ledger for the painting bench.</p>
-    <div class="cta">
-      <a class="primary" href="#quickstart">QUICKSTART</a>
-      <a href="https://github.com/arturskowronski/warpaint-cli">GITHUB ↗</a>
-      <a href="#mcp">CLAUDE DESKTOP MCP</a>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Local-first paint registry · CLI · MCP</p>
+        <h1 class="wordmark">
+          <span class="line"><span class="reveal">War</span></span>
+          <span class="line"><span class="reveal paint">Paint</span></span>
+        </h1>
+        <p class="hero-thesis">
+          The paint bench, indexed. Search <b>1,607</b> paints across four brands,
+          find the closest match <b>from your own rack first</b>, and hand the whole
+          catalog to Claude or ChatGPT.
+        </p>
+        <div class="cta-row">
+          <a class="btn solid" href="#match">Try the matcher</a>
+          <a class="btn" href="#start">Install</a>
+          <a class="btn" href="https://github.com/arturskowronski/warpaint-cli">GitHub ↗</a>
+        </div>
+        <div class="spec-strip" id="spec">
+          <div><b>1,607</b><span>Paints</span></div>
+          <div><b>4</b><span>Brands</span></div>
+          <div><b id="spec-owned">101</b><span>Owned</span></div>
+          <div><b>2</b><span>MCP endpoints</span></div>
+        </div>
+      </div>
+      <div class="wall" id="wall" aria-hidden="true"></div>
     </div>
   </section>
 
-  <div class="separator">═══════════════════════════════ <b>WHY THIS EXISTS</b> ═══════════════════════════════</div>
+  <!-- MATCHER ---------------------------------------------------------- -->
+  <section id="match">
+    <div class="wrap">
+      <div class="match-head">
+        <div>
+          <p class="eyebrow">Signature · cross-brand match</p>
+          <h2 class="section-head">Pick a color.<br>Find the paint.</h2>
+        </div>
+        <p class="lede">Every paint carries an approximate RGB. Drop a target and warpaint
+          returns the nearest pot in each brand by straight color distance — the ones you
+          already own float to the top.</p>
+      </div>
 
-  <p>
-    Most paint-advice workflows break at the same point: they recommend paints you do not have on hand.
-    <code>minipainting-cli</code> is a local-first paint registry built to fix exactly that — keep a deterministic
-    record of what is in your rack, search it by name, role, family, and approximate color, and prepare a stable
-    inventory foundation for AI tools that should reason from your <em>actual</em> shelf first.
-  </p>
-  <p class="muted">
-    The long-term goal isn't "AI picks random colors for miniatures." It's "AI reasons from your actual inventory
-    first, then suggests stronger alternatives only when useful."
-  </p>
+      <div class="match-console">
+        <div class="picker">
+          <div class="swatch-preview" id="preview">#C9A24C</div>
+          <label for="hex">Target color</label>
+          <div class="picker-row">
+            <input type="color" id="color" value="#c9a24c" aria-label="Color picker">
+            <input type="text" id="hex" value="#C9A24C" spellcheck="false" aria-label="Hex value" maxlength="7">
+          </div>
+          <label>Or start from</label>
+          <div class="presets" id="presets"></div>
+          <label class="owned-toggle"><input type="checkbox" id="ownedOnly"> Owned rack only</label>
+        </div>
 
-  <div class="separator">═══════════════════════════════ <b>FORGE CATALOG</b> ═══════════════════════════════</div>
+        <div>
+          <div class="match-grid" id="results"></div>
+          <div class="brand-legend" id="legend"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="cards">
-    <article class="card">
-      <h3>Owned-first matching</h3>
-      <p>Lookups and recommendations prioritize paints already bound to your inventory before suggesting alternatives.</p>
-    </article>
-    <article class="card">
-      <h3>Local registry</h3>
-      <p>Everything lives in a project-local <code>.minipainting/registry.json</code>. No cloud, no account, no telemetry.</p>
-    </article>
-    <article class="card">
-      <h3>RGB-aware search</h3>
-      <p>Approximate RGB values back nearest-color matching, so <code>match color "#d2c29b"</code> returns useful pigments.</p>
-    </article>
-    <article class="card">
-      <h3>Grimdark TUI</h3>
-      <p>A terminal UI styled as a workshop ledger: heavy ASCII frames, bold banners, paint data presented as inventory.</p>
-    </article>
-    <article class="card">
-      <h3>Agent-friendly CLI</h3>
-      <p>Deterministic <code>--json</code> output on every command, designed to be wired into future AI workflows.</p>
-    </article>
-    <article class="card">
-      <h3>Local MCP server</h3>
-      <p>Drop-in MCP endpoint exposes search, inspect, ownership, and color-match tools to Claude Desktop.</p>
-    </article>
-  </div>
+  <!-- THE RACK --------------------------------------------------------- -->
+  <section id="rack">
+    <div class="wrap">
+      <p class="eyebrow">The whole shelf</p>
+      <h2 class="section-head">1,607 pots, one wall</h2>
+      <p class="lede">The full catalog, every pot a real swatch. Hover any chip to read it.
+        The green corner marks a paint in the reference rack.</p>
+      <div id="racks"></div>
+      <div id="rack-read">Hover a chip to inspect a paint.</div>
+    </div>
+  </section>
 
-  <div class="separator">═══════════════════════════════ <b>SELECTED PIGMENT</b> ═══════════════════════════════</div>
+  <!-- MCP -------------------------------------------------------------- -->
+  <section id="mcp">
+    <div class="wrap">
+      <p class="eyebrow">Two ways in</p>
+      <h2 class="section-head">Hand it to your assistant</h2>
+      <p class="lede">The same catalog and inventory are served over MCP. Claude Desktop runs
+        the local server; ChatGPT connects to the hosted endpoint.</p>
 
-  <p class="muted">Captured from the live TUI. Reproduce locally with <code>npm run generate:demo</code>.</p>
+      <div class="ways">
+        <article class="plate">
+          <span class="tag">Claude Desktop · local</span>
+          <h3>Local MCP server</h3>
+          <p>Run the stdio server and drop it into your Claude Desktop config — Claude reads
+            and updates your registry directly.</p>
+          <div class="endpoint"><code>node src/mcp-server.mjs</code><button data-copy="node src/mcp-server.mjs">Copy</button></div>
+          <div class="toolchips">
+            <span>paint_search</span><span>paint_show</span><span>inventory_list</span>
+            <span>inventory_mark_owned</span><span>inventory_mark_unowned</span>
+            <span>match_color</span><span>match_describe</span>
+          </div>
+        </article>
 
-  <figure class="shot">
-    <div class="chrome"><i></i><i></i><i></i></div>
-    <img src="assets/hero.svg" alt="MINIPAINTING TUI hero screen with banner, catalog, selected pigment panel, and command strip">
-    <figcaption>HERO SCREEN — banner, catalog, detail panel, ritual commands</figcaption>
-  </figure>
+        <article class="plate">
+          <span class="tag">ChatGPT · hosted connector</span>
+          <h3>/mcp/v3 endpoint</h3>
+          <p>A hosted connector shaped for ChatGPT's <code>search</code> / <code>fetch</code>
+            contract. Add it as a custom connector and browse the catalog in chat.</p>
+          <div class="endpoint"><code>https://warpaint-mcp.fly.dev/mcp/v3</code><button data-copy="https://warpaint-mcp.fly.dev/mcp/v3">Copy</button></div>
+          <div class="toolchips"><span>search</span><span>fetch</span><span>match_color</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <figure class="shot">
-    <div class="chrome"><i></i><i></i><i></i></div>
-    <img src="assets/search.svg" alt="MINIPAINTING TUI search view filtering for the query 'bone'">
-    <figcaption>SEARCH VIEW — filtered lookup for <code>bone</code></figcaption>
-  </figure>
+  <!-- QUICKSTART ------------------------------------------------------- -->
+  <section id="start">
+    <div class="wrap">
+      <p class="eyebrow">Get going</p>
+      <h2 class="section-head">Quickstart</h2>
+      <div class="qs-grid">
+        <div>
+<pre class="code"><span class="c"># clone &amp; enter</span>
+<span class="p">$</span> git clone https://github.com/arturskowronski/warpaint-cli
+<span class="p">$</span> cd warpaint-cli
 
-  <figure class="shot">
-    <div class="chrome"><i></i><i></i><i></i></div>
-    <img src="assets/owned.svg" alt="MINIPAINTING TUI owned view showing only paints bound to inventory">
-    <figcaption>OWNED VIEW — only what is bound to your collection</figcaption>
-  </figure>
+<span class="c"># search the catalog</span>
+<span class="p">$</span> node src/cli.mjs paint search bone
+<span class="p">$</span> node src/cli.mjs paint search black --json
 
-  <div class="separator">═══════════════════════════════ <b>RITUAL COMMANDS</b> ═══════════════════════════════</div>
+<span class="c"># track what's on your rack</span>
+<span class="p">$</span> node src/cli.mjs inventory own "Abaddon Black"
+<span class="p">$</span> node src/cli.mjs inventory list
 
-  <figure class="shot">
-    <div class="chrome"><i></i><i></i><i></i></div>
-    <img src="assets/cli.svg" alt="minipainting-cli command line flow showing search, ownership, and color match">
-    <figcaption>CLI FLOW — search, ownership, color matching</figcaption>
-  </figure>
+<span class="c"># match by color or description</span>
+<span class="p">$</span> node src/cli.mjs match color "#d2c29b"
+<span class="p">$</span> node src/cli.mjs match describe bone
 
-  <h2 id="quickstart" class="subhead">Quickstart</h2>
-
-<pre class="code"><span class="comment"># initialize the local registry</span>
-<span class="prompt">$</span> node src/cli.mjs catalog sync
-
-<span class="comment"># search paints</span>
-<span class="prompt">$</span> node src/cli.mjs paint search black
-<span class="prompt">$</span> node src/cli.mjs paint search bone --json
-
-<span class="comment"># inspect one paint</span>
-<span class="prompt">$</span> node src/cli.mjs paint show "Abaddon Black" --json
-
-<span class="comment"># mark paints as owned or missing</span>
-<span class="prompt">$</span> node src/cli.mjs inventory own "Abaddon Black"
-<span class="prompt">$</span> node src/cli.mjs inventory unown "Abaddon Black"
-<span class="prompt">$</span> node src/cli.mjs inventory list
-
-<span class="comment"># semantic and color matching</span>
-<span class="prompt">$</span> node src/cli.mjs match describe bone
-<span class="prompt">$</span> node src/cli.mjs match color "#d2c29b"
-
-<span class="comment"># launch the forge ledger TUI</span>
-<span class="prompt">$</span> node src/cli.mjs tui</pre>
-
-  <div class="separator" id="mcp">═══════════════════════════ <b>CLAUDE DESKTOP MCP</b> ═══════════════════════════</div>
-
-  <p>
-    <code>minipainting-cli</code> ships a local MCP server so Claude Desktop can read and update your paint registry directly.
-    Drop this into your local MCP config:
-  </p>
-
-<pre class="code">{
-  "mcpServers": {
-    "warpaint": {
-      "command": "node",
-      "args": ["/absolute/path/to/warpaint-cli/src/mcp-server.mjs"]
-    }
-  }
-}</pre>
-
-  <p class="muted">After registering, the following tools become callable from Claude Desktop:</p>
-
-  <ul class="tools">
-    <li>paint_search</li>
-    <li>paint_show</li>
-    <li>inventory_list</li>
-    <li>inventory_mark_owned</li>
-    <li>inventory_mark_unowned</li>
-    <li>match_color</li>
-    <li>match_describe</li>
-  </ul>
-
-  <div class="separator">═══════════════════════════════ <b>PROJECT DIRECTION</b> ═══════════════════════════════</div>
-
-  <div class="roadmap">
-    <section class="implemented">
-      <h3>Implemented</h3>
-      <ul>
-        <li>local JSON registry</li>
-        <li>starter catalogs for Citadel and Army Painter</li>
-        <li>owned / missing inventory tracking</li>
-        <li>deterministic search and color matching</li>
-        <li>grimdark terminal presentation</li>
-        <li>local MCP server for Claude Desktop</li>
-      </ul>
-    </section>
-    <section class="planned">
-      <h3>Planned</h3>
-      <ul>
-        <li>parser skill for paint-set links</li>
-        <li>image-driven inventory fill from bottle photos</li>
-        <li>model-photo analysis recommending owned paints first</li>
-        <li>stronger cross-provider equivalents and matching hints</li>
-      </ul>
-    </section>
-  </div>
+<span class="c"># open the workshop ledger TUI</span>
+<span class="p">$</span> node src/cli.mjs tui</pre>
+        </div>
+        <div class="ledger">
+          <figure>
+            <img src="assets/hero.svg" alt="warpaint terminal ledger: banner, catalog table, selected-pigment detail panel and command strip" loading="lazy">
+            <figcaption>The ledger TUI — catalog, detail, commands</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer>
-    <div>minipainting-cli — Forge Ledger :: <a href="https://github.com/arturskowronski/warpaint-cli">arturskowronski/warpaint-cli</a></div>
-    <span class="easter">» node src/cli.mjs tui «</span>
+    <div class="wrap foot-grid">
+      <div>
+        <a class="brandmark" href="#top" style="font-size:1.4rem"><span class="dot"></span>WARPAINT</a>
+        <p class="muted">Local-first. No account, no telemetry — your rack stays yours.</p>
+      </div>
+      <div class="muted">
+        <a href="https://github.com/arturskowronski/warpaint-cli">arturskowronski/warpaint-cli</a><br>
+        node src/cli.mjs tui
+      </div>
+    </div>
   </footer>
 
 </main>
 
+<script src="assets/paints.js"></script>
+<script src="assets/app.js"></script>
 </body>
 </html>
