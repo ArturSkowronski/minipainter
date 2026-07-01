@@ -110,6 +110,19 @@ Smoke test against a live deploy:
 > Follow-up: versioning across `/mcp` and `/mcp/v3` will be unified into a single
 > coherent `/mcp/vN` scheme in a later change.
 
+## Postgres mode (portable deploys)
+
+Setting `DATABASE_URL` switches inventory storage from the JSON file/volume to Postgres — the
+same code path, chosen at runtime (`src/registry-store.mjs`). This is what `docker compose up`
+and the Render Blueprint (`render.yaml`) use, and it works on Fly too:
+
+    fly postgres create --name warpaint-db
+    fly postgres attach warpaint-db   # sets DATABASE_URL as a secret
+
+With `DATABASE_URL` set, the app creates the `owned_paints` table on boot and seeds it from
+`INVENTORY_JSON` once if empty. Without it, the volume-backed JSON file is used exactly as
+before. For a turnkey stack elsewhere, prefer `docker compose up` (see the README).
+
 ## Known limitations of this iteration
 
 - `/mcp` is unauthenticated — anyone with the URL can call tools.

@@ -84,9 +84,34 @@ See: docs/assets/cli.txt
 
 ![CLI Flow](docs/assets/cli.svg)
 
+## Run with Docker (Postgres)
+
+The whole stack — MCP/HTTP server plus a Postgres that stores your inventory — starts with
+one command. Inventory persists in a named volume, so it **survives container restarts and
+`docker compose down` / recreation** (only `down -v` wipes it).
+
+```bash
+docker compose up --build        # http://localhost:3000
+```
+
+- `GET /health` — liveness
+- `GET /api/inventory` — owned paints (from Postgres)
+- `POST /mcp` — MCP for Claude Desktop · `POST /mcp/v3` — MCP for ChatGPT (`search`/`fetch`)
+
+Storage is selected by `DATABASE_URL`: set it (as `docker-compose.yml` does) for Postgres,
+leave it unset to use a local JSON inventory file (unchanged local behavior). See `.env.example`.
+
+## Deploy
+
+Any Docker + Postgres host works (Fly.io, Railway, a VPS…). For a one-click remote MCP
+server with a managed database, the repo ships a **Render Blueprint** (`render.yaml`) that
+provisions the web service and Postgres together and wires `DATABASE_URL` automatically:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/arturskowronski/warpaint-cli)
+
 ## Install
 
-`minipainting-cli` is not published to npm. Clone the repo and install dependencies:
+`warpaint` is not published to npm. Clone the repo and install dependencies:
 
 ```bash
 git clone https://github.com/ArturSkowronski/warpaint-cli.git

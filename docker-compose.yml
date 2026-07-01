@@ -1,0 +1,33 @@
+# Full warpaint stack: MCP/HTTP server + Postgres. One command:
+#   docker compose up --build
+# Then: http://localhost:3000/health  and  POST http://localhost:3000/mcp/v3
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: warpaint
+      POSTGRES_PASSWORD: warpaint
+      POSTGRES_DB: warpaint
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U warpaint -d warpaint"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://warpaint:warpaint@db:5432/warpaint
+      PORT: "3000"
+      # AUTH_TOKEN: change-me                       # optional bearer for /mcp and /api
+      # INVENTORY_JSON: '{"version":1,"owned":[]}'  # optional one-time seed (empty DB only)
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
