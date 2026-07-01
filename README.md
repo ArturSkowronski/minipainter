@@ -109,6 +109,9 @@ provisions the web service and Postgres together and wires `DATABASE_URL` automa
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/arturskowronski/warpaint-cli)
 
+The reference deployment `warpaint-mcp.fly.dev` runs on Fly.io with Fly Managed Postgres — see
+[`docs/deploy-fly.md`](docs/deploy-fly.md) for the `fly mpg attach` + migration steps.
+
 ## Install
 
 `warpaint` is not published to npm. Clone the repo and install dependencies:

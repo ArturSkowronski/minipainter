@@ -1,7 +1,71 @@
-# minipainting-cli — project guide for Codex
+# AGENTS.md — warpaint project guide for coding agents
 
-A CLI + MCP server for managing a miniature-paint inventory and doing cross-brand
-paint matching. Node.js ESM, tested with the built-in runner (`npm test` → `node --test`).
+A CLI + TUI + MCP servers (Claude and ChatGPT) for managing a miniature-paint inventory and
+doing owned-first cross-brand paint matching over a catalog of 1,607 paints. Node.js, ESM,
+tested with the built-in runner (`npm test` → `node --test`).
+
+Humans: see `README.md`. `CLAUDE.md` carries the same paint-catalog rules and takes precedence.
+
+## Setup
+
+```sh
+npm install          # Node.js 20+ (the Docker image uses node:22-alpine)
+```
+
+No build step — everything runs straight from `src/` (`.mjs`, native ESM).
+
+## Commands
+
+```sh
+npm test                          # whole suite: node --test over tests/*.test.mjs
+node src/cli.mjs --help           # CLI entry point
+node src/cli.mjs paint search bone
+node src/cli.mjs inventory own "Abaddon Black"
+node src/cli.mjs match color "#d2c29b"
+node src/cli.mjs tui              # colored terminal UI (honors NO_COLOR)
+node src/cli.mjs catalog lint     # fails if any paint has a null product_format
+npm run generate:demo            # regenerate docs/assets/*.svg TUI captures
+```
+
+- `node src/mcp-server.mjs` — MCP over stdio (Claude Desktop).
+- `node src/mcp-http-server.mjs` — HTTP server on `PORT` (default 3000): `/mcp`, `/mcp/v3`
+  (ChatGPT `search`/`fetch`/`match_color`), `/health`, `/api/*`.
+
+**Always run `npm test` before finishing; keep it green.** Tests use `import test from 'node:test'`
++ `node:assert/strict`. External services in tests use in-memory fakes (`pg-mem` for Postgres) —
+`npm test` must never need a real database or network.
+
+## Storage (inventory)
+
+Chosen at runtime in `src/registry-store.mjs`:
+
+- `DATABASE_URL` set → **Postgres** (`owned_paints` table). Used by Docker / Render / Fly.
+- unset → **JSON file** (`~/.minipainting/inventory.json` locally, `/data/inventory.json` in Docker).
+
+Only the inventory (owned paint ids) is in the database; the catalog is always in-image files.
+
+## Run the full stack (Docker + Postgres)
+
+```sh
+docker compose up --build         # app + postgres:16; inventory persists in the pgdata volume
+```
+
+Inventory survives container restart and `docker compose down`/recreate (only `down -v` wipes it).
+
+## Deploy
+
+- Fly.io (reference deploy `warpaint-mcp.fly.dev`, Fly Managed Postgres): `docs/deploy-fly.md`.
+- One-click Render Blueprint: `render.yaml` (web service + managed Postgres, `DATABASE_URL` wired).
+- Any Docker + Postgres host works via `docker-compose.yml`.
+
+## Code layout & conventions
+
+- ESM only (`.mjs`). Keep **pure logic** (transforms, predicates, search) separate from **I/O**;
+  files stay small and focused.
+- `src/application/` (use-cases), `src/infrastructure/` (repositories, config), `src/commands/`
+  (CLI), `src/transports/` (http). Add tests alongside changes in `tests/`.
+- Match the style of the file you edit. Conventional-commit messages. Branch before committing;
+  don't push or commit unless asked. Use `gh` for GitHub.
 
 ## Paint catalog architecture
 
@@ -45,8 +109,3 @@ Caveat: the RGB in the pre-existing `citadel/army_painter/vallejo` catalogs does
 hobby-desk-data (different swatch sampling), and the original import script for those isn't in the
 repo. hobby-desk-data is the **canonical upstream going forward** (used for the AK Interactive
 catalog, pinned to `1bc4e09`); expect RGB drift versus the older catalogs.
-
-## Conventions
-- ESM (`.mjs`), `import test from 'node:test'` + `node:assert/strict`.
-- Pure logic (transforms, predicates) separated from I/O; keep files focused.
-- Run `npm test` before finishing; keep it green.

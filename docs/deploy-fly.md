@@ -6,11 +6,13 @@ inventory as a remote MCP server.
 ## What gets deployed
 
 - `src/mcp-http-server.mjs` exposes:
-  - `POST /mcp` (MCP Streamable HTTP) — unauthenticated; use URL obscurity for now
+  - `POST /mcp` (MCP Streamable HTTP, for Claude) and `POST /mcp/v3` (ChatGPT connector)
   - `GET /health` — liveness probe
-  - `GET`/`POST /inventory` — bearer-token-protected inventory sync
-- Inventory file is stored on a Fly volume at `/data/inventory.json` (path
-  controlled by `INVENTORY_PATH`).
+  - `GET`/`PUT`/`DELETE /api/*` — REST for paints and inventory
+  - `GET`/`POST /inventory` — bearer-token inventory sync (legacy; JSON/file mode only)
+- Inventory is stored in **Postgres** when `DATABASE_URL` is set (the current live setup — see
+  "Postgres mode" below); otherwise in a JSON file on a Fly volume at `/data/inventory.json`
+  (`INVENTORY_PATH`).
 - Stateless MCP transport: each request gets a fresh server+transport.
 
 This is single-user. OAuth and per-user storage come later.
@@ -110,18 +112,39 @@ Smoke test against a live deploy:
 > Follow-up: versioning across `/mcp` and `/mcp/v3` will be unified into a single
 > coherent `/mcp/vN` scheme in a later change.
 
-## Postgres mode (portable deploys)
+## Postgres mode (current setup)
 
 Setting `DATABASE_URL` switches inventory storage from the JSON file/volume to Postgres — the
 same code path, chosen at runtime (`src/registry-store.mjs`). This is what `docker compose up`
-and the Render Blueprint (`render.yaml`) use, and it works on Fly too:
+and the Render Blueprint (`render.yaml`) use, and **the live `warpaint-mcp.fly.dev` runs this
+mode** (v0.5+): inventory lives in Fly Managed Postgres, so it survives machine restarts.
 
-    fly postgres create --name warpaint-db
-    fly postgres attach warpaint-db   # sets DATABASE_URL as a secret
+Attach a Fly **Managed Postgres** (MPG) cluster to the app — either a new one or an existing one:
 
-With `DATABASE_URL` set, the app creates the `owned_paints` table on boot and seeds it from
-`INVENTORY_JSON` once if empty. Without it, the volume-backed JSON file is used exactly as
-before. For a turnkey stack elsewhere, prefer `docker compose up` (see the README).
+```sh
+# option A: a new dedicated cluster (a paid MPG plan)
+fly mpg create --name warpaint-db --plan Basic --region arn --pg-major-version 16
+fly mpg attach <CLUSTER_ID> --app warpaint-mcp    # sets the DATABASE_URL secret
+
+# option B: reuse a cluster you already pay for
+fly mpg list --org <your-org>                     # find the cluster id
+fly mpg attach <CLUSTER_ID> --app warpaint-mcp
+```
+
+Migrate the existing inventory in the same step: stage the current owned list as a one-time
+seed, then deploy the Postgres-capable image. On first boot the app creates the `owned_paints`
+table and seeds it from `INVENTORY_JSON` (only while the table is empty):
+
+```sh
+SEED=$(curl -s https://warpaint-mcp.fly.dev/api/inventory \
+  | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.stringify({version:1,owned:JSON.parse(s).items.map(i=>i.id)})))')
+fly secrets set --stage INVENTORY_JSON="$SEED" --app warpaint-mcp
+fly deploy --app warpaint-mcp
+```
+
+Without `DATABASE_URL` the volume-backed JSON file is used exactly as before (local dev, and any
+deploy you don't want on a DB). After migrating, the old `/data` volume and `WARPAINT_INVENTORY_JSON`
+secret become unused leftovers. For a turnkey stack elsewhere, prefer `docker compose up` (see the README).
 
 ## Known limitations of this iteration
 
