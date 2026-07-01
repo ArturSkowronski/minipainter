@@ -51,13 +51,13 @@ test('generated assets include forge ledger presentation and command output', as
   const cli = await fs.readFile(path.join(outputDir, 'cli.txt'), 'utf8');
   const heroSvg = await fs.readFile(path.join(outputDir, 'hero.svg'), 'utf8');
 
-  assert.match(hero, /MINIPAINTING/);
+  assert.match(hero, /WARPAINT/);
   assert.match(hero, /FORGE CATALOG/);
   assert.match(search, /Search Query: bone/i);
   assert.match(owned, /OWNED VIALS/);
   assert.match(cli, /inventory own/i);
   assert.match(heroSvg, /<svg/);
-  assert.match(heroSvg, /MINIPAINTING/);
+  assert.match(heroSvg, /WARPAINT/);
 });
 
 test('README references all generated demo assets and showcase sections', async () => {

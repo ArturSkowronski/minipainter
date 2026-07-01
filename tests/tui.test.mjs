@@ -6,6 +6,7 @@ import {
   createTuiState,
   renderTui,
 } from '../src/tui.mjs';
+import { stripAnsi, visibleWidth } from '../src/tui-theme.mjs';
 
 function makeRegistry() {
   return {
@@ -79,7 +80,7 @@ test('renderTui includes the current view, filters, and selected detail panel', 
   });
   const rendered = renderTui(state);
 
-  assert.match(rendered, /MINIPAINTING/);
+  assert.match(rendered, /WARPAINT/);
   assert.match(rendered, /FORGE CATALOG/);
   assert.match(rendered, /SELECTED PIGMENT/);
   assert.match(rendered, /Search Query: bone/i);
@@ -94,4 +95,29 @@ test('renderTui includes framed command legend and themed inventory labels', () 
   assert.match(rendered, /RITUAL COMMANDS/);
   assert.match(rendered, /MISSING|OWNED/);
   assert.match(rendered, /Visible:/);
+});
+
+test('renderTui plain output carries no ANSI escape codes', () => {
+  const rendered = renderTui(createTuiState(makeRegistry()));
+  assert.ok(!rendered.includes('\x1b['), 'plain render must not contain escape codes');
+});
+
+test('renderTui color output adds ANSI but stays visually equivalent to plain', () => {
+  const state = createTuiState(makeRegistry());
+  const plain = renderTui(state);
+  const colored = renderTui(state, { color: true });
+
+  assert.ok(colored.includes('\x1b['), 'color render should contain escape codes');
+  assert.ok(colored.includes('\x1b[48;2;'), 'color render should include a truecolor swatch');
+  // stripping the codes must reproduce the plain layout exactly (alignment safe)
+  assert.equal(stripAnsi(colored), plain);
+});
+
+test('framed rows stay square once ANSI codes are stripped', () => {
+  const colored = renderTui(createTuiState(makeRegistry()), { color: true });
+  const catalogRows = colored
+    .split('\n')
+    .filter((line) => stripAnsi(line).startsWith('║'));
+  const widths = new Set(catalogRows.map((line) => visibleWidth(line)));
+  assert.equal(widths.size, 1, `all framed rows must share one visible width, got ${[...widths]}`);
 });

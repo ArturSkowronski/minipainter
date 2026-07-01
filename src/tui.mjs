@@ -4,6 +4,7 @@ import { stdin as input, stdout as output } from 'node:process';
 import { searchPaints } from './search-engine.mjs';
 import { renderBanner } from './tui-banner.mjs';
 import { renderSection, renderSeparator } from './tui-frame.mjs';
+import { createTheme, supportsColor } from './tui-theme.mjs';
 
 function applyFilters(registry, view, query) {
   const paints = view === 'owned'
@@ -107,53 +108,69 @@ export function applyTuiAction(state, action) {
   return state;
 }
 
-export function renderTui(state) {
+export function renderTui(state, options = {}) {
+  const theme = createTheme(Boolean(options.color));
   const selectedPaint = state.filteredPaints[state.selectedIndex];
+
   const listRows = state.filteredPaints.length > 0
-    ? state.filteredPaints.map((paint, index) => [
-      `${index === state.selectedIndex ? '>' : ' '} ${paint.name}`,
-      `  ${paint.provider}`,
-      `  ${paint.owned ? 'BOUND TO INVENTORY' : 'MISSING FROM STORES'}`,
-    ].join(' :: '))
-    : ['No pigments match the current query.'];
+    ? state.filteredPaints.map((paint, index) => {
+      const selected = index === state.selectedIndex;
+      const marker = selected ? theme.gold('>') : ' ';
+      const name = selected ? theme.goldBold(paint.name) : theme.bone(paint.name);
+      const status = paint.owned
+        ? theme.green('BOUND TO INVENTORY')
+        : theme.red('MISSING FROM STORES');
+      return `${theme.swatch(paint.rgb)} ${marker} ${name} :: ${theme.dim(paint.provider)} :: ${status}`;
+    })
+    : [theme.dim('No pigments match the current query.')];
 
   const detailRows = selectedPaint
     ? [
-      `Name: ${selectedPaint.name}`,
-      `Provider: ${selectedPaint.provider}`,
-      `Status: ${selectedPaint.owned ? 'OWNED' : 'MISSING'}`,
-      `Usage: ${selectedPaint.usage_roles.join(', ')}`,
-      `Families: ${selectedPaint.color_families.join(', ')}`,
-      `RGB: ${selectedPaint.rgb.r}, ${selectedPaint.rgb.g}, ${selectedPaint.rgb.b}`,
+      `${theme.dim('Name:')} ${theme.bone(selectedPaint.name)}`,
+      `${theme.dim('Provider:')} ${theme.dim(selectedPaint.provider)}`,
+      `${theme.dim('Status:')} ${selectedPaint.owned ? theme.green('OWNED') : theme.red('MISSING')}`,
+      `${theme.dim('Usage:')} ${selectedPaint.usage_roles.join(', ')}`,
+      `${theme.dim('Families:')} ${selectedPaint.color_families.join(', ')}`,
+      `${theme.dim('RGB:')} ${theme.swatch(selectedPaint.rgb)} ${selectedPaint.rgb.r}, ${selectedPaint.rgb.g}, ${selectedPaint.rgb.b}`,
     ]
-    : ['No pigment selected.'];
+    : [theme.dim('No pigment selected.')];
 
   const commands = [
-    'search <text>   owned   catalog',
-    'toggle          quit',
+    `${theme.gold('search')} <text>   ${theme.gold('owned')}   ${theme.gold('catalog')}`,
+    `${theme.gold('toggle')}          ${theme.gold('quit')}`,
   ];
 
+  const ownedTotal = state.registry.catalog.paints.filter((paint) => paint.owned).length;
+  const statusLine = [
+    `${theme.dim('View:')} ${theme.bone(state.view.toUpperCase())}`,
+    `${theme.dim('Visible:')} ${theme.bone(String(state.filteredPaints.length))}`,
+    `${theme.dim('Owned:')} ${theme.bone(String(ownedTotal))}`,
+    `${theme.dim('Search Query:')} ${state.query ? theme.gold(state.query) : theme.dim('(none)')}`,
+  ].join(theme.dim('  |  '));
+
   return [
-    renderBanner(),
-    renderSeparator('FORGE STATUS'),
-    `View: ${state.view.toUpperCase()}  |  Visible: ${state.filteredPaints.length}  |  Owned: ${state.registry.catalog.paints.filter((paint) => paint.owned).length}  |  Search Query: ${state.query || '(none)'}`,
+    renderBanner(theme),
+    renderSeparator('FORGE STATUS', 78, theme),
+    statusLine,
     '',
-    renderSection(state.view === 'owned' ? 'OWNED VIALS' : 'FORGE CATALOG', listRows, 78),
+    renderSection(state.view === 'owned' ? 'OWNED VIALS' : 'FORGE CATALOG', listRows, 78, theme),
     '',
-    renderSection('SELECTED PIGMENT', detailRows, 78),
+    renderSection('SELECTED PIGMENT', detailRows, 78, theme),
     '',
-    renderSection('RITUAL COMMANDS', commands, 78),
+    renderSection('RITUAL COMMANDS', commands, 78, theme),
   ].join('\n');
 }
 
 export async function runTui(registry) {
   const rl = readline.createInterface({ input, output });
   let state = createTuiState(registry);
+  const color = supportsColor(output);
+  const prompt = color ? '\x1b[38;2;204;162;76mtui›\x1b[0m ' : 'tui> ';
 
   try {
     for (;;) {
-      output.write(`${renderTui(state)}\n\n`);
-      const line = (await rl.question('tui> ')).trim();
+      output.write(`${renderTui(state, { color })}\n\n`);
+      const line = (await rl.question(prompt)).trim();
 
       if (line === 'quit' || line === 'exit') {
         return { registry: state.registry };
