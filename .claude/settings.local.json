@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp *)",
+      "mcp__warpaint__inventory_mark_owned",
+      "Bash(node *)",
+      "mcp__warpaint__paint_search",
+      "mcp__warpaint__paint_show",
+      "Bash(mkdir -p /tmp/citadel-scrape)",
+      "Read(//tmp/**)",
+      "WebFetch(domain:encycolorpedia.com)",
+      "WebFetch(domain:handwiki.org)",
+      "WebFetch(domain:bolterandchainsword.com)",
+      "mcp__warpaint__inventory_list",
+      "WebFetch(domain:paint-stash.com)",
+      "Bash(grep -oE '#[0-9a-fA-F]{6}|background-color:[^;]+|fill=\"#[0-9a-fA-F]{3,6}\"')",
+      "Bash(git -C /Users/askowronski/Priv/warpaint-cli log --oneline data/catalog/army_painter.json)",
+      "Bash(git -C /Users/askowronski/Priv/warpaint-cli show c646e92:data/catalog/army_painter.json)",
+      "Bash(git -C /Users/askowronski/Priv/warpaint-cli show 6c06ffb --stat)",
+      "Bash(git -C /Users/askowronski/Priv/warpaint-cli log --format=\"%h %ad %s\" --date=short -2)",
+      "Bash(git *)",
+      "Bash(npm test *)",
+      "WebFetch(domain:thearmypainter.com)",
+      "WebFetch(domain:taleofpainters.com)",
+      "mcp__warpaint__match_describe",
+      "mcp__warpaint__match_color",
+      "WebFetch(domain:gist.github.com)",
+      "Bash(fly version *)",
+      "Bash(fly apps *)",
+      "Bash(fly deploy *)",
+      "Bash(fly logs *)",
+      "Bash(INVENTORY_PATH=/should-be-ignored node --test tests/config.test.mjs)",
+      "Bash(WARPAINT_INVENTORY_JSON='{\"version\":1,\"owned\":[\"army_painter/holy-white\"]}' node --test tests/registry-store.test.mjs)",
+      "Bash(MCP_SERVER_NAME=test-name INVENTORY_PATH=/tmp/inv-43.json timeout 3 node src/mcp-http-server.mjs)",
+      "Bash(gh pr *)"
+    ]
+  }
+}

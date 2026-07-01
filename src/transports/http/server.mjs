@@ -12,6 +12,7 @@ import {
   showPaint,
 } from '../../paint-service.mjs';
 import { createMcpServer } from '../../mcp-tools.mjs';
+import { createChatGptMcpServer } from '../../chatgpt-mcp-tools.mjs';
 import { handleInventorySync } from '../../inventory-sync.mjs';
 import { resolveServerConfig } from '../../infrastructure/config/runtime-config.mjs';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
@@ -112,14 +113,14 @@ async function dispatchApiRequest({ method, url, headers = {}, body }, config) {
   return null;
 }
 
-async function handleMcpRequest(req, res, config) {
+async function handleMcpRequest(req, res, config, serverFactory = createMcpServer) {
   if (config.authToken && !isAuthorized(req, config.authToken)) {
     unauthorized(res);
     return;
   }
 
   const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
-  const mcpServer = createMcpServer({ inventoryPath: config.inventoryPath });
+  const mcpServer = serverFactory({ inventoryPath: config.inventoryPath });
 
   try {
     await mcpServer.connect(transport);
@@ -206,6 +207,14 @@ export async function createHttpServer(env = process.env) {
 
       if (req.url === '/mcp') {
         await handleMcpRequest(req, res, config);
+        return;
+      }
+
+      if (req.url === '/mcp/v3') {
+        await handleMcpRequest(req, res, config, (opts) => createChatGptMcpServer({
+          ...opts,
+          baseUrl: config.publicBaseUrl,
+        }));
         return;
       }
 

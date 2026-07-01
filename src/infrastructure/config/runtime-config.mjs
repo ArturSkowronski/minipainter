@@ -15,5 +15,6 @@ export function resolveServerConfig(env = process.env) {
     authToken: env.AUTH_TOKEN || null,
     syncToken: env.INVENTORY_SYNC_TOKEN || env.AUTH_TOKEN || null,
     mcpServerName: env.MCP_SERVER_NAME || 'paint-inventory',
+    publicBaseUrl: (env.PUBLIC_BASE_URL || 'https://warpaint-mcp.fly.dev').replace(/\/+$/, ''),
   };
 }

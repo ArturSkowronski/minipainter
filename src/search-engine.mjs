@@ -125,6 +125,11 @@ export function searchPaints(registry, query, options = {}) {
 }
 
 export function resolvePaint(registry, query, options = {}) {
+  const exactById = registry.catalog.paints.find((paint) => paint.id === query);
+  if (exactById && (!options.provider || exactById.provider === options.provider)) {
+    return { status: 'resolved', paint: exactById };
+  }
+
   const results = searchPaints(registry, query, options);
 
   if (results.length === 0) {

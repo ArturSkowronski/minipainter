@@ -82,6 +82,34 @@ In Claude (mobile or web) add a custom MCP connector:
 The `/mcp` endpoint currently has no authentication. Use URL obscurity and
 Fly's network controls until per-user auth lands.
 
+## ChatGPT connector endpoint (v3)
+
+`POST /mcp/v3` is a second MCP endpoint shaped for the OpenAI ChatGPT connector
+contract. It exposes `search`, `fetch`, and `match_color` (the existing `/mcp`
+with the 7 paint tools is unchanged, for Claude).
+
+- `search({query})` → `{"results":[{"id","title","url"}]}`
+- `fetch({id})` → `{"id","title","text","url","metadata"}`
+
+Result `url`s are built from `PUBLIC_BASE_URL` (default
+`https://warpaint-mcp.fly.dev`), pointing at `GET /api/paints/<id>`. Set it if the
+app is deployed under a different hostname:
+
+    fly secrets set PUBLIC_BASE_URL="https://<your-app-name>.fly.dev"
+
+Add it in ChatGPT as a custom connector pointing at `https://<app>.fly.dev/mcp/v3`.
+
+Smoke test against a live deploy:
+
+    APP=https://warpaint-mcp.fly.dev
+    curl -s -X POST "$APP/mcp/v3" \
+      -H "Content-Type: application/json" \
+      -H "Accept: application/json, text/event-stream" \
+      -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"search","arguments":{"query":"nuln oil"}}}'
+
+> Follow-up: versioning across `/mcp` and `/mcp/v3` will be unified into a single
+> coherent `/mcp/vN` scheme in a later change.
+
 ## Known limitations of this iteration
 
 - `/mcp` is unauthenticated — anyone with the URL can call tools.

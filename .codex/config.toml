@@ -1,0 +1,3 @@
+[mcp_servers.warpaint]
+command = "node"
+args = ["/Users/askowronski/Priv/warpaint-cli/src/mcp-server.mjs"]
