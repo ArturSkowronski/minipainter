@@ -167,10 +167,33 @@
 <span class="p">$</span> node src/cli.mjs tui</pre>
         </div>
         <div class="ledger">
-          <figure>
-            <img src="assets/hero.svg" alt="warpaint terminal ledger: banner, catalog table, selected-pigment detail panel and command strip" loading="lazy">
-            <figcaption>The ledger TUI — catalog, detail, commands</figcaption>
-          </figure>
+          <div class="term" role="img" aria-label="warpaint ledger TUI: catalog list, selected pigment detail, and command strip">
+            <div class="term-bar"><i></i><i></i><i></i><span>warpaint — ledger</span></div>
+            <div class="term-body">
+              <div class="term-word">WARPAINT</div>
+              <div class="term-status">VIEW <b>catalog</b> · VISIBLE <b>5</b> · OWNED <b>3</b> · QUERY <b>(none)</b></div>
+
+              <div class="term-sec">Forge catalog</div>
+              <ul class="term-list">
+                <li class="sel"><i style="background:#141414"></i>Abaddon Black<em>citadel</em><span class="own">owned</span></li>
+                <li><i style="background:#5c5e60"></i>Leadbelcher<em>citadel</em><span class="own">owned</span></li>
+                <li><i style="background:#d7c89a"></i>Skeleton Bone<em>army painter</em><span class="miss">missing</span></li>
+                <li><i style="background:#d8c89a"></i>Pallid Bone<em>army painter</em><span class="own">owned</span></li>
+                <li><i style="background:#b89a7a"></i>Dark Tone<em>army painter</em><span class="miss">missing</span></li>
+              </ul>
+
+              <div class="term-sec">Selected pigment</div>
+              <div class="term-detail">
+                <span>name</span><b>Abaddon Black</b>
+                <span>provider</span><b>citadel</b>
+                <span>status</span><b class="ok">owned</b>
+                <span>rgb</span><b>20, 20, 20 · #141414</b>
+              </div>
+
+              <div class="term-cmd"><span>search</span><span>owned</span><span>catalog</span><span>toggle</span><span class="q">quit</span></div>
+            </div>
+          </div>
+          <p class="ledger-cap">The ledger TUI — <code>node src/cli.mjs tui</code></p>
         </div>
       </div>
     </div>
