@@ -1,18 +1,20 @@
 {
   "name": "minipainting-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "bin": {
     "minipainting": "./src/cli.mjs",
     "warpaint-mcp": "./src/mcp-server.mjs",
-    "warpaint-mcp-http": "./src/mcp-http-server.mjs"
+    "warpaint-mcp-http": "./src/mcp-http-server.mjs",
+    "minipainting-server": "./src/mcp-http-server.mjs"
   },
   "scripts": {
     "test": "node --test",
     "generate:demo": "node scripts/render-demo-output.mjs docs/assets",
     "mcp": "node src/mcp-server.mjs",
-    "mcp:http": "node src/mcp-http-server.mjs"
+    "mcp:http": "node src/mcp-http-server.mjs",
+    "server": "node src/mcp-http-server.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.28.0",

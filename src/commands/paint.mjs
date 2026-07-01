@@ -1,62 +1,32 @@
-import { loadRegistry } from '../registry-store.mjs';
-import { resolvePaint, searchPaints } from '../search-engine.mjs';
-
-function stripResult(result) {
-  return {
-    id: result.paint.id,
-    provider: result.paint.provider,
-    name: result.paint.name,
-    owned: result.paint.owned,
-    usage_roles: result.paint.usage_roles,
-    product_format: result.paint.product_format ?? null,
-    color_families: result.paint.color_families,
-    rgb: result.paint.rgb,
-    score: result.score,
-  };
-}
-
-function stripPaint(paint) {
-  return {
-    id: paint.id,
-    provider: paint.provider,
-    name: paint.name,
-    owned: paint.owned,
-    aliases: paint.aliases,
-    usage_roles: paint.usage_roles,
-    product_format: paint.product_format ?? null,
-    color_families: paint.color_families,
-    rgb: paint.rgb,
-  };
-}
+import { searchPaintCatalog, showPaint } from '../paint-service.mjs';
 
 export async function runPaintCommand(args, context) {
-  const registry = await loadRegistry(context.registryPath);
   const [subcommand, ...rest] = args;
 
   if (subcommand === 'search') {
     const query = rest[0] || '';
-    const items = searchPaints(registry, query).map(stripResult);
+    const result = await searchPaintCatalog({ inventoryPath: context.registryPath, query });
     return {
-      message: `Found ${items.length} paint matches`,
-      items,
+      message: `Found ${result.items.length} paint matches`,
+      items: result.items,
     };
   }
 
   if (subcommand === 'show') {
     const query = rest[0];
-    const result = resolvePaint(registry, query);
+    const result = await showPaint({ inventoryPath: context.registryPath, paint: query });
 
     if (result.status !== 'resolved') {
       return {
         message: 'Paint could not be resolved',
         item: null,
-        items: result.matches?.map(stripPaint) || [],
+        items: result.matches || [],
       };
     }
 
     return {
-      message: `Showing ${result.paint.name}`,
-      item: stripPaint(result.paint),
+      message: `Showing ${result.item.name}`,
+      item: result.item,
     };
   }
 

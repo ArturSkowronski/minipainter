@@ -1,20 +1,4 @@
-import { loadRegistry } from '../registry-store.mjs';
-import { matchByColor, searchPaints } from '../search-engine.mjs';
-
-function stripMatch(result) {
-  return {
-    id: result.paint.id,
-    provider: result.paint.provider,
-    name: result.paint.name,
-    owned: result.paint.owned,
-    usage_roles: result.paint.usage_roles,
-    product_format: result.paint.product_format ?? null,
-    color_families: result.paint.color_families,
-    rgb: result.paint.rgb,
-    distance: result.distance ?? null,
-    score: result.score ?? null,
-  };
-}
+import { matchPaintByColor, matchPaintByDescription } from '../paint-service.mjs';
 
 function parseHexColor(value) {
   const normalized = value.replace('#', '');
@@ -31,21 +15,25 @@ function parseHexColor(value) {
 }
 
 export async function runMatchCommand(args, context) {
-  const registry = await loadRegistry(context.registryPath);
   const [subcommand, ...rest] = args;
 
   if (subcommand === 'color') {
     const rgb = parseHexColor(rest[0]);
+    const result = await matchPaintByColor({ inventoryPath: context.registryPath, rgb });
     return {
       message: 'Color matches',
-      items: matchByColor(registry, rgb).map(stripMatch),
+      items: result.items,
     };
   }
 
   if (subcommand === 'describe') {
+    const result = await matchPaintByDescription({
+      inventoryPath: context.registryPath,
+      query: rest[0] || '',
+    });
     return {
       message: 'Described paint matches',
-      items: searchPaints(registry, rest[0] || '').map(stripMatch),
+      items: result.items,
     };
   }
 

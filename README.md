@@ -113,9 +113,10 @@ Initialize the local inventory once (creates `~/.minipainting/inventory.json`; l
 node src/cli.mjs catalog sync
 ```
 
-After that you have three usage modes:
+After that you have four usage modes:
 
 - **CLI / TUI** — see Quickstart below
+- **Self-hosted HTTP server** — a single Docker-friendly runtime with JSON storage and API endpoints
 - **Local MCP for Claude Desktop** — see [Claude Desktop MCP Setup](#claude-desktop-mcp-setup)
 - **Remote MCP for Claude mobile/web** — see [Remote MCP](#remote-mcp-claude-mobile)
 
@@ -167,6 +168,12 @@ Run the MCP server locally:
 node src/mcp-server.mjs
 ```
 
+Run the self-hosted HTTP server locally:
+
+```bash
+DATA_DIR=.minipainting-data node src/mcp-http-server.mjs
+```
+
 ## TUI Workflow
 
 The TUI is centered around three presentation areas:
@@ -212,6 +219,7 @@ Planned later:
 
 - Built-in catalog data lives in `data/catalog/` (Citadel and Army Painter, kept in version control)
 - Inventory file: `~/.minipainting/inventory.json` — stores only owned paint ids in the form `{ "version": 1, "owned": ["citadel/abaddon-black", ...] }`
+- Self-hosted server data directory: `DATA_DIR` (defaults to `/data` in Docker); inventory lives at `<DATA_DIR>/inventory.json`
 - The catalog and inventory are composed at runtime; saving never rewrites the catalog
 - IDs are stable by convention (provider + name slug); on load, owned ids missing from the catalog are reported as warnings instead of being silently dropped
 - A pre-existing project-local `.minipainting/registry.json` next to the inventory path is auto-migrated on first run
@@ -220,6 +228,7 @@ Planned later:
 - RGB values are approximate reference colors for matching, not a guarantee of final painted appearance
 - MCP entrypoint: `node src/mcp-server.mjs`
 - MCP helper script: `npm run mcp`
+- HTTP server helper script: `npm run server`
 - README demo captures are reproducible via:
 
 ```bash
@@ -258,6 +267,33 @@ Suggested local flow:
 1. initialize your registry once with `node src/cli.mjs catalog sync`
 2. add the MCP server to Claude Desktop
 3. ask Claude to search paints or update ownership through the exposed tools
+
+## Self-Hosted Docker
+
+The Docker image runs a single HTTP server runtime designed for self-hosted use:
+
+```bash
+docker run -p 3000:3000 -v minipainting-data:/data ghcr.io/ArturSkowronski/warpaint-cli
+```
+
+The server exposes:
+
+- `GET /health`
+- `GET /api/paints`
+- `GET /api/paints/:paint`
+- `GET /api/inventory`
+- `PUT /api/inventory/:paint`
+- `DELETE /api/inventory/:paint`
+- `POST /api/match/color`
+- `POST /api/match/describe`
+- `POST /mcp`
+
+Optional runtime configuration:
+
+- `PORT` — listen port, defaults to `3000`
+- `DATA_DIR` — persistent state directory, defaults to `/data` in Docker
+- `AUTH_TOKEN` — protects `/api/*` and `/mcp` with `Authorization: Bearer ...`
+- `INVENTORY_SYNC_TOKEN` — protects the legacy `/inventory` sync endpoint
 
 ## Remote MCP (Claude Mobile)
 
