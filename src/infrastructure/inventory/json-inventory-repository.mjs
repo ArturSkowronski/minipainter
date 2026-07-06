@@ -48,7 +48,14 @@ export function createJsonInventoryRepository({ inventoryPath }) {
     inventoryPath,
 
     async load() {
-      return readInventoryFile(inventoryPath);
+      try {
+        return await readInventoryFile(inventoryPath);
+      } catch (error) {
+        if (!error || error.code !== 'ENOENT') throw error;
+        // Fresh install: no inventory file yet. Treat as empty (honoring an
+        // INVENTORY_JSON seed) so read commands work and the first write creates it.
+        return readInventoryFromEnv() || normalizeInventory({ version: 1, owned: [] });
+      }
     },
 
     async save(inventory) {

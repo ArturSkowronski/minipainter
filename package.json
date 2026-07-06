@@ -1,13 +1,22 @@
 {
   "name": "minipainter",
-  "version": "0.6.0",
-  "private": true,
+  "version": "0.6.1",
+  "description": "Local-first CLI + MCP server for a miniature-paint inventory and cross-brand color matching.",
   "type": "module",
   "bin": {
+    "minipainter": "./src/cli.mjs",
     "mpaint": "./src/cli.mjs",
     "minipainter-mcp": "./src/mcp-server.mjs",
     "minipainter-mcp-http": "./src/mcp-http-server.mjs",
     "minipainter-server": "./src/mcp-http-server.mjs"
+  },
+  "files": [
+    "src/",
+    "data/",
+    "MCP.md"
+  ],
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
     "test": "node --test",

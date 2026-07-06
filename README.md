@@ -114,30 +114,38 @@ The reference deployment `warpaint-mcp.fly.dev` runs on Fly.io with Fly Managed 
 
 ## Install
 
-`minipainter` is not published to npm. Clone the repo and install dependencies:
+The fastest way — run it straight from npm with `npx`, no clone, no install:
+
+```bash
+npx minipainter paint search bone
+npx minipainter match color "#d2c29b"
+npx minipainter tui
+```
+
+Or install it globally to get the short `mpaint` command everywhere:
+
+```bash
+npm install -g minipainter
+mpaint paint search bone
+mpaint --help
+```
+
+The catalog is bundled, so search and matching work on first run with nothing to configure. Your inventory lives at `~/.minipainting/inventory.json`, created automatically the first time you mark a paint owned (legacy `~/.warpaint/` is auto-migrated).
+
+Requirements:
+
+- Node.js 18 or newer
+- POSIX-ish shell (Linux, macOS, WSL)
+
+### From source
+
+To hack on it, clone and run against the working tree:
 
 ```bash
 git clone https://github.com/ArturSkowronski/warpaint-cli.git
 cd warpaint-cli
 npm install
-```
-
-Requirements:
-
-- Node.js 20 or newer
-- POSIX-ish shell (Linux, macOS, WSL)
-
-Optional: expose the binaries on your `PATH` so you can call `mpaint` from anywhere:
-
-```bash
-npm link
-mpaint --help
-```
-
-Initialize the local inventory once (creates `~/.minipainting/inventory.json`; legacy `~/.warpaint/` is auto-migrated on first run):
-
-```bash
-node src/cli.mjs catalog sync
+node src/cli.mjs paint search bone
 ```
 
 After that you have four usage modes:

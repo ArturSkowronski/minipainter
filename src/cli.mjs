@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import process from 'node:process';
+import { realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 import os from 'node:os';
@@ -80,7 +81,20 @@ export async function runCli(argv, options = {}) {
   }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+function isMainModule() {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  // process.argv[1] is the path as invoked (e.g. a node_modules/.bin symlink),
+  // while import.meta.url is already realpath-resolved — resolve the symlink so
+  // the CLI still runs when launched via `npx`/a global bin, not just directly.
+  try {
+    return import.meta.url === pathToFileURL(realpathSync(entry)).href;
+  } catch {
+    return import.meta.url === pathToFileURL(entry).href;
+  }
+}
+
+if (isMainModule()) {
   const result = await runCli(process.argv.slice(2));
   process.stdout.write(result.stdout);
   process.stderr.write(result.stderr);
