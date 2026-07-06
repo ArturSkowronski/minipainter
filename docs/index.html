@@ -155,15 +155,18 @@
     <div class="wrap">
       <h2 class="section-head">Hand it to any agent</h2>
       <p class="lede">minipainter speaks the Model Context Protocol, so any MCP-capable agent can
-        use it: Claude on desktop, web and Code, ChatGPT, Gemini, and whatever comes next. Three
-        ways to connect, and a <a href="install.html">full setup guide</a> for each.</p>
+        use it: Claude on desktop, web and Code, ChatGPT, Gemini, and whatever comes next. Run it
+        locally or host your own, there is no shared service. Full <a href="install.html">setup
+        guide</a> for each.</p>
 
       <div class="ways">
         <article class="plate">
-          <span class="tag">Local · MCP over stdio</span>
-          <h3>Local MCP server</h3>
-          <p>Run the stdio server and add it to any desktop MCP client (Claude Desktop and
-            others). The agent reads and updates your registry directly on your machine.</p>
+          <span class="tag">Local · CLI + MCP</span>
+          <h3>On your machine</h3>
+          <p>The simplest path, nothing to host. Use minipainter as a CLI in your terminal, or run
+            the local MCP server and add it to a desktop agent like Claude Desktop. Your rack never
+            leaves your machine.</p>
+          <div class="endpoint"><code>npx minipainter tui</code><button data-copy="npx minipainter tui">Copy</button></div>
           <div class="endpoint"><code>npx minipainter-mcp</code><button data-copy="npx minipainter-mcp">Copy</button></div>
           <div class="toolchips">
             <span>paint_search</span><span>paint_show</span><span>inventory_list</span>
@@ -173,12 +176,12 @@
         </article>
 
         <article class="plate">
-          <span class="tag">Hosted · remote MCP</span>
-          <h3>Hosted endpoint</h3>
-          <p>A hosted MCP server for URL-based agents: Claude web, ChatGPT and Gemini. Add it as a
-            connector and browse the catalog in chat, no install. ChatGPT uses the
-            <code>/mcp/v3</code> route.</p>
-          <div class="endpoint"><code>https://warpaint-mcp.fly.dev/mcp</code><button data-copy="https://warpaint-mcp.fly.dev/mcp">Copy</button></div>
+          <span class="tag">Self-hosted · remote MCP</span>
+          <h3>Your own endpoint</h3>
+          <p>For URL-based agents (Claude web, ChatGPT, Gemini), deploy your own remote MCP with
+            Docker or Fly, then add your URL as a connector. It is your server and your inventory,
+            there is no public instance to share. ChatGPT uses the <code>/mcp/v3</code> route.</p>
+          <div class="endpoint"><code>https://your-app.fly.dev/mcp</code><button data-copy="https://your-app.fly.dev/mcp">Copy</button></div>
           <div class="toolchips"><span>paint_search</span><span>match_color</span><span>inventory_list</span><span>search</span><span>fetch</span></div>
         </article>
 
