@@ -6,11 +6,11 @@
   "author": "Artur Skowronski",
   "type": "module",
   "bin": {
-    "minipainter": "./src/cli.mjs",
-    "mpaint": "./src/cli.mjs",
-    "minipainter-mcp": "./src/mcp-server.mjs",
-    "minipainter-mcp-http": "./src/mcp-http-server.mjs",
-    "minipainter-server": "./src/mcp-http-server.mjs"
+    "minipainter": "src/cli.mjs",
+    "mpaint": "src/cli.mjs",
+    "minipainter-mcp": "src/mcp-server.mjs",
+    "minipainter-mcp-http": "src/mcp-http-server.mjs",
+    "minipainter-server": "src/mcp-http-server.mjs"
   },
   "files": [
     "src/",
