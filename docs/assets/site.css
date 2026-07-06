@@ -156,6 +156,28 @@ section + section { border-top: 1px solid var(--line); }
 }
 @keyframes chip-in { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: none; } }
 
+/* ---- workflow ----------------------------------------------------------- */
+
+.flow { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(22px, 3.5vw, 52px); margin-top: 2.6rem; }
+.flow-step { border-top: 1px solid var(--line-2); padding-top: 1.15rem; }
+.flow-step .tag { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+.flow-step h3 { font-family: var(--f-display); font-weight: 700; text-transform: uppercase; font-size: 1.7rem; line-height: 1; margin: .55rem 0 .75rem; }
+.flow-step p { margin: 0; color: var(--bone-dim); font-size: 1rem; }
+.flow-step .contrast { margin-top: .85rem; font-family: var(--f-mono); font-size: .74rem; letter-spacing: .02em; }
+.flow-step .contrast b { color: var(--bone); font-weight: 400; }
+
+.plan { border: 1px solid var(--line-2); background: var(--ink-2); margin: clamp(28px, 4.5vh, 56px) 0 0; }
+.plan-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 0; padding: .85rem 1.15rem; border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--bone-dim); }
+.plan-head b { color: var(--gold); font-weight: 400; }
+.plan-body { display: grid; grid-template-columns: 1fr 1fr; }
+.plan-zone { padding: 1.15rem 1.25rem; }
+.plan-zone + .plan-zone { border-left: 1px solid var(--line); }
+.plan-zone h4 { font-family: var(--f-display); font-weight: 600; text-transform: uppercase; font-size: 1.18rem; letter-spacing: .02em; margin: 0 0 .55rem; }
+.plan-zone p { margin: 0; color: var(--bone-dim); font-size: .93rem; line-height: 1.5; }
+.plan-zone .paint { color: var(--bone); }
+.plan-gap { margin: 0; border-top: 1px solid var(--line); padding: .95rem 1.25rem; font-size: .93rem; color: var(--bone-dim); }
+.plan-gap b { color: var(--gold); font-weight: 400; }
+
 /* ---- matcher (signature) ------------------------------------------------ */
 
 .match-head { margin-bottom: 2.2rem; }
@@ -302,7 +324,9 @@ footer .muted { font-family: var(--f-mono); font-size: .72rem; color: var(--bone
   .wall { order: -1; aspect-ratio: 16/7; grid-template-columns: repeat(18, 1fr); }
   .match-console { grid-template-columns: 1fr; }
   .picker { position: static; }
-  .ways, .qs-grid { grid-template-columns: 1fr; }
+  .ways, .qs-grid, .flow { grid-template-columns: 1fr; }
+  .plan-body { grid-template-columns: 1fr; }
+  .plan-zone + .plan-zone { border-left: 0; border-top: 1px solid var(--line); }
   .topbar nav a:not(.gh) { display: none; }
 }
 
