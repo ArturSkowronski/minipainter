@@ -151,7 +151,7 @@ secret become unused leftovers. For a turnkey stack elsewhere, prefer `docker co
 - `/mcp` is unauthenticated — anyone with the URL can call tools.
 - `/inventory` is protected by a single shared bearer token.
 - Stateless transport: no SSE streaming of long-running tool results
-  (minipainting tools are fast, so this is fine).
+  (minipainter tools are fast, so this is fine).
 
 ## Persistent Inventory (v2)
 
@@ -175,4 +175,4 @@ To bootstrap from your local inventory:
 
 After the first boot, the volume is the source of truth — the env var is
 ignored on subsequent loads (a warning is logged). Use the sync CLI for
-ongoing updates (see `minipainting sync --help`).
+ongoing updates (see `mpaint sync --help`).

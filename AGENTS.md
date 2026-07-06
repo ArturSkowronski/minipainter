@@ -1,4 +1,4 @@
-# AGENTS.md — warpaint project guide for coding agents
+# AGENTS.md — minipainter project guide for coding agents
 
 A CLI + TUI + MCP servers (Claude and ChatGPT) for managing a miniature-paint inventory and
 doing owned-first cross-brand paint matching over a catalog of 1,607 paints. Node.js, ESM,

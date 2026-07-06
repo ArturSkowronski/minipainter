@@ -1,4 +1,4 @@
-# warpaint page — design notes (log of choices, for future passes)
+# minipainter page — design notes (log of choices, for future passes)
 
 Aesthetic: physical paint-rack / swatch-card system. Bench = warm graphite (chaos black),
 faces/text = wraithbone bone, single accent = retributor gold. Chroma comes from the real

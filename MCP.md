@@ -1,6 +1,6 @@
-# MINIPAINTING MCP
+# MINIPAINTER MCP
 
-`minipainting-cli` exposes its paint catalog and inventory through the
+`minipainter` exposes its paint catalog and inventory through the
 [Model Context Protocol](https://modelcontextprotocol.io) so Claude (and other
 MCP-aware clients) can search paints, inspect them, and update what you own.
 
@@ -8,8 +8,8 @@ The same set of tools is served over two transports:
 
 | Transport | Binary | Use case |
 |---|---|---|
-| stdio | `warpaint-mcp` (`src/mcp-server.mjs`) | Claude Desktop on the same machine as the inventory file |
-| Streamable HTTP | `warpaint-mcp-http` (`src/mcp-http-server.mjs`) | Claude mobile, web, or any remote client |
+| stdio | `minipainter-mcp` (`src/mcp-server.mjs`) | Claude Desktop on the same machine as the inventory file |
+| Streamable HTTP | `minipainter-mcp-http` (`src/mcp-http-server.mjs`) | Claude mobile, web, or any remote client |
 
 Both wrap the same `createMcpServer()` factory in `src/mcp-tools.mjs`, so the
 tool surface is identical.
@@ -107,15 +107,15 @@ Rank paints from a semantic description such as `bone` or `silver metallic`.
 ```json
 {
   "mcpServers": {
-    "warpaint": {
+    "minipainter": {
       "command": "node",
-      "args": ["/absolute/path/to/minipainting-cli/src/mcp-server.mjs"]
+      "args": ["/absolute/path/to/warpaint-cli/src/mcp-server.mjs"]
     }
   }
 }
 ```
 
-4. Restart Claude Desktop. The seven tools above appear under the `warpaint`
+4. Restart Claude Desktop. The seven tools above appear under the `minipainter`
    server.
 
 To point the stdio server at a non-default inventory file, pass `cwd` in the
@@ -167,11 +167,11 @@ curl -s -X POST http://localhost:3000/inventory \
 
 ### Sync from the CLI
 
-The `minipainting` CLI ships a sync subcommand that pushes/pulls inventory to/from
+The `mpaint` CLI ships a sync subcommand that pushes/pulls inventory to/from
 the deployed MCP. One-time setup:
 
 ```bash
-minipainting sync add default \
+mpaint sync add default \
   --url https://<your-host> \
   --token <INVENTORY_SYNC_TOKEN>
 ```
@@ -179,8 +179,8 @@ minipainting sync add default \
 Then:
 
 ```bash
-minipainting sync push              # upload local → remote
-minipainting sync pull --force      # overwrite local from remote
+mpaint sync push              # upload local → remote
+mpaint sync pull --force      # overwrite local from remote
 ```
 
 Remote config lives in `~/.minipainting/remotes.json`.

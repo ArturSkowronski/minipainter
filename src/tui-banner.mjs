@@ -15,7 +15,7 @@ export function renderBanner(theme = plainTheme, width = 78) {
   return [
     edge(`╔${'═'.repeat(width)}╗`),
     line(''),
-    line(theme.goldBold('░▒▓█  WARPAINT  █▓▒░')),
+    line(theme.goldBold('░▒▓█  MINIPAINTER  █▓▒░')),
     line(''),
     line(theme.dim('MINIATURE PAINT INVENTORY')),
     line(''),

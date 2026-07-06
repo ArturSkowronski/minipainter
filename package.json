@@ -1,13 +1,13 @@
 {
-  "name": "minipainting-cli",
-  "version": "0.5.0",
+  "name": "minipainter",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "bin": {
-    "minipainting": "./src/cli.mjs",
-    "warpaint-mcp": "./src/mcp-server.mjs",
-    "warpaint-mcp-http": "./src/mcp-http-server.mjs",
-    "minipainting-server": "./src/mcp-http-server.mjs"
+    "mpaint": "./src/cli.mjs",
+    "minipainter-mcp": "./src/mcp-server.mjs",
+    "minipainter-mcp-http": "./src/mcp-http-server.mjs",
+    "minipainter-server": "./src/mcp-http-server.mjs"
   },
   "scripts": {
     "test": "node --test",

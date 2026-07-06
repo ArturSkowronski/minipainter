@@ -1,10 +1,10 @@
-# WARPAINT
+# MINIPAINTER
 
 > The paint bench, indexed.
 
 Site: [arturskowronski.github.io/warpaint-cli](https://arturskowronski.github.io/warpaint-cli/)
 
-`warpaint` is a local-first paint registry for miniature-painting workflows. It exists for one practical reason: AI paint suggestions are much more useful when they understand the paints you actually own.
+`minipainter` is a local-first paint registry for miniature-painting workflows. It exists for one practical reason: AI paint suggestions are much more useful when they understand the paints you actually own.
 
 The project gives you:
 
@@ -16,17 +16,17 @@ The project gives you:
 
 ## New in v0.4 — colored UI
 
-The ledger TUI is now a real colored terminal app: a `WARPAINT` banner, gold section
+The ledger TUI is now a real colored terminal app: a `MINIPAINTER` banner, gold section
 frames, green `OWNED` / red `MISSING` status, and a truecolor swatch of every paint's own
 RGB. Color turns on for a TTY and honors `NO_COLOR`.
 
-![WARPAINT terminal UI — catalog](docs/assets/hero.svg)
+![MINIPAINTER terminal UI — catalog](docs/assets/hero.svg)
 
 ## Why This Exists
 
 Most paint advice workflows break at the same point: they recommend paints you do not have on hand.
 
-`minipainting-cli` is built to solve that exact problem:
+`minipainter` is built to solve that exact problem:
 
 - keep a local record of what is in your paint rack
 - search it quickly by name, role, family, and approximate color
@@ -114,7 +114,7 @@ The reference deployment `warpaint-mcp.fly.dev` runs on Fly.io with Fly Managed 
 
 ## Install
 
-`warpaint` is not published to npm. Clone the repo and install dependencies:
+`minipainter` is not published to npm. Clone the repo and install dependencies:
 
 ```bash
 git clone https://github.com/ArturSkowronski/warpaint-cli.git
@@ -127,11 +127,11 @@ Requirements:
 - Node.js 20 or newer
 - POSIX-ish shell (Linux, macOS, WSL)
 
-Optional: expose the binaries on your `PATH` so you can call `minipainting` from anywhere:
+Optional: expose the binaries on your `PATH` so you can call `mpaint` from anywhere:
 
 ```bash
 npm link
-minipainting --help
+mpaint --help
 ```
 
 Initialize the local inventory once (creates `~/.minipainting/inventory.json`; legacy `~/.warpaint/` is auto-migrated on first run):
@@ -264,14 +264,14 @@ npm run generate:demo
 
 ## Claude Desktop MCP Setup
 
-`minipainting-cli` now includes a local MCP server so Claude Desktop can use your paint registry directly.
+`minipainter` now includes a local MCP server so Claude Desktop can use your paint registry directly.
 
 Example local MCP config:
 
 ```json
 {
   "mcpServers": {
-    "warpaint": {
+    "minipainter": {
       "command": "node",
       "args": ["/absolute/path/to/warpaint-cli/src/mcp-server.mjs"]
     }
@@ -325,7 +325,7 @@ Optional runtime configuration:
 ## Remote MCP (Claude Mobile)
 
 For Claude mobile or web, the stdio MCP server above is not reachable. Run
-`warpaint-mcp-http` instead — a Streamable HTTP MCP transport exposing the
+`minipainter-mcp-http` instead — a Streamable HTTP MCP transport exposing the
 same tools, plus `GET`/`POST /inventory` for syncing the local inventory.
 
 ### Local smoke test
@@ -392,7 +392,7 @@ add per-user auth before sharing the URL.
 
 ## Self-hosting your own MCP
 
-The MCP server is generic — only the CLI (`minipainting`) is branded. To run your
+The MCP server is generic — only the CLI (`mpaint`) is branded. To run your
 own instance:
 
 1. Fork or clone the repo.
@@ -422,12 +422,12 @@ own instance:
 6. Register the remote in your local CLI and sync:
 
    ```bash
-   minipainting sync add default \
+   mpaint sync add default \
      --url https://my-app.fly.dev \
      --token <token-from-step-3>
-   minipainting sync push
+   mpaint sync push
    ```
 
 After this, your local inventory and the deployed MCP stay in sync via
-`minipainting sync push` (upload local → remote) and `minipainting sync pull --force`
+`mpaint sync push` (upload local → remote) and `mpaint sync pull --force`
 (overwrite local from remote).

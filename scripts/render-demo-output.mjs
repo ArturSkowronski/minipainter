@@ -150,7 +150,7 @@ function parseAnsiLine(line) {
   return runs;
 }
 
-function renderTerminalSvg(content, title = 'warpaint tui') {
+function renderTerminalSvg(content, title = 'minipainter tui') {
   const lines = content.split('\n');
   const longest = lines.reduce((max, line) => Math.max(max, stripAnsi(line).length), 0);
   const charWidth = 9.6;
@@ -218,10 +218,10 @@ export async function renderDemoAssets(outputDir) {
   // SVGs capture the real colored terminal (truecolor swatches, gold/green/red).
   const cliDemo = renderCliDemo(registry);
   const svgAssets = {
-    'hero.svg': renderTerminalSvg(renderTui(heroState, { color: true }), 'warpaint tui — catalog'),
-    'search.svg': renderTerminalSvg(renderTui(searchState, { color: true }), 'warpaint tui — search'),
-    'owned.svg': renderTerminalSvg(renderTui(ownedState, { color: true }), 'warpaint tui — owned'),
-    'cli.svg': renderTerminalSvg(cliDemo, 'warpaint cli'),
+    'hero.svg': renderTerminalSvg(renderTui(heroState, { color: true }), 'minipainter tui — catalog'),
+    'search.svg': renderTerminalSvg(renderTui(searchState, { color: true }), 'minipainter tui — search'),
+    'owned.svg': renderTerminalSvg(renderTui(ownedState, { color: true }), 'minipainter tui — owned'),
+    'cli.svg': renderTerminalSvg(cliDemo, 'minipainter cli'),
   };
 
   const assets = {

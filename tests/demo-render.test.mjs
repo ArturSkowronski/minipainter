@@ -51,7 +51,7 @@ test('generated assets include forge ledger presentation and command output', as
   const cli = await fs.readFile(path.join(outputDir, 'cli.txt'), 'utf8');
   const heroSvg = await fs.readFile(path.join(outputDir, 'hero.svg'), 'utf8');
 
-  assert.match(hero, /WARPAINT/);
+  assert.match(hero, /MINIPAINTER/);
   assert.match(hero, /CATALOG/);
   assert.match(search, /Search Query: bone/i);
   assert.match(owned, /OWNED PAINTS/);
