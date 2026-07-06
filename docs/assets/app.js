@@ -3,6 +3,17 @@
   const PROV = window.PROVIDERS || {};
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // The public page never exposes a real inventory. Derive a deterministic
+  // "example rack" from each paint id (stable for every visitor, tied to
+  // nobody's install) so owned-first matching stays demonstrable with no
+  // personal data. Real ownership lives only in your local install.
+  const inExampleRack = (id) => {
+    let h = 0;
+    for (let k = 0; k < id.length; k++) h = (h * 31 + id.charCodeAt(k)) >>> 0;
+    return h % 7 === 0;
+  };
+  P.forEach((p) => { p.o = inExampleRack(p.i) ? 1 : 0; });
+
   // ---- color helpers ------------------------------------------------------
   const clamp = (n) => Math.max(0, Math.min(255, n | 0));
   const hex2 = (n) => clamp(n).toString(16).padStart(2, '0');
@@ -31,11 +42,6 @@
     return lum(b.c) - lum(a.c);
   });
 
-  // ---- spec: owned count --------------------------------------------------
-  const ownedCount = P.filter((p) => p.o).length;
-  const specOwned = document.getElementById('spec-owned');
-  if (specOwned) specOwned.textContent = ownedCount.toLocaleString();
-
   // ---- hero swatch wall ---------------------------------------------------
   const wall = document.getElementById('wall');
   if (wall && P.length) {
@@ -47,7 +53,7 @@
     sortByHue(picks).forEach((p, idx) => {
       const i = document.createElement('i');
       i.style.background = toHex(p.c);
-      i.title = `${p.n} — ${PROV[p.p] || p.p}`;
+      i.title = `${p.n} · ${PROV[p.p] || p.p}`;
       if (!reduce) i.style.animationDelay = `${(idx % 28) * 22 + Math.floor(idx / 28) * 40}ms`;
       frag.appendChild(i);
     });
@@ -90,7 +96,7 @@
     const winners = nearestPerBrand(target, ownedOnly.checked);
     results.innerHTML = '';
     if (!winners.length) {
-      results.innerHTML = '<p style="font-family:var(--f-mono);color:var(--bone-dim)">No paints in the owned rack yet — untick “Owned rack only”.</p>';
+      results.innerHTML = '<p style="font-family:var(--f-mono);color:var(--bone-dim)">No paints in the example rack for this target. Untick “Example rack only”.</p>';
       return;
     }
     winners.forEach((w, idx) => {
@@ -102,7 +108,7 @@
       card.innerHTML = `
         <div class="face" style="background:${toHex(p.c)}">
           <span class="rank" style="color:${textOnFace};background:${lum(p.c) > 0.55 ? 'rgba(255,255,255,.35)' : 'rgba(0,0,0,.35)'}">${String(idx + 1).padStart(2, '0')}</span>
-          ${p.o ? '<span class="own">Owned</span>' : ''}
+          ${p.o ? '<span class="own">In rack</span>' : ''}
         </div>
         <div class="body">
           <div class="pname">${p.n}</div>
@@ -166,7 +172,7 @@
       const wrap = document.createElement('div');
       wrap.className = 'rack-group';
       const owned = group.filter((p) => p.o).length;
-      wrap.innerHTML = `<h3><span>${PROV[b] || b}</span><span><b>${group.length}</b> pots · ${owned} owned</span></h3>`;
+      wrap.innerHTML = `<h3><span>${PROV[b] || b}</span><span><b>${group.length}</b> pots · ${owned} in example rack</span></h3>`;
       const grid = document.createElement('div');
       grid.className = 'rack';
       const frag = document.createDocumentFragment();
@@ -182,7 +188,7 @@
       grid.addEventListener('pointerover', (e) => {
         const t = e.target;
         if (t.tagName !== 'I' || !read) return;
-        read.innerHTML = `<b>${t.dataset.n}</b> · ${t.dataset.b} · ${t.dataset.hex} · <span style="opacity:.7">${t.dataset.id}</span>${t.dataset.o === '1' ? ' · <span style="color:var(--owned)">owned</span>' : ''}`;
+        read.innerHTML = `<b>${t.dataset.n}</b> · ${t.dataset.b} · ${t.dataset.hex} · <span style="opacity:.7">${t.dataset.id}</span>${t.dataset.o === '1' ? ' · <span style="color:var(--owned)">in example rack</span>' : ''}`;
       });
       wrap.appendChild(grid);
       racks.appendChild(wrap);

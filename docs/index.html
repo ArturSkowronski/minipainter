@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>minipainter — the paint bench, indexed</title>
+<title>minipainter: the paint bench, indexed</title>
 <meta name="description" content="A local-first ledger for the miniature-paint bench: search 1,607 paints across Citadel, Army Painter, Vallejo and AK, find the closest match across brands owned-first, and hand the whole catalog to Claude or ChatGPT over MCP.">
 <meta name="color-scheme" content="dark">
-<meta property="og:title" content="minipainter — the paint bench, indexed">
+<meta property="og:title" content="minipainter: the paint bench, indexed">
 <meta property="og:description" content="Search 1,607 paints, match colors across brands owned-first, and connect the catalog to Claude and ChatGPT over MCP.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +34,6 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow">Local-first paint registry · CLI · MCP</p>
         <h1 class="wordmark">
           <span class="line"><span class="reveal">Mini</span></span>
           <span class="line"><span class="reveal paint">Painter</span></span>
@@ -47,13 +46,12 @@
         <div class="cta-row">
           <a class="btn solid" href="#match">Try the matcher</a>
           <a class="btn" href="#start">Install</a>
-          <a class="btn" href="https://github.com/arturskowronski/warpaint-cli">GitHub ↗</a>
         </div>
         <div class="spec-strip" id="spec">
           <div><b>1,607</b><span>Paints</span></div>
           <div><b>4</b><span>Brands</span></div>
-          <div><b id="spec-owned">101</b><span>Owned</span></div>
-          <div><b>2</b><span>MCP endpoints</span></div>
+          <div><b>3</b><span>Ways in</span></div>
+          <div><b>0</b><span>Accounts</span></div>
         </div>
       </div>
       <div class="wall" id="wall" aria-hidden="true"></div>
@@ -64,13 +62,10 @@
   <section id="match">
     <div class="wrap">
       <div class="match-head">
-        <div>
-          <p class="eyebrow">Signature · cross-brand match</p>
-          <h2 class="section-head">Pick a color.<br>Find the paint.</h2>
-        </div>
+        <h2 class="section-head">Pick a color.<br>Find the paint.</h2>
         <p class="lede">Every paint carries an approximate RGB. Drop a target and minipainter
-          returns the nearest pot in each brand by straight color distance — the ones you
-          already own float to the top.</p>
+          returns the nearest pot in each brand by straight color distance. Flip to the example
+          rack below and its paints float to the top. In your install, that rack is whatever you own.</p>
       </div>
 
       <div class="match-console">
@@ -83,7 +78,7 @@
           </div>
           <label>Or start from</label>
           <div class="presets" id="presets"></div>
-          <label class="owned-toggle"><input type="checkbox" id="ownedOnly"> Owned rack only</label>
+          <label class="owned-toggle"><input type="checkbox" id="ownedOnly"> Example rack only</label>
         </div>
 
         <div>
@@ -97,10 +92,9 @@
   <!-- THE RACK --------------------------------------------------------- -->
   <section id="rack">
     <div class="wrap">
-      <p class="eyebrow">The whole shelf</p>
       <h2 class="section-head">1,607 pots, one wall</h2>
       <p class="lede">The full catalog, every pot a real swatch. Hover any chip to read it.
-        The green corner marks a paint in the reference rack.</p>
+        The green corner marks a paint in the example rack (a generic sample, not a real inventory).</p>
       <div id="racks"></div>
       <div id="rack-read">Hover a chip to inspect a paint.</div>
     </div>
@@ -109,7 +103,6 @@
   <!-- MCP -------------------------------------------------------------- -->
   <section id="mcp">
     <div class="wrap">
-      <p class="eyebrow">Three ways in</p>
       <h2 class="section-head">Hand it to your assistant</h2>
       <p class="lede">The same catalog and inventory reach your assistant three ways: a local MCP
         server for Claude Desktop, a hosted connector for ChatGPT, and an Agent Skill that teaches
@@ -119,7 +112,7 @@
         <article class="plate">
           <span class="tag">Claude Desktop · local</span>
           <h3>Local MCP server</h3>
-          <p>Run the stdio server and drop it into your Claude Desktop config — Claude reads
+          <p>Run the stdio server and drop it into your Claude Desktop config. Claude reads
             and updates your registry directly.</p>
           <div class="endpoint"><code>node src/mcp-server.mjs</code><button data-copy="node src/mcp-server.mjs">Copy</button></div>
           <div class="toolchips">
@@ -141,8 +134,8 @@
         <article class="plate">
           <span class="tag">Claude Code · skill</span>
           <h3>Agent Skill</h3>
-          <p>A standards-compliant Agent Skill that teaches Claude Code to drive the CLI —
-            search, match and inventory with the right guardrails: owned-first, cross-brand
+          <p>A standards-compliant Agent Skill that teaches Claude Code to drive the CLI:
+            search, match and inventory with the right guardrails. Owned-first, cross-brand
             <code>product_format</code>, and ambiguity checks before any write.</p>
           <div class="endpoint"><code>.claude/skills/minipainter/</code><button data-copy=".claude/skills/minipainter/">Copy</button></div>
           <div class="toolchips">
@@ -157,7 +150,6 @@
   <!-- QUICKSTART ------------------------------------------------------- -->
   <section id="start">
     <div class="wrap">
-      <p class="eyebrow">Get going</p>
       <h2 class="section-head">Quickstart</h2>
       <div class="qs-grid">
         <div>
@@ -182,7 +174,7 @@
         </div>
         <div class="ledger">
           <img class="shot" src="assets/hero.svg" alt="minipainter colored terminal UI: MINIPAINTER banner, catalog with real paint swatches, green OWNED / red MISSING status, selected-paint detail and commands" loading="lazy">
-          <p class="ledger-cap">The real terminal UI — <code>node src/cli.mjs tui</code></p>
+          <p class="ledger-cap">The real terminal UI: <code>node src/cli.mjs tui</code></p>
         </div>
       </div>
     </div>
@@ -192,7 +184,7 @@
     <div class="wrap foot-grid">
       <div>
         <a class="brandmark" href="#top" style="font-size:1.4rem"><span class="dot"></span>MINIPAINTER</a>
-        <p class="muted">Local-first. No account, no telemetry — your rack stays yours.</p>
+        <p class="muted">Local-first. No account, no telemetry. Your rack stays yours.</p>
       </div>
       <div class="muted">
         <a href="https://github.com/arturskowronski/warpaint-cli">arturskowronski/warpaint-cli</a><br>

@@ -10,4 +10,6 @@ not broadsheet hairline newspaper.
 
 Type: Big Shoulders Display (signage/stencil display) + Hanken Grotesk (body) + Space Mono (labels/data).
 Signature: working cross-brand color matcher + live swatch wall, both driven by real catalog data.
-Data: assets/paints.js (window.PAINTS), owned flags baked from live /api/inventory (101).
+Data: assets/paints.js (window.PAINTS). The public page shows no real inventory; the "owned"
+example rack is derived deterministically from paint ids in app.js (inExampleRack), so it is
+generic to every visitor and tied to nobody's install.
