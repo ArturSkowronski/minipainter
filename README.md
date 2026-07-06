@@ -439,3 +439,7 @@ own instance:
 After this, your local inventory and the deployed MCP stay in sync via
 `mpaint sync push` (upload local → remote) and `mpaint sync pull --force`
 (overwrite local from remote).
+
+## License
+
+[MIT](LICENSE) © Artur Skowronski
