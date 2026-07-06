@@ -231,7 +231,7 @@ section + section { border-top: 1px solid var(--line); }
 
 /* ---- ways in (mcp) ------------------------------------------------------ */
 
-.ways { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 2.2rem; }
+.ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 2.2rem; }
 .plate { border: 1px solid var(--line-2); background: var(--ink-2); padding: 1.5rem; display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
 .plate .tag { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
 .plate h3 { font-family: var(--f-display); font-weight: 700; text-transform: uppercase; font-size: 1.7rem; margin: 0; line-height: 1; }

@@ -109,10 +109,11 @@
   <!-- MCP -------------------------------------------------------------- -->
   <section id="mcp">
     <div class="wrap">
-      <p class="eyebrow">Two ways in</p>
+      <p class="eyebrow">Three ways in</p>
       <h2 class="section-head">Hand it to your assistant</h2>
-      <p class="lede">The same catalog and inventory are served over MCP. Claude Desktop runs
-        the local server; ChatGPT connects to the hosted endpoint.</p>
+      <p class="lede">The same catalog and inventory reach your assistant three ways: a local MCP
+        server for Claude Desktop, a hosted connector for ChatGPT, and an Agent Skill that teaches
+        Claude Code to drive the CLI.</p>
 
       <div class="ways">
         <article class="plate">
@@ -135,6 +136,19 @@
             contract. Add it as a custom connector and browse the catalog in chat.</p>
           <div class="endpoint"><code>https://warpaint-mcp.fly.dev/mcp/v3</code><button data-copy="https://warpaint-mcp.fly.dev/mcp/v3">Copy</button></div>
           <div class="toolchips"><span>search</span><span>fetch</span><span>match_color</span></div>
+        </article>
+
+        <article class="plate">
+          <span class="tag">Claude Code · skill</span>
+          <h3>Agent Skill</h3>
+          <p>A standards-compliant Agent Skill that teaches Claude Code to drive the CLI —
+            search, match and inventory with the right guardrails: owned-first, cross-brand
+            <code>product_format</code>, and ambiguity checks before any write.</p>
+          <div class="endpoint"><code>.claude/skills/minipainter/</code><button data-copy=".claude/skills/minipainter/">Copy</button></div>
+          <div class="toolchips">
+            <span>paint search</span><span>paint show</span><span>match color</span>
+            <span>match describe</span><span>inventory own</span><span>inventory list</span>
+          </div>
         </article>
       </div>
     </div>
