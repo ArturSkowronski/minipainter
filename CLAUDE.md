@@ -1,4 +1,4 @@
-# minipainting-cli — project guide for Claude
+# minipainter — project guide for Claude
 
 A CLI + MCP server for managing a miniature-paint inventory and doing cross-brand
 paint matching. Node.js ESM, tested with the built-in runner (`npm test` → `node --test`).
@@ -50,3 +50,31 @@ catalog, pinned to `1bc4e09`); expect RGB drift versus the older catalogs.
 - ESM (`.mjs`), `import test from 'node:test'` + `node:assert/strict`.
 - Pure logic (transforms, predicates) separated from I/O; keep files focused.
 - Run `npm test` before finishing; keep it green.
+
+## Distribution / npm packaging (bugs to not repeat)
+
+The package is meant to be installed from npm and run via `npx minipainter` / `npm i -g minipainter`
+(prepared as of v0.6.2; `npm publish` not yet run).
+`npm test` runs against the working tree and **cannot** catch install-only breakage — a global
+or `npx` install runs the code through a `node_modules/.bin` **symlink** and from a stranger's
+`$HOME` with no pre-existing data. Two bugs slipped through this gap (both fixed + regression-tested;
+don't reintroduce the patterns):
+
+1. **Is-main-module guard must survive a bin symlink.** `import.meta.url` is realpath-resolved by
+   Node, but `process.argv[1]` is the path *as invoked* (the `.bin` symlink). A bare
+   `import.meta.url === pathToFileURL(process.argv[1]).href` is **false** under `npx`/global install,
+   so the CLI exits 0 with **no output**. Always `realpathSync(process.argv[1])` before comparing
+   (see `src/cli.mjs::isMainModule`).
+2. **Read paths must treat a missing data file as empty, not throw.** A fresh install has no
+   `~/.minipainting/inventory.json`; `load()` returning a bare `fs.readFile` made every command
+   (even read-only `paint search`) die with `ENOENT`. Repository reads fall back to an empty
+   inventory (honoring `INVENTORY_JSON`); only the first write creates the file
+   (`src/infrastructure/inventory/json-inventory-repository.mjs::load`).
+
+**Packaging rules:**
+- `package.json` must stay non-`private`, keep a `files` allowlist (**ship only `src/` + `data/`**;
+  README/MCP.md/LICENSE/package.json are auto-included — never publish `docs/`, `tests/`, `scripts/`),
+  and keep the `minipainter` bin alias so `npx minipainter` resolves a command (short `mpaint` stays).
+- **Before touching packaging or an entrypoint, run the clean-room test**, not just `npm test`:
+  `npm pack` → install the tarball into a throwaway dir with an isolated `HOME` → run the bin from
+  `node_modules/.bin`. If search/match/own/list don't work self-contained, it's broken for users.
