@@ -231,8 +231,12 @@ section + section { border-top: 1px solid var(--line); }
 .pcard dd { margin: 0; color: var(--bone); text-align: right; }
 
 .brand-legend { display: flex; flex-wrap: wrap; gap: 1.2rem; font-family: var(--f-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--bone-dim); margin-top: 1.6rem; }
-.brand-legend span { display: inline-flex; align-items: center; gap: .45rem; }
-.brand-legend i { width: 11px; height: 11px; display: inline-block; }
+.brand-legend span { display: inline-flex; align-items: center; gap: .5rem; }
+
+/* per-brand monogram mark (typographic chip, not an official logo) */
+.bmark { width: 1.05rem; height: 1.05rem; flex: none; display: inline-block; vertical-align: middle; }
+.pcard .brand { display: flex; align-items: center; gap: .4rem; }
+.rack-brand { display: inline-flex; align-items: center; gap: .5rem; }
 
 /* ---- the rack ----------------------------------------------------------- */
 
@@ -313,6 +317,19 @@ footer { padding: 3rem 0 4rem; border-top: 1px solid var(--line); }
 .foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: baseline; }
 footer a { color: var(--gold); text-decoration: none; }
 footer .muted { font-family: var(--f-mono); font-size: .72rem; color: var(--bone-dim); letter-spacing: .06em; }
+
+/* ---- install / doc page ------------------------------------------------- */
+
+.doc-hero { padding-top: clamp(44px, 8vh, 96px); }
+.doc-h { font-family: var(--f-display); font-weight: 700; text-transform: uppercase; font-size: clamp(1.5rem, 3.4vw, 2.2rem); letter-spacing: .01em; margin: 0 0 1.1rem; }
+.doc-p { max-width: 64ch; color: var(--bone); margin: 0 0 1.15rem; }
+.doc-note { max-width: 64ch; color: var(--bone-dim); font-family: var(--f-mono); font-size: .78rem; line-height: 1.55; margin: 1rem 0 0; }
+.doc-block pre.code { margin-bottom: 1.2rem; }
+.doc-block .ways { margin-top: 1.6rem; align-items: start; }
+.doc-block .plate h3 { font-size: 1.4rem; margin: 0; }
+.doc-block .plate pre.code { font-size: .76rem; margin: 0; }
+.doc-block .plate .doc-note { margin-top: .2rem; }
+.doc-block .endpoint + .endpoint { margin-top: .5rem; }
 
 /* ---- responsive --------------------------------------------------------- */
 

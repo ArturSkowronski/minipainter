@@ -24,7 +24,7 @@
     <a href="#match">Match</a>
     <a href="#rack">The rack</a>
     <a href="#mcp">Connect</a>
-    <a href="#start">Quickstart</a>
+    <a href="install.html">Install</a>
     <a class="gh" href="https://github.com/arturskowronski/warpaint-cli">GitHub ↗</a>
   </nav>
 </header>
@@ -45,7 +45,7 @@
         </p>
         <div class="cta-row">
           <a class="btn solid" href="#match">Try the matcher</a>
-          <a class="btn" href="#start">Install</a>
+          <a class="btn" href="install.html">Install</a>
         </div>
         <div class="spec-strip" id="spec">
           <div><b>1,607</b><span>Paints</span></div>
@@ -62,18 +62,19 @@
   <section id="workflow">
     <div class="wrap">
       <h2 class="section-head">Paint with an agent,<br>not a database</h2>
-      <p class="lede">Attach minipainter to Claude, ChatGPT or Gemini. Your shelf and the full
-        catalog become tools the agent can actually use, so the advice is yours, not generic.</p>
+      <p class="lede">The hard part of starting out is not the painting. It is choosing paints and
+        knowing what you lack. Give any agent your whole shelf and it works from what you actually
+        own, not a random set that changes every time you ask.</p>
 
       <div class="flow">
         <article class="flow-step">
           <span class="tag">Plan</span>
           <h3>A scheme from your own shelf</h3>
-          <p>Drop two photos into the chat: the bare mini and the reference you are chasing. The
-            agent reads both, works the paint scheme zone by zone, and grounds every pick in the
-            pots you already own. Where there is a real gap it names one or two worth buying,
-            never a fresh set. Your collection grows on purpose.</p>
-          <p class="contrast">Without it: a correct but <b>generic</b> answer built on a random paint set.</p>
+          <p>Drop in whatever you have: one photo, two, or a half-painted mini next to the
+            reference you are chasing. Agents are smart, and now they can see your shelf, so they
+            work the scheme zone by zone and ground every pick in the pots you already own. Where
+            there is a real gap they name one or two worth buying, never a fresh set.</p>
+          <p class="contrast">Without it: a correct but <b>generic</b> answer that changes every time you ask.</p>
         </article>
         <article class="flow-step">
           <span class="tag">Restock</span>
@@ -152,18 +153,18 @@
   <!-- MCP -------------------------------------------------------------- -->
   <section id="mcp">
     <div class="wrap">
-      <h2 class="section-head">Hand it to your assistant</h2>
-      <p class="lede">The same catalog and inventory reach your assistant three ways: a local MCP
-        server for Claude Desktop, a hosted connector for ChatGPT, and an Agent Skill that teaches
-        Claude Code to drive the CLI.</p>
+      <h2 class="section-head">Hand it to any agent</h2>
+      <p class="lede">minipainter speaks the Model Context Protocol, so any MCP-capable agent can
+        use it: Claude on desktop, web and Code, ChatGPT, Gemini, and whatever comes next. Three
+        ways to connect, and a <a href="install.html">full setup guide</a> for each.</p>
 
       <div class="ways">
         <article class="plate">
-          <span class="tag">Claude Desktop · local</span>
+          <span class="tag">Local · MCP over stdio</span>
           <h3>Local MCP server</h3>
-          <p>Run the stdio server and drop it into your Claude Desktop config. Claude reads
-            and updates your registry directly.</p>
-          <div class="endpoint"><code>node src/mcp-server.mjs</code><button data-copy="node src/mcp-server.mjs">Copy</button></div>
+          <p>Run the stdio server and add it to any desktop MCP client (Claude Desktop and
+            others). The agent reads and updates your registry directly on your machine.</p>
+          <div class="endpoint"><code>npx minipainter-mcp</code><button data-copy="npx minipainter-mcp">Copy</button></div>
           <div class="toolchips">
             <span>paint_search</span><span>paint_show</span><span>inventory_list</span>
             <span>inventory_mark_owned</span><span>inventory_mark_unowned</span>
@@ -172,19 +173,20 @@
         </article>
 
         <article class="plate">
-          <span class="tag">ChatGPT · hosted connector</span>
-          <h3>/mcp/v3 endpoint</h3>
-          <p>A hosted connector shaped for ChatGPT's <code>search</code> / <code>fetch</code>
-            contract. Add it as a custom connector and browse the catalog in chat.</p>
-          <div class="endpoint"><code>https://warpaint-mcp.fly.dev/mcp/v3</code><button data-copy="https://warpaint-mcp.fly.dev/mcp/v3">Copy</button></div>
-          <div class="toolchips"><span>search</span><span>fetch</span><span>match_color</span></div>
+          <span class="tag">Hosted · remote MCP</span>
+          <h3>Hosted endpoint</h3>
+          <p>A hosted MCP server for URL-based agents: Claude web, ChatGPT and Gemini. Add it as a
+            connector and browse the catalog in chat, no install. ChatGPT uses the
+            <code>/mcp/v3</code> route.</p>
+          <div class="endpoint"><code>https://warpaint-mcp.fly.dev/mcp</code><button data-copy="https://warpaint-mcp.fly.dev/mcp">Copy</button></div>
+          <div class="toolchips"><span>paint_search</span><span>match_color</span><span>inventory_list</span><span>search</span><span>fetch</span></div>
         </article>
 
         <article class="plate">
-          <span class="tag">Claude Code · skill</span>
+          <span class="tag">Agent runtime · skill</span>
           <h3>Agent Skill</h3>
-          <p>A standards-compliant Agent Skill that teaches Claude Code to drive the CLI:
-            search, match and inventory with the right guardrails. Owned-first, cross-brand
+          <p>A standards-compliant Agent Skill for runtimes that load skills (Claude Code). It
+            teaches the agent to drive the CLI with the right guardrails: owned-first, cross-brand
             <code>product_format</code>, and ambiguity checks before any write.</p>
           <div class="endpoint"><code>.claude/skills/minipainter/</code><button data-copy=".claude/skills/minipainter/">Copy</button></div>
           <div class="toolchips">

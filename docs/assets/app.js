@@ -66,6 +66,19 @@
   };
   const brands = Object.keys(PROV);
 
+  // Tasteful monogram marks per brand (initials in the brand accent). These are
+  // NOT the official trademarked logos, just typographic brand chips in-style.
+  const BRAND_INITIALS = { citadel: 'C', army_painter: 'AP', vallejo: 'V', ak_interactive: 'AK' };
+  function brandMark(b) {
+    const fill = brandAccent[b] || '#999';
+    const t = BRAND_INITIALS[b] || (PROV[b] || b).slice(0, 2).toUpperCase();
+    return `<svg class="bmark" viewBox="0 0 24 24" aria-hidden="true">`
+      + `<rect width="24" height="24" rx="3" fill="${fill}"/>`
+      + `<text x="12" y="13" text-anchor="middle" dominant-baseline="central"`
+      + ` font-family="'Space Mono', ui-monospace, monospace" font-size="10" font-weight="700"`
+      + ` fill="#17161b">${t}</text></svg>`;
+  }
+
   const color = document.getElementById('color');
   const hexInput = document.getElementById('hex');
   const preview = document.getElementById('preview');
@@ -112,7 +125,7 @@
         </div>
         <div class="body">
           <div class="pname">${p.n}</div>
-          <div class="brand">${PROV[p.p] || p.p}</div>
+          <div class="brand">${brandMark(p.p)}${PROV[p.p] || p.p}</div>
           <dl>
             <dt>dist</dt><dd>${w.d}</dd>
             <dt>rgb</dt><dd>${p.c.join(', ')}</dd>
@@ -128,7 +141,7 @@
   if (legend) {
     legend.innerHTML = brands.map((b) => {
       const n = P.filter((p) => p.p === b).length;
-      return `<span><i style="background:${brandAccent[b] || '#999'}"></i>${PROV[b] || b} · ${n}</span>`;
+      return `<span>${brandMark(b)}${PROV[b] || b} · ${n}</span>`;
     }).join('');
   }
 
@@ -172,7 +185,7 @@
       const wrap = document.createElement('div');
       wrap.className = 'rack-group';
       const owned = group.filter((p) => p.o).length;
-      wrap.innerHTML = `<h3><span>${PROV[b] || b}</span><span><b>${group.length}</b> pots · ${owned} in example rack</span></h3>`;
+      wrap.innerHTML = `<h3><span class="rack-brand">${brandMark(b)}${PROV[b] || b}</span><span><b>${group.length}</b> pots · ${owned} in example rack</span></h3>`;
       const grid = document.createElement('div');
       grid.className = 'rack';
       const frag = document.createDocumentFragment();
