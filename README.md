@@ -2,7 +2,7 @@
 
 > The paint bench, indexed.
 
-Site: [arturskowronski.github.io/warpaint-cli](https://arturskowronski.github.io/warpaint-cli/)
+Site: [arturskowronski.github.io/minipainter](https://arturskowronski.github.io/minipainter/)
 
 `minipainter` is a local-first paint registry for miniature-painting workflows. It exists for one practical reason: AI paint suggestions are much more useful when they understand the paints you actually own.
 
@@ -107,7 +107,7 @@ Any Docker + Postgres host works (Fly.io, Railway, a VPS…). For a one-click re
 server with a managed database, the repo ships a **Render Blueprint** (`render.yaml`) that
 provisions the web service and Postgres together and wires `DATABASE_URL` automatically:
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/arturskowronski/warpaint-cli)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/arturskowronski/minipainter)
 
 The reference deployment `warpaint-mcp.fly.dev` runs on Fly.io with Fly Managed Postgres — see
 [`docs/deploy-fly.md`](docs/deploy-fly.md) for the `fly mpg attach` + migration steps.
@@ -142,8 +142,8 @@ Requirements:
 To hack on it, clone and run against the working tree:
 
 ```bash
-git clone https://github.com/ArturSkowronski/warpaint-cli.git
-cd warpaint-cli
+git clone https://github.com/ArturSkowronski/minipainter.git
+cd minipainter
 npm install
 node src/cli.mjs paint search bone
 ```
@@ -281,7 +281,7 @@ Example local MCP config:
   "mcpServers": {
     "minipainter": {
       "command": "node",
-      "args": ["/absolute/path/to/warpaint-cli/src/mcp-server.mjs"]
+      "args": ["/absolute/path/to/minipainter/src/mcp-server.mjs"]
     }
   }
 }

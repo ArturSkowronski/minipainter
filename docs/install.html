@@ -20,7 +20,7 @@
     <a href="index.html#workflow">Workflow</a>
     <a href="index.html#mcp">Connect</a>
     <a href="index.html">Home</a>
-    <a class="gh" href="https://github.com/arturskowronski/warpaint-cli">GitHub ↗</a>
+    <a class="gh" href="https://github.com/arturskowronski/minipainter">GitHub ↗</a>
   </nav>
 </header>
 
@@ -49,8 +49,8 @@
 <span class="p">$</span> mpaint paint search bone</pre>
       <p class="doc-p">Prefer to work from source? Clone and run against the working tree:</p>
 <pre class="code"><span class="c"># hack on it locally</span>
-<span class="p">$</span> git clone https://github.com/arturskowronski/warpaint-cli
-<span class="p">$</span> cd warpaint-cli &amp;&amp; npm install
+<span class="p">$</span> git clone https://github.com/arturskowronski/minipainter
+<span class="p">$</span> cd minipainter &amp;&amp; npm install
 <span class="p">$</span> node src/cli.mjs paint search bone</pre>
       <p class="doc-note">Your inventory lives at <code>~/.minipainting/inventory.json</code>, created
         automatically the first time you mark a paint owned. A legacy <code>~/.warpaint/</code> is
@@ -97,12 +97,13 @@
         <article class="plate">
           <span class="tag">Claude Code · skill</span>
           <h3>Agent Skill</h3>
-          <p>The repo ships a standards-compliant Agent Skill. Drop it into your project or your home
-            config and Claude Code drives the CLI with the right guardrails.</p>
-<pre class="code"><span class="c"># make it available in a project</span>
-<span class="p">$</span> cp -r warpaint-cli/.claude/skills/minipainter \
-     your-project/.claude/skills/</pre>
-          <p class="doc-note">Or copy it to <code>~/.claude/skills/</code> to use it everywhere.</p>
+          <p>Fetch the skill straight from this site, no clone required. It ships with the
+            right guardrails baked in: JSON-only reads, product_format rules, failure handling.</p>
+<pre class="code"><span class="c"># project-scoped</span>
+<span class="p">$</span> mkdir -p .claude/skills/minipainter
+<span class="p">$</span> curl -fsSL https://arturskowronski.github.io/minipainter/SKILL.md \
+     -o .claude/skills/minipainter/SKILL.md</pre>
+          <p class="doc-note">Or save it to <code>~/.claude/skills/minipainter/SKILL.md</code> to use it everywhere.</p>
         </article>
       </div>
     </div>

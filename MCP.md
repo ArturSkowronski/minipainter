@@ -109,7 +109,7 @@ Rank paints from a semantic description such as `bone` or `silver metallic`.
   "mcpServers": {
     "minipainter": {
       "command": "node",
-      "args": ["/absolute/path/to/warpaint-cli/src/mcp-server.mjs"]
+      "args": ["/absolute/path/to/minipainter/src/mcp-server.mjs"]
     }
   }
 }
