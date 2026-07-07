@@ -303,6 +303,20 @@ Suggested local flow:
 2. add the MCP server to Claude Desktop
 3. ask Claude to search paints or update ownership through the exposed tools
 
+## Agent Skill
+
+For Claude Code, fetch the skill straight from the site, no clone required. It ships with the
+right guardrails baked in: JSON-only reads, `product_format` rules, failure handling.
+
+```bash
+# project-scoped
+mkdir -p .claude/skills/minipainter
+curl -fsSL https://arturskowronski.github.io/minipainter/SKILL.md \
+  -o .claude/skills/minipainter/SKILL.md
+```
+
+Or save it to `~/.claude/skills/minipainter/SKILL.md` to use it everywhere.
+
 ## Self-Hosted Docker
 
 The Docker image runs a single HTTP server runtime designed for self-hosted use:
