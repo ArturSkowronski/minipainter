@@ -2,6 +2,9 @@
 
 > The paint bench, indexed.
 
+[![CI](https://github.com/ArturSkowronski/minipainter/actions/workflows/ci.yml/badge.svg)](https://github.com/ArturSkowronski/minipainter/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/minipainter.svg)](https://www.npmjs.com/package/minipainter)
+
 Site: [arturskowronski.github.io/minipainter](https://arturskowronski.github.io/minipainter/)
 
 `minipainter` is a local-first paint registry for miniature-painting workflows. It exists for one practical reason: AI paint suggestions are much more useful when they understand the paints you actually own.
