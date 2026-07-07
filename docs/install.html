@@ -122,7 +122,7 @@
           <p>Bring up the server and Postgres together with one command.</p>
 <pre class="code"><span class="c"># from the repo</span>
 <span class="p">$</span> docker compose up -d
-<span class="p">$</span> curl localhost:8787/mcp</pre>
+<span class="p">$</span> curl localhost:3000/health</pre>
           <p class="doc-note">Set <code>DATABASE_URL</code> to move inventory into Postgres; without it,
             inventory stays in a JSON file.</p>
         </article>
@@ -153,7 +153,7 @@
       </div>
       <div class="muted">
         <a href="index.html">Back to the overview</a><br>
-        node src/cli.mjs tui
+        npx minipainter tui
       </div>
     </div>
   </footer>

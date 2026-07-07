@@ -5,6 +5,26 @@
   "license": "MIT",
   "author": "Artur Skowronski",
   "type": "module",
+  "homepage": "https://arturskowronski.github.io/minipainter/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArturSkowronski/minipainter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ArturSkowronski/minipainter/issues"
+  },
+  "keywords": [
+    "miniatures",
+    "wargaming",
+    "paint",
+    "citadel",
+    "vallejo",
+    "army-painter",
+    "color-matching",
+    "mcp",
+    "model-context-protocol",
+    "cli"
+  ],
   "bin": {
     "minipainter": "src/cli.mjs",
     "mpaint": "src/cli.mjs",

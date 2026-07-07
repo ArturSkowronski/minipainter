@@ -208,28 +208,24 @@
       <h2 class="section-head">Quickstart</h2>
       <div class="qs-grid">
         <div>
-<pre class="code"><span class="c"># clone &amp; enter</span>
-<span class="p">$</span> git clone https://github.com/arturskowronski/minipainter
-<span class="p">$</span> cd minipainter
-
-<span class="c"># search the catalog</span>
-<span class="p">$</span> node src/cli.mjs paint search bone
-<span class="p">$</span> node src/cli.mjs paint search black --json
+<pre class="code"><span class="c"># straight from npm, no clone</span>
+<span class="p">$</span> npx minipainter paint search bone
+<span class="p">$</span> npx minipainter paint search black --json
 
 <span class="c"># track what's on your rack</span>
-<span class="p">$</span> node src/cli.mjs inventory own "Abaddon Black"
-<span class="p">$</span> node src/cli.mjs inventory list
+<span class="p">$</span> npx minipainter inventory own "Abaddon Black"
+<span class="p">$</span> npx minipainter inventory list
 
 <span class="c"># match by color or description</span>
-<span class="p">$</span> node src/cli.mjs match color "#d2c29b"
-<span class="p">$</span> node src/cli.mjs match describe bone
+<span class="p">$</span> npx minipainter match color "#d2c29b"
+<span class="p">$</span> npx minipainter match describe bone
 
 <span class="c"># open the workshop ledger TUI</span>
-<span class="p">$</span> node src/cli.mjs tui</pre>
+<span class="p">$</span> npx minipainter tui</pre>
         </div>
         <div class="ledger">
           <img class="shot" src="assets/hero.svg" alt="minipainter colored terminal UI: MINIPAINTER banner, catalog with real paint swatches, green OWNED / red MISSING status, selected-paint detail and commands" loading="lazy">
-          <p class="ledger-cap">The real terminal UI: <code>node src/cli.mjs tui</code></p>
+          <p class="ledger-cap">The real terminal UI: <code>npx minipainter tui</code></p>
         </div>
       </div>
     </div>
@@ -243,7 +239,7 @@
       </div>
       <div class="muted">
         <a href="https://github.com/arturskowronski/minipainter">arturskowronski/minipainter</a><br>
-        node src/cli.mjs tui
+        npx minipainter tui
       </div>
     </div>
   </footer>

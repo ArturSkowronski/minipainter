@@ -17,9 +17,9 @@ The project gives you:
 - MCP servers for both Claude Desktop and ChatGPT
 - a CLI surface designed for both humans and agent workflows
 
-## New in v0.4 — colored UI
+## The colored TUI
 
-The ledger TUI is now a real colored terminal app: a `MINIPAINTER` banner, gold section
+The ledger TUI is a real colored terminal app: a `MINIPAINTER` banner, gold section
 frames, green `OWNED` / red `MISSING` status, and a truecolor swatch of every paint's own
 RGB. Color turns on for a TTY and honors `NO_COLOR`.
 
@@ -130,7 +130,7 @@ Or install it globally to get the short `mpaint` command everywhere:
 ```bash
 npm install -g minipainter
 mpaint paint search bone
-mpaint --help
+mpaint match color "#d2c29b"
 ```
 
 The catalog is bundled, so search and matching work on first run with nothing to configure. Your inventory lives at `~/.minipainting/inventory.json`, created automatically the first time you mark a paint owned (legacy `~/.warpaint/` is auto-migrated).
@@ -322,11 +322,15 @@ Or save it to `~/.claude/skills/minipainter/SKILL.md` to use it everywhere.
 
 ## Self-Hosted Docker
 
-The Docker image runs a single HTTP server runtime designed for self-hosted use:
+The Docker image runs a single HTTP server runtime designed for self-hosted use. Build it from
+the repo (no image is published to a registry yet):
 
 ```bash
-docker run -p 3000:3000 -v minipainting-data:/data ghcr.io/ArturSkowronski/warpaint-cli
+docker build -t minipainter .
+docker run -p 3000:3000 -v minipainting-data:/data minipainter
 ```
+
+Or bring up the server together with Postgres in one step with `docker compose up -d`.
 
 The server exposes:
 
