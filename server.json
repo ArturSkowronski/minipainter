@@ -3,7 +3,7 @@
   "name": "io.github.arturskowronski/minipainter",
   "title": "minipainter",
   "description": "Local-first miniature-paint inventory and cross-brand color matching for AI agents.",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "repository": {
     "url": "https://github.com/ArturSkowronski/minipainter",
     "source": "github"
@@ -14,18 +14,30 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "minipainter",
-      "version": "0.7.1",
+      "version": "0.7.2",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
       },
       "runtimeArguments": [
-        { "type": "positional", "value": "-y" },
-        { "type": "positional", "value": "-p" },
-        { "type": "positional", "value": "minipainter" }
+        {
+          "type": "positional",
+          "value": "-y"
+        },
+        {
+          "type": "positional",
+          "value": "-p"
+        },
+        {
+          "type": "positional",
+          "value": "minipainter"
+        }
       ],
       "packageArguments": [
-        { "type": "positional", "value": "minipainter-mcp" }
+        {
+          "type": "positional",
+          "value": "minipainter-mcp"
+        }
       ],
       "environmentVariables": [
         {
