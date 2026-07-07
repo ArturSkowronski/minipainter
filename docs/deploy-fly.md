@@ -175,4 +175,6 @@ To bootstrap from your local inventory:
 
 After the first boot, the volume is the source of truth — the env var is
 ignored on subsequent loads (a warning is logged). Use the sync CLI for
-ongoing updates (see `mpaint sync --help`).
+ongoing updates: `mpaint sync add <name> --url <app-url> --token <token>`
+then `mpaint sync push` (see the "Self-hosting your own MCP" section in the
+README for the full flow).
