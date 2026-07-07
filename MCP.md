@@ -99,10 +99,23 @@ Rank paints from a semantic description such as `bone` or `silver metallic`.
 
 ## Local (stdio) — Claude Desktop
 
-1. Install dependencies once: `npm install` in this repo.
-2. Initialize the inventory: `node src/cli.mjs catalog sync` (creates
-   `~/.minipainting/inventory.json`; legacy `~/.warpaint/` is auto-migrated on first run).
-3. Add the server to Claude Desktop's MCP config:
+**From npm (no clone).** The MCP server ships as the `minipainter-mcp` binary inside the
+`minipainter` package. Because that binary name differs from the package name, run it with
+`npx -p` (a bare `npx minipainter-mcp` fails — npm would look for a package called
+`minipainter-mcp`, which does not exist):
+
+```json
+{
+  "mcpServers": {
+    "minipainter": {
+      "command": "npx",
+      "args": ["-y", "-p", "minipainter", "minipainter-mcp"]
+    }
+  }
+}
+```
+
+**From a clone.** Point `node` at the entry file directly:
 
 ```json
 {
@@ -115,8 +128,10 @@ Rank paints from a semantic description such as `bone` or `silver metallic`.
 }
 ```
 
-4. Restart Claude Desktop. The seven tools above appear under the `minipainter`
-   server.
+Restart Claude Desktop. The seven tools above appear under the `minipainter` server. The
+catalog is bundled, so no `catalog sync` is required first; the inventory file
+(`~/.minipainting/inventory.json`, legacy `~/.warpaint/` auto-migrated) is created on the
+first write.
 
 To point the stdio server at a non-default inventory file, pass `cwd` in the
 MCP server entry or set the `INVENTORY_PATH` env var on the spawned process.

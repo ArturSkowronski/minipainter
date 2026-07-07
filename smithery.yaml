@@ -1,0 +1,25 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # minipainter needs no credentials. The only (optional) setting is a custom
+    # inventory file path; omit it to use ~/.minipainting/inventory.json.
+    type: object
+    required: []
+    properties:
+      inventoryPath:
+        type: string
+        description: >-
+          Optional path to the inventory JSON file. Defaults to
+          ~/.minipainting/inventory.json.
+  commandFunction:
+    # Runs the published npm package's MCP binary over stdio. The binary
+    # (minipainter-mcp) differs from the package name (minipainter), so it is
+    # launched via `npx -p`.
+    |-
+    (config) => ({
+      command: 'npx',
+      args: ['-y', '-p', 'minipainter', 'minipainter-mcp'],
+      env: config.inventoryPath ? { INVENTORY_PATH: config.inventoryPath } : {}
+    })
