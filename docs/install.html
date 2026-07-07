@@ -113,12 +113,35 @@
     <div class="wrap doc-block">
       <h2 class="doc-h">3 · Self-host the hosted endpoint</h2>
       <p class="doc-p">Want your own remote MCP with a private inventory rather than the shared one?
-        Bring up the server and Postgres with Docker, or deploy to Fly.</p>
-<pre class="code"><span class="c"># from the repo, server + Postgres</span>
+        Two paths, pick one.</p>
+
+      <div class="ways">
+        <article class="plate">
+          <span class="tag">Local · Docker + Postgres</span>
+          <h3>Run it on your machine</h3>
+          <p>Bring up the server and Postgres together with one command.</p>
+<pre class="code"><span class="c"># from the repo</span>
 <span class="p">$</span> docker compose up -d
 <span class="p">$</span> curl localhost:8787/mcp</pre>
-      <p class="doc-note">Set <code>DATABASE_URL</code> to move inventory into Postgres; without it,
-        inventory stays in a JSON file. Fly steps live in <code>docs/deploy-fly.md</code> in the repo.</p>
+          <p class="doc-note">Set <code>DATABASE_URL</code> to move inventory into Postgres; without it,
+            inventory stays in a JSON file.</p>
+        </article>
+
+        <article class="plate">
+          <span class="tag">Cloud · Fly.io</span>
+          <h3>Deploy your own instance</h3>
+          <p>A single-user remote MCP with a persistent volume, reachable from anywhere.</p>
+<pre class="code"><span class="c"># claim the app name, no deploy yet</span>
+<span class="p">$</span> fly launch --no-deploy --copy-config --name your-app-name
+<span class="c"># volume for inventory.json (skip if you attach Postgres instead)</span>
+<span class="p">$</span> fly volumes create inventory_data --region &lt;region&gt; --size 1
+<span class="c"># bearer token for the /inventory sync endpoint</span>
+<span class="p">$</span> fly secrets set INVENTORY_SYNC_TOKEN="$(openssl rand -hex 32)"
+<span class="p">$</span> fly deploy</pre>
+          <p class="doc-note">Full walkthrough (Postgres mode, ChatGPT connector, smoke tests) in
+            <code>docs/deploy-fly.md</code> in the repo.</p>
+        </article>
+      </div>
     </div>
   </section>
 
