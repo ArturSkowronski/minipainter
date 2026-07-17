@@ -5,7 +5,7 @@
  *
  * Brand-specific roles live on each paint as `usage_roles`. The overlay
  * (data/overrides/product_formats.json) maps those roles into one of:
- *   opaque_base | opaque_layer | wash | contrast | technical | drybrush | metallic
+ *   opaque_base | opaque_layer | wash | contrast | technical | drybrush | metallic | ink
  *
  * Always reason about cross-brand behavior via these predicates, never via
  * `usage_roles` directly.
@@ -35,6 +35,10 @@ export function isTechnical(paint) {
 
 export function isDrybrush(paint) {
   return paint.product_format === 'drybrush';
+}
+
+export function isInk(paint) {
+  return paint.product_format === 'ink';
 }
 
 export function equivalentFormat(a, b) {

@@ -106,6 +106,60 @@ test('searchPaints applies provider, role, and color filters', () => {
   ]);
 });
 
+function makeInkFixtures() {
+  return [
+    {
+      id: 'vallejo/squid-pink',
+      provider: 'vallejo',
+      name: 'Squid Pink',
+      normalized_name: 'squid pink',
+      aliases: [],
+      usage_roles: ['shade'],
+      color_families: ['pink'],
+      rgb: { r: 203, g: 111, b: 158 },
+      owned: false,
+      product_format: 'wash',
+    },
+    {
+      id: 'vallejo/green-ink',
+      provider: 'vallejo',
+      name: 'Green Ink',
+      normalized_name: 'green ink',
+      aliases: [],
+      usage_roles: ['ink'],
+      color_families: ['green'],
+      rgb: { r: 0, g: 112, b: 51 },
+      owned: false,
+      product_format: 'ink',
+    },
+  ];
+}
+
+test('searchPaints matches names only at word boundaries ("ink" must not hit "Squid Pink")', () => {
+  const registry = makeRegistry();
+  registry.catalog.paints.push(...makeInkFixtures());
+
+  const ids = searchPaints(registry, 'ink').map((result) => result.paint.id);
+
+  assert.ok(ids.includes('vallejo/green-ink'), 'Green Ink should match');
+  assert.ok(!ids.includes('vallejo/squid-pink'), 'Squid Pink must not match "ink" mid-word');
+});
+
+test('searchPaints matches paints by product_format', () => {
+  const registry = makeRegistry();
+  registry.catalog.paints.push(...makeInkFixtures());
+
+  const washIds = searchPaints(registry, 'wash').map((result) => result.paint.id);
+
+  assert.ok(washIds.includes('vallejo/squid-pink'), 'washes should match the "wash" query by format');
+});
+
+test('searchPaints still matches a token prefix ("pall" finds Pallid Bone)', () => {
+  const results = searchPaints(makeRegistry(), 'pall');
+
+  assert.equal(results[0].paint.id, 'army_painter/pallid-bone');
+});
+
 test('resolvePaint reports ambiguous matches', () => {
   const resolution = resolvePaint(makeRegistry(), 'black');
 

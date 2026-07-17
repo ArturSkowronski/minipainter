@@ -41,6 +41,12 @@ function isFuzzyTokenMatch(paint, query) {
     && levenshteinDistance(candidate, query) <= 2);
 }
 
+// Substring matching must start at a word boundary: "ink" matches "green ink"
+// but not "squid pink". Query tokens may still be prefixes ("pall" -> "pallid").
+function matchesAtWordBoundary(text, query) {
+  return ` ${text}`.includes(` ${query}`);
+}
+
 function matchesFilters(paint, options = {}) {
   if (options.provider && paint.provider !== options.provider) {
     return false;
@@ -74,11 +80,11 @@ function scorePaint(paint, query) {
     return 95;
   }
 
-  if (paint.normalized_name.includes(query)) {
+  if (matchesAtWordBoundary(paint.normalized_name, query)) {
     return 80;
   }
 
-  if (paint.aliases.some((alias) => normalizeText(alias).includes(query))) {
+  if (paint.aliases.some((alias) => matchesAtWordBoundary(normalizeText(alias), query))) {
     return 75;
   }
 
@@ -90,6 +96,10 @@ function scorePaint(paint, query) {
   const roles = paint.usage_roles.map((role) => normalizeText(role));
   if (roles.includes(query)) {
     return 55;
+  }
+
+  if (paint.product_format && normalizeText(paint.product_format) === query) {
+    return 50;
   }
 
   if (isFuzzyTokenMatch(paint, query)) {

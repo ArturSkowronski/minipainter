@@ -10,6 +10,7 @@ export const PRODUCT_FORMATS = Object.freeze([
   'technical',
   'drybrush',
   'metallic',
+  'ink',
 ]);
 
 const PRODUCT_FORMAT_SET = new Set(PRODUCT_FORMATS);

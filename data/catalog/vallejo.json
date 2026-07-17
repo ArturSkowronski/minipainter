@@ -2958,6 +2958,236 @@
         "b": 255
       },
       "owned": false
+    },
+    {
+      "id": "vallejo/black-green-ink",
+      "provider": "vallejo",
+      "name": "Black Green Ink",
+      "normalized_name": "black green ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 37,
+        "g": 60,
+        "b": 44
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/black-ink",
+      "provider": "vallejo",
+      "name": "Black Ink",
+      "normalized_name": "black ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 0,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/blue-ink",
+      "provider": "vallejo",
+      "name": "Blue Ink",
+      "normalized_name": "blue ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 21,
+        "g": 55,
+        "b": 103
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/dark-turquoise-ink",
+      "provider": "vallejo",
+      "name": "Dark Turquoise Ink",
+      "normalized_name": "dark turquoise ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 4,
+        "g": 63,
+        "b": 61
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/green-ink",
+      "provider": "vallejo",
+      "name": "Green Ink",
+      "normalized_name": "green ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 112,
+        "b": 51
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/magenta-ink",
+      "provider": "vallejo",
+      "name": "Magenta Ink",
+      "normalized_name": "magenta ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 155,
+        "g": 34,
+        "b": 65
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/red-ink",
+      "provider": "vallejo",
+      "name": "Red Ink",
+      "normalized_name": "red ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 167,
+        "g": 21,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/sepia-ink",
+      "provider": "vallejo",
+      "name": "Sepia Ink",
+      "normalized_name": "sepia ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 53,
+        "g": 38,
+        "b": 19
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/skin-wash",
+      "provider": "vallejo",
+      "name": "Skin Wash",
+      "normalized_name": "skin wash",
+      "aliases": [
+        "Skin Ink"
+      ],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 197,
+        "g": 111,
+        "b": 24
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/violet-ink",
+      "provider": "vallejo",
+      "name": "Violet Ink",
+      "normalized_name": "violet ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 72,
+        "g": 49,
+        "b": 93
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/white-ink",
+      "provider": "vallejo",
+      "name": "White Ink",
+      "normalized_name": "white ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "owned": false
+    },
+    {
+      "id": "vallejo/yellow-ink",
+      "provider": "vallejo",
+      "name": "Yellow Ink",
+      "normalized_name": "yellow ink",
+      "aliases": [],
+      "usage_roles": [
+        "ink"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 233,
+        "g": 155,
+        "b": 18
+      },
+      "owned": false
     }
   ]
 }

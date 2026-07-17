@@ -1,0 +1,20 @@
+{
+  "provenance": {
+    "note": "Hand-curated source for the Vallejo Game Color Ink range. hobby-desk-data (our canonical upstream) does not carry the Game Ink line, so this file pins the range explicitly. Line-up (12 SKUs, 72.082-72.094, no 72.092) cross-checked 2026-07-17 against a stockist dump with EAN codes (mhollink/miniature-inventory scripts/paints/vallejo/input/game-color.json) and piemasters/MiniToTheMax src/data/paints/vallejo/game.ts; hex swatches from MiniToTheMax. RGB is an approximate reference colour (inks are transparent).",
+    "verified": "2026-07-17"
+  },
+  "records": [
+    { "name": "White Ink", "sku": "72.082", "hex": "#FFFFFF" },
+    { "name": "Magenta Ink", "sku": "72.083", "hex": "#9B2241" },
+    { "name": "Dark Turquoise Ink", "sku": "72.084", "hex": "#043F3D" },
+    { "name": "Yellow Ink", "sku": "72.085", "hex": "#E99B12" },
+    { "name": "Red Ink", "sku": "72.086", "hex": "#A71520" },
+    { "name": "Violet Ink", "sku": "72.087", "hex": "#48315D" },
+    { "name": "Blue Ink", "sku": "72.088", "hex": "#153767" },
+    { "name": "Green Ink", "sku": "72.089", "hex": "#007033" },
+    { "name": "Black Green Ink", "sku": "72.090", "hex": "#253C2C" },
+    { "name": "Sepia Ink", "sku": "72.091", "hex": "#352613" },
+    { "name": "Skin Wash", "sku": "72.093", "hex": "#C56F18", "aliases": ["Skin Ink"] },
+    { "name": "Black Ink", "sku": "72.094", "hex": "#000000" }
+  ]
+}
