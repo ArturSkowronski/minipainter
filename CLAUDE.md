@@ -13,7 +13,7 @@ Paint data lives in two layers — **never** conflate them:
   `{ id, provider, name, normalized_name, aliases, usage_roles, color_families, rgb, owned }`.
 - **`data/overrides/product_formats.json`** — an overlay that maps `(provider, usage_role)`
   → normalized `product_format` (`opaque_base | opaque_layer | wash | contrast | technical |
-  drybrush | metallic`). Brand rules are matched in order (first wins); per-id `overrides`
+  drybrush | metallic | ink`). Brand rules are matched in order (first wins); per-id `overrides`
   win over rules. `src/overrides.mjs::enrichPaint` attaches `product_format` at load time.
 
 ### Rules
@@ -45,6 +45,21 @@ Caveat: the RGB in the pre-existing `citadel/army_painter/vallejo` catalogs does
 hobby-desk-data (different swatch sampling), and the original import script for those isn't in the
 repo. hobby-desk-data is the **canonical upstream going forward** (used for the AK Interactive
 catalog, pinned to `1bc4e09`); expect RGB drift versus the older catalogs.
+
+Second caveat: the `citadel`/`army_painter` catalogs were originally **model-generated**
+(commit `6c06ffb`), not imported — which left ~160 names that exist in no upstream range (a mix
+of Vallejo/Reaper names and pure inventions). Those were **purged 2026-07-17** with
+`node scripts/prune-unbacked.mjs <hobby-desk-data-checkout>` (backing = per-brand normalized-name
+match against upstream `1bc4e09` + pinned hand-curated sources; never prunes without review of
+owned paints — pass `--keep`). All four catalogs are now name-backed; RGB is still legacy.
+`tests/catalog-backing.test.mjs` guards against ghosts returning.
+
+The GitHub Pages dataset `docs/assets/paints.js` is generated — run
+`node scripts/generate-site-paints.mjs` after any catalog or inventory change.
+
+Ranges upstream doesn't carry get a hand-curated pinned source instead: the Vallejo Game Color
+Ink line lives in `scripts/vallejo-game-inks.source.json` (provenance inside) and is merged by
+`node scripts/import-vallejo-inks.mjs` (idempotent).
 
 ## Conventions
 - ESM (`.mjs`), `import test from 'node:test'` + `node:assert/strict`.
