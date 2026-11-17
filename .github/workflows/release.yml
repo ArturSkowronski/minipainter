@@ -129,11 +129,12 @@ jobs:
       - name: Confirm it is live
         run: |
           pkg="${{ needs.verify.outputs.version }}"
-          for i in $(seq 1 10); do
-            if [ "$(npm view "minipainter@$pkg" version 2>/dev/null)" = "$pkg" ]; then
+          # v0.10.0 took ~76 s to become visible after publish; allow up to 5 min.
+          for i in $(seq 1 30); do
+            if [ "$(npm view "minipainter@$pkg" version --prefer-online 2>/dev/null)" = "$pkg" ]; then
               echo "minipainter@$pkg is live on npm"; exit 0
             fi
-            echo "not visible yet, retry $i/10"; sleep 6
+            echo "not visible yet, retry $i/30"; sleep 10
           done
           echo "::error::minipainter@$pkg did not become visible on npm"; exit 1
 
