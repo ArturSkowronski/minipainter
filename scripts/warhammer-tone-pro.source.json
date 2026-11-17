@@ -1,0 +1,128 @@
+{
+  "provenance": {
+    "note": "Hand-curated source for the Games Workshop Warhammer Tone Pro range (released 2026-10-24): 30 colour families x 5 numbered tones (1 = darkest, 5 = lightest) = 150 paints, 12 ml pots. hobby-desk-data (our canonical upstream, pinned 1bc4e09) predates the range. Family names and per-tone hex swatches are taken from FauxHammer's 'Ultimate Guide to Warhammer Tone Pro' (https://www.fauxhammer.com/reviews/paints/ultimate-guide-warhammer-tone-pro/, dateModified 2026-10-10), whose hexes are sampled from GW's published colour charts, not from wet paint; all 150 values were extracted and every duplicate occurrence on the page agreed. Family list cross-checked against Loaded Dice and Tale of Painters. The two mediums (Shading Medium, Blending Medium) have no swatch and are not included.",
+    "verified": "2026-11-17"
+  },
+  "families": [
+    {
+      "name": "Carmine Blades",
+      "tones": ["#3C262A", "#5B3539", "#750019", "#910022", "#C64D50"]
+    },
+    {
+      "name": "Bloodtoof Red",
+      "tones": ["#581E16", "#94001E", "#AD072B", "#D60020", "#EF353C"]
+    },
+    {
+      "name": "Chotec Orange",
+      "tones": ["#93150B", "#B82F2D", "#E04A33", "#F56230", "#F78030"]
+    },
+    {
+      "name": "Ta’unar Ochre",
+      "tones": ["#BB5528", "#D27144", "#E78344", "#EA9B6B", "#E9B06E"]
+    },
+    {
+      "name": "Khemri Sands",
+      "tones": ["#6C4B12", "#8D5E06", "#B1791E", "#CF8400", "#DC9A00"]
+    },
+    {
+      "name": "Hawkshroud Yellow",
+      "tones": ["#F69113", "#FBA200", "#FEBB00", "#FFD300", "#FDE07E"]
+    },
+    {
+      "name": "Megaboss Yellow",
+      "tones": ["#F9AD00", "#F8CE00", "#FFE440", "#F8E85F", "#FFF175"]
+    },
+    {
+      "name": "Plague Toad Venom",
+      "tones": ["#49892D", "#549B32", "#80C234", "#9CC829", "#C8D600"]
+    },
+    {
+      "name": "Kruleboyz Green",
+      "tones": ["#4A7D36", "#627F3C", "#7A823F", "#939859", "#AEB16C"]
+    },
+    {
+      "name": "Lustria Green",
+      "tones": ["#004816", "#006929", "#007931", "#34AD40", "#4EB33F"]
+    },
+    {
+      "name": "Kasrkin Green",
+      "tones": ["#001B1B", "#1F4530", "#40713C", "#678E55", "#86A978"]
+    },
+    {
+      "name": "Hierotek Green",
+      "tones": ["#00321C", "#00542D", "#006A2E", "#00894E", "#00B681"]
+    },
+    {
+      "name": "Green Morkshroom",
+      "tones": ["#143230", "#004F48", "#006458", "#007B6D", "#37AC83"]
+    },
+    {
+      "name": "Seraphon Blue",
+      "tones": ["#002F34", "#004650", "#006874", "#008D92", "#00B7B9"]
+    },
+    {
+      "name": "Craventhrone Cloak",
+      "tones": ["#08232E", "#12373E", "#164858", "#41717D", "#598A8E"]
+    },
+    {
+      "name": "Stormwolf Blue",
+      "tones": ["#233F55", "#405568", "#54697D", "#6E95A4", "#87AFB9"]
+    },
+    {
+      "name": "Scinari Blue",
+      "tones": ["#004789", "#005895", "#006C9A", "#0088BB", "#009AB9"]
+    },
+    {
+      "name": "Blue Gorkshroom",
+      "tones": ["#002356", "#004487", "#0057A3", "#006CAD", "#007BB2"]
+    },
+    {
+      "name": "Ultramar Blue",
+      "tones": ["#001A42", "#0F3062", "#0D4F88", "#436CA1", "#6D9ECF"]
+    },
+    {
+      "name": "Shalaxi Violet",
+      "tones": ["#130040", "#262E6D", "#324E99", "#6472B9", "#7E8BC8"]
+    },
+    {
+      "name": "Enrapturess Dusk",
+      "tones": ["#1E1435", "#413549", "#534D5E", "#6E6773", "#817A86"]
+    },
+    {
+      "name": "Hive Fleet Purple",
+      "tones": ["#1E1A40", "#3C1E54", "#655192", "#8769B1", "#8F82AE"]
+    },
+    {
+      "name": "Magnus The Red",
+      "tones": ["#3A202D", "#4A123E", "#76003F", "#9A1B59", "#AA4277"]
+    },
+    {
+      "name": "Eye Of Terror",
+      "tones": ["#920030", "#BD0047", "#C20060", "#D4417B", "#DB6499"]
+    },
+    {
+      "name": "Carthalos Skin",
+      "tones": ["#241815", "#2D140C", "#4E2212", "#5F3A37", "#795346"]
+    },
+    {
+      "name": "Celestine Skin",
+      "tones": ["#CD8169", "#D58B70", "#D99578", "#EAA889", "#DDB398"]
+    },
+    {
+      "name": "Gnarlwood",
+      "tones": ["#342928", "#514235", "#725C44", "#776857", "#887B67"]
+    },
+    {
+      "name": "Necrolith Bone",
+      "tones": ["#877561", "#B0916A", "#B99F7D", "#C1AB86", "#BCB79E"]
+    },
+    {
+      "name": "Dataslate Grey",
+      "tones": ["#2B2D28", "#3E3D35", "#555650", "#737069", "#878983"]
+    },
+    {
+      "name": "Blackstone Void",
+      "tones": ["#000208", "#4E5458", "#6E7074", "#9B9D9F", "#FFFFFF"]
+    }
+  ]
+}

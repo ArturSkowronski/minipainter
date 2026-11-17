@@ -4995,6 +4995,3161 @@
         "b": 104
       },
       "owned": false
+    },
+    {
+      "id": "citadel/carmine-blades-1",
+      "provider": "citadel",
+      "name": "Carmine Blades 1",
+      "normalized_name": "carmine blades 1",
+      "aliases": [
+        "Tone Pro Carmine Blades 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 60,
+        "g": 38,
+        "b": 42
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carmine-blades-2",
+      "provider": "citadel",
+      "name": "Carmine Blades 2",
+      "normalized_name": "carmine blades 2",
+      "aliases": [
+        "Tone Pro Carmine Blades 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 91,
+        "g": 53,
+        "b": 57
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carmine-blades-3",
+      "provider": "citadel",
+      "name": "Carmine Blades 3",
+      "normalized_name": "carmine blades 3",
+      "aliases": [
+        "Tone Pro Carmine Blades 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 117,
+        "g": 0,
+        "b": 25
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carmine-blades-4",
+      "provider": "citadel",
+      "name": "Carmine Blades 4",
+      "normalized_name": "carmine blades 4",
+      "aliases": [
+        "Tone Pro Carmine Blades 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 145,
+        "g": 0,
+        "b": 34
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carmine-blades-5",
+      "provider": "citadel",
+      "name": "Carmine Blades 5",
+      "normalized_name": "carmine blades 5",
+      "aliases": [
+        "Tone Pro Carmine Blades 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 198,
+        "g": 77,
+        "b": 80
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/bloodtoof-red-1",
+      "provider": "citadel",
+      "name": "Bloodtoof Red 1",
+      "normalized_name": "bloodtoof red 1",
+      "aliases": [
+        "Tone Pro Bloodtoof Red 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 88,
+        "g": 30,
+        "b": 22
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/bloodtoof-red-2",
+      "provider": "citadel",
+      "name": "Bloodtoof Red 2",
+      "normalized_name": "bloodtoof red 2",
+      "aliases": [
+        "Tone Pro Bloodtoof Red 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 148,
+        "g": 0,
+        "b": 30
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/bloodtoof-red-3",
+      "provider": "citadel",
+      "name": "Bloodtoof Red 3",
+      "normalized_name": "bloodtoof red 3",
+      "aliases": [
+        "Tone Pro Bloodtoof Red 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 173,
+        "g": 7,
+        "b": 43
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/bloodtoof-red-4",
+      "provider": "citadel",
+      "name": "Bloodtoof Red 4",
+      "normalized_name": "bloodtoof red 4",
+      "aliases": [
+        "Tone Pro Bloodtoof Red 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 214,
+        "g": 0,
+        "b": 32
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/bloodtoof-red-5",
+      "provider": "citadel",
+      "name": "Bloodtoof Red 5",
+      "normalized_name": "bloodtoof red 5",
+      "aliases": [
+        "Tone Pro Bloodtoof Red 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 239,
+        "g": 53,
+        "b": 60
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/chotec-orange-1",
+      "provider": "citadel",
+      "name": "Chotec Orange 1",
+      "normalized_name": "chotec orange 1",
+      "aliases": [
+        "Tone Pro Chotec Orange 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 147,
+        "g": 21,
+        "b": 11
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/chotec-orange-2",
+      "provider": "citadel",
+      "name": "Chotec Orange 2",
+      "normalized_name": "chotec orange 2",
+      "aliases": [
+        "Tone Pro Chotec Orange 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 184,
+        "g": 47,
+        "b": 45
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/chotec-orange-3",
+      "provider": "citadel",
+      "name": "Chotec Orange 3",
+      "normalized_name": "chotec orange 3",
+      "aliases": [
+        "Tone Pro Chotec Orange 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 224,
+        "g": 74,
+        "b": 51
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/chotec-orange-4",
+      "provider": "citadel",
+      "name": "Chotec Orange 4",
+      "normalized_name": "chotec orange 4",
+      "aliases": [
+        "Tone Pro Chotec Orange 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 245,
+        "g": 98,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/chotec-orange-5",
+      "provider": "citadel",
+      "name": "Chotec Orange 5",
+      "normalized_name": "chotec orange 5",
+      "aliases": [
+        "Tone Pro Chotec Orange 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 247,
+        "g": 128,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ta-unar-ochre-1",
+      "provider": "citadel",
+      "name": "Ta’unar Ochre 1",
+      "normalized_name": "ta unar ochre 1",
+      "aliases": [
+        "Tone Pro Ta’unar Ochre 1",
+        "Taunar Ochre 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 187,
+        "g": 85,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ta-unar-ochre-2",
+      "provider": "citadel",
+      "name": "Ta’unar Ochre 2",
+      "normalized_name": "ta unar ochre 2",
+      "aliases": [
+        "Tone Pro Ta’unar Ochre 2",
+        "Taunar Ochre 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 210,
+        "g": 113,
+        "b": 68
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ta-unar-ochre-3",
+      "provider": "citadel",
+      "name": "Ta’unar Ochre 3",
+      "normalized_name": "ta unar ochre 3",
+      "aliases": [
+        "Tone Pro Ta’unar Ochre 3",
+        "Taunar Ochre 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 231,
+        "g": 131,
+        "b": 68
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ta-unar-ochre-4",
+      "provider": "citadel",
+      "name": "Ta’unar Ochre 4",
+      "normalized_name": "ta unar ochre 4",
+      "aliases": [
+        "Tone Pro Ta’unar Ochre 4",
+        "Taunar Ochre 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 234,
+        "g": 155,
+        "b": 107
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ta-unar-ochre-5",
+      "provider": "citadel",
+      "name": "Ta’unar Ochre 5",
+      "normalized_name": "ta unar ochre 5",
+      "aliases": [
+        "Tone Pro Ta’unar Ochre 5",
+        "Taunar Ochre 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 233,
+        "g": 176,
+        "b": 110
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/khemri-sands-1",
+      "provider": "citadel",
+      "name": "Khemri Sands 1",
+      "normalized_name": "khemri sands 1",
+      "aliases": [
+        "Tone Pro Khemri Sands 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 108,
+        "g": 75,
+        "b": 18
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/khemri-sands-2",
+      "provider": "citadel",
+      "name": "Khemri Sands 2",
+      "normalized_name": "khemri sands 2",
+      "aliases": [
+        "Tone Pro Khemri Sands 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 141,
+        "g": 94,
+        "b": 6
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/khemri-sands-3",
+      "provider": "citadel",
+      "name": "Khemri Sands 3",
+      "normalized_name": "khemri sands 3",
+      "aliases": [
+        "Tone Pro Khemri Sands 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 177,
+        "g": 121,
+        "b": 30
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/khemri-sands-4",
+      "provider": "citadel",
+      "name": "Khemri Sands 4",
+      "normalized_name": "khemri sands 4",
+      "aliases": [
+        "Tone Pro Khemri Sands 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 207,
+        "g": 132,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/khemri-sands-5",
+      "provider": "citadel",
+      "name": "Khemri Sands 5",
+      "normalized_name": "khemri sands 5",
+      "aliases": [
+        "Tone Pro Khemri Sands 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 220,
+        "g": 154,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hawkshroud-yellow-1",
+      "provider": "citadel",
+      "name": "Hawkshroud Yellow 1",
+      "normalized_name": "hawkshroud yellow 1",
+      "aliases": [
+        "Tone Pro Hawkshroud Yellow 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 246,
+        "g": 145,
+        "b": 19
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hawkshroud-yellow-2",
+      "provider": "citadel",
+      "name": "Hawkshroud Yellow 2",
+      "normalized_name": "hawkshroud yellow 2",
+      "aliases": [
+        "Tone Pro Hawkshroud Yellow 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 251,
+        "g": 162,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hawkshroud-yellow-3",
+      "provider": "citadel",
+      "name": "Hawkshroud Yellow 3",
+      "normalized_name": "hawkshroud yellow 3",
+      "aliases": [
+        "Tone Pro Hawkshroud Yellow 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 254,
+        "g": 187,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hawkshroud-yellow-4",
+      "provider": "citadel",
+      "name": "Hawkshroud Yellow 4",
+      "normalized_name": "hawkshroud yellow 4",
+      "aliases": [
+        "Tone Pro Hawkshroud Yellow 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 211,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hawkshroud-yellow-5",
+      "provider": "citadel",
+      "name": "Hawkshroud Yellow 5",
+      "normalized_name": "hawkshroud yellow 5",
+      "aliases": [
+        "Tone Pro Hawkshroud Yellow 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 253,
+        "g": 224,
+        "b": 126
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/megaboss-yellow-1",
+      "provider": "citadel",
+      "name": "Megaboss Yellow 1",
+      "normalized_name": "megaboss yellow 1",
+      "aliases": [
+        "Tone Pro Megaboss Yellow 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 249,
+        "g": 173,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/megaboss-yellow-2",
+      "provider": "citadel",
+      "name": "Megaboss Yellow 2",
+      "normalized_name": "megaboss yellow 2",
+      "aliases": [
+        "Tone Pro Megaboss Yellow 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 248,
+        "g": 206,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/megaboss-yellow-3",
+      "provider": "citadel",
+      "name": "Megaboss Yellow 3",
+      "normalized_name": "megaboss yellow 3",
+      "aliases": [
+        "Tone Pro Megaboss Yellow 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 228,
+        "b": 64
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/megaboss-yellow-4",
+      "provider": "citadel",
+      "name": "Megaboss Yellow 4",
+      "normalized_name": "megaboss yellow 4",
+      "aliases": [
+        "Tone Pro Megaboss Yellow 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 248,
+        "g": 232,
+        "b": 95
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/megaboss-yellow-5",
+      "provider": "citadel",
+      "name": "Megaboss Yellow 5",
+      "normalized_name": "megaboss yellow 5",
+      "aliases": [
+        "Tone Pro Megaboss Yellow 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 241,
+        "b": 117
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/plague-toad-venom-1",
+      "provider": "citadel",
+      "name": "Plague Toad Venom 1",
+      "normalized_name": "plague toad venom 1",
+      "aliases": [
+        "Tone Pro Plague Toad Venom 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 73,
+        "g": 137,
+        "b": 45
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/plague-toad-venom-2",
+      "provider": "citadel",
+      "name": "Plague Toad Venom 2",
+      "normalized_name": "plague toad venom 2",
+      "aliases": [
+        "Tone Pro Plague Toad Venom 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 84,
+        "g": 155,
+        "b": 50
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/plague-toad-venom-3",
+      "provider": "citadel",
+      "name": "Plague Toad Venom 3",
+      "normalized_name": "plague toad venom 3",
+      "aliases": [
+        "Tone Pro Plague Toad Venom 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 128,
+        "g": 194,
+        "b": 52
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/plague-toad-venom-4",
+      "provider": "citadel",
+      "name": "Plague Toad Venom 4",
+      "normalized_name": "plague toad venom 4",
+      "aliases": [
+        "Tone Pro Plague Toad Venom 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 156,
+        "g": 200,
+        "b": 41
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/plague-toad-venom-5",
+      "provider": "citadel",
+      "name": "Plague Toad Venom 5",
+      "normalized_name": "plague toad venom 5",
+      "aliases": [
+        "Tone Pro Plague Toad Venom 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 200,
+        "g": 214,
+        "b": 0
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kruleboyz-green-1",
+      "provider": "citadel",
+      "name": "Kruleboyz Green 1",
+      "normalized_name": "kruleboyz green 1",
+      "aliases": [
+        "Tone Pro Kruleboyz Green 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 125,
+        "b": 54
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kruleboyz-green-2",
+      "provider": "citadel",
+      "name": "Kruleboyz Green 2",
+      "normalized_name": "kruleboyz green 2",
+      "aliases": [
+        "Tone Pro Kruleboyz Green 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 98,
+        "g": 127,
+        "b": 60
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kruleboyz-green-3",
+      "provider": "citadel",
+      "name": "Kruleboyz Green 3",
+      "normalized_name": "kruleboyz green 3",
+      "aliases": [
+        "Tone Pro Kruleboyz Green 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 122,
+        "g": 130,
+        "b": 63
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kruleboyz-green-4",
+      "provider": "citadel",
+      "name": "Kruleboyz Green 4",
+      "normalized_name": "kruleboyz green 4",
+      "aliases": [
+        "Tone Pro Kruleboyz Green 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 147,
+        "g": 152,
+        "b": 89
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kruleboyz-green-5",
+      "provider": "citadel",
+      "name": "Kruleboyz Green 5",
+      "normalized_name": "kruleboyz green 5",
+      "aliases": [
+        "Tone Pro Kruleboyz Green 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 174,
+        "g": 177,
+        "b": 108
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/lustria-green-1",
+      "provider": "citadel",
+      "name": "Lustria Green 1",
+      "normalized_name": "lustria green 1",
+      "aliases": [
+        "Tone Pro Lustria Green 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 72,
+        "b": 22
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/lustria-green-2",
+      "provider": "citadel",
+      "name": "Lustria Green 2",
+      "normalized_name": "lustria green 2",
+      "aliases": [
+        "Tone Pro Lustria Green 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 105,
+        "b": 41
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/lustria-green-3",
+      "provider": "citadel",
+      "name": "Lustria Green 3",
+      "normalized_name": "lustria green 3",
+      "aliases": [
+        "Tone Pro Lustria Green 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 121,
+        "b": 49
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/lustria-green-4",
+      "provider": "citadel",
+      "name": "Lustria Green 4",
+      "normalized_name": "lustria green 4",
+      "aliases": [
+        "Tone Pro Lustria Green 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 52,
+        "g": 173,
+        "b": 64
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/lustria-green-5",
+      "provider": "citadel",
+      "name": "Lustria Green 5",
+      "normalized_name": "lustria green 5",
+      "aliases": [
+        "Tone Pro Lustria Green 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 78,
+        "g": 179,
+        "b": 63
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kasrkin-green-1",
+      "provider": "citadel",
+      "name": "Kasrkin Green 1",
+      "normalized_name": "kasrkin green 1",
+      "aliases": [
+        "Tone Pro Kasrkin Green 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 27,
+        "b": 27
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kasrkin-green-2",
+      "provider": "citadel",
+      "name": "Kasrkin Green 2",
+      "normalized_name": "kasrkin green 2",
+      "aliases": [
+        "Tone Pro Kasrkin Green 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 31,
+        "g": 69,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kasrkin-green-3",
+      "provider": "citadel",
+      "name": "Kasrkin Green 3",
+      "normalized_name": "kasrkin green 3",
+      "aliases": [
+        "Tone Pro Kasrkin Green 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 64,
+        "g": 113,
+        "b": 60
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kasrkin-green-4",
+      "provider": "citadel",
+      "name": "Kasrkin Green 4",
+      "normalized_name": "kasrkin green 4",
+      "aliases": [
+        "Tone Pro Kasrkin Green 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 103,
+        "g": 142,
+        "b": 85
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/kasrkin-green-5",
+      "provider": "citadel",
+      "name": "Kasrkin Green 5",
+      "normalized_name": "kasrkin green 5",
+      "aliases": [
+        "Tone Pro Kasrkin Green 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 134,
+        "g": 169,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hierotek-green-1",
+      "provider": "citadel",
+      "name": "Hierotek Green 1",
+      "normalized_name": "hierotek green 1",
+      "aliases": [
+        "Tone Pro Hierotek Green 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 50,
+        "b": 28
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hierotek-green-2",
+      "provider": "citadel",
+      "name": "Hierotek Green 2",
+      "normalized_name": "hierotek green 2",
+      "aliases": [
+        "Tone Pro Hierotek Green 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 84,
+        "b": 45
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hierotek-green-3",
+      "provider": "citadel",
+      "name": "Hierotek Green 3",
+      "normalized_name": "hierotek green 3",
+      "aliases": [
+        "Tone Pro Hierotek Green 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 106,
+        "b": 46
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hierotek-green-4",
+      "provider": "citadel",
+      "name": "Hierotek Green 4",
+      "normalized_name": "hierotek green 4",
+      "aliases": [
+        "Tone Pro Hierotek Green 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 137,
+        "b": 78
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hierotek-green-5",
+      "provider": "citadel",
+      "name": "Hierotek Green 5",
+      "normalized_name": "hierotek green 5",
+      "aliases": [
+        "Tone Pro Hierotek Green 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 182,
+        "b": 129
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/green-morkshroom-1",
+      "provider": "citadel",
+      "name": "Green Morkshroom 1",
+      "normalized_name": "green morkshroom 1",
+      "aliases": [
+        "Tone Pro Green Morkshroom 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 20,
+        "g": 50,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/green-morkshroom-2",
+      "provider": "citadel",
+      "name": "Green Morkshroom 2",
+      "normalized_name": "green morkshroom 2",
+      "aliases": [
+        "Tone Pro Green Morkshroom 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 79,
+        "b": 72
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/green-morkshroom-3",
+      "provider": "citadel",
+      "name": "Green Morkshroom 3",
+      "normalized_name": "green morkshroom 3",
+      "aliases": [
+        "Tone Pro Green Morkshroom 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 100,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/green-morkshroom-4",
+      "provider": "citadel",
+      "name": "Green Morkshroom 4",
+      "normalized_name": "green morkshroom 4",
+      "aliases": [
+        "Tone Pro Green Morkshroom 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 123,
+        "b": 109
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/green-morkshroom-5",
+      "provider": "citadel",
+      "name": "Green Morkshroom 5",
+      "normalized_name": "green morkshroom 5",
+      "aliases": [
+        "Tone Pro Green Morkshroom 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "green"
+      ],
+      "rgb": {
+        "r": 55,
+        "g": 172,
+        "b": 131
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/seraphon-blue-1",
+      "provider": "citadel",
+      "name": "Seraphon Blue 1",
+      "normalized_name": "seraphon blue 1",
+      "aliases": [
+        "Tone Pro Seraphon Blue 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 47,
+        "b": 52
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/seraphon-blue-2",
+      "provider": "citadel",
+      "name": "Seraphon Blue 2",
+      "normalized_name": "seraphon blue 2",
+      "aliases": [
+        "Tone Pro Seraphon Blue 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 70,
+        "b": 80
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/seraphon-blue-3",
+      "provider": "citadel",
+      "name": "Seraphon Blue 3",
+      "normalized_name": "seraphon blue 3",
+      "aliases": [
+        "Tone Pro Seraphon Blue 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 104,
+        "b": 116
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/seraphon-blue-4",
+      "provider": "citadel",
+      "name": "Seraphon Blue 4",
+      "normalized_name": "seraphon blue 4",
+      "aliases": [
+        "Tone Pro Seraphon Blue 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 141,
+        "b": 146
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/seraphon-blue-5",
+      "provider": "citadel",
+      "name": "Seraphon Blue 5",
+      "normalized_name": "seraphon blue 5",
+      "aliases": [
+        "Tone Pro Seraphon Blue 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 183,
+        "b": 185
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/craventhrone-cloak-1",
+      "provider": "citadel",
+      "name": "Craventhrone Cloak 1",
+      "normalized_name": "craventhrone cloak 1",
+      "aliases": [
+        "Tone Pro Craventhrone Cloak 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 8,
+        "g": 35,
+        "b": 46
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/craventhrone-cloak-2",
+      "provider": "citadel",
+      "name": "Craventhrone Cloak 2",
+      "normalized_name": "craventhrone cloak 2",
+      "aliases": [
+        "Tone Pro Craventhrone Cloak 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 18,
+        "g": 55,
+        "b": 62
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/craventhrone-cloak-3",
+      "provider": "citadel",
+      "name": "Craventhrone Cloak 3",
+      "normalized_name": "craventhrone cloak 3",
+      "aliases": [
+        "Tone Pro Craventhrone Cloak 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 22,
+        "g": 72,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/craventhrone-cloak-4",
+      "provider": "citadel",
+      "name": "Craventhrone Cloak 4",
+      "normalized_name": "craventhrone cloak 4",
+      "aliases": [
+        "Tone Pro Craventhrone Cloak 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 65,
+        "g": 113,
+        "b": 125
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/craventhrone-cloak-5",
+      "provider": "citadel",
+      "name": "Craventhrone Cloak 5",
+      "normalized_name": "craventhrone cloak 5",
+      "aliases": [
+        "Tone Pro Craventhrone Cloak 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 89,
+        "g": 138,
+        "b": 142
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stormwolf-blue-1",
+      "provider": "citadel",
+      "name": "Stormwolf Blue 1",
+      "normalized_name": "stormwolf blue 1",
+      "aliases": [
+        "Tone Pro Stormwolf Blue 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 35,
+        "g": 63,
+        "b": 85
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stormwolf-blue-2",
+      "provider": "citadel",
+      "name": "Stormwolf Blue 2",
+      "normalized_name": "stormwolf blue 2",
+      "aliases": [
+        "Tone Pro Stormwolf Blue 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 64,
+        "g": 85,
+        "b": 104
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stormwolf-blue-3",
+      "provider": "citadel",
+      "name": "Stormwolf Blue 3",
+      "normalized_name": "stormwolf blue 3",
+      "aliases": [
+        "Tone Pro Stormwolf Blue 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 84,
+        "g": 105,
+        "b": 125
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stormwolf-blue-4",
+      "provider": "citadel",
+      "name": "Stormwolf Blue 4",
+      "normalized_name": "stormwolf blue 4",
+      "aliases": [
+        "Tone Pro Stormwolf Blue 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 110,
+        "g": 149,
+        "b": 164
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/stormwolf-blue-5",
+      "provider": "citadel",
+      "name": "Stormwolf Blue 5",
+      "normalized_name": "stormwolf blue 5",
+      "aliases": [
+        "Tone Pro Stormwolf Blue 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 135,
+        "g": 175,
+        "b": 185
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/scinari-blue-1",
+      "provider": "citadel",
+      "name": "Scinari Blue 1",
+      "normalized_name": "scinari blue 1",
+      "aliases": [
+        "Tone Pro Scinari Blue 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 71,
+        "b": 137
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/scinari-blue-2",
+      "provider": "citadel",
+      "name": "Scinari Blue 2",
+      "normalized_name": "scinari blue 2",
+      "aliases": [
+        "Tone Pro Scinari Blue 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 88,
+        "b": 149
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/scinari-blue-3",
+      "provider": "citadel",
+      "name": "Scinari Blue 3",
+      "normalized_name": "scinari blue 3",
+      "aliases": [
+        "Tone Pro Scinari Blue 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 108,
+        "b": 154
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/scinari-blue-4",
+      "provider": "citadel",
+      "name": "Scinari Blue 4",
+      "normalized_name": "scinari blue 4",
+      "aliases": [
+        "Tone Pro Scinari Blue 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 136,
+        "b": 187
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/scinari-blue-5",
+      "provider": "citadel",
+      "name": "Scinari Blue 5",
+      "normalized_name": "scinari blue 5",
+      "aliases": [
+        "Tone Pro Scinari Blue 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 154,
+        "b": 185
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blue-gorkshroom-1",
+      "provider": "citadel",
+      "name": "Blue Gorkshroom 1",
+      "normalized_name": "blue gorkshroom 1",
+      "aliases": [
+        "Tone Pro Blue Gorkshroom 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 35,
+        "b": 86
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blue-gorkshroom-2",
+      "provider": "citadel",
+      "name": "Blue Gorkshroom 2",
+      "normalized_name": "blue gorkshroom 2",
+      "aliases": [
+        "Tone Pro Blue Gorkshroom 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 68,
+        "b": 135
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blue-gorkshroom-3",
+      "provider": "citadel",
+      "name": "Blue Gorkshroom 3",
+      "normalized_name": "blue gorkshroom 3",
+      "aliases": [
+        "Tone Pro Blue Gorkshroom 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 87,
+        "b": 163
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blue-gorkshroom-4",
+      "provider": "citadel",
+      "name": "Blue Gorkshroom 4",
+      "normalized_name": "blue gorkshroom 4",
+      "aliases": [
+        "Tone Pro Blue Gorkshroom 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 108,
+        "b": 173
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blue-gorkshroom-5",
+      "provider": "citadel",
+      "name": "Blue Gorkshroom 5",
+      "normalized_name": "blue gorkshroom 5",
+      "aliases": [
+        "Tone Pro Blue Gorkshroom 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 123,
+        "b": 178
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ultramar-blue-1",
+      "provider": "citadel",
+      "name": "Ultramar Blue 1",
+      "normalized_name": "ultramar blue 1",
+      "aliases": [
+        "Tone Pro Ultramar Blue 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 26,
+        "b": 66
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ultramar-blue-2",
+      "provider": "citadel",
+      "name": "Ultramar Blue 2",
+      "normalized_name": "ultramar blue 2",
+      "aliases": [
+        "Tone Pro Ultramar Blue 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 15,
+        "g": 48,
+        "b": 98
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ultramar-blue-3",
+      "provider": "citadel",
+      "name": "Ultramar Blue 3",
+      "normalized_name": "ultramar blue 3",
+      "aliases": [
+        "Tone Pro Ultramar Blue 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 13,
+        "g": 79,
+        "b": 136
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ultramar-blue-4",
+      "provider": "citadel",
+      "name": "Ultramar Blue 4",
+      "normalized_name": "ultramar blue 4",
+      "aliases": [
+        "Tone Pro Ultramar Blue 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 67,
+        "g": 108,
+        "b": 161
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/ultramar-blue-5",
+      "provider": "citadel",
+      "name": "Ultramar Blue 5",
+      "normalized_name": "ultramar blue 5",
+      "aliases": [
+        "Tone Pro Ultramar Blue 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 109,
+        "g": 158,
+        "b": 207
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/shalaxi-violet-1",
+      "provider": "citadel",
+      "name": "Shalaxi Violet 1",
+      "normalized_name": "shalaxi violet 1",
+      "aliases": [
+        "Tone Pro Shalaxi Violet 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 19,
+        "g": 0,
+        "b": 64
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/shalaxi-violet-2",
+      "provider": "citadel",
+      "name": "Shalaxi Violet 2",
+      "normalized_name": "shalaxi violet 2",
+      "aliases": [
+        "Tone Pro Shalaxi Violet 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 38,
+        "g": 46,
+        "b": 109
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/shalaxi-violet-3",
+      "provider": "citadel",
+      "name": "Shalaxi Violet 3",
+      "normalized_name": "shalaxi violet 3",
+      "aliases": [
+        "Tone Pro Shalaxi Violet 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 50,
+        "g": 78,
+        "b": 153
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/shalaxi-violet-4",
+      "provider": "citadel",
+      "name": "Shalaxi Violet 4",
+      "normalized_name": "shalaxi violet 4",
+      "aliases": [
+        "Tone Pro Shalaxi Violet 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 100,
+        "g": 114,
+        "b": 185
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/shalaxi-violet-5",
+      "provider": "citadel",
+      "name": "Shalaxi Violet 5",
+      "normalized_name": "shalaxi violet 5",
+      "aliases": [
+        "Tone Pro Shalaxi Violet 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 126,
+        "g": 139,
+        "b": 200
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/enrapturess-dusk-1",
+      "provider": "citadel",
+      "name": "Enrapturess Dusk 1",
+      "normalized_name": "enrapturess dusk 1",
+      "aliases": [
+        "Tone Pro Enrapturess Dusk 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 30,
+        "g": 20,
+        "b": 53
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/enrapturess-dusk-2",
+      "provider": "citadel",
+      "name": "Enrapturess Dusk 2",
+      "normalized_name": "enrapturess dusk 2",
+      "aliases": [
+        "Tone Pro Enrapturess Dusk 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 65,
+        "g": 53,
+        "b": 73
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/enrapturess-dusk-3",
+      "provider": "citadel",
+      "name": "Enrapturess Dusk 3",
+      "normalized_name": "enrapturess dusk 3",
+      "aliases": [
+        "Tone Pro Enrapturess Dusk 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 83,
+        "g": 77,
+        "b": 94
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/enrapturess-dusk-4",
+      "provider": "citadel",
+      "name": "Enrapturess Dusk 4",
+      "normalized_name": "enrapturess dusk 4",
+      "aliases": [
+        "Tone Pro Enrapturess Dusk 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 110,
+        "g": 103,
+        "b": 115
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/enrapturess-dusk-5",
+      "provider": "citadel",
+      "name": "Enrapturess Dusk 5",
+      "normalized_name": "enrapturess dusk 5",
+      "aliases": [
+        "Tone Pro Enrapturess Dusk 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 129,
+        "g": 122,
+        "b": 134
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hive-fleet-purple-1",
+      "provider": "citadel",
+      "name": "Hive Fleet Purple 1",
+      "normalized_name": "hive fleet purple 1",
+      "aliases": [
+        "Tone Pro Hive Fleet Purple 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 30,
+        "g": 26,
+        "b": 64
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hive-fleet-purple-2",
+      "provider": "citadel",
+      "name": "Hive Fleet Purple 2",
+      "normalized_name": "hive fleet purple 2",
+      "aliases": [
+        "Tone Pro Hive Fleet Purple 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 60,
+        "g": 30,
+        "b": 84
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hive-fleet-purple-3",
+      "provider": "citadel",
+      "name": "Hive Fleet Purple 3",
+      "normalized_name": "hive fleet purple 3",
+      "aliases": [
+        "Tone Pro Hive Fleet Purple 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 101,
+        "g": 81,
+        "b": 146
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hive-fleet-purple-4",
+      "provider": "citadel",
+      "name": "Hive Fleet Purple 4",
+      "normalized_name": "hive fleet purple 4",
+      "aliases": [
+        "Tone Pro Hive Fleet Purple 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 135,
+        "g": 105,
+        "b": 177
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/hive-fleet-purple-5",
+      "provider": "citadel",
+      "name": "Hive Fleet Purple 5",
+      "normalized_name": "hive fleet purple 5",
+      "aliases": [
+        "Tone Pro Hive Fleet Purple 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "blue"
+      ],
+      "rgb": {
+        "r": 143,
+        "g": 130,
+        "b": 174
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/magnus-the-red-1",
+      "provider": "citadel",
+      "name": "Magnus The Red 1",
+      "normalized_name": "magnus the red 1",
+      "aliases": [
+        "Tone Pro Magnus The Red 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 58,
+        "g": 32,
+        "b": 45
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/magnus-the-red-2",
+      "provider": "citadel",
+      "name": "Magnus The Red 2",
+      "normalized_name": "magnus the red 2",
+      "aliases": [
+        "Tone Pro Magnus The Red 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "purple"
+      ],
+      "rgb": {
+        "r": 74,
+        "g": 18,
+        "b": 62
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/magnus-the-red-3",
+      "provider": "citadel",
+      "name": "Magnus The Red 3",
+      "normalized_name": "magnus the red 3",
+      "aliases": [
+        "Tone Pro Magnus The Red 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 118,
+        "g": 0,
+        "b": 63
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/magnus-the-red-4",
+      "provider": "citadel",
+      "name": "Magnus The Red 4",
+      "normalized_name": "magnus the red 4",
+      "aliases": [
+        "Tone Pro Magnus The Red 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 154,
+        "g": 27,
+        "b": 89
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/magnus-the-red-5",
+      "provider": "citadel",
+      "name": "Magnus The Red 5",
+      "normalized_name": "magnus the red 5",
+      "aliases": [
+        "Tone Pro Magnus The Red 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 170,
+        "g": 66,
+        "b": 119
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/eye-of-terror-1",
+      "provider": "citadel",
+      "name": "Eye Of Terror 1",
+      "normalized_name": "eye of terror 1",
+      "aliases": [
+        "Tone Pro Eye Of Terror 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 146,
+        "g": 0,
+        "b": 48
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/eye-of-terror-2",
+      "provider": "citadel",
+      "name": "Eye Of Terror 2",
+      "normalized_name": "eye of terror 2",
+      "aliases": [
+        "Tone Pro Eye Of Terror 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 189,
+        "g": 0,
+        "b": 71
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/eye-of-terror-3",
+      "provider": "citadel",
+      "name": "Eye Of Terror 3",
+      "normalized_name": "eye of terror 3",
+      "aliases": [
+        "Tone Pro Eye Of Terror 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 194,
+        "g": 0,
+        "b": 96
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/eye-of-terror-4",
+      "provider": "citadel",
+      "name": "Eye Of Terror 4",
+      "normalized_name": "eye of terror 4",
+      "aliases": [
+        "Tone Pro Eye Of Terror 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 212,
+        "g": 65,
+        "b": 123
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/eye-of-terror-5",
+      "provider": "citadel",
+      "name": "Eye Of Terror 5",
+      "normalized_name": "eye of terror 5",
+      "aliases": [
+        "Tone Pro Eye Of Terror 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "pink"
+      ],
+      "rgb": {
+        "r": 219,
+        "g": 100,
+        "b": 153
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carthalos-skin-1",
+      "provider": "citadel",
+      "name": "Carthalos Skin 1",
+      "normalized_name": "carthalos skin 1",
+      "aliases": [
+        "Tone Pro Carthalos Skin 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 36,
+        "g": 24,
+        "b": 21
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carthalos-skin-2",
+      "provider": "citadel",
+      "name": "Carthalos Skin 2",
+      "normalized_name": "carthalos skin 2",
+      "aliases": [
+        "Tone Pro Carthalos Skin 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 45,
+        "g": 20,
+        "b": 12
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carthalos-skin-3",
+      "provider": "citadel",
+      "name": "Carthalos Skin 3",
+      "normalized_name": "carthalos skin 3",
+      "aliases": [
+        "Tone Pro Carthalos Skin 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 78,
+        "g": 34,
+        "b": 18
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carthalos-skin-4",
+      "provider": "citadel",
+      "name": "Carthalos Skin 4",
+      "normalized_name": "carthalos skin 4",
+      "aliases": [
+        "Tone Pro Carthalos Skin 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 95,
+        "g": 58,
+        "b": 55
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/carthalos-skin-5",
+      "provider": "citadel",
+      "name": "Carthalos Skin 5",
+      "normalized_name": "carthalos skin 5",
+      "aliases": [
+        "Tone Pro Carthalos Skin 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 121,
+        "g": 83,
+        "b": 70
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/celestine-skin-1",
+      "provider": "citadel",
+      "name": "Celestine Skin 1",
+      "normalized_name": "celestine skin 1",
+      "aliases": [
+        "Tone Pro Celestine Skin 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 205,
+        "g": 129,
+        "b": 105
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/celestine-skin-2",
+      "provider": "citadel",
+      "name": "Celestine Skin 2",
+      "normalized_name": "celestine skin 2",
+      "aliases": [
+        "Tone Pro Celestine Skin 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 213,
+        "g": 139,
+        "b": 112
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/celestine-skin-3",
+      "provider": "citadel",
+      "name": "Celestine Skin 3",
+      "normalized_name": "celestine skin 3",
+      "aliases": [
+        "Tone Pro Celestine Skin 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 217,
+        "g": 149,
+        "b": 120
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/celestine-skin-4",
+      "provider": "citadel",
+      "name": "Celestine Skin 4",
+      "normalized_name": "celestine skin 4",
+      "aliases": [
+        "Tone Pro Celestine Skin 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 234,
+        "g": 168,
+        "b": 137
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/celestine-skin-5",
+      "provider": "citadel",
+      "name": "Celestine Skin 5",
+      "normalized_name": "celestine skin 5",
+      "aliases": [
+        "Tone Pro Celestine Skin 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 221,
+        "g": 179,
+        "b": 152
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gnarlwood-1",
+      "provider": "citadel",
+      "name": "Gnarlwood 1",
+      "normalized_name": "gnarlwood 1",
+      "aliases": [
+        "Tone Pro Gnarlwood 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "red"
+      ],
+      "rgb": {
+        "r": 52,
+        "g": 41,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gnarlwood-2",
+      "provider": "citadel",
+      "name": "Gnarlwood 2",
+      "normalized_name": "gnarlwood 2",
+      "aliases": [
+        "Tone Pro Gnarlwood 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 81,
+        "g": 66,
+        "b": 53
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gnarlwood-3",
+      "provider": "citadel",
+      "name": "Gnarlwood 3",
+      "normalized_name": "gnarlwood 3",
+      "aliases": [
+        "Tone Pro Gnarlwood 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "brown"
+      ],
+      "rgb": {
+        "r": 114,
+        "g": 92,
+        "b": 68
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gnarlwood-4",
+      "provider": "citadel",
+      "name": "Gnarlwood 4",
+      "normalized_name": "gnarlwood 4",
+      "aliases": [
+        "Tone Pro Gnarlwood 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 119,
+        "g": 104,
+        "b": 87
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/gnarlwood-5",
+      "provider": "citadel",
+      "name": "Gnarlwood 5",
+      "normalized_name": "gnarlwood 5",
+      "aliases": [
+        "Tone Pro Gnarlwood 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 136,
+        "g": 123,
+        "b": 103
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/necrolith-bone-1",
+      "provider": "citadel",
+      "name": "Necrolith Bone 1",
+      "normalized_name": "necrolith bone 1",
+      "aliases": [
+        "Tone Pro Necrolith Bone 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 135,
+        "g": 117,
+        "b": 97
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/necrolith-bone-2",
+      "provider": "citadel",
+      "name": "Necrolith Bone 2",
+      "normalized_name": "necrolith bone 2",
+      "aliases": [
+        "Tone Pro Necrolith Bone 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 176,
+        "g": 145,
+        "b": 106
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/necrolith-bone-3",
+      "provider": "citadel",
+      "name": "Necrolith Bone 3",
+      "normalized_name": "necrolith bone 3",
+      "aliases": [
+        "Tone Pro Necrolith Bone 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 185,
+        "g": 159,
+        "b": 125
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/necrolith-bone-4",
+      "provider": "citadel",
+      "name": "Necrolith Bone 4",
+      "normalized_name": "necrolith bone 4",
+      "aliases": [
+        "Tone Pro Necrolith Bone 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "orange"
+      ],
+      "rgb": {
+        "r": 193,
+        "g": 171,
+        "b": 134
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/necrolith-bone-5",
+      "provider": "citadel",
+      "name": "Necrolith Bone 5",
+      "normalized_name": "necrolith bone 5",
+      "aliases": [
+        "Tone Pro Necrolith Bone 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "yellow"
+      ],
+      "rgb": {
+        "r": 188,
+        "g": 183,
+        "b": 158
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dataslate-grey-1",
+      "provider": "citadel",
+      "name": "Dataslate Grey 1",
+      "normalized_name": "dataslate grey 1",
+      "aliases": [
+        "Tone Pro Dataslate Grey 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 43,
+        "g": 45,
+        "b": 40
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dataslate-grey-2",
+      "provider": "citadel",
+      "name": "Dataslate Grey 2",
+      "normalized_name": "dataslate grey 2",
+      "aliases": [
+        "Tone Pro Dataslate Grey 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 62,
+        "g": 61,
+        "b": 53
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dataslate-grey-3",
+      "provider": "citadel",
+      "name": "Dataslate Grey 3",
+      "normalized_name": "dataslate grey 3",
+      "aliases": [
+        "Tone Pro Dataslate Grey 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 85,
+        "g": 86,
+        "b": 80
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dataslate-grey-4",
+      "provider": "citadel",
+      "name": "Dataslate Grey 4",
+      "normalized_name": "dataslate grey 4",
+      "aliases": [
+        "Tone Pro Dataslate Grey 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 115,
+        "g": 112,
+        "b": 105
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/dataslate-grey-5",
+      "provider": "citadel",
+      "name": "Dataslate Grey 5",
+      "normalized_name": "dataslate grey 5",
+      "aliases": [
+        "Tone Pro Dataslate Grey 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 135,
+        "g": 137,
+        "b": 131
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blackstone-void-1",
+      "provider": "citadel",
+      "name": "Blackstone Void 1",
+      "normalized_name": "blackstone void 1",
+      "aliases": [
+        "Tone Pro Blackstone Void 1"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "black"
+      ],
+      "rgb": {
+        "r": 0,
+        "g": 2,
+        "b": 8
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blackstone-void-2",
+      "provider": "citadel",
+      "name": "Blackstone Void 2",
+      "normalized_name": "blackstone void 2",
+      "aliases": [
+        "Tone Pro Blackstone Void 2"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 78,
+        "g": 84,
+        "b": 88
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blackstone-void-3",
+      "provider": "citadel",
+      "name": "Blackstone Void 3",
+      "normalized_name": "blackstone void 3",
+      "aliases": [
+        "Tone Pro Blackstone Void 3"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 110,
+        "g": 112,
+        "b": 116
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blackstone-void-4",
+      "provider": "citadel",
+      "name": "Blackstone Void 4",
+      "normalized_name": "blackstone void 4",
+      "aliases": [
+        "Tone Pro Blackstone Void 4"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "grey"
+      ],
+      "rgb": {
+        "r": 155,
+        "g": 157,
+        "b": 159
+      },
+      "owned": false
+    },
+    {
+      "id": "citadel/blackstone-void-5",
+      "provider": "citadel",
+      "name": "Blackstone Void 5",
+      "normalized_name": "blackstone void 5",
+      "aliases": [
+        "Tone Pro Blackstone Void 5"
+      ],
+      "usage_roles": [
+        "layer"
+      ],
+      "color_families": [
+        "white"
+      ],
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "owned": false
     }
   ]
 }

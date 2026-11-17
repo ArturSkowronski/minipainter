@@ -59,7 +59,11 @@ The GitHub Pages dataset `docs/assets/paints.js` is generated — run
 
 Ranges upstream doesn't carry get a hand-curated pinned source instead: the Vallejo Game Color
 Ink line lives in `scripts/vallejo-game-inks.source.json` (provenance inside) and is merged by
-`node scripts/import-vallejo-inks.mjs` (idempotent).
+`node scripts/import-vallejo-inks.mjs` (idempotent). Likewise **Warhammer Tone Pro** (GW, released
+2026-10-24; 30 families × 5 numbered tones = 150 paints) lives in `scripts/warhammer-tone-pro.source.json`
+(hex from FauxHammer's GW-chart samples, provenance inside) and is merged into `citadel.json` by
+`node scripts/import-tone-pro.mjs` (idempotent). Ids are `citadel/<family-slug>-<tone>`, names match the pot
+label (`Ultramar Blue 3`), role `layer` → `opaque_layer`. `prune-unbacked.mjs` reads both pinned sources as backing.
 
 Vallejo **True Metallic Metal** ships **four bottles per colour**, one per SKU block — Light
 (77.101–120), Base (77.121–140), Shade (77.141–160), Airbrush (77.161–180) — so upstream's

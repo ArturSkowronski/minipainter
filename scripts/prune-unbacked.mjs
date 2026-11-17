@@ -3,7 +3,8 @@
 //
 // Removes catalog entries that have no backing in the upstream
 // (alexparlett/hobby-desk-data — pass a checkout or a flat dump of its JSON
-// files) or in a pinned hand-curated source (scripts/vallejo-game-inks.source.json).
+// files) or in a pinned hand-curated source (scripts/vallejo-game-inks.source.json,
+// scripts/warhammer-tone-pro.source.json).
 // Backing is a per-brand normalized-name match; discontinued upstream records
 // still count as backing.
 //
@@ -20,6 +21,7 @@ import { normalizeText } from '../src/normalize.mjs';
 
 const CATALOG_DIR = fileURLToPath(new URL('../data/catalog', import.meta.url));
 const INKS_SOURCE = fileURLToPath(new URL('./vallejo-game-inks.source.json', import.meta.url));
+const TONE_PRO_SOURCE = fileURLToPath(new URL('./warhammer-tone-pro.source.json', import.meta.url));
 
 // upstream folder / file prefix -> our provider id
 const BRAND_MAP = {
@@ -82,6 +84,11 @@ async function main() {
   for (const record of inkSource.records) {
     backing.vallejo.add(normalizeText(record.name));
     for (const alias of record.aliases || []) backing.vallejo.add(normalizeText(alias));
+  }
+
+  const toneProSource = JSON.parse(await fs.readFile(TONE_PRO_SOURCE, 'utf8'));
+  for (const family of toneProSource.families) {
+    family.tones.forEach((_, i) => backing.citadel.add(normalizeText(`${family.name} ${i + 1}`)));
   }
 
   for (const provider of Object.values(BRAND_MAP)) {
