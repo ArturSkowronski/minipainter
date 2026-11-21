@@ -12,7 +12,10 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest", "httpx"]
+dev = [
+    "httpx2>=2.16.2",
+    "pytest",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
