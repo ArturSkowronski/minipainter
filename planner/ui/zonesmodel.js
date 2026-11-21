@@ -156,3 +156,10 @@ export function faceColor(mode, face, { zones, zoneRgb, patches, cavity, ridge }
   }
   return zoneRgb.get(zones[face]) ?? PRIMER_RGB;
 }
+
+// Faces that belong to no zone yet: what "fill the rest" assigns.
+export function unassignedFaces(zones) {
+  const faces = [];
+  for (let face = 0; face < zones.length; face++) if (zones[face] === 0) faces.push(face);
+  return Uint32Array.from(faces);
+}

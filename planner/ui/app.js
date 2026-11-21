@@ -1,10 +1,13 @@
 // Screens and wiring. Rendering is plain DOM; what to show comes from model.js, the 3D stage from viewer.js.
 import * as api from "./api.js";
+import { fetchArray } from "./geometry.js";
 import {
-  KIND_LABEL, ROLE_LABEL, STATUS_LABEL, activeVariant, assembledParts, firstViewablePart, progress,
-  routeFromHash,
+  KIND_LABEL, ROLE_LABEL, STATUS_LABEL, activeVariant, assembledParts, firstViewablePart, paintable, progress,
+  routeFromHash, sidecarPath,
 } from "./model.js";
+import { loadPaintMesh, lodFaceColors } from "./paintmesh.js";
 import { createViewer } from "./viewer.js";
+import { ZoneEdit, hexToRgb, unassignedFaces, zoneShares } from "./zonesmodel.js";
 
 const root = document.getElementById("app");
 let teardown = () => {};
@@ -31,8 +34,6 @@ function route() {
   else startScreen();
 }
 
-window.addEventListener("hashchange", route);
-route();
 
 // ---------------------------------------------------------------------------------------------------
 // Start: open a directory, or pick a recent project.
@@ -76,25 +77,48 @@ function startScreen() {
 }
 
 // ---------------------------------------------------------------------------------------------------
-// Project: variant, parts and references on the left; the stage on the right.
+// Project: variant, parts, zones and references on the left; the stage on the right.
+
+const TOOLS = [["orbit", "Obrót"], ["brush", "Pędzel"], ["patch", "Płat"], ["erase", "Gumka"]];
+const VIEWS = [["zones", "Strefy"], ["patches", "Płaty"], ["relief", "Relief"]];
+const SAVE_DELAY = 400;
+const RETRY_DELAY = 3000;
 
 function projectScreen(slug) {
-  const state = { plan: null, selected: null, mode: "part" };
+  const state = {
+    plan: null, selected: null, mode: "part",
+    tool: "orbit", radius: 2, stayInPatch: false, onlyEmpty: false, view: "zones",
+  };
   let fetching = false;
   let stale = false;
   let closed = false;
   let lightbox = null;
-  const drawn = { variants: "", refs: "" };
+  const drawn = { variants: "", refs: "", zones: "" };
+
+  // What is being painted: one part's mesh, its zone array and the bookkeeping of saving it.
+  let paint = null;             // { key, variant, part, mesh, edit, rev, colors, activeZone, shares, confirm }
+  let shown = "";               // what the stage currently holds, so a plan refresh does not reload it
+  let strokeOpen = false;
+  let dirty = false;
+  let saving = false;
+  let saveTimer = null;
+  let assembledTicket = 0;
+  const lodmaps = new Map();    // lodmap url -> Promise<Uint32Array>
+
+  // -- skeleton -----------------------------------------------------------------------------------
 
   const title = h("h1", {}, "…");
   const variantSelect = h("select", { id: "variant", onchange: onVariant });
   const partsBox = h("div");
+  const zonesBox = h("div", { class: "zones" });
+  const zonesSection = h("section", { hidden: true }, zonesBox);
   const refsBox = h("div", { class: "refs" });
   const refsSection = h("section", { hidden: true }, h("span", { class: "label" }, "Referencje"), refsBox);
   const side = h("aside", { class: "side" },
     h("header", {}, h("a", { href: "#" }, "← Projekty"), title),
     h("section", {}, h("label", { class: "label", for: "variant" }, "Wariant"), variantSelect),
     h("section", {}, partsBox),
+    zonesSection,
     refsSection);
 
   const modeButtons = {
@@ -102,6 +126,60 @@ function projectScreen(slug) {
     assembled: h("button", { type: "button", onclick: () => setMode("assembled") }, "Złożona figurka"),
   };
   const info = h("span", { class: "info" });
+
+  const toolButtons = Object.fromEntries(TOOLS.map(([id, label]) =>
+    [id, h("button", { type: "button", onclick: () => setTool(id) }, label)]));
+  const viewButtons = Object.fromEntries(VIEWS.map(([id, label]) =>
+    [id, h("button", { type: "button", onclick: () => setView(id) }, label)]));
+  const sizeValue = h("output", { for: "brush-size" });
+  const sizeInput = h("input", {
+    id: "brush-size", type: "range", min: "0.3", max: "15", step: "0.1", value: String(state.radius),
+    oninput: () => { state.radius = Number(sizeInput.value); syncTools(); },
+  });
+  const stayInput = h("input", {
+    id: "stay-in-patch", type: "checkbox", onchange: () => { state.stayInPatch = stayInput.checked; syncTools(); },
+  });
+  const emptyInput = h("input", {
+    id: "only-empty", type: "checkbox", onchange: () => { state.onlyEmpty = emptyInput.checked; },
+  });
+  const undoButton = h("button", { type: "button", class: "plain", onclick: undo }, "Cofnij");
+  const redoButton = h("button", { type: "button", class: "plain", onclick: redo }, "Ponów");
+  const fillButton = h("button", {
+    type: "button", class: "plain", onclick: fillRest,
+    title: "Przypisz do aktywnej strefy wszystko, co nie ma jeszcze strefy",
+  }, "Wypełnij resztę");
+  const saveStatus = h("span", { class: "save-status", role: "status" });
+  const angleValue = h("output", { for: "cut-angle" });
+  const angleInput = h("input", {
+    id: "cut-angle", type: "range", min: "10", max: "60", step: "1",
+    oninput: () => showCut(),
+  });
+  const minValue = h("output", { for: "cut-min" });
+  const minInput = h("input", {
+    id: "cut-min", type: "range", min: "0", max: "1", step: "0.01",
+    oninput: () => showCut(),
+  });
+  function showCut() {
+    angleValue.textContent = `${angleInput.value}°`;
+    minValue.textContent = `${Number(minInput.value).toFixed(2)}%`;
+  }
+  const cutButton = h("button", { type: "button", class: "plain", onclick: recut }, "Przelicz");
+  const cutCount = h("span", { class: "muted" });
+  const paintBar = h("div", { class: "paintbar", hidden: true },
+    h("div", { class: "segmented", role: "group", "aria-label": "Narzędzie" }, Object.values(toolButtons)),
+    h("label", { class: "field", for: "brush-size" }, "Rozmiar", sizeInput, sizeValue),
+    h("label", { class: "field check", for: "stay-in-patch" }, stayInput, "Trzymaj się płata"),
+    h("label", { class: "field check", for: "only-empty", title: "Nie zmieniaj tego, co już ma strefę" },
+      emptyInput, "Tylko puste miejsca"),
+    h("div", { class: "pair" }, undoButton, redoButton, fillButton),
+    h("div", { class: "segmented", role: "group", "aria-label": "Widok" }, Object.values(viewButtons)),
+    h("details", { class: "cut" }, h("summary", {}, "Płaty…"),
+      h("div", { class: "cut-body" },
+        h("label", { class: "field", for: "cut-angle" }, "Kąt cięcia", angleInput, angleValue),
+        h("label", { class: "field", for: "cut-min" }, "Najmniejszy płat", minInput, minValue),
+        cutButton, cutCount)),
+    saveStatus);
+
   const canvas = h("canvas", { "aria-label": "Podgląd modelu" });
   const hint = h("div", { class: "hint" });
   const main = h("div", { class: "main" },
@@ -109,18 +187,21 @@ function projectScreen(slug) {
       h("div", { class: "segmented", role: "group", "aria-label": "Tryb widoku" },
         modeButtons.part, modeButtons.assembled),
       info),
+    paintBar,
     h("div", { class: "stage" }, canvas, hint));
   root.append(h("div", { class: "project" }, side, main));
 
   const viewer = createViewer(canvas);
   viewer.onPick(select);
-  let shown = "";               // what the stage currently holds, so a plan refresh does not reload it
+  viewer.onStroke(onStroke);
 
   const stopWatching = api.watchPlan(slug, revision => {
     if (!state.plan || revision !== state.plan.revision) refresh();
   });
   window.addEventListener("keydown", onKey);
   refresh();
+
+  // -- plan ---------------------------------------------------------------------------------------
 
   async function refresh() {
     if (fetching) { stale = true; return; }
@@ -161,8 +242,329 @@ function projectScreen(slug) {
     render();
   }
 
+  // -- tools --------------------------------------------------------------------------------------
+
+  function canPaint() {
+    return !!paint && paint.part.zones.length > 0 && paint.activeZone !== null;
+  }
+
+  function setTool(tool) {
+    state.tool = tool;
+    syncTools();
+  }
+
+  function setView(view) {
+    state.view = view;
+    viewer.setPaintData({ view });
+    syncTools();
+  }
+
+  function syncTools() {
+    if (state.tool !== "orbit" && !canPaint()) state.tool = "orbit";
+    for (const [id, button] of Object.entries(toolButtons)) {
+      button.setAttribute("aria-pressed", String(state.tool === id));
+      button.disabled = id !== "orbit" && !canPaint();
+    }
+    for (const [id, button] of Object.entries(viewButtons)) {
+      button.setAttribute("aria-pressed", String(state.view === id));
+    }
+    sizeValue.textContent = `${state.radius.toFixed(1)} mm`;
+    fillButton.disabled = !canPaint();
+    undoButton.disabled = !paint?.edit.canUndo;
+    redoButton.disabled = !paint?.edit.canRedo;
+    viewer.setTool({ tool: state.tool, radius: state.radius, stayInPatch: state.stayInPatch });
+  }
+
+  function onStroke({ phase, faces }) {
+    if (!paint) return;
+    if (phase === "begin") {
+      strokeOpen = true;
+      paint.edit.begin();
+    } else if (phase === "paint") {
+      const erasing = state.tool === "erase";
+      const reach = state.onlyEmpty && !erasing ? faces.filter(face => paint.edit.zones[face] === 0) : faces;
+      viewer.refreshColors(paint.edit.assign(reach, erasing ? 0 : paint.activeZone));
+    } else {
+      strokeOpen = false;
+      if (paint.edit.commit()) changed();
+    }
+  }
+
+  // Everything not yet in a zone goes to the active one, as a single stroke that can be undone.
+  function fillRest() {
+    if (!canPaint()) return;
+    paint.edit.begin();
+    viewer.refreshColors(paint.edit.assign(unassignedFaces(paint.edit.zones), paint.activeZone));
+    if (paint.edit.commit()) changed();
+  }
+
+  function undo() {
+    const faces = paint?.edit.undo();
+    if (faces) { viewer.refreshColors(faces); changed(); }
+  }
+
+  function redo() {
+    const faces = paint?.edit.redo();
+    if (faces) { viewer.refreshColors(faces); changed(); }
+  }
+
+  // The zone array changed locally: update the panel and save soon.
+  function changed() {
+    paint.shares = zoneShares(paint.edit.zones, paint.mesh.areas);
+    dirty = true;
+    renderZones();
+    syncTools();
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(save, SAVE_DELAY);
+    saveStatus.textContent = "zapisywanie…";
+  }
+
+  async function save() {
+    clearTimeout(saveTimer);
+    if (!paint || !dirty) return;
+    if (saving) { saveTimer = setTimeout(save, SAVE_DELAY); return; }
+    const target = paint;
+    saving = true;
+    dirty = false;
+    try {
+      const { zones_rev: revision } = await api.putZoneFaces(slug, target.variant, target.part.id, target.edit.zones.slice());
+      target.rev = revision;
+      if (paint === target && !dirty) saveStatus.textContent = "zapisano";
+    } catch {
+      if (paint === target) {
+        dirty = true;
+        saveStatus.textContent = "błąd zapisu — ponawiam";
+        saveTimer = setTimeout(save, RETRY_DELAY);
+      }
+    } finally {
+      saving = false;
+    }
+  }
+
+  async function recut() {
+    if (!paint) return;
+    const target = paint;
+    cutButton.disabled = true;
+    cutCount.textContent = "liczenie…";
+    try {
+      const result = await api.segment(slug, target.variant, target.part.id, {
+        angle: Number(angleInput.value), min_area_fraction: Number(minInput.value) / 100,
+      });
+      const patches = await fetchArray(api.fileUrl(slug, sidecarPath(target.part, "patches")), Uint32Array);
+      if (paint !== target) return;
+      target.mesh.setPatches(patches);
+      cutCount.textContent = `${result.patches} płatów`;
+      if (state.view === "patches") viewer.refreshColors(null);
+    } catch (failure) {
+      cutCount.textContent = failure.message;
+    } finally {
+      cutButton.disabled = false;
+    }
+  }
+
+  // -- zones --------------------------------------------------------------------------------------
+
+  async function addZone() {
+    if (!paint) return;
+    const target = paint;
+    const zone = await api.createZone(slug, target.variant, target.part.id);
+    if (paint !== target) return;
+    target.activeZone = zone.id;
+    await refresh();
+  }
+
+  async function removeZone(zoneId) {
+    if (!paint) return;
+    const target = paint;
+    await save();                                             // the server clears the faces in what it has stored
+    const { zones_rev: revision } = await api.deleteZone(slug, target.variant, target.part.id, zoneId);
+    if (paint !== target) return;
+    target.rev = revision;
+    target.confirm = null;
+    viewer.refreshColors(target.edit.clearZone(zoneId));
+    target.shares = zoneShares(target.edit.zones, target.mesh.areas);
+    if (target.activeZone === zoneId) target.activeZone = null;
+    await refresh();
+  }
+
+  async function editZone(zoneId, changes) {
+    if (!paint) return;
+    try {
+      await api.updateZone(slug, paint.variant, paint.part.id, zoneId, changes);
+    } finally {
+      refresh();
+    }
+  }
+
+  function renderZones() {
+    const visible = !!paint && state.mode === "part";
+    zonesSection.hidden = !visible;
+    if (!visible) { drawn.zones = ""; return; }
+    const zones = paint.part.zones;
+    if (paint.activeZone === null || !zones.some(z => z.id === paint.activeZone)) {
+      paint.activeZone = zones[0]?.id ?? null;
+    }
+    const key = JSON.stringify([paint.key, zones, paint.activeZone, paint.confirm,
+      zones.map(z => Math.round((paint.shares.get(z.id) ?? 0) * 1000))]);
+    if (key === drawn.zones || zonesBox.contains(document.activeElement) && document.activeElement.tagName === "INPUT") return;
+    drawn.zones = key;
+    zonesBox.replaceChildren(
+      h("span", { class: "label" }, "Strefy"),
+      zones.length ? "" : h("p", { class: "muted small" }, "Dodaj strefę, żeby malować."),
+      h("ul", { class: "zone-list" }, zones.map(zone => h("li", {
+        class: "zone", "aria-current": zone.id === paint.activeZone ? "true" : null,
+        onclick: event => {
+          if (event.target.closest("button, input[type=color]")) return;
+          paint.activeZone = zone.id;
+          renderZones();
+          syncTools();
+        },
+      },
+      h("input", {
+        type: "color", value: zone.color, "aria-label": `Kolor strefy ${zone.name}`,
+        onchange: event => editZone(zone.id, { color: event.target.value }),
+      }),
+      h("input", {
+        type: "text", class: "zone-name", value: zone.name, maxLength: 60, "aria-label": "Nazwa strefy",
+        onfocus: () => { paint.activeZone = zone.id; syncTools(); },
+        onchange: event => editZone(zone.id, { name: event.target.value }),
+        onkeydown: event => { if (event.key === "Enter") event.target.blur(); },
+      }),
+      h("span", { class: "share" }, `${((paint.shares.get(zone.id) ?? 0) * 100).toFixed(1)}%`),
+      paint.confirm === zone.id
+        ? h("span", { class: "confirm" }, "Usunąć strefę?",
+          h("button", { type: "button", class: "plain", onclick: () => removeZone(zone.id) }, "Tak"),
+          h("button", { type: "button", class: "plain", onclick: () => { paint.confirm = null; renderZones(); } }, "Nie"))
+        : h("button", {
+          type: "button", class: "plain icon", title: "Usuń strefę", "aria-label": `Usuń strefę ${zone.name}`,
+          onclick: () => { paint.confirm = zone.id; renderZones(); },
+        }, "×")))),
+      h("button", { type: "button", class: "plain add", onclick: addZone }, "＋ Strefa"));
+  }
+
+  function zoneColors(part) {
+    return new Map(part.zones.map(zone => [zone.id, hexToRgb(zone.color)]));
+  }
+
+  // -- stage --------------------------------------------------------------------------------------
+
+  function leavePaint() {
+    if (!paint) return;
+    if (dirty) save();
+    const old = paint;
+    paint = null;
+    strokeOpen = false;
+    setTimeout(() => old.mesh.dispose(), 0);
+    saveStatus.textContent = "";
+  }
+
+  async function openPaint(variant, part, key) {
+    const [mesh, zones] = await Promise.all([
+      loadPaintMesh({
+        meshUrl: api.fileUrl(slug, part.mesh),
+        patchesUrl: api.fileUrl(slug, sidecarPath(part, "patches")),
+        masksUrl: api.fileUrl(slug, sidecarPath(part, "masks")),
+      }),
+      api.getZoneFaces(slug, variant.id, part.id),
+    ]);
+    if (closed || shown !== key) { mesh.dispose(); return; }
+    paint = {
+      key, variant: variant.id, part, mesh, edit: new ZoneEdit(zones), rev: part.zones_rev,
+      colors: JSON.stringify(part.zones.map(z => [z.id, z.color])), activeZone: part.zones[0]?.id ?? null,
+      shares: zoneShares(zones, mesh.areas), confirm: null,
+    };
+    angleInput.value = String(part.segmentation.angle);
+    minInput.value = String(part.segmentation.min_area_fraction * 100);
+    showCut();
+    cutCount.textContent = `${part.patches} płatów`;
+    viewer.showPaint(mesh, { view: state.view, zones: paint.edit.zones, zoneRgb: zoneColors(part) });
+    render();
+  }
+
+  // The plan moved on while a part is being painted: take over what changed elsewhere.
+  async function followPlan(part) {
+    paint.part = part;
+    const colors = JSON.stringify(part.zones.map(z => [z.id, z.color]));
+    if (colors !== paint.colors) {
+      paint.colors = colors;
+      viewer.setPaintData({ zoneRgb: zoneColors(part) });
+    }
+    if (part.zones_rev !== paint.rev && !dirty && !saving && !strokeOpen) {
+      const target = paint;
+      const revision = part.zones_rev;
+      target.rev = revision;                                  // do not fetch twice for the same revision
+      const zones = await api.getZoneFaces(slug, target.variant, part.id);
+      if (paint !== target || dirty || strokeOpen) return;
+      target.edit.replaceAll(zones);
+      target.shares = zoneShares(zones, target.mesh.areas);
+      viewer.setPaintData({ zones });
+      renderZones();
+      syncTools();
+    }
+  }
+
+  async function assembledPart(variant, part) {
+    const base = { id: part.id, url: api.fileUrl(slug, part.mesh_lod) };
+    if (!paintable(part) || part.zones.length === 0) return base;
+    const mapUrl = api.fileUrl(slug, sidecarPath(part, "lodmap"));
+    if (!lodmaps.has(mapUrl)) lodmaps.set(mapUrl, fetchArray(mapUrl, Uint32Array));
+    const [lodmap, zones] = await Promise.all([lodmaps.get(mapUrl), api.getZoneFaces(slug, variant.id, part.id)]);
+    return {
+      ...base, faceRgb: lodFaceColors(lodmap, zones, zoneColors(part)),
+      colorKey: `${part.zones_rev}:${JSON.stringify(part.zones.map(z => z.color))}`,
+    };
+  }
+
+  function syncViewer(variant, selected) {
+    const failed = error => { shown = ""; hint.textContent = "Nie udało się wczytać siatki."; console.error(error); };
+    if (!variant || !selected) {
+      leavePaint();
+      if (shown) viewer.clear();
+      shown = "";
+      return;
+    }
+    if (state.mode === "part") {
+      const key = `${paintable(selected) ? "paint" : "part"}:${variant.id}:${selected.id}`;
+      if (key === shown) {
+        if (paint) followPlan(selected).catch(console.error);
+        return;
+      }
+      leavePaint();
+      shown = key;
+      if (paintable(selected)) openPaint(variant, selected, key).catch(failed);
+      else viewer.showPart({ id: selected.id, url: api.fileUrl(slug, selected.mesh) }).catch(failed);
+      return;
+    }
+    const parts = assembledParts(variant);
+    const key = `assembled:${variant.id}:` + parts.map(p => `${p.id}@${p.zones_rev}:${p.zones.map(z => z.color)}`).join(",");
+    if (key === shown) {
+      viewer.setSelected(selected.id);
+      return;
+    }
+    const pending = dirty ? save() : Promise.resolve();
+    leavePaint();
+    shown = key;
+    const ticket = ++assembledTicket;
+    pending.then(() => Promise.all(parts.map(part => assembledPart(variant, part)))).then(ready => {
+      if (closed || ticket !== assembledTicket || shown !== key) return;
+      return viewer.showAssembled(ready, selected.id);
+    }).catch(failed);
+  }
+
+  // -- references ---------------------------------------------------------------------------------
+
   function onKey(event) {
     if (event.key === "Escape") closeLightbox();
+    const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)
+      && document.activeElement.type !== "range" && document.activeElement.type !== "checkbox";
+    if (typing || !(event.metaKey || event.ctrlKey)) return;
+    if (event.key.toLowerCase() === "z") {
+      event.preventDefault();
+      if (event.shiftKey) redo(); else undo();
+    } else if (event.key.toLowerCase() === "y") {
+      event.preventDefault();
+      redo();
+    }
   }
 
   function openLightbox(reference) {
@@ -177,6 +579,8 @@ function projectScreen(slug) {
     lightbox = null;
   }
 
+  // -- render -------------------------------------------------------------------------------------
+
   function render() {
     const plan = state.plan;
     const variant = activeVariant(plan);
@@ -187,7 +591,7 @@ function projectScreen(slug) {
     if (variantsKey !== drawn.variants) {
       drawn.variants = variantsKey;
       variantSelect.replaceChildren(
-        variant ? null : h("option", { value: "" }, "— wybierz —"),
+        ...(variant ? [] : [h("option", { value: "" }, "— wybierz —")]),
         ...plan.variants.map(v => h("option", { value: v.id }, `${v.name} · ${KIND_LABEL[v.kind]}`)));
       variantSelect.value = plan.active_variant ?? "";
     }
@@ -224,6 +628,9 @@ function projectScreen(slug) {
     hint.textContent = !variant ? "Wybierz wariant" : selected ? "" : "Przetwarzanie części…";
 
     syncViewer(variant, selected);
+    paintBar.hidden = !(paint && state.mode === "part");
+    renderZones();
+    syncTools();
   }
 
   function partsList(variant) {
@@ -239,7 +646,9 @@ function projectScreen(slug) {
           onclick: () => select(part.id),
         },
         h("span", { class: "name", title: part.name }, part.name),
-        h("span", { class: "status" }, part.outlier ? "pominięty" : STATUS_LABEL[part.status]),
+        h("span", { class: "status" }, part.outlier ? "pominięty"
+          : part.status === "ready" && part.zones.length ? `${part.zones.length} ${zoneWord(part.zones.length)}`
+            : STATUS_LABEL[part.status]),
         part.status === "error" ? h("span", { class: "detail" }, part.error) : null)))),
     ];
   }
@@ -253,36 +662,27 @@ function projectScreen(slug) {
           h("img", { src: api.fileUrl(slug, reference.file), alt: reference.id, loading: "lazy" }))))));
   }
 
-  function syncViewer(variant, selected) {
-    if (!variant || !selected) {
-      if (shown) viewer.clear();
-      shown = "";
-      return;
-    }
-    const failed = error => { shown = ""; hint.textContent = "Nie udało się wczytać siatki."; console.error(error); };
-    if (state.mode === "part") {
-      const key = `part:${variant.id}:${selected.id}`;
-      if (key === shown) return;
-      shown = key;
-      viewer.showPart({ id: selected.id, url: api.fileUrl(slug, selected.mesh) }).catch(failed);
-    } else {
-      const parts = assembledParts(variant);
-      const key = `assembled:${variant.id}:${parts.map(part => part.id).join(",")}`;
-      if (key === shown) {
-        viewer.setSelected(selected.id);
-        return;
-      }
-      shown = key;
-      viewer.showAssembled(
-        parts.map(part => ({ id: part.id, url: api.fileUrl(slug, part.mesh_lod) })), selected.id).catch(failed);
-    }
-  }
+  window.__planner = { viewer, state, get paint() { return paint; } };   // for checks from the console
 
   return () => {
     closed = true;
+    if (dirty) save();
     stopWatching();
     window.removeEventListener("keydown", onKey);
     closeLightbox();
+    clearTimeout(saveTimer);
     viewer.dispose();
+    paint?.mesh.dispose();
+    delete window.__planner;
   };
 }
+
+function zoneWord(count) {
+  if (count === 1) return "strefa";
+  const tens = count % 100, ones = count % 10;
+  return ones >= 2 && ones <= 4 && !(tens >= 12 && tens <= 14) ? "strefy" : "stref";
+}
+
+// Start only now: the screens above use constants that must exist first.
+window.addEventListener("hashchange", route);
+route();

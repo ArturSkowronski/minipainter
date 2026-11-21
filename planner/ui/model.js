@@ -38,3 +38,15 @@ export function assembledParts(variant) {
 export function firstViewablePart(variant) {
   return assembledParts(variant)[0] ?? variant.parts.find(p => p.status === "ready") ?? null;
 }
+
+// Ready, and its patches and masks exist: the part can be shown for painting.
+export function paintable(part) {
+  return !!part && part.status === "ready" && part.patches !== null && part.patches !== undefined;
+}
+
+const SIDECAR = { patches: ".patches.u32", masks: ".masks.u8", lodmap: ".lodmap.u32", stats: ".patches.json" };
+
+// Workspace path of one of a part's analysis files.
+export function sidecarPath(part, kind) {
+  return part.mesh.replace(/\.glb$/, "") + SIDECAR[kind];
+}

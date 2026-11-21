@@ -107,3 +107,10 @@ test("face colours per view mode", () => {
   const [cavity, ridge] = [faceColor("relief", 0, data), faceColor("relief", 1, data)];
   assert.ok(cavity[2] > cavity[0] && ridge[0] > ridge[2]);   // recess reads blue, bump reads orange
 });
+
+import { unassignedFaces } from "../zonesmodel.js";
+
+test("the faces no zone has claimed yet", () => {
+  assert.deepEqual(Array.from(unassignedFaces(Uint8Array.from([0, 3, 0, 1, 0]))), [0, 2, 4]);
+  assert.equal(unassignedFaces(Uint8Array.from([1, 1])).length, 0);
+});

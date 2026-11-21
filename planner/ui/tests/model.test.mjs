@@ -34,3 +34,18 @@ test("labels are Polish", () => {
   assert.equal(STATUS_LABEL.processing, "przetwarzanie…");
   assert.equal(KIND_LABEL.bust, "popiersie");
 });
+
+import { paintable, sidecarPath } from "../model.js";
+
+test("a part can be painted once it is ready and analysed", () => {
+  assert.equal(paintable({ status: "ready", patches: 12 }), true);
+  assert.equal(paintable({ status: "ready", patches: null }), false);
+  assert.equal(paintable({ status: "processing", patches: 12 }), false);
+  assert.equal(paintable(null), false);
+});
+test("sidecar files sit beside the mesh", () => {
+  const part = { mesh: "meshes/1-10-scale-split/body.glb" };
+  assert.equal(sidecarPath(part, "patches"), "meshes/1-10-scale-split/body.patches.u32");
+  assert.equal(sidecarPath(part, "masks"), "meshes/1-10-scale-split/body.masks.u8");
+  assert.equal(sidecarPath(part, "lodmap"), "meshes/1-10-scale-split/body.lodmap.u32");
+});
