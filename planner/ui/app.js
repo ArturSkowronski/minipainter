@@ -4,6 +4,7 @@ import {
   KIND_LABEL, ROLE_LABEL, STATUS_LABEL, activeVariant, assembledParts, firstViewablePart, progress,
   routeFromHash,
 } from "./model.js";
+import { createViewer } from "./viewer.js";
 
 const root = document.getElementById("app");
 let teardown = () => {};
@@ -111,7 +112,9 @@ function projectScreen(slug) {
     h("div", { class: "stage" }, canvas, hint));
   root.append(h("div", { class: "project" }, side, main));
 
-  const viewer = null;
+  const viewer = createViewer(canvas);
+  viewer.onPick(select);
+  let shown = "";               // what the stage currently holds, so a plan refresh does not reload it
 
   const stopWatching = api.watchPlan(slug, revision => {
     if (!state.plan || revision !== state.plan.revision) refresh();
@@ -251,7 +254,28 @@ function projectScreen(slug) {
   }
 
   function syncViewer(variant, selected) {
-    if (!viewer) return;
+    if (!variant || !selected) {
+      if (shown) viewer.clear();
+      shown = "";
+      return;
+    }
+    const failed = error => { shown = ""; hint.textContent = "Nie udało się wczytać siatki."; console.error(error); };
+    if (state.mode === "part") {
+      const key = `part:${variant.id}:${selected.id}`;
+      if (key === shown) return;
+      shown = key;
+      viewer.showPart({ id: selected.id, url: api.fileUrl(slug, selected.mesh) }).catch(failed);
+    } else {
+      const parts = assembledParts(variant);
+      const key = `assembled:${variant.id}:${parts.map(part => part.id).join(",")}`;
+      if (key === shown) {
+        viewer.setSelected(selected.id);
+        return;
+      }
+      shown = key;
+      viewer.showAssembled(
+        parts.map(part => ({ id: part.id, url: api.fileUrl(slug, part.mesh_lod) })), selected.id).catch(failed);
+    }
   }
 
   return () => {
@@ -259,6 +283,6 @@ function projectScreen(slug) {
     stopWatching();
     window.removeEventListener("keydown", onKey);
     closeLightbox();
-    viewer?.dispose();
+    viewer.dispose();
   };
 }
