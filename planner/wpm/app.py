@@ -9,10 +9,11 @@ from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 from starlette.requests import Request
-from starlette.responses import FileResponse, JSONResponse, StreamingResponse
+from starlette.responses import FileResponse, JSONResponse, Response, StreamingResponse
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
 
+from wpm import zones
 from wpm.jobs import Processor
 from wpm.profiles import detect
 from wpm.workspace import Project, get_project, list_projects
@@ -24,11 +25,13 @@ IS_ARCHIVE = "To archiwum. Rozpakuj je i wskaż katalog."
 NOT_A_PACKAGE = "Nie rozpoznano paczki Nom Nom w tym katalogu."
 NOT_FOUND = "Nie znaleziono."
 NOT_JSON = "Oczekiwano JSON."
+BAD_INPUT = "Nieprawidłowe dane."
 LOCAL_HOSTS = ["127.0.0.1", "localhost"]
 _BINARY = "application/octet-stream"
 _SERVED = {"meshes": {".glb": "model/gltf-binary", ".u32": _BINARY, ".u8": _BINARY, ".json": "application/json"},
            "refs": {".jpg": "image/jpeg"}}
 _KEEPALIVE_SECONDS = 15
+PART = "/api/projects/{slug}/variants/{variant}/parts/{part}"
 
 
 def _error(status: int, message: str) -> JSONResponse:
@@ -156,6 +159,68 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
             return _error(404, NOT_FOUND)
         return FileResponse(target, media_type=media)
 
+    # -- zones of one part ---------------------------------------------------------------------
+
+    def zone_route(handler):
+        """Resolve the project and part of the URL; KeyError becomes 404, ValueError 400."""
+        async def route(request: Request):
+            project = project_or_none(request)
+            if project is None:
+                return _error(404, NOT_FOUND)
+            where = (project, request.path_params["variant"], request.path_params["part"])
+            try:
+                return await handler(request, *where)
+            except KeyError:
+                return _error(404, NOT_FOUND)
+            except ValueError:
+                return _error(400, BAD_INPUT)
+        return route
+
+    def zone_id(request: Request) -> int:
+        try:
+            return int(request.path_params["zone"])
+        except ValueError:
+            raise KeyError(request.path_params["zone"]) from None
+
+    async def json_body(request: Request) -> dict:
+        body = await _body(request)
+        if body is None:
+            raise ValueError("JSON expected")
+        return body
+
+    @zone_route
+    async def create_zone(request, project, variant, part):
+        body = await json_body(request)
+        return JSONResponse(zones.create_zone(project, variant, part, body.get("name"), body.get("color")))
+
+    @zone_route
+    async def update_zone(request, project, variant, part):
+        body = await json_body(request)
+        return JSONResponse(zones.update_zone(project, variant, part, zone_id(request),
+                                              body.get("name"), body.get("color")))
+
+    @zone_route
+    async def delete_zone(request, project, variant, part):
+        zones.delete_zone(project, variant, part, zone_id(request))
+        return JSONResponse({"zones_rev": project.part(variant, part)["zones_rev"]})
+
+    @zone_route
+    async def get_faces(request, project, variant, part):
+        return Response(zones.read_faces(project, variant, part), media_type=_BINARY,
+                        headers={"Cache-Control": "no-store"})
+
+    @zone_route
+    async def put_faces(request, project, variant, part):
+        if request.headers.get("content-type", "").split(";")[0].strip().lower() != _BINARY:
+            return _error(415, BAD_INPUT)
+        return JSONResponse({"zones_rev": zones.write_faces(project, variant, part, await request.body())})
+
+    @zone_route
+    async def segment(request, project, variant, part):
+        body = await json_body(request)
+        return JSONResponse(await asyncio.to_thread(
+            zones.resegment, project, variant, part, body.get("angle"), body.get("min_area_fraction")))
+
     @contextlib.asynccontextmanager
     async def lifespan(app: Starlette):
         yield
@@ -168,6 +233,12 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
         Route("/api/projects/{slug}", plan),
         Route("/api/projects/{slug}/variant", choose_variant, methods=["POST"]),
         Route("/api/projects/{slug}/events", events),
+        Route(PART + "/zones", create_zone, methods=["POST"]),
+        Route(PART + "/zones/{zone}", update_zone, methods=["PATCH"]),
+        Route(PART + "/zones/{zone}", delete_zone, methods=["DELETE"]),
+        Route(PART + "/zone-faces", get_faces, methods=["GET"]),
+        Route(PART + "/zone-faces", put_faces, methods=["PUT"]),
+        Route(PART + "/segment", segment, methods=["POST"]),
         Route("/files/{slug}/{path:path}", workspace_file),
         Mount("/", StaticFiles(directory=UI_DIR, html=True)),
     ])

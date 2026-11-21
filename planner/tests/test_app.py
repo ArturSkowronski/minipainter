@@ -159,3 +159,46 @@ def test_sidecars_are_served(client, processor, tmp_path):
     assert len(client.get(base + ".lodmap.u32").content) == 4 * part["tris_lod"]
     assert len(client.get(base + ".patches.json").json()) == part["patches"]
     assert client.get(f"/files/{slug}/plan.json").status_code == 404
+
+
+@pytest.fixture
+def part_url(client, processor, tmp_path):
+    slug = client.post("/api/projects", json={"path": str(flat(tmp_path / "src"))}).json()["slug"]
+    processor.wait_idle(30)
+    return f"/api/projects/{slug}/variants/src/parts/a"
+
+
+OCTETS = {"content-type": "application/octet-stream"}
+
+
+def test_zone_routes(client, part_url):
+    zone = client.post(f"{part_url}/zones", json={"name": "Czerwień"}).json()
+    assert zone["id"] == 1 and zone["name"] == "Czerwień"
+    assert client.patch(f"{part_url}/zones/1", json={"color": "#b3202a"}).json()["color"] == "#b3202a"
+    data = bytes([1] * 3 + [0] * 9)
+    saved = client.put(f"{part_url}/zone-faces", content=data, headers=OCTETS)
+    assert saved.status_code == 200 and saved.json() == {"zones_rev": 1}
+    got = client.get(f"{part_url}/zone-faces")
+    assert got.content == data and got.headers["content-type"] == "application/octet-stream"
+    assert client.delete(f"{part_url}/zones/1").json() == {"zones_rev": 2}
+    assert client.get(f"{part_url}/zone-faces").content == bytes(12)
+
+
+def test_zone_route_errors(client, part_url):
+    client.post(f"{part_url}/zones", json={})
+    assert client.put(f"{part_url}/zone-faces", content=bytes(12), headers={"content-type": "text/plain"}).status_code == 415
+    wrong = client.put(f"{part_url}/zone-faces", content=bytes(5), headers=OCTETS)
+    assert wrong.status_code == 400 and wrong.json() == {"error": "Nieprawidłowe dane."}
+    assert client.patch(f"{part_url}/zones/1", json={"color": "red"}).status_code == 400
+    assert client.patch(f"{part_url}/zones/9", json={"name": "x"}).status_code == 404
+    assert client.patch(f"{part_url}/zones/abc", json={"name": "x"}).status_code == 404
+    missing = part_url.replace("/parts/a", "/parts/nope")
+    assert client.post(f"{missing}/zones", json={}).status_code == 404
+    assert client.get(f"{missing}/zone-faces").status_code == 404
+
+
+def test_segment_route(client, part_url):
+    r = client.post(f"{part_url}/segment", json={"angle": 100, "min_area_fraction": 0})
+    assert r.status_code == 200 and r.json() == {"patches": 1, "patches_rev": 2}
+    assert client.post(f"{part_url}/segment", json={"angle": 500, "min_area_fraction": 0}).status_code == 400
+    assert client.post(f"{part_url}/segment", json={}).status_code == 400
