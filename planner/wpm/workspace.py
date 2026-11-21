@@ -122,15 +122,15 @@ class Project:
         return project
 
     def _repair(self) -> bool:
-        """After a restart nothing is running, and a 'ready' item without its file is not ready."""
+        """After a restart nothing is running, failures get another try, and 'ready' needs its file."""
         changed = False
         items = [(p, "mesh") for v in self._plan["variants"] for p in v["parts"]]
         items += [(r, "file") for r in self._plan["references"]]
         for item, key in items:
-            stale = item["status"] == "processing" or (
+            stale = item["status"] in ("processing", "error") or (
                 item["status"] == "ready" and not (self.dir / item[key]).exists())
             if stale:
-                item["status"] = "pending"
+                item["status"], item["error"] = "pending", None
                 changed = True
         return changed
 

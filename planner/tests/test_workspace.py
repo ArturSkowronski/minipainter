@@ -103,3 +103,11 @@ def test_find_outliers_flags_the_banner_only():
               "base": ((-62, -41, -12), (67, 40, 66))}
     assert find_outliers(figure | {"banner": ((0, 0, 0), (576, 65, 50))}) == {"banner"}
     assert find_outliers(figure) == set() and find_outliers({"only": ((0, 0, 0), (1, 1, 1))}) == set()
+
+
+def test_failed_items_are_retried_after_a_restart(tmp_path):
+    p = Project.open_or_create(scan(flat(tmp_path / "src")))
+    p.update(lambda plan: plan["variants"][0]["parts"][0].update(status="error", error="source file is missing"))
+    workspace._projects.clear()
+    part = Project.load(p.slug).snapshot()["variants"][0]["parts"][0]
+    assert part["status"] == "pending" and part["error"] is None
