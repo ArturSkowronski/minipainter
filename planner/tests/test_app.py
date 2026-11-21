@@ -8,7 +8,7 @@ from tests.packages import flat, spiderman
 from wpm.app import create_app, plan_events
 from wpm.jobs import Processor
 from wpm.profiles.nomnom import scan
-from wpm.workspace import Project
+from wpm.workspace import Project, get_project
 
 
 @pytest.fixture
@@ -20,7 +20,7 @@ def processor():
 
 @pytest.fixture
 def client(processor):
-    with TestClient(create_app(processor)) as c:
+    with TestClient(create_app(processor, allowed_hosts=["testserver"])) as c:
         yield c
 
 
@@ -105,3 +105,43 @@ def test_plan_events_starts_with_the_current_revision_then_follows_updates(tmp_p
         return first, second
     first, second = asyncio.run(run())
     assert first == 'data: {"revision": 1}\n\n' and second == 'data: {"revision": 2}\n\n'
+
+
+def test_reopening_retries_failed_parts(client, processor, tmp_path):
+    root = flat(tmp_path / "src")
+    project = Project.open_or_create(scan(root))
+    (root / "a.stl").rename(root / "a.away")                      # the drive went away
+    client.post(f"/api/projects/{project.slug}/variant", json={"variant": "src"})
+    processor.wait_idle(30)
+    assert project.snapshot()["variants"][0]["parts"][0]["status"] == "error"
+    (root / "a.away").rename(root / "a.stl")                      # and came back
+    client.get(f"/api/projects/{project.slug}")                   # a page refresh alone does not retry
+    processor.wait_idle(30)
+    assert project.snapshot()["variants"][0]["parts"][0]["status"] == "error"
+    client.post("/api/projects", json={"path": str(root)})        # opening again does
+    processor.wait_idle(30)
+    assert project.snapshot()["variants"][0]["parts"][0]["status"] == "ready"
+
+
+def test_deleting_a_parts_meshes_and_reopening_rebuilds_them(client, processor, tmp_path):
+    root = flat(tmp_path / "src")
+    slug = client.post("/api/projects", json={"path": str(root)}).json()["slug"]
+    processor.wait_idle(30)
+    project = get_project(slug)
+    part = project.snapshot()["variants"][0]["parts"][0]
+    project.file(part["mesh"]).unlink()
+    project.file(part["mesh_lod"]).unlink()
+    client.post("/api/projects", json={"path": str(root)})
+    processor.wait_idle(30)
+    assert project.snapshot()["variants"][0]["parts"][0]["status"] == "ready" and project.file(part["mesh"]).exists()
+
+
+def test_a_request_for_another_host_is_refused(client):
+    assert client.get("/api/projects", headers={"host": "evil.example"}).status_code == 400
+    assert client.get("/api/projects", headers={"host": "127.0.0.1:8770"}).status_code == 200
+
+
+def test_posts_must_be_json(client, tmp_path):
+    body = '{"path": "%s"}' % flat(tmp_path / "src")
+    r = client.post("/api/projects", content=body, headers={"content-type": "text/plain"})
+    assert r.status_code == 415 and client.get("/api/projects").json() == []

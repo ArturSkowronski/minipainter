@@ -16,6 +16,8 @@ PROFILE = "nomnom"
 _KIND_ORDER = ("split", "unsplit", "miniature", "bust")
 _ROLE_ORDER = ("colour", "turntable", "beauty", "parts", "bust", "scale", "other")
 _IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp"}
+_CONTAINER = re.compile(r"(?<![a-z])stl(?![a-z])")        # "STL", "Artorias_STL"; not "Castlevania"
+_COMPANION = re.compile(r"support|render|image|lychee")    # folders a package keeps beside its variants
 _ROLE_PREFIXES = (
     (("colored", "coloured"), "colour"),
     (("turntable",), "turntable"),
@@ -85,9 +87,19 @@ def variant_dirs(root: Path) -> tuple[list[Path], Path | None] | None:
         return direct, None
     if not direct and len(nested) == 1:
         (container, subs), = nested.items()
-        if "stl" in container.name.lower():
+        if _CONTAINER.search(container.name.lower()):
             return subs, container
     return None
+
+
+def is_tidy_root(root: Path, dirs: list[Path], container: Path | None) -> bool:
+    """True when every folder in root belongs to the package: a variant, the container or a companion.
+
+    A downloads folder that happens to hold one package is not tidy; a package root is.
+    """
+    known = set(dirs) | {container}
+    return all(Path(e.path) in known or _COMPANION.search(e.name.lower())
+               for e in _children(root) if _is_dir(e))
 
 
 def _role(stem: str) -> str:

@@ -6,6 +6,8 @@ from collections.abc import AsyncIterator
 from pathlib import Path
 
 from starlette.applications import Starlette
+from starlette.middleware import Middleware
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 from starlette.requests import Request
 from starlette.responses import FileResponse, JSONResponse, StreamingResponse
 from starlette.routing import Mount, Route
@@ -21,6 +23,8 @@ NO_DIRECTORY = "Nie ma takiego katalogu."
 IS_ARCHIVE = "To archiwum. Rozpakuj je i wskaż katalog."
 NOT_A_PACKAGE = "Nie rozpoznano paczki Nom Nom w tym katalogu."
 NOT_FOUND = "Nie znaleziono."
+NOT_JSON = "Oczekiwano JSON."
+LOCAL_HOSTS = ["127.0.0.1", "localhost"]
 _SERVED = {"meshes": {".glb": "model/gltf-binary"}, "refs": {".jpg": "image/jpeg"}}
 _KEEPALIVE_SECONDS = 15
 
@@ -29,7 +33,14 @@ def _error(status: int, message: str) -> JSONResponse:
     return JSONResponse({"error": message}, status_code=status)
 
 
-async def _body(request: Request) -> dict:
+async def _body(request: Request) -> dict | None:
+    """The JSON object sent, {} if it is not one, None if the request is not JSON at all.
+
+    Requiring a JSON content type keeps other web pages from posting here: a cross-site form or
+    "simple" fetch cannot send it without a preflight, which this server never grants.
+    """
+    if request.headers.get("content-type", "").split(";")[0].strip().lower() != "application/json":
+        return None
     try:
         body = await request.json()
     except (ValueError, UnicodeDecodeError):
@@ -60,8 +71,11 @@ async def plan_events(project: Project) -> AsyncIterator[str]:
         unsubscribe()
 
 
-def create_app(processor: Processor | None = None) -> Starlette:
+def create_app(processor: Processor | None = None, allowed_hosts: list[str] | None = None) -> Starlette:
+    """`allowed_hosts` adds Host names accepted besides this machine's own (tests use it)."""
     processor = processor or Processor()
+    # Refusing foreign Host headers stops DNS-rebinding pages from reading plans and reference images.
+    hosts = Middleware(TrustedHostMiddleware, allowed_hosts=LOCAL_HOSTS + (allowed_hosts or []))
 
     def project_or_none(request: Request) -> Project | None:
         try:
@@ -76,7 +90,10 @@ def create_app(processor: Processor | None = None) -> Starlette:
         return JSONResponse(list_projects())
 
     async def open_project(request: Request):
-        raw = (await _body(request)).get("path")
+        body = await _body(request)
+        if body is None:
+            return _error(415, NOT_JSON)
+        raw = body.get("path")
         if not isinstance(raw, str) or not raw.strip():
             return _error(400, NO_DIRECTORY)
         path = Path(raw.strip()).expanduser()
@@ -91,7 +108,7 @@ def create_app(processor: Processor | None = None) -> Starlette:
         project = Project.open_or_create(package)
         resume = variant or project.snapshot()["active_variant"]
         if resume:
-            processor.enqueue_variant(project, resume)
+            processor.enqueue_variant(project, resume, retry=True)
         return JSONResponse({"slug": project.slug, "variant": variant})
 
     async def plan(request: Request):
@@ -107,8 +124,11 @@ def create_app(processor: Processor | None = None) -> Starlette:
         project = project_or_none(request)
         if project is None:
             return _error(404, NOT_FOUND)
+        body = await _body(request)
+        if body is None:
+            return _error(415, NOT_JSON)
         try:
-            processor.enqueue_variant(project, str((await _body(request)).get("variant")))
+            processor.enqueue_variant(project, str(body.get("variant")), retry=True)
         except KeyError:
             return _error(404, NOT_FOUND)
         return JSONResponse({"revision": project.snapshot()["revision"]})
@@ -139,7 +159,7 @@ def create_app(processor: Processor | None = None) -> Starlette:
         yield
         processor.shutdown()
 
-    return Starlette(lifespan=lifespan, routes=[
+    return Starlette(lifespan=lifespan, middleware=[hosts], routes=[
         Route("/api/health", health),
         Route("/api/projects", projects, methods=["GET"]),
         Route("/api/projects", open_project, methods=["POST"]),

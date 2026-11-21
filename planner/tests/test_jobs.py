@@ -117,3 +117,18 @@ def test_default_executor_runs_in_a_worker_process(project_of_flat):
         assert [x["status"] for x in project_of_flat.snapshot()["variants"][0]["parts"]] == ["ready"] * 3
     finally:
         processor.shutdown()
+
+
+def test_failed_parts_are_retried_only_when_asked(tmp_path, proc):
+    root = flat(tmp_path / "src")
+    p = Project.open_or_create(scan(root))
+    (root / "a.stl").rename(root / "a.away")
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    (root / "a.away").rename(root / "a.stl")           # the drive came back
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    assert p.snapshot()["variants"][0]["parts"][0]["status"] == "error"
+    proc.enqueue_variant(p, "src", retry=True)
+    proc.wait_idle(30)
+    assert p.snapshot()["variants"][0]["parts"][0]["status"] == "ready"

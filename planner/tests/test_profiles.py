@@ -101,3 +101,24 @@ def test_a_stray_stl_does_not_turn_a_folder_of_packages_into_a_package(tmp_path)
     write_binary_stl(models / "loose.stl", *cube())
     assert scan(models) is None
     assert detect(models / "x")[0].root == models / "x"
+
+
+def test_stl_inside_a_word_does_not_make_a_folder_a_container(tmp_path):
+    from PIL import Image
+    downloads = tmp_path / "Downloads"
+    root = ciri(downloads / "NomNom - Castlevania Alucard")       # "Ca-stl-evania"
+    Image.new("RGB", (1, 1)).save(downloads / "holiday.jpg")
+    assert scan(downloads) is None
+    for path in (root, root / "178 mm split"):
+        pkg, _ = detect(path)
+        assert pkg.root == root and "holiday" not in {r.id for r in pkg.references}
+
+
+def test_a_package_folder_named_like_a_container_is_the_package(tmp_path):
+    downloads = tmp_path / "Downloads"
+    root = downloads / "Hinako STL"
+    write_binary_stl(root / "Split" / "a.stl", *cube())
+    write_binary_stl(root / "Bust" / "b.stl", *cube())
+    (downloads / "invoices").mkdir()
+    assert detect(root)[0].root == root
+    assert detect(root / "Split")[0].root == root

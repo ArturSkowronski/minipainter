@@ -27,7 +27,8 @@ def detect(path: Path) -> tuple[Package, str | None] | None:
         if found is None:
             continue
         dirs, container = found
-        if len(dirs) >= 2 and (path == container or any(_within(path, d) for d in dirs)):
+        belongs = path == container or any(_within(path, d) for d in dirs)
+        if len(dirs) >= 2 and belongs and nomnom.is_tidy_root(ancestor, dirs, container):
             package = nomnom.scan(ancestor)
             break
     if package is None:

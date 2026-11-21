@@ -117,22 +117,35 @@ class Project:
         if slug != slugify(slug) or not path.exists():
             raise KeyError(slug)
         project = cls(slug, json.loads(path.read_text()))
-        if project._repair():
-            project._save()
+        project._reset_stale(("processing", "error"))     # after a restart nothing is running
+        # Always a new revision: a page left open across the restart refetches and so resumes the work.
+        project._commit()
         return project
 
-    def _repair(self) -> bool:
-        """After a restart nothing is running, failures get another try, and 'ready' needs its file."""
+    def _reset_stale(self, statuses: tuple[str, ...]) -> bool:
+        """Back to 'pending': items in the given statuses, and 'ready' items whose file is gone."""
         changed = False
         items = [(p, "mesh") for v in self._plan["variants"] for p in v["parts"]]
         items += [(r, "file") for r in self._plan["references"]]
         for item, key in items:
-            stale = item["status"] in ("processing", "error") or (
+            stale = item["status"] in statuses or (
                 item["status"] == "ready" and not (self.dir / item[key]).exists())
             if stale:
                 item["status"], item["error"] = "pending", None
                 changed = True
         return changed
+
+    def recheck(self) -> bool:
+        """Give failed items another try and notice deleted files. Running work is left alone.
+
+        Called when the user opens the project or picks a variant. Returns whether anything changed.
+        """
+        with self._lock:
+            if not self._reset_stale(("error",)):
+                return False
+            revision = self._commit()
+        self._notify(revision)
+        return True
 
     # -- state --------------------------------------------------------------------------------
 

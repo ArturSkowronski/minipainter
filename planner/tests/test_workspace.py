@@ -111,3 +111,27 @@ def test_failed_items_are_retried_after_a_restart(tmp_path):
     workspace._projects.clear()
     part = Project.load(p.slug).snapshot()["variants"][0]["parts"][0]
     assert part["status"] == "pending" and part["error"] is None
+
+
+def test_loading_from_disk_always_moves_the_revision(tmp_path):
+    # A page left open across a restart compares revisions to decide whether to refetch.
+    p = Project.open_or_create(scan(flat(tmp_path / "src")))
+    assert p.snapshot()["revision"] == 1
+    workspace._projects.clear()
+    assert Project.load(p.slug).snapshot()["revision"] == 2
+
+
+def test_recheck_requeues_failures_and_missing_meshes_but_not_running_work(tmp_path):
+    p = Project.open_or_create(scan(flat(tmp_path / "src")))
+
+    def setup(plan):
+        a, b, c = plan["variants"][0]["parts"]
+        a.update(status="error", error="source file is missing")
+        b.update(status="ready")                       # but its mesh file does not exist
+        c.update(status="processing")
+    before = p.update(setup)
+    assert p.recheck() is True
+    parts = p.snapshot()["variants"][0]["parts"]
+    assert [(x["status"], x["error"]) for x in parts] == [("pending", None), ("pending", None), ("processing", None)]
+    assert p.snapshot()["revision"] == before + 1
+    assert p.recheck() is False and p.snapshot()["revision"] == before + 1

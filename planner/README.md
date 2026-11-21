@@ -44,7 +44,9 @@ meshes per part (`meshes/<variant>/<part>.glb` at about 150 000 triangles for si
 `<part>.lod.glb` at about 30 000 for the assembled figure) and reference images scaled to 1600 px.
 
 The model's own directory is never written to. A mesh, once made, is never regenerated: to rebuild a part,
-delete its two files and reopen the project. Set `WPM_DATA_DIR` to keep the workspace somewhere else.
+delete its two files and open the project again (from the command line, the start page, or by picking the
+variant). Opening a project or picking a variant also retries parts that failed, for example because the
+drive holding the model was offline. Set `WPM_DATA_DIR` to keep the workspace somewhere else.
 
 ## Keep it running (optional)
 

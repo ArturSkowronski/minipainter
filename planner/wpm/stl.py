@@ -26,6 +26,8 @@ def read_stl(path: Path) -> tuple[np.ndarray, np.ndarray]:
         raise StlError("STL has no triangles")
 
     corners = np.ascontiguousarray(np.fromfile(path, dtype=_RECORD, offset=_HEADER)["v"].reshape(-1, 3))
+    if not np.isfinite(corners).all():
+        raise StlError("STL has non-finite coordinates")
     # Weld corners that are bit-identical: STL repeats each shared vertex exactly.
     rows = corners.view(np.dtype((np.void, corners.dtype.itemsize * 3))).ravel()
     _, first, inverse = np.unique(rows, return_index=True, return_inverse=True)

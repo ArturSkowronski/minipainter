@@ -36,3 +36,10 @@ def test_empty_mesh_is_rejected(tmp_path):
     p.write_bytes(b"\0" * 80 + (0).to_bytes(4, "little"))
     with pytest.raises(StlError, match="no triangles"):
         read_stl(p)
+
+
+def test_non_finite_coordinates_are_rejected(tmp_path):
+    v, f = cube()
+    v[0, 0] = np.nan
+    with pytest.raises(StlError, match="non-finite"):
+        read_stl(write_binary_stl(tmp_path / "nan.stl", v, f))

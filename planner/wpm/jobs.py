@@ -48,8 +48,14 @@ class Processor:
 
     # -- public -------------------------------------------------------------------------------
 
-    def enqueue_variant(self, project: Project, variant_id: str) -> None:
-        """Make this the active variant and queue what it still needs. KeyError for an unknown variant."""
+    def enqueue_variant(self, project: Project, variant_id: str, retry: bool = False) -> None:
+        """Make this the active variant and queue what it still needs. KeyError for an unknown variant.
+
+        `retry` is for explicit user actions (open, choose): failed items get another try and deleted
+        meshes are rebuilt. Background resumes leave failures alone, or they would retry forever.
+        """
+        if retry:
+            project.recheck()
         plan = project.snapshot()
         variant = next((v for v in plan["variants"] if v["id"] == variant_id), None)
         if variant is None:
