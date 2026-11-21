@@ -1,0 +1,19 @@
+[project]
+name = "warpaint-model"
+version = "0.1.0"
+description = "Local browser app for planning how to paint a 3D-printed figure, layer by layer."
+requires-python = ">=3.13"
+dependencies = [
+    "numpy",
+    "fast-simplification>=0.2,<0.3",
+    "pillow",
+    "starlette",
+    "uvicorn",
+]
+
+[dependency-groups]
+dev = ["pytest", "httpx"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
