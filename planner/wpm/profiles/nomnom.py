@@ -80,7 +80,7 @@ def variant_dirs(root: Path) -> tuple[list[Path], Path | None] | None:
     nested = {d: subs for d, subs in nested.items() if subs}
     if _part_entries(root):
         # Flat package. Several part-holding directories below it mean a library with a stray file instead.
-        return ([root], None) if len(direct) + len(nested) < 2 else None
+        return ([root], None) if len(direct) + sum(map(len, nested.values())) < 2 else None
     if direct and not nested:
         return direct, None
     if not direct and len(nested) == 1:
