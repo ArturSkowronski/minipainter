@@ -202,3 +202,19 @@ def test_segment_route(client, part_url):
     assert r.status_code == 200 and r.json() == {"patches": 1, "patches_rev": 2}
     assert client.post(f"{part_url}/segment", json={"angle": 500, "min_area_fraction": 0}).status_code == 400
     assert client.post(f"{part_url}/segment", json={}).status_code == 400
+
+
+def test_zone_faces_conflict(client, part_url):
+    client.post(f"{part_url}/zones", json={})
+    ok = client.put(f"{part_url}/zone-faces", content=bytes([1] * 12), headers={**OCTETS, "if-match": "0"})
+    assert ok.status_code == 200 and ok.json() == {"zones_rev": 1}
+    stale = client.put(f"{part_url}/zone-faces", content=bytes(12), headers={**OCTETS, "if-match": "0"})
+    assert stale.status_code == 409 and stale.json() == {"error": "Strefy zmieniły się w innym miejscu."}
+    assert client.get(f"{part_url}/zone-faces").content == bytes([1] * 12)
+    assert client.put(f"{part_url}/zone-faces", content=bytes(12), headers={**OCTETS, "if-match": "x"}).status_code == 400
+
+
+def test_page_files_are_always_revalidated(client):
+    # The page is edited in place; a browser must not keep running last hour's script.
+    assert client.get("/").headers["cache-control"] == "no-cache"
+    assert client.get("/index.html").headers["cache-control"] == "no-cache"

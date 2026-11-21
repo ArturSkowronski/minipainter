@@ -2,6 +2,7 @@
 
 One item runs at a time. The heavy work happens in a worker process so the server stays responsive.
 """
+import json
 import logging
 import queue
 import threading
@@ -138,10 +139,12 @@ class Processor:
         cut = (part["segmentation"]["angle"], part["segmentation"]["min_area_fraction"])
         if mesh.exists() and lod.exists():
             # Frozen: a mesh that exists is never regenerated. At most its analysis is (re)done.
-            if all(f.exists() for f in analysis_files(mesh).values()):
+            sidecars = analysis_files(mesh)
+            if all(f.exists() for f in sidecars.values()):
                 vertices, faces = read_glb(mesh)
                 stats = {"tris": len(faces), "tris_lod": len(read_glb(lod)[1]),
-                         "bbox": [list(b) for b in bbox_of(vertices)]}
+                         "bbox": [list(b) for b in bbox_of(vertices)],
+                         "patches": len(json.loads(sidecars["stats"].read_text()))}
                 project.update(lambda p: find(p).update(status="ready", error=None, **stats))
                 return
             job = (_do_analysis, str(mesh), str(lod), *cut)

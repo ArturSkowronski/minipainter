@@ -7,7 +7,7 @@ import {
 } from "./model.js";
 import { loadPaintMesh, lodFaceColors } from "./paintmesh.js";
 import { createViewer } from "./viewer.js";
-import { ZoneEdit, hexToRgb, unassignedFaces, zoneShares } from "./zonesmodel.js";
+import { ZoneEdit, dropUnknownZones, hexToRgb, unassignedFaces, zoneShares } from "./zonesmodel.js";
 
 const root = document.getElementById("app");
 let teardown = () => {};
@@ -96,12 +96,10 @@ function projectScreen(slug) {
   const drawn = { variants: "", refs: "", zones: "" };
 
   // What is being painted: one part's mesh, its zone array and the bookkeeping of saving it.
-  let paint = null;             // { key, variant, part, mesh, edit, rev, colors, activeZone, shares, confirm }
+  // rev is the server's zones_rev this page's array is based on; dirty/saving/timer track sending it back.
+  let paint = null;             // { key, variant, part, mesh, edit, rev, dirty, saving, timer, following, ... }
   let shown = "";               // what the stage currently holds, so a plan refresh does not reload it
   let strokeOpen = false;
-  let dirty = false;
-  let saving = false;
-  let saveTimer = null;
   let assembledTicket = 0;
   const lodmaps = new Map();    // lodmap url -> Promise<Uint32Array>
 
@@ -287,6 +285,7 @@ function projectScreen(slug) {
     } else {
       strokeOpen = false;
       if (paint.edit.commit()) changed();
+      else followPlan(paint.part).catch(console.error);   // catch up on what arrived during a stroke that changed nothing
     }
   }
 
@@ -310,34 +309,65 @@ function projectScreen(slug) {
 
   // The zone array changed locally: update the panel and save soon.
   function changed() {
-    paint.shares = zoneShares(paint.edit.zones, paint.mesh.areas);
-    dirty = true;
+    const target = paint;
+    target.shares = zoneShares(target.edit.zones, target.mesh.areas);
+    target.dirty = true;
     renderZones();
     syncTools();
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(save, SAVE_DELAY);
+    clearTimeout(target.timer);
+    target.timer = setTimeout(() => save(target), SAVE_DELAY);
     saveStatus.textContent = "zapisywanie…";
   }
 
-  async function save() {
-    clearTimeout(saveTimer);
-    if (!paint || !dirty) return;
-    if (saving) { saveTimer = setTimeout(save, SAVE_DELAY); return; }
-    const target = paint;
-    saving = true;
-    dirty = false;
-    try {
-      const { zones_rev: revision } = await api.putZoneFaces(slug, target.variant, target.part.id, target.edit.zones.slice());
-      target.rev = revision;
-      if (paint === target && !dirty) saveStatus.textContent = "zapisano";
-    } catch {
-      if (paint === target) {
-        dirty = true;
-        saveStatus.textContent = "błąd zapisu — ponawiam";
-        saveTimer = setTimeout(save, RETRY_DELAY);
+  // Send what is unsaved of one part. Resolves when it has nothing left to send, or the attempt failed.
+  async function save(target = paint) {
+    if (!target) return;
+    clearTimeout(target.timer);
+    while (target.saving) await target.saving;
+    if (!target.dirty) return;
+    target.dirty = false;
+    const say = text => { if (paint === target) saveStatus.textContent = text; };
+    // A zone deleted elsewhere must not be written back.
+    const dropped = dropUnknownZones(target.edit.zones, new Set(target.part.zones.map(zone => zone.id)));
+    if (dropped.length && paint === target) viewer.refreshColors(dropped);
+    target.saving = (async () => {
+      try {
+        const { zones_rev: revision } = await api.putZoneFaces(
+          slug, target.variant, target.part.id, target.edit.zones.slice(), target.rev);
+        target.rev = revision;
+        if (!target.dirty) say("zapisano");
+      } catch (failure) {
+        if (failure.status === 409 || failure.status === 400) {
+          await reload(target);                // the zones changed elsewhere: theirs stand, start again from them
+        } else {
+          target.dirty = true;
+          say("błąd zapisu — ponawiam");
+          target.timer = setTimeout(() => save(target), RETRY_DELAY);
+        }
       }
-    } finally {
-      saving = false;
+    })();
+    try { await target.saving; } finally { target.saving = null; }
+  }
+
+  // Take the server's zones of a part as they are now, dropping what this page had not saved.
+  async function reload(target) {
+    try {
+      const plan = await api.getPlan(slug);
+      const part = plan.variants.find(v => v.id === target.variant)?.parts.find(p => p.id === target.part.id);
+      if (!part) return;
+      const zones = await api.getZoneFaces(slug, target.variant, part.id);
+      target.part = part;
+      target.rev = part.zones_rev;
+      target.dirty = false;
+      target.edit.replaceAll(zones);
+      target.shares = zoneShares(zones, target.mesh.areas);
+      if (paint !== target) return;
+      viewer.setPaintData({ zones, zoneRgb: zoneColors(part) });
+      renderZones();
+      syncTools();
+      saveStatus.textContent = "zmienione w innym miejscu — wczytano ponownie";
+    } catch {
+      if (paint === target) saveStatus.textContent = "błąd zapisu";
     }
   }
 
@@ -376,7 +406,7 @@ function projectScreen(slug) {
   async function removeZone(zoneId) {
     if (!paint) return;
     const target = paint;
-    await save();                                             // the server clears the faces in what it has stored
+    await save(target);                                       // the server clears the faces in what it has stored
     const { zones_rev: revision } = await api.deleteZone(slug, target.variant, target.part.id, zoneId);
     if (paint !== target) return;
     target.rev = revision;
@@ -450,7 +480,7 @@ function projectScreen(slug) {
 
   function leavePaint() {
     if (!paint) return;
-    if (dirty) save();
+    save(paint);                               // keeps going after the part is left; it holds its own copy
     const old = paint;
     paint = null;
     strokeOpen = false;
@@ -472,6 +502,7 @@ function projectScreen(slug) {
       key, variant: variant.id, part, mesh, edit: new ZoneEdit(zones), rev: part.zones_rev,
       colors: JSON.stringify(part.zones.map(z => [z.id, z.color])), activeZone: part.zones[0]?.id ?? null,
       shares: zoneShares(zones, mesh.areas), confirm: null,
+      dirty: false, saving: null, timer: null, following: false,
     };
     angleInput.value = String(part.segmentation.angle);
     minInput.value = String(part.segmentation.min_area_fraction * 100);
@@ -489,17 +520,22 @@ function projectScreen(slug) {
       paint.colors = colors;
       viewer.setPaintData({ zoneRgb: zoneColors(part) });
     }
-    if (part.zones_rev !== paint.rev && !dirty && !saving && !strokeOpen) {
-      const target = paint;
-      const revision = part.zones_rev;
-      target.rev = revision;                                  // do not fetch twice for the same revision
-      const zones = await api.getZoneFaces(slug, target.variant, part.id);
-      if (paint !== target || dirty || strokeOpen) return;
-      target.edit.replaceAll(zones);
-      target.shares = zoneShares(zones, target.mesh.areas);
-      viewer.setPaintData({ zones });
-      renderZones();
-      syncTools();
+    const target = paint;
+    if (part.zones_rev !== target.rev && !target.dirty && !target.saving && !strokeOpen && !target.following) {
+      target.following = true;
+      try {
+        const revision = part.zones_rev;
+        const zones = await api.getZoneFaces(slug, target.variant, part.id);
+        if (paint !== target || target.dirty || strokeOpen) return;   // the next save will find out (409)
+        target.rev = revision;
+        target.edit.replaceAll(zones);
+        target.shares = zoneShares(zones, target.mesh.areas);
+        viewer.setPaintData({ zones });
+        renderZones();
+        syncTools();
+      } finally {
+        target.following = false;
+      }
     }
   }
 
@@ -541,7 +577,7 @@ function projectScreen(slug) {
       viewer.setSelected(selected.id);
       return;
     }
-    const pending = dirty ? save() : Promise.resolve();
+    const pending = paint ? save(paint) : Promise.resolve();     // the figure is coloured from what is stored
     leavePaint();
     shown = key;
     const ticket = ++assembledTicket;
@@ -666,11 +702,10 @@ function projectScreen(slug) {
 
   return () => {
     closed = true;
-    if (dirty) save();
+    if (paint) save(paint);
     stopWatching();
     window.removeEventListener("keydown", onKey);
     closeLightbox();
-    clearTimeout(saveTimer);
     viewer.dispose();
     paint?.mesh.dispose();
     delete window.__planner;

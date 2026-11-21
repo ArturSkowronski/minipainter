@@ -3,7 +3,7 @@
 import * as THREE from "three";
 
 import { fetchArray, loadGeometry } from "./geometry.js";
-import { PRIMER_RGB, buildPatchIndex, faceColor } from "./zonesmodel.js";
+import { PRIMER_RGB, buildPatchIndex, faceColor, queueFaceUpload } from "./zonesmodel.js";
 
 export async function loadPaintMesh({ meshUrl, patchesUrl, masksUrl }) {
   const [indexed, patches, vertexMasks] = await Promise.all([
@@ -91,9 +91,7 @@ export async function loadPaintMesh({ meshUrl, patchesUrl, masksUrl }) {
           if (face > last) last = face;
         }
       }
-      colorAttribute.clearUpdateRanges();
-      colorAttribute.addUpdateRange(first * 9, (last - first + 1) * 9);
-      colorAttribute.needsUpdate = true;
+      queueFaceUpload(colorAttribute, first, last);
     },
 
     // After the patches were cut again.

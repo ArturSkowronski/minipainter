@@ -3,7 +3,11 @@
 async function call(url, options) {
   const response = await fetch(url, options);
   const body = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(body.error || `Błąd serwera (${response.status}).`);
+  if (!response.ok) {
+    const error = new Error(body.error || `Błąd serwera (${response.status}).`);
+    error.status = response.status;
+    throw error;
+  }
   return body;
 }
 
@@ -46,8 +50,8 @@ export async function getZoneFaces(slug, variant, id) {
   return new Uint8Array(await response.arrayBuffer());
 }
 
-// keepalive lets a save that starts while the page is closing still reach the server.
-export const putZoneFaces = (slug, variant, id, zones, keepalive = false) =>
+// `basedOn` is the zones_rev this array was edited from: the server refuses (409) if it has moved on.
+export const putZoneFaces = (slug, variant, id, zones, basedOn) =>
   call(`${part(slug, variant, id)}/zone-faces`, {
-    method: "PUT", headers: { "Content-Type": "application/octet-stream" }, body: zones, keepalive,
+    method: "PUT", headers: { "Content-Type": "application/octet-stream", "If-Match": String(basedOn) }, body: zones,
   });

@@ -101,3 +101,22 @@ def test_resegment_keeps_zones(project):
     for bad in ((0.5, 0.0), (181.0, 0.0), (30.0, -0.1), (30.0, 0.06)):
         with pytest.raises(ValueError):
             zones.resegment(project, "src", "a", *bad)
+
+
+def test_a_write_based_on_an_old_revision_is_refused(project):
+    zones.create_zone(project, "src", "a")
+    first = zones.write_faces(project, "src", "a", bytes([1] * 12), base_rev=0)
+    with pytest.raises(zones.Conflict):
+        zones.write_faces(project, "src", "a", bytes(12), base_rev=0)          # someone wrote in between
+    assert zones.read_faces(project, "src", "a") == bytes([1] * 12)
+    assert zones.write_faces(project, "src", "a", bytes(12), base_rev=first) == first + 1
+
+
+def test_a_page_that_missed_a_deletion_cannot_revive_the_zone(project):
+    zones.create_zone(project, "src", "a")
+    seen = zones.write_faces(project, "src", "a", bytes([1] * 12))
+    zones.delete_zone(project, "src", "a", 1)
+    zones.create_zone(project, "src", "a")                                      # id 1 again, owning nothing
+    with pytest.raises(zones.Conflict):
+        zones.write_faces(project, "src", "a", bytes([1] * 12), base_rev=seen)
+    assert zones.read_faces(project, "src", "a") == bytes(12)

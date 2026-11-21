@@ -163,3 +163,19 @@ export function unassignedFaces(zones) {
   for (let face = 0; face < zones.length; face++) if (zones[face] === 0) faces.push(face);
   return Uint32Array.from(faces);
 }
+
+// A zone was deleted somewhere else: its faces here go back to none. Returns the faces that changed.
+export function dropUnknownZones(zones, known) {
+  const changed = [];
+  for (let face = 0; face < zones.length; face++) {
+    if (zones[face] !== 0 && !known.has(zones[face])) { zones[face] = 0; changed.push(face); }
+  }
+  return Uint32Array.from(changed);
+}
+
+// Ask for the colours of faces first..last to be sent to the GPU. Spans queue up until the next frame
+// uploads them; three.js empties the queue itself after uploading.
+export function queueFaceUpload(attribute, first, last) {
+  attribute.addUpdateRange(first * 9, (last - first + 1) * 9);
+  attribute.needsUpdate = true;
+}

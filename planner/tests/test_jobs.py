@@ -161,3 +161,15 @@ def test_frozen_meshes_are_analysed_not_regenerated(project_of_flat, proc):
     assert after["status"] == "ready" and after["patches"] == 6 and after["patches_rev"] == 2
     assert [m.stat().st_mtime_ns for m in meshes] == stamps
     assert all(f.exists() for f in analysis_files(meshes[0]).values())
+
+
+def test_a_ready_part_without_a_patch_count_gets_one(project_of_flat, proc):
+    # The server can stop after the sidecars are written and before the plan records them.
+    p = project_of_flat
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    p.update(lambda plan: plan["variants"][0]["parts"][0].update(status="pending", patches=None))
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    part = p.snapshot()["variants"][0]["parts"][0]
+    assert part["status"] == "ready" and part["patches"] == 6

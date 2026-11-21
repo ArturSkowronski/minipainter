@@ -114,3 +114,20 @@ test("the faces no zone has claimed yet", () => {
   assert.deepEqual(Array.from(unassignedFaces(Uint8Array.from([0, 3, 0, 1, 0]))), [0, 2, 4]);
   assert.equal(unassignedFaces(Uint8Array.from([1, 1])).length, 0);
 });
+
+import { dropUnknownZones, queueFaceUpload } from "../zonesmodel.js";
+
+test("faces of zones that no longer exist go back to none", () => {
+  const zones = Uint8Array.from([1, 4, 0, 2, 4]);
+  assert.deepEqual(Array.from(dropUnknownZones(zones, new Set([1, 2]))), [1, 4]);
+  assert.deepEqual(Array.from(zones), [1, 0, 0, 2, 0]);
+  assert.equal(dropUnknownZones(zones, new Set([1, 2])).length, 0);
+});
+
+test("every recoloured span is queued for upload, not only the last", () => {
+  const attribute = { ranges: [], needsUpdate: false, addUpdateRange(start, count) { this.ranges.push([start, count]); } };
+  queueFaceUpload(attribute, 2, 3);
+  queueFaceUpload(attribute, 10, 10);
+  assert.deepEqual(attribute.ranges, [[18, 18], [90, 9]]);
+  assert.equal(attribute.needsUpdate, true);
+});

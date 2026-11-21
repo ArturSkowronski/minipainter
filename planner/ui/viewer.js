@@ -22,6 +22,7 @@ function loadAssembledGeometry(url) {
       const color = new Uint8Array(geometry.attributes.position.count * 3);
       for (let i = 0; i < color.length; i += 3) color.set(PRIMER_RGB, i);
       geometry.setAttribute("color", new THREE.BufferAttribute(color, 3, true));
+      geometry.userData.colorKey = null;                   // null = primer everywhere
       geometry.boundingBox = indexed.boundingBox.clone();
       geometry.boundingSphere = indexed.boundingSphere.clone();
       return geometry;
@@ -145,7 +146,7 @@ export function createViewer(canvas) {
 
   function add(id, url, geometry) {
     const mesh = new THREE.Mesh(geometry, materialFor(id));
-    mesh.userData = { id, url, colorKey: null };
+    mesh.userData = { id, url };
     meshes.set(id, mesh);
     group.add(mesh);
     return mesh;
@@ -372,8 +373,9 @@ export function createViewer(canvas) {
   // -- assembled figure -------------------------------------------------------------------------
 
   function colour(mesh, part) {
-    if (mesh.userData.colorKey === (part.colorKey ?? null)) return;
-    mesh.userData.colorKey = part.colorKey ?? null;
+    // The geometry is cached across visits, so what it is painted with is remembered on it.
+    if (mesh.geometry.userData.colorKey === (part.colorKey ?? null)) return;
+    mesh.geometry.userData.colorKey = part.colorKey ?? null;
     const attribute = mesh.geometry.attributes.color;
     const target = attribute.array;
     for (let face = 0, i = 0; i < target.length; face++, i += 9) {

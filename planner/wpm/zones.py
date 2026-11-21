@@ -19,7 +19,12 @@ MAX_ZONES = 255
 PALETTE = ("#c0392b", "#2a6fbb", "#f1c40f", "#27ae60", "#8e44ad", "#e67e22",
            "#16a085", "#d35485", "#7f8c2d", "#34495e", "#e8d5b5", "#6d4c41")
 _HEX = re.compile(r"#[0-9a-f]{6}")
-_lock = threading.Lock()          # zone edits are rare and small: one at a time keeps file and plan in step
+_lock = threading.Lock()
+
+
+class Conflict(Exception):
+    """The stored zones changed since the revision the caller based its data on."""
+          # zone edits are rare and small: one at a time keeps file and plan in step
 
 
 def _faces_path(project: Project, variant_id: str, part_id: str) -> Path:
@@ -106,10 +111,17 @@ def _write(project: Project, variant_id: str, part_id: str, data: bytes) -> int:
     return project.part(variant_id, part_id)["zones_rev"]
 
 
-def write_faces(project: Project, variant_id: str, part_id: str, data: bytes) -> int:
-    """Store the zone of every face. Returns the part's new zones_rev."""
+def write_faces(project: Project, variant_id: str, part_id: str, data: bytes, base_rev: int | None = None) -> int:
+    """Store the zone of every face. Returns the part's new zones_rev.
+
+    With `base_rev`, the write only goes through if that is still the part's zones_rev; otherwise Conflict.
+    A whole array written over a newer one would silently undo someone else's work, or hand the faces
+    of a deleted zone to whatever zone reuses its id.
+    """
     with _lock:
         part = project.part(variant_id, part_id)
+        if base_rev is not None and part["zones_rev"] != base_rev:
+            raise Conflict(part["zones_rev"])
         if not part["tris"] or len(data) != part["tris"]:
             raise ValueError("one byte per face is expected")
         allowed = np.array([0] + [z["id"] for z in part["zones"]], dtype=np.uint8)

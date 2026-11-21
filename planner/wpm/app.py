@@ -26,12 +26,22 @@ NOT_A_PACKAGE = "Nie rozpoznano paczki Nom Nom w tym katalogu."
 NOT_FOUND = "Nie znaleziono."
 NOT_JSON = "Oczekiwano JSON."
 BAD_INPUT = "Nieprawidłowe dane."
+CONFLICT = "Strefy zmieniły się w innym miejscu."
 LOCAL_HOSTS = ["127.0.0.1", "localhost"]
 _BINARY = "application/octet-stream"
 _SERVED = {"meshes": {".glb": "model/gltf-binary", ".u32": _BINARY, ".u8": _BINARY, ".json": "application/json"},
            "refs": {".jpg": "image/jpeg"}}
 _KEEPALIVE_SECONDS = 15
 PART = "/api/projects/{slug}/variants/{variant}/parts/{part}"
+
+
+class _PageFiles(StaticFiles):
+    """The page's own files. `no-cache` makes the browser check on every load that it has the current one."""
+
+    async def get_response(self, path, scope):
+        response = await super().get_response(path, scope)
+        response.headers["Cache-Control"] = "no-cache"
+        return response
 
 
 def _error(status: int, message: str) -> JSONResponse:
@@ -172,6 +182,8 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
                 return await handler(request, *where)
             except KeyError:
                 return _error(404, NOT_FOUND)
+            except zones.Conflict:
+                return _error(409, CONFLICT)
             except ValueError:
                 return _error(400, BAD_INPUT)
         return route
@@ -213,7 +225,9 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
     async def put_faces(request, project, variant, part):
         if request.headers.get("content-type", "").split(";")[0].strip().lower() != _BINARY:
             return _error(415, BAD_INPUT)
-        return JSONResponse({"zones_rev": zones.write_faces(project, variant, part, await request.body())})
+        based_on = request.headers.get("if-match")
+        base_rev = int(based_on) if based_on is not None else None          # not a number: ValueError, 400
+        return JSONResponse({"zones_rev": zones.write_faces(project, variant, part, await request.body(), base_rev)})
 
     @zone_route
     async def segment(request, project, variant, part):
@@ -240,5 +254,5 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
         Route(PART + "/zone-faces", put_faces, methods=["PUT"]),
         Route(PART + "/segment", segment, methods=["POST"]),
         Route("/files/{slug}/{path:path}", workspace_file),
-        Mount("/", StaticFiles(directory=UI_DIR, html=True)),
+        Mount("/", _PageFiles(directory=UI_DIR, html=True)),
     ])
