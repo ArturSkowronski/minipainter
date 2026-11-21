@@ -20,7 +20,9 @@ def test_create_writes_a_plan_inside_the_data_dir(tmp_path):
         "id": "body", "name": "body", "source": None, "size": None, "status": "pending", "error": None,
         "outlier": False, "mesh": "meshes/1-10-scale-split/body.glb",
         "mesh_lod": "meshes/1-10-scale-split/body.lod.glb",
-        "tris_source": None, "tris": None, "tris_lod": None, "bbox": None}
+        "tris_source": None, "tris": None, "tris_lod": None, "bbox": None,
+        "patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0,
+        "segmentation": {"angle": 30.0, "min_area_fraction": 0.0001}}
     assert plan["references"][0] == {
         "id": "colored-01", "role": "colour", "source": str(root / "Render Images" / "Colored_01.jpg"),
         "file": "refs/colored-01.jpg", "status": "pending", "error": None}
@@ -135,3 +137,47 @@ def test_recheck_requeues_failures_and_missing_meshes_but_not_running_work(tmp_p
     assert [(x["status"], x["error"]) for x in parts] == [("pending", None), ("pending", None), ("processing", None)]
     assert p.snapshot()["revision"] == before + 1
     assert p.recheck() is False and p.snapshot()["revision"] == before + 1
+
+
+NEW_PART_FIELDS = {"patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0,
+                   "segmentation": {"angle": 30.0, "min_area_fraction": 0.0001}}
+
+
+def test_new_parts_carry_zone_and_patch_fields(tmp_path):
+    part = Project.open_or_create(scan(flat(tmp_path / "src"))).snapshot()["variants"][0]["parts"][0]
+    assert {k: part[k] for k in NEW_PART_FIELDS} == NEW_PART_FIELDS
+
+
+def test_version_1_plans_gain_zone_fields_on_load(tmp_path):
+    p = Project.open_or_create(scan(flat(tmp_path / "src")))
+    path = p.dir / "plan.json"
+    old = json.loads(path.read_text())
+    old["version"] = 1
+    for part in old["variants"][0]["parts"]:
+        for key in NEW_PART_FIELDS:
+            del part[key]
+    path.write_text(json.dumps(old))
+    workspace._projects.clear()
+    plan = Project.load(p.slug).snapshot()
+    assert plan["version"] == 2
+    assert all({k: part[k] for k in NEW_PART_FIELDS} == NEW_PART_FIELDS for part in plan["variants"][0]["parts"])
+    assert json.loads(path.read_text())["version"] == 2
+
+
+def test_ready_without_analysis_files_is_reset_on_load(tmp_path):
+    from wpm.glb import write_glb
+    p = Project.open_or_create(scan(flat(tmp_path / "src")))
+    part = p.snapshot()["variants"][0]["parts"][0]
+    write_glb(p.file(part["mesh"]), *cube())
+    write_glb(p.file(part["mesh_lod"]), *cube())
+    p.update(lambda plan: plan["variants"][0]["parts"][0].update(status="ready"))
+    workspace._projects.clear()
+    assert Project.load(p.slug).snapshot()["variants"][0]["parts"][0]["status"] == "pending"
+
+
+def test_part_lookup(tmp_path):
+    p = Project.open_or_create(scan(flat(tmp_path / "src")))
+    assert p.part("src", "b")["id"] == "b"
+    for variant, part in (("src", "nope"), ("nope", "a")):
+        with pytest.raises(KeyError):
+            p.part(variant, part)

@@ -8,21 +8,31 @@ import threading
 from concurrent.futures import BrokenExecutor, Executor, ProcessPoolExecutor
 from pathlib import Path
 
+from wpm.analysis import analyse_part, analysis_files
 from wpm.glb import read_glb
 from wpm.pipeline import bbox_of, process_part
 from wpm.refs import prepare_reference
 from wpm.stl import StlError
-from wpm.workspace import Project, find_outliers
+from wpm.workspace import Project, find_outliers, find_part
 
 _STOP = object()
 log = logging.getLogger(__name__)
 
 
-def _do_part(src: str, mesh: str, lod: str) -> dict:
+def _do_part(src: str, mesh: str, lod: str, angle: float, min_area_fraction: float) -> dict:
     """Runs in the worker process: plain values in, plain values out."""
     result = process_part(Path(src), Path(mesh), Path(lod))
+    analysis = analyse_part(Path(mesh), Path(lod), angle, min_area_fraction)
     return {"tris_source": result.tris_source, "tris": result.tris, "tris_lod": result.tris_lod,
-            "bbox": [list(result.bbox[0]), list(result.bbox[1])]}
+            "bbox": [list(result.bbox[0]), list(result.bbox[1])], "patches": analysis["patches"]}
+
+
+def _do_analysis(mesh: str, lod: str, angle: float, min_area_fraction: float) -> dict:
+    """For a mesh that already exists (it is frozen): only the sidecars are written."""
+    analysis = analyse_part(Path(mesh), Path(lod), angle, min_area_fraction)
+    vertices, faces = read_glb(Path(mesh))
+    return {"tris": len(faces), "tris_lod": len(read_glb(Path(lod))[1]),
+            "bbox": [list(b) for b in bbox_of(vertices)], "patches": analysis["patches"]}
 
 
 def _do_reference(src: str, dst: str) -> dict:
@@ -112,31 +122,42 @@ class Processor:
 
     def _run_part(self, project: Project, variant_id: str, part_id: str) -> None:
         def find(plan: dict) -> dict:
-            variant = next(v for v in plan["variants"] if v["id"] == variant_id)
-            return next(p for p in variant["parts"] if p["id"] == part_id)
+            return find_part(plan, variant_id, part_id)
+
+        def finish(stats: dict) -> None:
+            def apply(plan: dict) -> None:
+                entry = find(plan)
+                entry.update(status="ready", error=None, **stats)
+                entry["patches_rev"] += 1
+            project.update(apply)
 
         part = find(project.snapshot())
         if part["status"] != "pending":
             return
         mesh, lod = project.file(part["mesh"]), project.file(part["mesh_lod"])
+        cut = (part["segmentation"]["angle"], part["segmentation"]["min_area_fraction"])
         if mesh.exists() and lod.exists():
-            # Frozen: a mesh that exists is never regenerated. Read its stats back.
-            vertices, faces = read_glb(mesh)
-            stats = {"tris": len(faces), "tris_lod": len(read_glb(lod)[1]),
-                     "bbox": [list(b) for b in bbox_of(vertices)]}
-            project.update(lambda p: find(p).update(status="ready", error=None, **stats))
-            return
-        if not Path(part["source"]).exists():
+            # Frozen: a mesh that exists is never regenerated. At most its analysis is (re)done.
+            if all(f.exists() for f in analysis_files(mesh).values()):
+                vertices, faces = read_glb(mesh)
+                stats = {"tris": len(faces), "tris_lod": len(read_glb(lod)[1]),
+                         "bbox": [list(b) for b in bbox_of(vertices)]}
+                project.update(lambda p: find(p).update(status="ready", error=None, **stats))
+                return
+            job = (_do_analysis, str(mesh), str(lod), *cut)
+        elif not Path(part["source"]).exists():
             project.update(lambda p: find(p).update(status="error", error="source file is missing"))
             return
+        else:
+            job = (_do_part, part["source"], str(mesh), str(lod), *cut)
         project.update(lambda p: find(p).update(status="processing", error=None))
         try:
-            stats = self._submit(_do_part, part["source"], str(mesh), str(lod))
+            stats = self._submit(*job)
         except Exception as error:
             message = _message(error)
             project.update(lambda p: find(p).update(status="error", error=message))
         else:
-            project.update(lambda p: find(p).update(status="ready", error=None, **stats))
+            finish(stats)
 
     def _run_reference(self, project: Project, ref_id: str) -> None:
         def find(plan: dict) -> dict:

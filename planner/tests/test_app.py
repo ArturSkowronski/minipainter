@@ -145,3 +145,17 @@ def test_posts_must_be_json(client, tmp_path):
     body = '{"path": "%s"}' % flat(tmp_path / "src")
     r = client.post("/api/projects", content=body, headers={"content-type": "text/plain"})
     assert r.status_code == 415 and client.get("/api/projects").json() == []
+
+
+def test_sidecars_are_served(client, processor, tmp_path):
+    slug = client.post("/api/projects", json={"path": str(flat(tmp_path / "src"))}).json()["slug"]
+    processor.wait_idle(30)
+    part = client.get(f"/api/projects/{slug}").json()["variants"][0]["parts"][0]
+    base = f"/files/{slug}/{part['mesh'][:-4]}"
+    patches = client.get(base + ".patches.u32")
+    assert patches.status_code == 200 and patches.headers["content-type"] == "application/octet-stream"
+    assert len(patches.content) == 4 * part["tris"]
+    assert len(client.get(base + ".masks.u8").content) == 2 * 8
+    assert len(client.get(base + ".lodmap.u32").content) == 4 * part["tris_lod"]
+    assert len(client.get(base + ".patches.json").json()) == part["patches"]
+    assert client.get(f"/files/{slug}/plan.json").status_code == 404

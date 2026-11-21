@@ -11,9 +11,10 @@ import threading
 from collections.abc import Callable
 from pathlib import Path
 
+from wpm.analysis import DEFAULT_ANGLE, DEFAULT_MIN_AREA_FRACTION, analysis_files
 from wpm.profiles.base import Package, slugify
 
-PLAN_VERSION = 1
+PLAN_VERSION = 2
 _projects: dict[str, "Project"] = {}
 _registry_lock = threading.Lock()
 
@@ -32,13 +33,44 @@ def project_slug(root: Path) -> str:
     return f"{slugify(Path(root).name)}-{digest}"
 
 
+def _zone_fields() -> dict:
+    """What version 2 added to every part: its patches and its zones."""
+    return {"patches": None, "patches_rev": 0,
+            "segmentation": {"angle": DEFAULT_ANGLE, "min_area_fraction": DEFAULT_MIN_AREA_FRACTION},
+            "zones": [], "zones_rev": 0}
+
+
 def _part_entry(variant_id: str, part) -> dict:
     return {
         "id": part.id, "name": part.path.stem, "source": str(part.path), "size": part.size,
         "status": "pending", "error": None, "outlier": False,
         "mesh": f"meshes/{variant_id}/{part.id}.glb", "mesh_lod": f"meshes/{variant_id}/{part.id}.lod.glb",
         "tris_source": None, "tris": None, "tris_lod": None, "bbox": None,
+        **_zone_fields(),
     }
+
+
+def migrate(plan: dict) -> bool:
+    """Bring an older plan up to PLAN_VERSION in place. Returns whether anything changed."""
+    changed = plan.get("version") != PLAN_VERSION
+    for variant in plan["variants"]:
+        for part in variant["parts"]:
+            for key, value in _zone_fields().items():
+                if key not in part:
+                    part[key] = value
+                    changed = True
+    plan["version"] = PLAN_VERSION
+    return changed
+
+
+def find_part(plan: dict, variant_id: str, part_id: str) -> dict:
+    """The live part entry inside a plan. KeyError when the variant or the part is unknown."""
+    for variant in plan["variants"]:
+        if variant["id"] == variant_id:
+            for part in variant["parts"]:
+                if part["id"] == part_id:
+                    return part
+    raise KeyError((variant_id, part_id))
 
 
 def _reference_entry(ref) -> dict:
@@ -117,6 +149,7 @@ class Project:
         if slug != slugify(slug) or not path.exists():
             raise KeyError(slug)
         project = cls(slug, json.loads(path.read_text()))
+        migrate(project._plan)
         project._reset_stale(("processing", "error"))     # after a restart nothing is running
         # Always a new revision: a page left open across the restart refetches and so resumes the work.
         project._commit()
@@ -125,11 +158,17 @@ class Project:
     def _reset_stale(self, statuses: tuple[str, ...]) -> bool:
         """Back to 'pending': items in the given statuses, and 'ready' items whose file is gone."""
         changed = False
-        items = [(p, "mesh") for v in self._plan["variants"] for p in v["parts"]]
-        items += [(r, "file") for r in self._plan["references"]]
-        for item, key in items:
-            stale = item["status"] in statuses or (
-                item["status"] == "ready" and not (self.dir / item[key]).exists())
+
+        def complete(item: dict) -> bool:
+            if "file" in item:                                    # a reference image
+                return (self.dir / item["file"]).exists()
+            mesh = self.dir / item["mesh"]
+            return (mesh.exists() and (self.dir / item["mesh_lod"]).exists()
+                    and all(f.exists() for f in analysis_files(mesh).values()))
+
+        items = [p for v in self._plan["variants"] for p in v["parts"]] + self._plan["references"]
+        for item in items:
+            stale = item["status"] in statuses or (item["status"] == "ready" and not complete(item))
             if stale:
                 item["status"], item["error"] = "pending", None
                 changed = True
@@ -160,6 +199,11 @@ class Project:
             revision = self._commit()
         self._notify(revision)
         return revision
+
+    def part(self, variant_id: str, part_id: str) -> dict:
+        """A copy of one part's entry. KeyError when unknown."""
+        with self._lock:
+            return copy.deepcopy(find_part(self._plan, variant_id, part_id))
 
     def subscribe(self, callback: Callable[[int], None]) -> Callable[[], None]:
         with self._lock:

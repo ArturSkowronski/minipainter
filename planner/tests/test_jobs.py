@@ -132,3 +132,32 @@ def test_failed_parts_are_retried_only_when_asked(tmp_path, proc):
     proc.enqueue_variant(p, "src", retry=True)
     proc.wait_idle(30)
     assert p.snapshot()["variants"][0]["parts"][0]["status"] == "ready"
+
+
+def test_processing_writes_analysis_files_and_patch_count(project_of_flat, proc):
+    from wpm.analysis import analysis_files
+    p = project_of_flat
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    part = p.snapshot()["variants"][0]["parts"][0]
+    assert part["status"] == "ready" and part["patches"] == 6 and part["patches_rev"] == 1
+    assert all(f.exists() for f in analysis_files(p.file(part["mesh"])).values())
+
+
+def test_frozen_meshes_are_analysed_not_regenerated(project_of_flat, proc):
+    from wpm.analysis import analysis_files
+    p = project_of_flat
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    part = p.snapshot()["variants"][0]["parts"][0]
+    meshes = [p.file(part["mesh"]), p.file(part["mesh_lod"])]
+    stamps = [m.stat().st_mtime_ns for m in meshes]
+    for sidecar in analysis_files(meshes[0]).values():
+        sidecar.unlink()
+    p.update(lambda plan: plan["variants"][0]["parts"][0].update(status="pending", patches=None))
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    after = p.snapshot()["variants"][0]["parts"][0]
+    assert after["status"] == "ready" and after["patches"] == 6 and after["patches_rev"] == 2
+    assert [m.stat().st_mtime_ns for m in meshes] == stamps
+    assert all(f.exists() for f in analysis_files(meshes[0]).values())

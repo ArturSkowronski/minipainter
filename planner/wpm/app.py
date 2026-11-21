@@ -25,7 +25,9 @@ NOT_A_PACKAGE = "Nie rozpoznano paczki Nom Nom w tym katalogu."
 NOT_FOUND = "Nie znaleziono."
 NOT_JSON = "Oczekiwano JSON."
 LOCAL_HOSTS = ["127.0.0.1", "localhost"]
-_SERVED = {"meshes": {".glb": "model/gltf-binary"}, "refs": {".jpg": "image/jpeg"}}
+_BINARY = "application/octet-stream"
+_SERVED = {"meshes": {".glb": "model/gltf-binary", ".u32": _BINARY, ".u8": _BINARY, ".json": "application/json"},
+           "refs": {".jpg": "image/jpeg"}}
 _KEEPALIVE_SECONDS = 15
 
 
