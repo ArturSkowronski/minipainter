@@ -21,7 +21,7 @@ def test_create_writes_a_plan_inside_the_data_dir(tmp_path):
         "outlier": False, "mesh": "meshes/1-10-scale-split/body.glb",
         "mesh_lod": "meshes/1-10-scale-split/body.lod.glb",
         "tris_source": None, "tris": None, "tris_lod": None, "bbox": None,
-        "patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0, "progress": {},
+        "patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0, "progress": {}, "analysis": 0,
         "segmentation": {"angle": 30.0, "min_area_fraction": 0.0001}}
     assert plan["references"][0] == {
         "id": "colored-01", "role": "colour", "source": str(root / "Render Images" / "Colored_01.jpg"),
@@ -139,7 +139,7 @@ def test_recheck_requeues_failures_and_missing_meshes_but_not_running_work(tmp_p
     assert p.recheck() is False and p.snapshot()["revision"] == before + 1
 
 
-NEW_PART_FIELDS = {"patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0, "progress": {},
+NEW_PART_FIELDS = {"patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0, "progress": {}, "analysis": 0,
                    "segmentation": {"angle": 30.0, "min_area_fraction": 0.0001}}
 
 

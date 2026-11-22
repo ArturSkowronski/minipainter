@@ -53,7 +53,9 @@ export function createViewer(canvas) {
   let primerRgb = PRIMER_RGB;
   // Vertex colours carry the paint; the material colour only dims or keeps them.
   const painted = new THREE.MeshStandardMaterial({ color: 0xffffff, vertexColors: true, ...SURFACE });
-  const dimmed = new THREE.MeshStandardMaterial({ color: 0x8a8a8a, vertexColors: true, ...SURFACE });
+  const DIM = { strong: 0xb4b4b4, mild: 0xdcdcdc };
+  const dimmed = new THREE.MeshStandardMaterial({ color: DIM.strong, vertexColors: true, ...SURFACE });
+  let emphasis = "strong";     // how the selected part of the figure stands out, see setEmphasis
   const chosen = new THREE.MeshStandardMaterial({
     color: 0xffffff, vertexColors: true, emissiveIntensity: 0.22, ...SURFACE,
   });
@@ -131,7 +133,17 @@ export function createViewer(canvas) {
     if (mode === "paint") return painted;
     if (mode !== "assembled") return primer;
     if (selected === null) return painted;
-    return id === selected ? chosen : dimmed;
+    if (id === selected) return emphasis === "strong" ? chosen : painted;
+    return dimmed;
+  }
+
+  // "strong": the selected part glows and the others are dimmed. "mild": the others are dimmed a little
+  // and nothing is tinted, for when the colours themselves are what is being looked at.
+  function setEmphasis(next) {
+    if (next === emphasis) return;
+    emphasis = next;
+    dimmed.color.set(DIM[next]);
+    restyle();
   }
 
   function restyle() {
@@ -518,6 +530,7 @@ export function createViewer(canvas) {
     onStroke(callback) { onStroke = callback; },
     onFaceClick(callback) { faceClick = callback; },
     setPrimer,
+    setEmphasis,
     pickFace,
     showAssembled,
     setSelected,

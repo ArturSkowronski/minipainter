@@ -867,6 +867,7 @@ function projectScreen(slug) {
     // Until the steps have arrived there is only the primer to stand on; the choice is kept for when they do.
     position = settle(positions, state.position, stages);
     viewer.setPrimer(painting ? plan.primer : NEUTRAL);
+    viewer.setEmphasis(painting ? "mild" : "strong");
     info.textContent = selected
       ? `${selected.name} · ${selected.tris.toLocaleString("pl-PL")} trójkątów`
         + (selected.tris_source > selected.tris ? ` (z ${selected.tris_source.toLocaleString("pl-PL")})` : "")

@@ -11,7 +11,7 @@ import threading
 from collections.abc import Callable
 from pathlib import Path
 
-from wpm.analysis import DEFAULT_ANGLE, DEFAULT_MIN_AREA_FRACTION, analysis_files
+from wpm.analysis import ANALYSIS_VERSION, DEFAULT_ANGLE, DEFAULT_MIN_AREA_FRACTION, analysis_files
 from wpm.layers import DEFAULT_BOTTLE_DISTANCE, DEFAULT_PROFILE
 from wpm.profiles.base import Package, slugify
 
@@ -40,7 +40,8 @@ def _part_fields() -> dict:
     return {"patches": None, "patches_rev": 0,
             "segmentation": {"angle": DEFAULT_ANGLE, "min_area_fraction": DEFAULT_MIN_AREA_FRACTION},
             "zones": [], "zones_rev": 0,
-            "progress": {}}                      # recipe id -> keys of the steps done on this part
+            "progress": {},                      # recipe id -> keys of the steps done on this part
+            "analysis": 0}                       # wpm.analysis.ANALYSIS_VERSION that wrote the sidecars
 
 
 def _painting_fields() -> dict:
@@ -180,7 +181,7 @@ class Project:
             if "file" in item:                                    # a reference image
                 return (self.dir / item["file"]).exists()
             mesh = self.dir / item["mesh"]
-            return (mesh.exists() and (self.dir / item["mesh_lod"]).exists()
+            return (mesh.exists() and (self.dir / item["mesh_lod"]).exists() and item["analysis"] == ANALYSIS_VERSION
                     and all(f.exists() for f in analysis_files(mesh).values()))
 
         items = [p for v in self._plan["variants"] for p in v["parts"]] + self._plan["references"]

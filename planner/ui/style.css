@@ -126,7 +126,7 @@ h1, h2 { margin: 0; font-weight: 600; }
 .step { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; gap: 0.5rem; align-items: start; padding: 0.4rem 0.45rem; border: 1px solid transparent; border-radius: 5px; cursor: pointer; }
 .step:hover { background: var(--bg); }
 .step[aria-current="true"] { background: var(--accent-soft); border-color: var(--accent); }
-.step[data-done="true"] .step-title { color: var(--muted); text-decoration: line-through; }
+.step[data-done="true"] .step-name { color: var(--muted); text-decoration: line-through; }
 .step input[type="checkbox"] { margin-top: 0.2rem; }
 .swatch { display: inline-block; width: 1.25rem; height: 1.25rem; border: 1px solid var(--line); border-radius: 4px; flex: none; }
 .swatch.tiny { width: 0.8rem; height: 0.8rem; vertical-align: -2px; }

@@ -133,7 +133,8 @@ test("highlight sits on ridges only", () => {
   assert.deepEqual(shaded(plain, "highlight", { ridge: 0 }), [179, 32, 42]);
   assert.deepEqual(shaded(plain, "highlight", { ridge: 0.2, up: 1 }), [179, 32, 42]);
   assert.deepEqual(shaded(plain, "highlight", { ridge: 1 }), [232, 112, 90]);
-  const edge = shaded(plain, "highlight", { ridge: 0.6 });
+  assert.deepEqual(shaded(plain, "highlight", { ridge: 0.6 }), [179, 32, 42]);
+  const edge = shaded(plain, "highlight", { ridge: 0.75 });
   assert.ok(edge[1] > 32 && edge[1] < 112);
 });
 

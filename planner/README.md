@@ -1,8 +1,9 @@
 # warpaint-model
 
 A local browser app for planning how to paint a 3D-printed figure. Point it at a model's directory and it
-shows every part, alone and assembled, in the browser. Layer-by-layer painting steps, colour zones and an
-agent that works alongside you are designed but not built yet (see "Status").
+shows every part, alone and assembled, in the browser; you divide the parts into colour zones, give the zones
+paint recipes, and step through the painting stages on the model, each step named with a paint you own. An
+agent that works alongside you is designed but not built yet (see "Status").
 
 ## Run
 
@@ -52,17 +53,52 @@ zones — named areas that will each get one paint recipe:
 
 On Spiderman's torso that is three clicks for the blue panels and the whole web, and one button for the red.
 Strokes are saved as you go and can be undone (⌘Z). The assembled figure shows every part in its zone colours.
-"Relief" view shows what the app reads as recesses (blue) and raised areas (orange); the layer preview of the
-next milestone is built on it.
+"Relief" view shows what the app reads as recesses (blue) and raised areas (orange); the painted view below is
+built on it.
+
+## Layers and time travel
+
+"Malowanie" (next to "Strefy" in the toolbar) shows the model painted, with a timeline under it and the recipe
+panel on the right.
+
+A **recipe** says how one kind of surface is painted: a base colour, a highlight colour, how many layers lie
+between them (0–6), and which of shade, lining, highlight and ink it uses. Recipes belong to the figure, not to
+a part: "suit red" is written once and used by the body, the arms and the legs. Give a zone a recipe from the
+list under its name in the zone list; "＋ Nowa z tej strefy" makes one from the zone's name and colour.
+
+Each recipe resolves to **steps** — base, layer 1…n, shade, lining, highlight, ink — and every step names a
+paint you own, or a mix of the base and highlight paints in simple parts (2 : 1, 1 : 1, …). An owned bottle is
+used for a layer when it is close enough to the layer's colour; "Dobór farb" prefers bottles or mixes. "zmień"
+on a step pins any paint you own to it, "Automatycznie" unpins. A step warns when the nearest owned paint is
+far from the colour asked for, and says so when you own nothing of the kind it needs.
+
+The **timeline** has one stop per stage of what is on screen (as many layer stops as the recipe with the most
+layers); drag it, click a stop, or use ← and →. The model shows where each stage puts paint: layers climb
+towards raised and upward-facing surfaces, shade gathers in recesses, lining follows the deepest grooves,
+highlight sits on edges. It is an indication of where and roughly what colour, not a render. The step the
+timeline stands on is opened in the panel with where and how to apply it and a note of your own. The same
+timeline drives "Złożona figurka".
+
+Tick a step when it is done on the selected part; the part list shows done/all. Clicking the model picks the
+zone under the pointer. "Podkład" sets the primer colour of the whole figure.
+
+Paints come from [minipainter](https://www.npmjs.com/package/minipainter): the server runs
+`node ~/Priv/warpaint-cli/src/cli.mjs inventory list --json` once when it starts and again on "odśwież". Set
+`WPM_MPAINT` to another command line (for example `mpaint inventory list --json`). The inventory is only read.
+What kind of product a paint is comes from minipainter's `product_format`: base and layer steps use
+`opaque_base` and `opaque_layer` paints (`metallic` for a recipe marked "Metaliczna"), shade and lining use
+`wash`, ink uses `ink` and `contrast`. Without minipainter the steps still show their colours, without paints.
 
 ## Where things are kept
 
 `data/projects/<name>-<hash>/` (git-ignored) holds everything the app derives from a model: `plan.json`, two
 meshes per part (`meshes/<variant>/<part>.glb` at about 150 000 triangles for single-part view and
 `<part>.lod.glb` at about 30 000 for the assembled figure), the analysis of each mesh beside it
-(`.patches.u32`, `.patches.json`, `.masks.u8`, `.lodmap.u32`), the zone of every face
+(`.patches.u32`, `.patches.json`, `.masks.u8`, `.lodmap.u32`, `.lodmasks.u8`), the zone of every face
 (`zones/<variant>/<part>.u8`, one byte per triangle of the preview mesh) and reference images scaled to
-1600 px. Zone names and colours are in `plan.json`.
+1600 px. Zone names and colours, recipes, the primer colour and the done marks are in `plan.json`. When a new
+version of the app analyses meshes differently, parts are analysed again on the next open; meshes and zones
+are not touched by that.
 
 The model's own directory is never written to. A mesh, once made, is never regenerated: to rebuild a part,
 delete its two files and open the project again (from the command line, the start page, or by picking the
@@ -89,6 +125,9 @@ scripts/vendor-three.sh  # re-create ui/vendor/ from the pinned Three.js release
 The page is plain ES modules with Three.js vendored in `ui/vendor/`; there is no build step. In the browser
 console, `__viewerBenchmark()` orbits the model for 120 frames and reports triangles drawn and mean frame time.
 
+Moving the timeline repaints a 150 000-triangle part in about 15 ms and the assembled Spiderman in about
+30 ms; a change of a recipe's layer count is on screen about 25 ms after the slider moves.
+
 Measured on the two reference models (Chromium, 1440×900): Spiderman assembled 390 000 triangles and Ciri
 assembled 770 000 triangles, both at 16.7 ms per frame; a single part at 150 000 triangles, 16.8 ms.
 
@@ -100,5 +139,5 @@ Design: `docs/superpowers/specs/2026-11-21-figure-painting-planner-design.md`.
 |---|---|
 | 1. Open and view | built |
 | 2. Zones (colour areas on each part, patch tool, brush) | built |
-| 3. Layers and time travel (recipes, stage preview, paints from minipainter) | not built |
+| 3. Layers and time travel (recipes, stage preview, paints from minipainter) | built |
 | 4. Agent (MCP server, session in the browser, skills) | not built |

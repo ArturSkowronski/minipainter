@@ -196,3 +196,24 @@ def test_a_part_analysed_before_the_figure_relief_existed_is_analysed_again(proj
     assert [m.stat().st_mtime_ns for m in meshes] == stamps
     assert analysis_files(meshes[0])["lodmasks"].exists()
     assert analysis_files(meshes[0])["patches"].read_bytes() == patches
+
+
+def test_an_analysis_made_by_an_older_version_is_redone(project_of_flat, proc):
+    from wpm import workspace
+    from wpm.analysis import ANALYSIS_VERSION
+    p = project_of_flat
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    part = p.snapshot()["variants"][0]["parts"][0]
+    assert part["analysis"] == ANALYSIS_VERSION
+    stamp = p.file(part["mesh"]).stat().st_mtime_ns
+    p.update(lambda plan: plan["variants"][0]["parts"][0].update(analysis=ANALYSIS_VERSION - 1))
+    workspace._projects.clear()
+    p = Project.load(p.slug)
+    statuses = [x["status"] for x in p.snapshot()["variants"][0]["parts"]]
+    assert statuses == ["pending", "ready", "ready"]
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    after = p.snapshot()["variants"][0]["parts"][0]
+    assert after["status"] == "ready" and after["analysis"] == ANALYSIS_VERSION
+    assert p.file(part["mesh"]).stat().st_mtime_ns == stamp

@@ -3,7 +3,7 @@ import json
 import numpy as np
 
 from tests.meshes import cube, icosphere
-from wpm.analysis import analyse_part, analysis_files, lod_map, masks, patch_stats, segment
+from wpm.analysis import analyse_part, analysis_files, lod_map, masks, patch_stats, relief_scale, segment
 from wpm.glb import write_glb
 
 
@@ -69,6 +69,22 @@ def test_masks_mark_recesses_and_bumps():
     assert cavity.dtype == ridge.dtype == np.uint8 and len(cavity) == len(ridge) == len(v)
     assert cavity[dent] > 150 and ridge[dent] == 0
     assert ridge[bump] > 150 and cavity[bump] == 0
+    # The rest of the sphere is evenly convex: clearly raised, clearly less than the bump, and all much alike.
+    plain = [i for i in range(len(v)) if abs(v[i][2]) < 2.0]
+    assert 60 < ridge[plain].min() and ridge[plain].max() < 150 and cavity[plain].max() == 0
+
+
+def test_masks_are_measured_against_what_is_typical_for_the_part():
+    values = np.array([0.0, 1.0, 1.0, 5.0])
+    even = np.ones(4)
+    scaled = relief_scale(values, even)
+    assert scaled.dtype == np.uint8 and scaled[0] == 0 and scaled[1] == scaled[2] and 0 < scaled[1] < scaled[3] < 255
+    assert relief_scale(values * 40, even).tolist() == scaled.tolist()            # the size of the model does not matter
+    assert relief_scale(np.r_[np.zeros(99), 9.0], np.ones(100))[99] == 255         # far above typical: full
+    # Where the strong relief covers most of the surface it is the typical one, and everything reads lower.
+    assert relief_scale(values, np.array([1.0, 1.0, 1.0, 20.0]))[1] < scaled[1]
+    assert relief_scale(np.zeros(3), np.ones(3)).tolist() == [0, 0, 0]
+    assert relief_scale(np.full(5, 3.0), np.ones(5)).tolist() == [102] * 5        # an even surface stays even: 1 / 2.5
 
 
 def test_patch_stats():

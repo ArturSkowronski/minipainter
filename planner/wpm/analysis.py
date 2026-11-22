@@ -15,6 +15,9 @@ from scipy.spatial import cKDTree
 
 from wpm.glb import read_glb
 
+# Raised when what the sidecar files hold changes; parts analysed by an older version are analysed again.
+# 2: masks are scaled by the part's typical relief, and the assembled-view mesh has its own relief file.
+ANALYSIS_VERSION = 2
 DEFAULT_ANGLE = 30.0
 DEFAULT_MIN_AREA_FRACTION = 1e-4
 
@@ -88,8 +91,28 @@ def segment(vertices: np.ndarray, faces: np.ndarray, angle: float = DEFAULT_ANGL
     return rank[inverse].astype(np.uint32)
 
 
+SATURATION = 2.5        # a mask is full where relief is this many times the surface's typical relief
+
+
+def relief_scale(values: np.ndarray, weights: np.ndarray) -> np.ndarray:
+    """Non-negative relief per vertex, with the area each stands for, to uint8.
+
+    255 is SATURATION times the area-weighted root mean square. Measuring against what is typical for
+    the part, not against its extremes, keeps an evenly curved surface even (a percentile would
+    stretch its noise to the full range) and still lets real edges and grooves stand out.
+    """
+    typical = float(np.sqrt((values ** 2 * weights).sum() / (weights.sum() or 1.0)))
+    if typical <= 0:
+        return np.zeros(len(values), dtype=np.uint8)
+    return np.round(np.clip(values / (SATURATION * typical), 0, 1) * 255).astype(np.uint8)
+
+
 def masks(vertices: np.ndarray, faces: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """(cavity, ridge) per vertex as uint8: where shade collects, and where highlights go."""
+    """(cavity, ridge) per vertex as uint8: where shade collects, and where highlights go.
+
+    Both are relative to how much relief is typical for this part (see relief_scale), because how
+    strongly a sculpt is detailed differs wildly from part to part.
+    """
     n = len(vertices)
     v = vertices.astype(np.float64)
     normals, area = _face_geometry(vertices, faces)
@@ -110,10 +133,9 @@ def masks(vertices: np.ndarray, faces: np.ndarray) -> tuple[np.ndarray, np.ndarr
     relief = ((v - (neighbours @ v) / degree[:, None]) * vertex_normal).sum(1) / mean_edge
     for _ in range(2):
         relief = 0.5 * relief + 0.5 * (neighbours @ relief) / degree
-    scale = np.percentile(np.abs(relief), 98) or 1.0
-    ridge = np.clip(relief / scale, 0, 1)
-    cavity = np.clip(-relief / scale, 0, 1)
-    return np.round(cavity * 255).astype(np.uint8), np.round(ridge * 255).astype(np.uint8)
+    vertex_area = np.zeros(n)
+    np.add.at(vertex_area, faces.ravel(), np.repeat(area / 3, 3))
+    return relief_scale(np.maximum(-relief, 0), vertex_area), relief_scale(np.maximum(relief, 0), vertex_area)
 
 
 def patch_stats(vertices: np.ndarray, faces: np.ndarray, patches: np.ndarray) -> list[dict]:

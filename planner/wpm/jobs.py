@@ -9,7 +9,7 @@ import threading
 from concurrent.futures import BrokenExecutor, Executor, ProcessPoolExecutor
 from pathlib import Path
 
-from wpm.analysis import analyse_part, analysis_files
+from wpm.analysis import ANALYSIS_VERSION, analyse_part, analysis_files
 from wpm.glb import read_glb
 from wpm.pipeline import bbox_of, process_part
 from wpm.refs import prepare_reference
@@ -128,7 +128,7 @@ class Processor:
         def finish(stats: dict) -> None:
             def apply(plan: dict) -> None:
                 entry = find(plan)
-                entry.update(status="ready", error=None, **stats)
+                entry.update(status="ready", error=None, analysis=ANALYSIS_VERSION, **stats)
                 entry["patches_rev"] += 1
             project.update(apply)
 
@@ -140,7 +140,7 @@ class Processor:
         if mesh.exists() and lod.exists():
             # Frozen: a mesh that exists is never regenerated. At most its analysis is (re)done.
             sidecars = analysis_files(mesh)
-            if all(f.exists() for f in sidecars.values()):
+            if part["analysis"] == ANALYSIS_VERSION and all(f.exists() for f in sidecars.values()):
                 vertices, faces = read_glb(mesh)
                 stats = {"tris": len(faces), "tris_lod": len(read_glb(lod)[1]),
                          "bbox": [list(b) for b in bbox_of(vertices)],

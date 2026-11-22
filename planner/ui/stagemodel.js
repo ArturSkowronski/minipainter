@@ -91,9 +91,10 @@ const BASE = 0, LAYER = 1, SHADE = 2, LINING = 3, HIGHLIGHT = 4, INK = 5;
 const KIND = { base: BASE, layers: LAYER, shade: SHADE, lining: LINING, highlight: HIGHLIGHT, ink: INK };
 
 // How much a point catches paint that is put on raised, upward surfaces: 0 deep in a recess, 1 on a ridge
-// facing up. cavity and ridge are 0..1, up is the y of the surface normal.
+// facing up. cavity and ridge are 0..1, up is the y of the surface normal. Facing up counts most: on a sculpt
+// covered in small raised cells (a web suit) nearly everything is a ridge of something.
 export function exposure(cavity, ridge, up) {
-  return clamp01(0.5 + 0.3 * up + 0.7 * ridge - 0.8 * cavity);
+  return clamp01(0.45 + 0.4 * up + 0.25 * ridge - 0.8 * cavity);
 }
 
 // The steps of one recipe in the form `shade` reads.
@@ -103,7 +104,7 @@ export function compile(steps) {
     return {
       key: step.key, kind: KIND[step.stage], r, g, b,
       // Later layers need more exposure: the first reaches most of the surface, the last only the top of it.
-      reach: step.stage === "layers" ? 0.3 + 0.45 * (step.index - 1) / Math.max((step.of ?? step.index) - 1, 1) : 0,
+      reach: step.stage === "layers" ? 0.3 + 0.55 * (step.index - 1) / Math.max((step.of ?? step.index) - 1, 1) : 0,
       threshold: step.threshold ?? 0.5,
     };
   });
@@ -135,7 +136,7 @@ export function shade(ops, count, cavity, ridge, up, primer, out, offset) {
         break;
       case SHADE:
         // What is underneath, darker and pulled towards the wash; a little everywhere, fully in recesses.
-        w = 0.12 + 0.88 * smooth(0.08, 0.6, cavity);
+        w = 0.12 + 0.88 * smooth(0.1, 0.5, cavity);
         r += (0.3 * r + 0.4 * op.r - r) * w; g += (0.3 * g + 0.4 * op.g - g) * w; b += (0.3 * b + 0.4 * op.b - b) * w;
         break;
       case LINING:
@@ -144,7 +145,7 @@ export function shade(ops, count, cavity, ridge, up, primer, out, offset) {
         }
         break;
       case HIGHLIGHT:
-        w = smooth(0.45, 0.8, ridge);
+        w = smooth(0.6, 0.9, ridge);
         r += (op.r - r) * w; g += (op.g - g) * w; b += (op.b - b) * w;
         break;
       default:      // INK: a transparent film of the ink's colour
