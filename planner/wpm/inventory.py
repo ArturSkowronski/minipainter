@@ -1,7 +1,7 @@
-"""The paints Artur owns, read from the minipainter CLI.
+"""The paints Artur owns, and the rest of minipainter's catalogue, read from the minipainter CLI.
 
 The command runs once per server and again only when asked, so moving a slider never starts a process.
-A failure is not an error of this app: the list is then empty and `status()` says why.
+A failure is not an error of this app: the lists are then empty and `status()` says why.
 """
 import datetime as dt
 import json
@@ -22,11 +22,18 @@ def default_command() -> list[str]:
     if override:
         return shlex.split(override)
     cli = Path.home() / "Priv" / "warpaint-cli" / "src" / "cli.mjs"
-    return ["node", str(cli), "inventory", "list", "--json"]
+    # A search for nothing lists the whole catalogue, each paint marked owned or not. A command that
+    # lists only the owned paints (`inventory list --json`) works too; then there is nothing to propose.
+    return ["node", str(cli), "paint", "search", "--json"]
 
 
 def parse(text: str) -> list[dict]:
-    """Owned paints with a product format and a colour, sorted by name.
+    """Owned paints with a product format and a colour, sorted by name."""
+    return read(text)[0]
+
+
+def read(text: str) -> tuple[list[dict], list[dict]]:
+    """(owned paints, the other paints of the list), each with a product format and a colour, sorted by name.
 
     ValueError when `text` is not minipainter's list: something else that happens to be JSON (an error
     object, the output of a version without `product_format`) must not pass for "owns no paints".
@@ -35,7 +42,7 @@ def parse(text: str) -> list[dict]:
     items = data.get("items") if isinstance(data, dict) else data
     if not isinstance(items, list):
         raise ValueError("the inventory is not a list of paints")
-    paints, understood = [], 0
+    paints, others = [], []
     for item in items:
         if not isinstance(item, dict) or not item.get("product_format"):
             continue
@@ -46,12 +53,14 @@ def parse(text: str) -> list[dict]:
                      "hex": rgb_to_hex(*(min(255, max(0, int(rgb[k]))) for k in "rgb"))}
         except (KeyError, TypeError, ValueError):
             continue
-        understood += 1
-        if item.get("owned"):
-            paints.append(paint)
-    if items and not understood:
+        (paints if item.get("owned") else others).append(paint)
+    if items and not paints and not others:
         raise ValueError("no entry of the inventory has a product_format and an rgb colour")
-    return sorted(paints, key=lambda p: (p["name"].lower(), p["id"]))
+    return sorted(paints, key=_by_name), sorted(others, key=_by_name)
+
+
+def _by_name(paint: dict) -> tuple[str, str]:
+    return paint["name"].lower(), paint["id"]
 
 
 class Inventory:
@@ -60,15 +69,17 @@ class Inventory:
         self._runner = runner
         self._lock = threading.Lock()
         self._paints: list[dict] = []
+        self._others: list[dict] = []
         self._state = "unread"
         self._error: str | None = None
         self._loaded: str | None = None
 
     @classmethod
-    def fixed(cls, paints: list[dict]) -> "Inventory":
-        """A list that is given, not read: for tests and for running without minipainter."""
+    def fixed(cls, paints: list[dict], others: list[dict] = ()) -> "Inventory":
+        """Lists that are given, not read: for tests and for running without minipainter."""
         inventory = cls(command=[])
         inventory._paints = [dict(p) for p in paints]
+        inventory._others = [dict(p) for p in others]
         inventory._state = "ok"
         return inventory
 
@@ -77,6 +88,13 @@ class Inventory:
             if self._state == "unread":
                 self._load()
             return [dict(p) for p in self._paints]
+
+    def others(self) -> list[dict]:
+        """The paints of the catalogue that are not owned: what a shopping list can propose."""
+        with self._lock:
+            if self._state == "unread":
+                self._load()
+            return [dict(p) for p in self._others]
 
     def refresh(self) -> dict:
         with self._lock:
@@ -89,7 +107,8 @@ class Inventory:
             return self._status()
 
     def _status(self) -> dict:
-        return {"state": self._state, "count": len(self._paints), "loaded": self._loaded, "error": self._error}
+        return {"state": self._state, "count": len(self._paints), "catalogue": len(self._paints) + len(self._others),
+                "loaded": self._loaded, "error": self._error}
 
     def _load(self) -> None:
         command = self._command if self._command is not None else default_command()
@@ -97,7 +116,7 @@ class Inventory:
             done = self._runner(command, capture_output=True, text=True, timeout=TIMEOUT_SECONDS)
             if done.returncode != 0:
                 raise RuntimeError((done.stderr or "").strip()[:300] or f"exit code {done.returncode}")
-            self._paints = parse(done.stdout)
+            self._paints, self._others = read(done.stdout)
             self._state, self._error = "ok", None
         except subprocess.TimeoutExpired:
             self._fail(f"no answer within {TIMEOUT_SECONDS} s")
@@ -106,4 +125,4 @@ class Inventory:
         self._loaded = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
 
     def _fail(self, reason: str) -> None:
-        self._paints, self._state, self._error = [], "error", reason
+        self._paints, self._others, self._state, self._error = [], [], "error", reason

@@ -357,4 +357,32 @@ def test_the_inventory_is_read_when_the_server_starts(processor):
 def test_an_app_built_without_an_inventory_runs_nothing(processor, tmp_path):
     with TestClient(create_app(processor, allowed_hosts=["testserver"])) as c:
         assert c.get("/api/inventory").json() == {
-            "status": {"state": "ok", "count": 0, "loaded": None, "error": None}, "paints": []}
+            "status": {"state": "ok", "count": 0, "catalogue": 0, "loaded": None, "error": None}, "paints": []}
+
+
+OTHERS = [_paint("blue", "opaque_layer", "#2a5caa"), _paint("sky", "opaque_layer", "#6493de")]
+
+
+def test_the_shopping_list_is_for_the_recipes_in_use(processor, tmp_path):
+    inventory = Inventory.fixed(PAINTS, others=OTHERS)
+    with TestClient(create_app(processor, allowed_hosts=["testserver"], inventory=inventory)) as c:
+        slug = c.post("/api/projects", json={"path": str(flat(tmp_path / "src"))}).json()["slug"]
+        processor.wait_idle(30)
+        project, part = f"/api/projects/{slug}", f"/api/projects/{slug}/variants/src/parts/a"
+        c.post(f"{project}/recipes", json=RED)
+        c.post(f"{project}/recipes", json={"name": "Błękit", "base": "#2a5caa", "layers": 0, "use": {"highlight": False}})
+
+        # No zone uses a recipe yet: all of them are looked at.
+        answer = c.get(f"{project}/missing").json()
+        assert [r["id"] for r in answer["recipes"]] == ["r1", "r2"] and answer["unused"] == []
+        assert [(g["recipe"], g["key"], g["reason"], g["pick"]) for g in answer["gaps"]] == [("r2", "base", "far", "blue")]
+        assert answer["buy"] == [{"paint": OTHERS[0], "grade": "missing", "for": [{"recipe": "r2", "keys": ["base"]}]}]
+        assert answer["inventory"]["count"] == 3 and answer["inventory"]["catalogue"] == 5
+
+        # Once zones use recipes, only those are worth a purchase.
+        c.post(f"{part}/zones", json={"name": "Pas"})
+        c.patch(f"{part}/zones/1", json={"recipe": "r1"})
+        answer = c.get(f"{project}/missing").json()
+        assert answer["recipes"] == [{"id": "r1", "name": "Czerwień", "base": "#b3202a", "zones": [{"part": "a", "zone": "Pas"}]}]
+        assert answer["unused"] == ["Błękit"] and answer["gaps"] == [] and answer["buy"] == []
+        assert c.get("/api/projects/nope/missing").status_code == 404

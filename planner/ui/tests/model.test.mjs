@@ -71,3 +71,12 @@ test("what a key press means depends on the work in hand", () => {
   assert.equal(keyAction(key("ArrowRight", { altKey: true }), paint), null);
   assert.equal(keyAction(key("Escape"), paint), "close");
 });
+
+test("with a dialog open, the keys belong to the dialog", () => {
+  const press = (key, extra = {}) => ({ key, metaKey: false, ctrlKey: false, altKey: false, shiftKey: false, ...extra });
+  const paint = { work: "paint", typing: false, onSlider: false };
+  assert.equal(keyAction(press("ArrowRight"), paint), "forward");
+  assert.equal(keyAction(press("ArrowRight"), { ...paint, modal: true }), null);
+  assert.equal(keyAction(press("Escape"), { ...paint, modal: true }), null);
+  assert.equal(keyAction(press("z", { metaKey: true }), { work: "zones", typing: false, onSlider: false, modal: true }), null);
+});

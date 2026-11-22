@@ -8,6 +8,7 @@ import {
 } from "./model.js";
 import { loadPaintMesh, lodFaceColors, lodStageColors } from "./paintmesh.js";
 import { createRecipePanel } from "./recipepanel.js";
+import { createShoppingDialog } from "./shopping.js";
 import { buildStage, paintPlan, progressOf, settle, stepLabel, stepsKey, timeline } from "./stagemodel.js";
 import { createTimeline } from "./timeline.js";
 import { createViewer } from "./viewer.js";
@@ -145,8 +146,9 @@ function projectScreen(slug) {
   const panel = createRecipePanel({
     selectRecipe, createRecipe: () => attempt(addRecipe()), deleteRecipe: id => attempt(removeRecipe(id)), changeRecipe,
     setPrimer: hex => attempt(setPrimer(hex)), toggleDone: (...mark) => attempt(toggleDone(...mark)), goTo,
-    refreshInventory: () => attempt(refreshInventory()),
+    refreshInventory: () => attempt(refreshInventory()), openShopping: () => shopping.open(),
   });
+  const shopping = createShoppingDialog({ load: () => api.getMissing(slug) });
 
   const toolButtons = Object.fromEntries(TOOLS.map(([id, label]) =>
     [id, h("button", { type: "button", onclick: () => setTool(id) }, label)]));
@@ -214,7 +216,7 @@ function projectScreen(slug) {
     h("div", { class: "stage" }, canvas, hint),
     timelineBar.element);
   const screen = h("div", { class: "project" }, side, main, panel.element);
-  root.append(screen);
+  root.append(screen, shopping.element);
 
   const viewer = createViewer(canvas);
   viewer.onPick(select);
@@ -818,7 +820,7 @@ function projectScreen(slug) {
     const focused = document.activeElement;
     const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(focused?.tagName)
       && focused.type !== "range" && focused.type !== "checkbox";
-    const action = keyAction(event, { work: state.work, typing, onSlider: focused?.type === "range" });
+    const action = keyAction(event, { work: state.work, typing, onSlider: focused?.type === "range", modal: shopping.isOpen() });
     if (action === "close") closeLightbox();
     else if (action === "undo") { event.preventDefault(); undo(); }
     else if (action === "redo") { event.preventDefault(); redo(); }
@@ -974,6 +976,7 @@ function projectScreen(slug) {
     stopWatching();
     timelineBar.dispose();
     window.removeEventListener("keydown", onKey);
+    shopping.dispose();
     closeLightbox();
     viewer.dispose();
     paint?.mesh.dispose();

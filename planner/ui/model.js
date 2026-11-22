@@ -54,8 +54,10 @@ export function sidecarPath(part, kind) {
 }
 
 // What a key press asks for: "undo", "redo", "back", "forward" (the timeline), "close", or null.
-// where: { work: "zones" | "paint", typing: a text field has the focus, onSlider: a slider has it }
-export function keyAction(event, { work, typing, onSlider }) {
+// where: { work: "zones" | "paint", typing: a text field has the focus, onSlider: a slider has it,
+//          modal: a dialog is open over the page (it gets every key, Escape included) }
+export function keyAction(event, { work, typing, onSlider, modal = false }) {
+  if (modal) return null;
   if (event.key === "Escape") return "close";
   if (typing) return null;
   const command = event.metaKey || event.ctrlKey;

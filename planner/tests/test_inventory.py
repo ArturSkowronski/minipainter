@@ -105,4 +105,17 @@ def test_the_command_comes_from_the_environment(monkeypatch):
     monkeypatch.delenv("WPM_MPAINT")
     command = inventory.default_command()
     assert command[0] == "node" and command[1].endswith("warpaint-cli/src/cli.mjs") and "~" not in command[1]
-    assert command[2:] == ["inventory", "list", "--json"]
+    # The whole catalogue with what is owned marked in it: one run serves the steps and the shopping list.
+    assert command[2:] == ["paint", "search", "--json"]
+
+
+def test_the_rest_of_the_catalogue_is_kept_for_proposals():
+    inv = Inventory(["mpaint"], Runner(ok()))
+    assert inv.others() == [{"id": "c/not-owned", "name": "Not Owned", "provider": "citadel", "format": "opaque_base",
+                             "hex": "#010203"}]
+    assert inv.paints() == EXPECTED and inv.status()["catalogue"] == 3
+    failed = Inventory(["mpaint"], Runner(FileNotFoundError("node")))
+    assert failed.others() == [] and failed.status()["catalogue"] == 0
+    fixed = Inventory.fixed(EXPECTED, others=inv.others())
+    assert fixed.others() == inv.others() and fixed.status()["catalogue"] == 3
+    assert Inventory.fixed(EXPECTED).others() == []

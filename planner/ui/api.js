@@ -71,3 +71,7 @@ export const setProgress = (slug, variant, id, mark) => call(`${part(slug, varia
 // { status: { state, count, loaded, error }, paints: [{ id, name, provider, format, hex }] }
 export const getInventory = () => call("/api/inventory");
 export const refreshInventory = () => call("/api/inventory/refresh", post({}));
+// What to buy for the recipes in use: { inventory, recipes: [{ id, name, base, zones }], unused: [name],
+//   gaps: [{ recipe, key, stage, index, of, grade, reason, off, wanted, have, distance, options, pick }],
+//   buy: [{ paint, grade, for: [{ recipe, keys }] }] }
+export const getMissing = slug => call(`${project(slug)}/missing`);

@@ -93,11 +93,31 @@ Tick a step when it is done on the selected part; the part list shows done/all. 
 zone under the pointer. "Podkład" sets the primer colour of the whole figure.
 
 Paints come from [minipainter](https://www.npmjs.com/package/minipainter): the server runs
-`node ~/Priv/warpaint-cli/src/cli.mjs inventory list --json` once when it starts and again on "odśwież". Set
-`WPM_MPAINT` to another command line (for example `mpaint inventory list --json`). The inventory is only read.
+`node ~/Priv/warpaint-cli/src/cli.mjs paint search --json` once when it starts and again on "odśwież". That
+lists the whole catalogue with the owned paints marked. Set `WPM_MPAINT` to another command line (for example
+`mpaint paint search --json`); a command that lists only the owned paints (`mpaint inventory list --json`)
+works too, but then there is nothing to propose for purchase. The inventory is only read.
 What kind of product a paint is comes from minipainter's `product_format`: base and layer steps use
 `opaque_base` and `opaque_layer` paints (`metallic` for a recipe marked "Metaliczna"), shade and lining use
 `wash`, ink uses `ink` and `contrast`. Without minipainter the steps still show their colours, without paints.
+
+### What to buy
+
+"Czego brakuje?" in the painting panel lists the steps the owned paints do not cover and proposes paints
+of the catalogue for them. It looks at the recipes the zones use (at all of them while no zone uses one).
+
+- **Brakuje**: the step has no paint, the nearest owned paint is another colour (more than twice the bottle
+  distance away, 0.08 by default), or the highlight is the base paint again, so the layers have nothing to
+  blend towards.
+- **Warto dokupić**: the owned paint is only roughly the colour (between one and two bottle distances), or
+  the recipe prefers bottles and a layer is mixed.
+
+Each gap gets the nearest paint of up to three brands, and only paints clearly nearer than what is owned.
+The first is tried before it is listed: it is added to the owned paints and the recipe resolved again, so
+the list says which steps the bottle then serves, and one bottle is not proposed twice. A pinned step is
+never a gap. Washes are judged loosely (their bottle colour says little), and a lining wash only when no
+wash is owned. "Kopiuj listę" puts the list on the clipboard as text. Nothing is written anywhere: the
+inventory stays minipainter's.
 
 ## Where things are kept
 

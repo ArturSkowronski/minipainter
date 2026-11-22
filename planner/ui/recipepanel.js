@@ -1,18 +1,18 @@
 // The right-hand panel of the painting view: the primer, one recipe's settings, and its steps with the
 // paints they resolve to. It shows what it is given and reports what the user did; it calls no server.
 import { h } from "./dom.js";
+import { PROVIDER_LABEL as PROVIDER } from "./shoppingmodel.js";
 import { FORMAT_LABEL, HOW, WHERE, mixText, nearestFirst, stageSummary, stepLabel } from "./stagemodel.js";
 
 const MODES = [["auto", "automatycznie"], ["bottles", "wolę gotowe farby"], ["mixes", "wolę mieszanki"]];
 const OPTIONAL = [["shade", "Cień"], ["lining", "Linie"], ["highlight", "Rozjaśnienie"], ["ink", "Tusz"]];
 const PRIMERS = [["#141414", "Czarny"], ["#8b8e93", "Szary"], ["#e8e8e4", "Biały"]];
-const PROVIDER = { citadel: "Citadel", army_painter: "Army Painter", vallejo: "Vallejo", ak_interactive: "AK Interactive" };
 // Which kinds of paint come first in the list offered for a step that has no colour of its own.
 const TINT_ORDER = { shade: ["wash", "contrast", "ink"], lining: ["wash", "ink", "contrast"], ink: ["contrast", "ink", "wash"] };
 const FAR = 0.08;      // OKLab distance beyond which the nearest owned paint is not really the colour asked for
 
 // actions: selectRecipe(id), createRecipe(), deleteRecipe(id), changeRecipe(id, changes), setPrimer(hex),
-//          toggleDone(recipeId, stepKey, done), goTo(stepKey, recipeId), refreshInventory()
+//          toggleDone(recipeId, stepKey, done), goTo(stepKey, recipeId), refreshInventory(), openShopping()
 export function createRecipePanel(actions) {
   let view = null;         // what update() was last given
   let picker = null;       // "<recipe id>|<step key>" of the step whose paint list is open
@@ -84,10 +84,16 @@ export function createRecipePanel(actions) {
 
   // -- steps --------------------------------------------------------------------------------------
   const stepsBox = h("section", { class: "steps" });
-  const inventoryBox = h("section", { class: "inventory muted small" });
+  const inventoryLine = h("span", { class: "muted small" });
+  const shoppingButton = h("button", {
+    type: "button", class: "plain", title: "Których farb brakuje do receptur i co kupić",
+    onclick: () => actions.openShopping(),
+  }, "Czego brakuje?");
+  const inventoryBox = h("section", { class: "inventory" }, h("span", { class: "label" }, "Farby"),
+    h("div", { class: "inventory-row" }, inventoryLine, shoppingButton));
   const problemBox = h("p", { class: "problem", role: "alert", hidden: true });
   const element = h("aside", { class: "panel", hidden: true, "aria-label": "Receptura i kroki malowania" },
-    problemBox, primerBox, chooserBox, formBox, stepsBox, inventoryBox);
+    problemBox, primerBox, inventoryBox, chooserBox, formBox, stepsBox);
 
   const set = (control, value) => { if (document.activeElement !== control && control.value !== value) control.value = value; };
 
@@ -266,11 +272,12 @@ export function createRecipePanel(actions) {
   function drawInventory() {
     const { inventory } = view;
     const refresh = h("button", { type: "button", class: "plain small", onclick: () => actions.refreshInventory() }, "odśwież");
-    if (!inventory || inventory.state === "unread") inventoryBox.replaceChildren("Inwentarz: wczytywanie…");
+    if (!inventory || inventory.state === "unread") inventoryLine.replaceChildren("Inwentarz: wczytywanie…");
     else if (inventory.state === "error") {
-      inventoryBox.replaceChildren(
+      inventoryLine.replaceChildren(
         h("span", { class: "warn", title: inventory.error }, "Nie udało się odczytać inwentarza mpaint — kroki pokazują same kolory."), " ", refresh);
-    } else inventoryBox.replaceChildren(`Inwentarz mpaint: ${inventory.count} farb `, refresh);
+    } else inventoryLine.replaceChildren(`Inwentarz mpaint: ${inventory.count} farb `, refresh);
+    shoppingButton.disabled = !inventory || inventory.state !== "ok" || view.plan.recipes.length === 0;
   }
 
   return {

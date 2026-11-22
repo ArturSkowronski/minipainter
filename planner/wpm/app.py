@@ -14,7 +14,7 @@ from starlette.responses import FileResponse, JSONResponse, Response, StreamingR
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
 
-from wpm import layers, recipes, zones
+from wpm import layers, recipes, shopping, zones
 from wpm.inventory import Inventory
 from wpm.jobs import Processor
 from wpm.profiles import detect
@@ -240,6 +240,25 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
         return JSONResponse({"profile": profile, "recipes": await resolved(project), "inventory": inventory.status()})
 
     @project_route
+    async def missing(request, project):
+        """What to buy for the recipes the zones use (for all of them while no zone uses any)."""
+        paints = await asyncio.to_thread(inventory.paints)
+        others = await asyncio.to_thread(inventory.others)
+        plan = project.snapshot()
+        zones_of: dict[str, list[dict]] = {}
+        for variant in plan["variants"]:
+            for part in variant["parts"]:
+                for zone in part["zones"]:
+                    if zone.get("recipe"):
+                        zones_of.setdefault(zone["recipe"], []).append({"part": part["name"], "zone": zone["name"]})
+        used = [r for r in plan["recipes"] if r["id"] in zones_of] or plan["recipes"]
+        answer = await asyncio.to_thread(shopping.recommend, used, paints, others, plan["stage_profile"], plan["bottle_distance"])
+        return JSONResponse({
+            **answer, "inventory": inventory.status(),
+            "recipes": [{"id": r["id"], "name": r["name"], "base": r["base"], "zones": zones_of.get(r["id"], [])} for r in used],
+            "unused": [r["name"] for r in plan["recipes"] if r not in used]})
+
+    @project_route
     async def create_recipe(request, project):
         return await with_steps(project, recipes.create_recipe(project, await strict_json(request)))
 
@@ -325,6 +344,7 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
         Route("/api/inventory", inventory_list, methods=["GET"]),
         Route("/api/inventory/refresh", inventory_refresh, methods=["POST"]),
         Route("/api/projects/{slug}/steps", steps, methods=["GET"]),
+        Route("/api/projects/{slug}/missing", missing, methods=["GET"]),
         Route("/api/projects/{slug}/recipes", create_recipe, methods=["POST"]),
         Route("/api/projects/{slug}/recipes/{recipe}", update_recipe, methods=["PATCH"]),
         Route("/api/projects/{slug}/recipes/{recipe}", delete_recipe, methods=["DELETE"]),

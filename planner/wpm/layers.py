@@ -140,6 +140,23 @@ def _layer_steps(recipe: dict, pins: _Pins, candidates: list[dict], base: dict, 
     return steps
 
 
+def covering_formats(recipe: dict) -> tuple[str, ...]:
+    """The kinds of paint a recipe's base, layers and highlight are chosen from."""
+    return ("metallic",) if recipe.get("metallic") else COVERING
+
+
+def tints(recipe: dict) -> dict[str, tuple[str, tuple[str, ...], object]]:
+    """For each stage done with a thin paint: the colour a paint is looked for by, the kinds of paint
+    that will do, and how nearness is measured."""
+    return {
+        "shade": (colour.darken(recipe["base"]), ("wash",), _tint_distance),
+        "lining": (colour.darken(recipe["base"], LINING_DARKEN), ("wash",), colour.distance),
+        # A glaze is chosen by the colour it adds, so by the base itself: contrast paints are catalogued
+        # as they look over white, not as dark as they pool.
+        "ink": (recipe["base"], ("ink", "contrast"), _tint_distance),
+    }
+
+
 def step_keys(recipe: dict, profile: str = DEFAULT_PROFILE) -> list[str]:
     """The keys of the steps `resolve` returns, without resolving anything."""
     keys = []
@@ -157,25 +174,15 @@ def resolve(recipe: dict, paints: list[dict], profile: str = DEFAULT_PROFILE,
             bottle_distance: float = DEFAULT_BOTTLE_DISTANCE) -> list[dict]:
     """The recipe's steps in the profile's order (the primer is the figure's, not a recipe's)."""
     pins = _Pins(recipe, paints)
-    covering = [p for p in paints if p["format"] in (("metallic",) if recipe.get("metallic") else COVERING)]
-    washes = [p for p in paints if p["format"] == "wash"]
-    tints = [p for p in paints if p["format"] in ("ink", "contrast")]
+    covering = [p for p in paints if p["format"] in covering_formats(recipe)]
 
     base = _covering_step("base", recipe["base"], pins, covering)
     # The highlight is resolved even when its stage is off: the layers blend towards it.
     highlight = _covering_step("highlight", recipe.get("highlight") or colour.lighten(recipe["base"]), pins, covering)
     limit = {"auto": bottle_distance, "bottles": bottle_distance * BOTTLES_REACH, "mixes": 0}[recipe["mode"]]
-    shaded = colour.darken(recipe["base"])
-    made = {
-        "base": [base],
-        "layers": _layer_steps(recipe, pins, covering, base, highlight, limit),
-        "shade": [_tint_step("shade", shaded, pins, washes, _tint_distance)],
-        "lining": [_tint_step("lining", colour.darken(recipe["base"], LINING_DARKEN), pins, washes, colour.distance)],
-        "highlight": [highlight],
-        # A glaze is chosen by the colour it adds, so by the base itself: contrast paints are catalogued
-        # as they look over white, not as dark as they pool.
-        "ink": [_tint_step("ink", recipe["base"], pins, tints, _tint_distance)],
-    }
+    made = {"base": [base], "layers": _layer_steps(recipe, pins, covering, base, highlight, limit), "highlight": [highlight]}
+    for stage, (wanted, formats, measure) in tints(recipe).items():
+        made[stage] = [_tint_step(stage, wanted, pins, [p for p in paints if p["format"] in formats], measure)]
     made["lining"][0]["threshold"] = recipe["lining_threshold"]
 
     notes = recipe.get("notes") or {}
