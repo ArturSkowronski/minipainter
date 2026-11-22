@@ -3,6 +3,8 @@ import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
+
 from wpm import inventory
 from wpm.inventory import Inventory
 
@@ -105,6 +107,9 @@ def test_the_command_comes_from_the_environment(monkeypatch):
     assert inventory.default_command() == ["mpaint", "inventory", "list", "--json"]
 
 
+# Skipped only where there is no repository around the planner (a release archive); in the repository a
+# CLI that has moved fails this test rather than quietly turning the default into `mpaint`.
+@pytest.mark.skipif(not (inventory.REPO_CLI.parents[1] / "package.json").is_file(), reason="unpacked without the repository")
 def test_the_command_is_the_cli_of_this_repository(monkeypatch):
     monkeypatch.delenv("WPM_MPAINT", raising=False)
     command = inventory.default_command()
