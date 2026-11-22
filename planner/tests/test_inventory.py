@@ -1,5 +1,6 @@
 import json
 import subprocess
+from pathlib import Path
 from types import SimpleNamespace
 
 from wpm import inventory
@@ -102,11 +103,22 @@ def test_fixed_never_runs_anything():
 def test_the_command_comes_from_the_environment(monkeypatch):
     monkeypatch.setenv("WPM_MPAINT", "mpaint inventory list --json")
     assert inventory.default_command() == ["mpaint", "inventory", "list", "--json"]
-    monkeypatch.delenv("WPM_MPAINT")
+
+
+def test_the_command_is_the_cli_of_this_repository(monkeypatch):
+    monkeypatch.delenv("WPM_MPAINT", raising=False)
     command = inventory.default_command()
-    assert command[0] == "node" and command[1].endswith("warpaint-cli/src/cli.mjs") and "~" not in command[1]
+    cli = Path(command[1])
+    assert command[0] == "node" and cli.is_file()
+    assert cli == Path(inventory.__file__).resolve().parents[2] / "src" / "cli.mjs"
     # The whole catalogue with what is owned marked in it: one run serves the steps and the shopping list.
     assert command[2:] == ["paint", "search", "--json"]
+
+
+def test_without_the_repository_the_command_is_the_installed_minipainter(monkeypatch, tmp_path):
+    monkeypatch.delenv("WPM_MPAINT", raising=False)
+    monkeypatch.setattr(inventory, "REPO_CLI", tmp_path / "src" / "cli.mjs")       # the planner unpacked on its own
+    assert inventory.default_command() == ["mpaint", "paint", "search", "--json"]
 
 
 def test_the_rest_of_the_catalogue_is_kept_for_proposals():

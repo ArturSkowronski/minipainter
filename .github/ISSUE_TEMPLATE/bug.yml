@@ -1,5 +1,5 @@
 name: Bug
-description: Something behaves wrong in the CLI, TUI or an MCP server
+description: Something behaves wrong in the CLI, TUI, an MCP server or the planner
 labels: [bug]
 body:
   - type: textarea
@@ -30,6 +30,7 @@ body:
         - MCP over HTTP (self-hosted or Fly)
         - ChatGPT connector (/mcp/v3)
         - Website
+        - Planner (planner/)
     validations:
       required: true
   - type: input

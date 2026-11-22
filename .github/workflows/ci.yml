@@ -1,10 +1,13 @@
 name: CI
 
+# The planner in planner/ has its own tests and workflow (planner.yml).
 on:
   push:
     branches: [master]
+    paths-ignore: ['planner/**']
   pull_request:
     branches: [master]
+    paths-ignore: ['planner/**']
   workflow_dispatch:
 
 jobs:

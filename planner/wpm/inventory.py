@@ -16,15 +16,20 @@ from wpm.colour import rgb_to_hex
 TIMEOUT_SECONDS = 30
 
 
+# minipainter's CLI in the repository this planner is a directory of.
+REPO_CLI = Path(__file__).resolve().parents[2] / "src" / "cli.mjs"
+
+
 def default_command() -> list[str]:
-    """`WPM_MPAINT` (a command line), else the minipainter checkout next to this project."""
+    """`WPM_MPAINT` (a command line), else this repository's CLI, else the installed `mpaint`."""
     override = os.environ.get("WPM_MPAINT")
     if override:
         return shlex.split(override)
-    cli = Path.home() / "Priv" / "warpaint-cli" / "src" / "cli.mjs"
     # A search for nothing lists the whole catalogue, each paint marked owned or not. A command that
     # lists only the owned paints (`inventory list --json`) works too; then there is nothing to propose.
-    return ["node", str(cli), "paint", "search", "--json"]
+    # A released planner is unpacked without the rest of the repository: there minipainter comes from npm.
+    mpaint = ["node", str(REPO_CLI)] if REPO_CLI.is_file() else ["mpaint"]
+    return [*mpaint, "paint", "search", "--json"]
 
 
 def parse(text: str) -> list[dict]:

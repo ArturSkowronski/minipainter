@@ -1,4 +1,7 @@
-# warpaint-model
+# minipainter planner
+
+Lives in `planner/` of the [minipainter](../README.md) repository and is released on its own (see
+"Release"). Every command below runs from this directory.
 
 A local browser app for planning how to paint a 3D-printed figure. Point it at a model's directory and it
 shows every part, alone and assembled, in the browser; you divide the parts into colour zones, give the zones
@@ -93,9 +96,10 @@ Tick a step when it is done on the selected part; the part list shows done/all. 
 zone under the pointer. "Podkład" sets the primer colour of the whole figure.
 
 Paints come from [minipainter](https://www.npmjs.com/package/minipainter): the server runs
-`node ~/Priv/warpaint-cli/src/cli.mjs paint search --json` once when it starts and again on "odśwież". That
-lists the whole catalogue with the owned paints marked. Set `WPM_MPAINT` to another command line (for example
-`mpaint paint search --json`); a command that lists only the owned paints (`mpaint inventory list --json`)
+this repository's CLI (`node ../src/cli.mjs paint search --json`) once when it starts and again on "odśwież".
+That lists the whole catalogue with the owned paints marked. Unpacked from a release archive, without the
+rest of the repository, it runs `mpaint paint search --json` instead, so install minipainter first
+(`npm i -g minipainter`). Set `WPM_MPAINT` to use another command line; a command that lists only the owned paints (`mpaint inventory list --json`)
 works too, but then there is nothing to propose for purchase. The inventory is only read.
 What kind of product a paint is comes from minipainter's `product_format`: base and layer steps use
 `opaque_base` and `opaque_layer` paints (`metallic` for a recipe marked "Metaliczna"), shade and lining use
@@ -138,7 +142,8 @@ drive holding the model was offline. Set `WPM_DATA_DIR` to keep the workspace so
 ## Keep it running (optional)
 
 ```sh
-cp launchd/com.local.warpaint-model.plist ~/Library/LaunchAgents/
+sed -e "s|/Users/YOU/minipainter/planner|$PWD|" -e "s|/Users/YOU|$HOME|" \
+  launchd/com.local.warpaint-model.plist > ~/Library/LaunchAgents/com.local.warpaint-model.plist
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.local.warpaint-model.plist
 ```
 
@@ -161,9 +166,15 @@ Moving the timeline repaints a 150 000-triangle part in about 15 ms and the asse
 Measured on the two reference models (Chromium, 1440×900): Spiderman assembled 390 000 triangles and Ciri
 assembled 770 000 triangles, both at 16.7 ms per frame; a single part at 150 000 triangles, 16.8 ms.
 
-## Status
+## Release
 
-Design: `docs/superpowers/specs/2026-11-21-figure-painting-planner-design.md`.
+The planner has its own version (`version` in `pyproject.toml`) and its own tags: `planner-vX.Y.Z`. Pushing
+such a tag runs `.github/workflows/planner-release.yml`: the tests, then a GitHub release with this directory
+as `minipainter-planner-X.Y.Z.tar.gz`. The tag has to equal the version in `pyproject.toml`. minipainter's
+own releases are the `vX.Y.Z` tags; the two never trigger each other, and the planner is not part of the npm
+package.
+
+## Status
 
 | Milestone | State |
 |---|---|

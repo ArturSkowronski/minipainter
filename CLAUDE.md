@@ -129,6 +129,25 @@ catalog reaches Fly only via a deploy. See `docs/deploy-fly.md`.
   `match color` prints ~66 KB, the substitution is quadratic in bash 3.2 (macOS default) and hangs
   for minutes, and grep's early exit trips `set -o pipefail` via SIGPIPE. Use `case`/glob instead.
 
+## Planner (`planner/`)
+
+A second, separately released project in this repository: a locally hosted browser app (Python 3.13 via
+`uv`, Starlette, plain ES modules) that plans how to paint a 3D-printed figure. Its guide is
+`planner/README.md`.
+
+- **It reads this package's CLI**: `node src/cli.mjs paint search --json`, taking `id`, `name`, `provider`,
+  `owned`, `product_format` and `rgb` of every paint (`planner/wpm/inventory.py`). Changing the shape of
+  that output is a change to the planner too.
+- **Tests are separate.** `npm test` runs only `tests/*.test.mjs`. The planner's are run from `planner/`:
+  `uv run pytest` and `node --test ui/tests/`. CI: `ci.yml` skips changes under `planner/`, `planner.yml`
+  runs only for them.
+- **Releases are separate.** minipainter: tag `vX.Y.Z` (`release.yml`: npm + Fly). Planner: tag
+  `planner-vX.Y.Z`, equal to `version` in `planner/pyproject.toml` (`planner-release.yml`: tests + a GitHub
+  release with `planner/` as an archive). Never tag the planner `v…`: that publishes minipainter.
+- **It never ships in the npm package**: `files` in `package.json` stays `src/` + `data/` + `MCP.md`.
+- `planner/data/` (the user's projects and meshes) is git-ignored and must never be committed; purchased
+  models are not ours to publish.
+
 ## Issue tracking
 
 The backlog is GitHub Issues on `ArturSkowronski/minipainter` (`gh issue list`). Before starting
@@ -137,7 +156,7 @@ work that is not a direct request, check whether an issue already covers it.
 **Labels** — every issue gets one type and at least one area; status and priority are optional.
 - Type: `bug`, `feature`, `data` (paints and ranges), `docs`, `chore`.
 - Area: `area:catalog`, `area:matching`, `area:inventory`, `area:mcp`, `area:cli`, `area:site`,
-  `area:release`.
+  `area:release`, `area:planner`.
 - Status: `ready` — the body has acceptance criteria and a way to verify, so it can be picked up
   and finished without asking. `needs-decision` — do **not** start; the body states the question
   and the options, and the maintainer answers in a comment. `blocked` — waiting on something
