@@ -55,3 +55,19 @@ export const putZoneFaces = (slug, variant, id, zones, basedOn) =>
   call(`${part(slug, variant, id)}/zone-faces`, {
     method: "PUT", headers: { "Content-Type": "application/octet-stream", "If-Match": String(basedOn) }, body: zones,
   });
+
+// -- recipes, steps and paints ----------------------------------------------------------------------
+
+const recipe = (slug, id) => `${project(slug)}/recipes/${encodeURIComponent(id)}`;
+
+// { profile: { id, stages }, recipes: { id: [step] }, inventory: status }
+export const getSteps = slug => call(`${project(slug)}/steps`);
+// Each answers { recipe, steps }: the steps as they resolve with the paints owned now.
+export const createRecipe = (slug, fields = {}) => call(`${project(slug)}/recipes`, post(fields));
+export const updateRecipe = (slug, id, changes) => call(recipe(slug, id), json("PATCH", changes));
+export const deleteRecipe = (slug, id) => call(recipe(slug, id), { method: "DELETE" });
+export const updateSettings = (slug, changes) => call(`${project(slug)}/settings`, json("PATCH", changes));
+export const setProgress = (slug, variant, id, mark) => call(`${part(slug, variant, id)}/progress`, json("PUT", mark));
+// { status: { state, count, loaded, error }, paints: [{ id, name, provider, format, hex }] }
+export const getInventory = () => call("/api/inventory");
+export const refreshInventory = () => call("/api/inventory/refresh", post({}));
