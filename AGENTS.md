@@ -6,6 +6,9 @@ tested with the built-in runner (`npm test` → `node --test`).
 
 Humans: see `README.md`. `CLAUDE.md` carries the same paint-catalog rules and takes precedence.
 
+The backlog is GitHub Issues; label meanings and the issue workflow are in `CLAUDE.md` under
+"Issue tracking". `gh issue list --label ready` lists work that can be picked up without asking.
+
 ## Setup
 
 ```sh

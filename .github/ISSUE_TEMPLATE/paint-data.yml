@@ -1,0 +1,47 @@
+name: Paint data
+description: A paint is missing, misnamed, has the wrong colour or the wrong type, or a whole range is missing
+labels: [data, "area:catalog"]
+body:
+  - type: dropdown
+    id: brand
+    attributes:
+      label: Brand
+      options:
+        - Citadel / Games Workshop
+        - Army Painter
+        - Vallejo
+        - AK Interactive
+        - Another brand (not in the catalog yet)
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong
+      options:
+        - A paint is missing
+        - A whole range is missing
+        - Wrong colour (RGB / hex)
+        - Wrong type (base, layer, wash, contrast, metallic, ink…)
+        - Wrong or misspelled name
+        - A paint that does not exist is listed
+    validations:
+      required: true
+  - type: textarea
+    id: paints
+    attributes:
+      label: Paints affected
+      description: Names exactly as printed on the pot, one per line. Add the SKU if you know it.
+      placeholder: |
+        Imperial Gold (77.121)
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: >
+        A link that shows the correct data: the manufacturer's page or colour chart, or a record in
+        https://github.com/alexparlett/hobby-desk-data. Data without a source cannot be added.
+    validations:
+      required: true

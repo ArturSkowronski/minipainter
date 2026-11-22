@@ -128,3 +128,29 @@ catalog reaches Fly only via a deploy. See `docs/deploy-fly.md`.
   When adding checks to that script, do not `${var//…/}`-strip or `| grep -q` a captured CLI output:
   `match color` prints ~66 KB, the substitution is quadratic in bash 3.2 (macOS default) and hangs
   for minutes, and grep's early exit trips `set -o pipefail` via SIGPIPE. Use `case`/glob instead.
+
+## Issue tracking
+
+The backlog is GitHub Issues on `ArturSkowronski/minipainter` (`gh issue list`). Before starting
+work that is not a direct request, check whether an issue already covers it.
+
+**Labels** — every issue gets one type and at least one area; status and priority are optional.
+- Type: `bug`, `feature`, `data` (paints and ranges), `docs`, `chore`.
+- Area: `area:catalog`, `area:matching`, `area:inventory`, `area:mcp`, `area:cli`, `area:site`,
+  `area:release`.
+- Status: `ready` — the body has acceptance criteria and a way to verify, so it can be picked up
+  and finished without asking. `needs-decision` — do **not** start; the body states the question
+  and the options, and the maintainer answers in a comment. `blocked` — waiting on something
+  external that the body names. No status label means it still needs triage.
+- Priority: `priority:high`, `priority:low`; unlabelled is normal.
+
+`gh issue list --label ready` is the queue of work that can be done unattended.
+
+**Issue body** — `## Context` (what is true now, with file paths or commands that show it),
+`## Done when` (observable conditions), `## Verify` (the commands to run). A `needs-decision`
+issue has `## Decision needed` with the options and a recommendation instead of `## Done when`.
+
+**Working an issue** — branch `<number>-<short-slug>`, and put `Closes #<number>` in the PR body
+(or the commit message when committing straight to `master`). When a task turns up unrelated work,
+file an issue for it instead of widening the change. When an answer arrives on a `needs-decision`
+issue, rewrite the body into the `ready` shape and swap the label.
