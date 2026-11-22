@@ -26,23 +26,31 @@ def default_command() -> list[str]:
 
 
 def parse(text: str) -> list[dict]:
-    """Owned paints with a product format and a colour, sorted by name. ValueError if `text` is not the list."""
+    """Owned paints with a product format and a colour, sorted by name.
+
+    ValueError when `text` is not minipainter's list: something else that happens to be JSON (an error
+    object, the output of a version without `product_format`) must not pass for "owns no paints".
+    """
     data = json.loads(text)
-    items = data.get("items", []) if isinstance(data, dict) else data
+    items = data.get("items") if isinstance(data, dict) else data
     if not isinstance(items, list):
         raise ValueError("the inventory is not a list of paints")
-    paints = []
+    paints, understood = [], 0
     for item in items:
-        if not isinstance(item, dict) or not item.get("owned") or not item.get("product_format"):
+        if not isinstance(item, dict) or not item.get("product_format"):
             continue
         rgb = item.get("rgb")
         try:
-            colour = rgb_to_hex(*(min(255, max(0, int(rgb[k]))) for k in "rgb"))
-            paints.append({"id": str(item["id"]), "name": str(item["name"]),
-                           "provider": str(item.get("provider") or ""),
-                           "format": str(item["product_format"]), "hex": colour})
+            paint = {"id": str(item["id"]), "name": str(item["name"]), "provider": str(item.get("provider") or ""),
+                     "format": str(item["product_format"]),
+                     "hex": rgb_to_hex(*(min(255, max(0, int(rgb[k]))) for k in "rgb"))}
         except (KeyError, TypeError, ValueError):
             continue
+        understood += 1
+        if item.get("owned"):
+            paints.append(paint)
+    if items and not understood:
+        raise ValueError("no entry of the inventory has a product_format and an rgb colour")
     return sorted(paints, key=lambda p: (p["name"].lower(), p["id"]))
 
 

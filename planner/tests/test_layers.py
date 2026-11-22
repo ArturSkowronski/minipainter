@@ -107,11 +107,34 @@ def test_auto_takes_a_bottle_only_when_it_is_close():
     assert ids(steps(with_mid, mode="mixes", layers=1)["layer:1"]) == [("red", 1), ("light-red", 1)]
 
 
-def test_a_bottle_serves_one_layer_and_never_repeats_base_or_highlight():
-    s = steps(PAINTS + [MID], distance=5, layers=3)
-    used = [ids(s[f"layer:{k}"]) for k in (1, 2, 3)]
-    assert len(set(used)) == 3 and all(isinstance(u, str) for u in used)
-    assert not {"red", "light-red"} & set(used) and "mid-red" in used
+def place(step):
+    """Where a layer sits between base (0) and highlight (1): a mix by its parts, a bottle by its colour."""
+    if step["mix"]:
+        first, second = step["mix"]
+        return second["parts"] / (first["parts"] + second["parts"])
+    base, light, here = (colour.to_oklab(c) for c in (RED, LIGHT, step["paint"]["hex"]))
+    along = [h - b for b, h in zip(base, light)]
+    return sum((x - b) * a for x, b, a in zip(here, base, along)) / sum(a * a for a in along)
+
+
+def test_a_bottle_is_used_only_for_the_layer_whose_place_it_has():
+    # A paint from the middle of the blend is layer 2, never layer 1 or 3, though it is the nearest bottle to all.
+    assert colour.distance(colour.mix(RED, LIGHT, 0.25), MID["hex"]) < 2 * layers.DEFAULT_BOTTLE_DISTANCE    # in reach
+    s = steps(PAINTS + [MID], layers=3, mode="bottles")
+    assert [ids(s[f"layer:{k}"]) for k in (1, 2, 3)] == [
+        [("red", 3), ("light-red", 1)], "mid-red", [("red", 1), ("light-red", 3)]]
+
+
+def test_layers_never_step_back_towards_the_base():
+    # Nearest-bottle-first once gave a lighter layer under a darker one.
+    for share in (0.3, 0.45, 0.55, 0.7, 0.9):
+        paints = PAINTS + [paint("somewhere", "opaque_layer", colour.mix(RED, LIGHT, share))]
+        for count in range(1, 7):
+            for mode in ("auto", "bottles"):
+                s = steps(paints, distance=5, layers=count, mode=mode)
+                places = [place(s[f"layer:{k}"]) for k in range(1, count + 1)]
+                assert places == sorted(places), (share, count, mode, places)
+                assert len({str(ids(s[f"layer:{k}"])) for k in range(1, count + 1)}) == count
 
 
 def test_bottles_mode_reaches_further_than_auto():

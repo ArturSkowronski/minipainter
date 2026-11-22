@@ -152,3 +152,4 @@ h1, h2 { margin: 0; font-weight: 600; }
 .stop { position: absolute; top: 0; transform: translateX(-50%); padding: 0.05rem 0.35rem; background: none; border: 0; border-radius: 4px; color: var(--muted); font-size: 0.75rem; white-space: nowrap; cursor: pointer; }
 .stop:hover { color: var(--fg); }
 .stop[aria-current="true"] { background: var(--accent); color: var(--panel); }
+.problem { margin: 0; padding: 0.45rem 0.6rem; border: 1px solid var(--bad); border-radius: 5px; color: var(--bad); }

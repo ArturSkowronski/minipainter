@@ -26,7 +26,17 @@ EXPECTED = [
 def test_parse_keeps_owned_paints_with_a_format_and_a_colour():
     assert inventory.parse(json.dumps({"message": "89 paints", "items": ITEMS})) == EXPECTED
     assert inventory.parse(json.dumps(ITEMS)) == EXPECTED
-    assert inventory.parse("{}") == []
+    assert inventory.parse('{"items": []}') == [] and inventory.parse("[]") == []
+
+
+def test_json_of_another_shape_is_not_an_empty_inventory():
+    # An older mpaint, or an error object, must read as "could not read", not as "owns nothing".
+    import pytest
+    unusable = [{"id": "c/x", "name": "X", "owned": True, "rgb": "#010203", "product_format": "wash"},
+                {"id": "c/y", "name": "Y", "owned": True, "rgb": {"r": 1, "g": 2, "b": 3}}]
+    for text in ("{}", '{"error": "no such command"}', '{"items": "none"}', json.dumps(unusable), '"text"', "12"):
+        with pytest.raises(ValueError):
+            inventory.parse(text)
 
 
 class Runner:
@@ -66,6 +76,8 @@ def test_every_kind_of_failure_leaves_an_empty_list_and_says_why():
         SimpleNamespace(returncode=1, stdout="", stderr="boom"),
         SimpleNamespace(returncode=0, stdout="not json", stderr=""),
         SimpleNamespace(returncode=0, stdout='"a string"', stderr=""),
+        SimpleNamespace(returncode=0, stdout='{"error": "unknown command"}', stderr=""),
+        SimpleNamespace(returncode=0, stdout='[{"id": "c/x", "name": "X", "owned": true}]', stderr=""),
         subprocess.TimeoutExpired("mpaint", 30),
     ]
     for failure in failures:

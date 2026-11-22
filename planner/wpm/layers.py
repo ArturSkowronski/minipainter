@@ -97,9 +97,25 @@ def _tint_step(key: str, wanted: str, pins: _Pins, candidates: list[dict], measu
     return _step(key, key, paint=paint, color=paint["hex"] if paint else wanted, pinned=pinned, stale_pin=stale)
 
 
+def _places(candidates: list[dict], start: str, end: str) -> dict[str, float]:
+    """Paint id -> where its colour falls on the line from `start` (0) to `end` (1). Empty when the two are one colour."""
+    origin, far = colour.to_oklab(start), colour.to_oklab(end)
+    along = [f - o for o, f in zip(origin, far)]
+    length = sum(a * a for a in along)
+    if length < 1e-9:
+        return {}
+    return {p["id"]: sum((c - o) * a for c, o, a in zip(colour.to_oklab(p["hex"]), origin, along)) / length
+            for p in candidates}
+
+
 def _layer_steps(recipe: dict, pins: _Pins, candidates: list[dict], base: dict, highlight: dict, limit: float) -> list[dict]:
     count = recipe["layers"]
     used = {step["paint"]["id"] for step in (base, highlight) if step["paint"]}
+    # A bottle may stand in for a layer only if it lies in that layer's stretch of the blend. Without
+    # this the nearest bottle is taken by whichever layer asks first, and a lighter layer can end up
+    # under a darker one.
+    places = _places(candidates, base["color"], highlight["color"])
+    half_step = 0.5 / (count + 1)
     can_mix = bool(base["paint"] and highlight["paint"] and base["paint"]["id"] != highlight["paint"]["id"])
     steps = []
     for k in range(1, count + 1):
@@ -108,7 +124,9 @@ def _layer_steps(recipe: dict, pins: _Pins, candidates: list[dict], base: dict, 
         paint, mix, stale = pins.get(f"layer:{k}/{count}")
         pinned = paint is not None or mix is not None
         if not pinned and limit > 0:
-            bottle, gap = _nearest([p for p in candidates if p["id"] not in used], target)
+            fitting = [p for p in candidates
+                       if p["id"] not in used and p["id"] in places and abs(places[p["id"]] - share) < half_step]
+            bottle, gap = _nearest(fitting, target)
             if bottle is not None and gap < limit:
                 paint = bottle
         if paint is None and mix is None and can_mix:

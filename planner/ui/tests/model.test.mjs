@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-  KIND_LABEL, STATUS_LABEL, activeVariant, assembledParts, firstViewablePart, progress, routeFromHash,
+  KIND_LABEL, STATUS_LABEL, activeVariant, assembledParts, firstViewablePart, keyAction, progress, routeFromHash,
 } from "../model.js";
 
 const plan = { active_variant: "split", variants: [
@@ -49,4 +49,25 @@ test("sidecar files sit beside the mesh", () => {
   assert.equal(sidecarPath(part, "masks"), "meshes/1-10-scale-split/body.masks.u8");
   assert.equal(sidecarPath(part, "lodmap"), "meshes/1-10-scale-split/body.lodmap.u32");
   assert.equal(sidecarPath(part, "lodmasks"), "meshes/1-10-scale-split/body.lodmasks.u8");
+});
+
+test("what a key press means depends on the work in hand", () => {
+  const key = (name, extra = {}) => ({ key: name, metaKey: false, ctrlKey: false, altKey: false, shiftKey: false, ...extra });
+  const zones = { work: "zones", typing: false, onSlider: false };
+  const paint = { work: "paint", typing: false, onSlider: false };
+  assert.equal(keyAction(key("z", { metaKey: true }), zones), "undo");
+  assert.equal(keyAction(key("Z", { ctrlKey: true, shiftKey: true }), zones), "redo");
+  assert.equal(keyAction(key("y", { ctrlKey: true }), zones), "redo");
+  // Zone strokes are not undone from the painting view: its tools and save status are hidden there.
+  assert.equal(keyAction(key("z", { metaKey: true }), paint), null);
+  assert.equal(keyAction(key("y", { ctrlKey: true }), paint), null);
+  assert.equal(keyAction(key("z", { metaKey: true }), { ...zones, typing: true }), null);
+  assert.equal(keyAction(key("z"), zones), null);
+  assert.equal(keyAction(key("ArrowLeft"), paint), "back");
+  assert.equal(keyAction(key("ArrowRight"), paint), "forward");
+  assert.equal(keyAction(key("ArrowRight"), zones), null);
+  assert.equal(keyAction(key("ArrowRight"), { ...paint, typing: true }), null);
+  assert.equal(keyAction(key("ArrowRight"), { ...paint, onSlider: true }), null);     // the slider moves itself
+  assert.equal(keyAction(key("ArrowRight", { altKey: true }), paint), null);
+  assert.equal(keyAction(key("Escape"), paint), "close");
 });

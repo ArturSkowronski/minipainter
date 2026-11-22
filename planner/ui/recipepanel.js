@@ -17,7 +17,7 @@ export function createRecipePanel(actions) {
   let view = null;         // what update() was last given
   let picker = null;       // key of the step whose paint list is open
   let filter = "";
-  let confirming = false;
+  let confirming = null;   // id of the recipe whose deletion is being asked about
   let drawnSteps = "";
 
   const change = changes => { if (view?.recipe) actions.changeRecipe(view.recipe.id, changes); };
@@ -33,7 +33,7 @@ export function createRecipePanel(actions) {
 
   // -- which recipe -------------------------------------------------------------------------------
   const recipeSelect = h("select", {
-    id: "recipe", onchange: () => { confirming = false; actions.selectRecipe(recipeSelect.value || null); },
+    id: "recipe", onchange: () => actions.selectRecipe(recipeSelect.value || null),
   });
   const addButton = h("button", {
     type: "button", class: "plain", title: "Nowa receptura", "aria-label": "Nowa receptura", onclick: () => actions.createRecipe(),
@@ -85,8 +85,9 @@ export function createRecipePanel(actions) {
   // -- steps --------------------------------------------------------------------------------------
   const stepsBox = h("section", { class: "steps" });
   const inventoryBox = h("section", { class: "inventory muted small" });
+  const problemBox = h("p", { class: "problem", role: "alert", hidden: true });
   const element = h("aside", { class: "panel", hidden: true, "aria-label": "Receptura i kroki malowania" },
-    primerBox, chooserBox, formBox, stepsBox, inventoryBox);
+    problemBox, primerBox, chooserBox, formBox, stepsBox, inventoryBox);
 
   const set = (control, value) => { if (document.activeElement !== control && control.value !== value) control.value = value; };
 
@@ -102,13 +103,15 @@ export function createRecipePanel(actions) {
     }
     recipeSelect.value = recipe?.id ?? "";
     recipeSelect.disabled = options.length === 0;
+    // The question is about one recipe: once another is shown, it is withdrawn.
+    if (confirming !== recipe?.id) confirming = null;
     deleteBox.replaceChildren(...(!recipe ? [] : confirming
       ? [h("span", { class: "small" }, "Usunąć?"),
-        h("button", { type: "button", class: "plain", onclick: () => { confirming = false; actions.deleteRecipe(recipe.id); } }, "Tak"),
-        h("button", { type: "button", class: "plain", onclick: () => { confirming = false; drawChooser(); } }, "Nie")]
+        h("button", { type: "button", class: "plain", onclick: () => { confirming = null; actions.deleteRecipe(recipe.id); } }, "Tak"),
+        h("button", { type: "button", class: "plain", onclick: () => { confirming = null; drawChooser(); } }, "Nie")]
       : [h("button", {
         type: "button", class: "plain icon", title: "Usuń recepturę", "aria-label": `Usuń recepturę ${recipe.name}`,
-        onclick: () => { confirming = true; drawChooser(); },
+        onclick: () => { confirming = recipe.id; drawChooser(); },
       }, "×")]));
     usedBy.textContent = !recipe ? "Receptura opisuje, jak malować jeden rodzaj powierzchni. Utwórz ją tutaj albo z listy stref."
       : view.usedBy.length ? `Używana przez: ${view.usedBy.join(", ")}` : "Żadna strefa jeszcze jej nie używa.";
@@ -213,7 +216,10 @@ export function createRecipePanel(actions) {
     stepsBox.hidden = !recipe;
     if (!recipe) { drawnSteps = ""; return; }
     const current = stepAt(steps, position, stages)?.key ?? null;
-    const key = JSON.stringify([recipe.id, steps, part?.id, part?.progress?.[recipe.id], current, picker, view.paints.length]);
+    // A failed change is part of the key: the list is drawn again from what the server has, so a tick that
+    // was not saved does not stay.
+    const key = JSON.stringify([recipe.id, steps, part?.id, part?.progress?.[recipe.id], current, picker,
+      view.paints.length, view.problem.count]);
     const typing = stepsBox.contains(document.activeElement) && ["TEXTAREA", "INPUT"].includes(document.activeElement.tagName)
       && document.activeElement.type !== "checkbox";
     if (key === drawnSteps || typing) return;
@@ -237,9 +243,11 @@ export function createRecipePanel(actions) {
   return {
     element,
     // view: { plan, recipe (or null), steps (of that recipe), usedBy: [text], part (or null), position, stages,
-    //         paints: [paint], inventory: status }
+    //         paints: [paint], inventory: status, problem: { text (or null), count } }
     update(next) {
       view = next;
+      problemBox.hidden = !view.problem.text;
+      problemBox.textContent = view.problem.text ?? "";
       set(primerInput, view.plan.primer);
       drawChooser();
       drawForm();

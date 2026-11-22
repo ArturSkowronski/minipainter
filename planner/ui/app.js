@@ -3,8 +3,8 @@ import * as api from "./api.js";
 import { h } from "./dom.js";
 import { fetchArray } from "./geometry.js";
 import {
-  KIND_LABEL, ROLE_LABEL, STATUS_LABEL, activeVariant, assembledParts, firstViewablePart, paintable, progress,
-  routeFromHash, sidecarPath,
+  KIND_LABEL, ROLE_LABEL, STATUS_LABEL, activeVariant, assembledParts, firstViewablePart, keyAction, paintable,
+  progress, routeFromHash, sidecarPath,
 } from "./model.js";
 import { loadPaintMesh, lodFaceColors, lodStageColors } from "./paintmesh.js";
 import { createRecipePanel } from "./recipepanel.js";
@@ -106,6 +106,7 @@ function projectScreen(slug) {
   let positions = [];           // the timeline's stops for what is on screen
   let position = null;          // where the timeline stands among them
   let lookKey = "";             // what the painted part currently shows, so it is repainted only on a change
+  const problem = { text: null, count: 0 };   // the last change the server did not take, shown in the panel
   const changeSeq = new Map();  // recipe id -> number of the latest change sent
 
   // -- skeleton -----------------------------------------------------------------------------------
@@ -271,9 +272,25 @@ function projectScreen(slug) {
     render();
   }
 
-  // A request the user started failed: say so in the console and show what the server really has.
+  // A change the user made did not reach the server, or was refused: say so where they are looking, and
+  // show what the server really has (a tick or a typed name must not stay on screen as if it were saved).
+  function failed(failure) {
+    console.error(failure);
+    if (closed) return;
+    problem.text = failure.status ? `Nie zapisano zmiany: ${failure.message}` : "Nie zapisano zmiany — serwer nie odpowiada.";
+    problem.count += 1;
+    render();
+    refresh();
+  }
+
+  function saved() {
+    if (problem.text === null) return;
+    problem.text = null;
+    render();
+  }
+
   function attempt(promise) {
-    promise.catch(failure => { console.error(failure); if (!closed) refresh(); });
+    promise.then(saved, failed);
   }
 
   // -- recipes ------------------------------------------------------------------------------------
@@ -311,10 +328,10 @@ function projectScreen(slug) {
       const answer = await api.updateRecipe(slug, id, changes);
       if (closed || changeSeq.get(id) !== turn) return;      // a later change is on its way and carries this one
       applyRecipe(answer);
+      problem.text = null;
       render();
     } catch (failure) {
-      console.error(failure);
-      if (!closed) refresh();
+      failed(failure);
     }
   }
 
@@ -784,22 +801,15 @@ function projectScreen(slug) {
   // -- references ---------------------------------------------------------------------------------
 
   function onKey(event) {
-    if (event.key === "Escape") closeLightbox();
-    const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)
-      && document.activeElement.type !== "range" && document.activeElement.type !== "checkbox";
-    const arrow = event.key === "ArrowLeft" ? -1 : event.key === "ArrowRight" ? 1 : 0;
-    if (arrow && state.work === "paint" && !typing && document.activeElement?.type !== "range"
-        && !event.metaKey && !event.ctrlKey && !event.altKey) {
-      if (timelineBar.nudge(arrow)) event.preventDefault();
-      return;
-    }
-    if (typing || !(event.metaKey || event.ctrlKey)) return;
-    if (event.key.toLowerCase() === "z") {
-      event.preventDefault();
-      if (event.shiftKey) redo(); else undo();
-    } else if (event.key.toLowerCase() === "y") {
-      event.preventDefault();
-      redo();
+    const focused = document.activeElement;
+    const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(focused?.tagName)
+      && focused.type !== "range" && focused.type !== "checkbox";
+    const action = keyAction(event, { work: state.work, typing, onSlider: focused?.type === "range" });
+    if (action === "close") closeLightbox();
+    else if (action === "undo") { event.preventDefault(); undo(); }
+    else if (action === "redo") { event.preventDefault(); redo(); }
+    else if (action === "back" || action === "forward") {
+      if (timelineBar.nudge(action === "back" ? -1 : 1)) event.preventDefault();
     }
   }
 
@@ -895,7 +905,7 @@ function projectScreen(slug) {
     const recipe = plan.recipes.find(candidate => candidate.id === state.recipe) ?? null;
     panel.update({
       plan, recipe, steps: (recipe && steps.recipes[recipe.id]) ?? [], part: selected, position, stages, paints,
-      inventory: steps.inventory,
+      inventory: steps.inventory, problem,
       usedBy: !recipe || !variant ? [] : variant.parts.flatMap(part =>
         part.zones.filter(zone => zone.recipe === recipe.id).map(zone => `${part.name} · ${zone.name}`)),
     });

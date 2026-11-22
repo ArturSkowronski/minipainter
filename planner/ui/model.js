@@ -52,3 +52,20 @@ const SIDECAR = {
 export function sidecarPath(part, kind) {
   return part.mesh.replace(/\.glb$/, "") + SIDECAR[kind];
 }
+
+// What a key press asks for: "undo", "redo", "back", "forward" (the timeline), "close", or null.
+// where: { work: "zones" | "paint", typing: a text field has the focus, onSlider: a slider has it }
+export function keyAction(event, { work, typing, onSlider }) {
+  if (event.key === "Escape") return "close";
+  if (typing) return null;
+  const command = event.metaKey || event.ctrlKey;
+  if (!command && !event.altKey && work === "paint" && !onSlider) {
+    if (event.key === "ArrowLeft") return "back";
+    if (event.key === "ArrowRight") return "forward";
+  }
+  // Undo belongs to zone strokes; while painting steps are looked at, their tools are not on screen.
+  if (!command || work !== "zones") return null;
+  const key = event.key.toLowerCase();
+  if (key === "z") return event.shiftKey ? "redo" : "undo";
+  return key === "y" ? "redo" : null;
+}
