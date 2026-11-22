@@ -1,29 +1,20 @@
 // Screens and wiring. Rendering is plain DOM; what to show comes from model.js, the 3D stage from viewer.js.
 import * as api from "./api.js";
+import { h } from "./dom.js";
 import { fetchArray } from "./geometry.js";
 import {
   KIND_LABEL, ROLE_LABEL, STATUS_LABEL, activeVariant, assembledParts, firstViewablePart, paintable, progress,
   routeFromHash, sidecarPath,
 } from "./model.js";
-import { loadPaintMesh, lodFaceColors } from "./paintmesh.js";
+import { loadPaintMesh, lodFaceColors, lodStageColors } from "./paintmesh.js";
+import { createRecipePanel } from "./recipepanel.js";
+import { buildStage, progressOf, settle, stepsKey, timeline } from "./stagemodel.js";
+import { createTimeline } from "./timeline.js";
 import { createViewer } from "./viewer.js";
 import { ZoneEdit, dropUnknownZones, hexToRgb, unassignedFaces, zoneShares } from "./zonesmodel.js";
 
 const root = document.getElementById("app");
 let teardown = () => {};
-
-function h(tag, attrs = {}, ...children) {
-  const node = document.createElement(tag);
-  for (const [key, value] of Object.entries(attrs)) {
-    if (value === null || value === undefined || value === false) continue;
-    if (key.startsWith("on")) node.addEventListener(key.slice(2), value);
-    else if (key === "class") node.className = value;
-    else if (key in node && key !== "list") node[key] = value;
-    else node.setAttribute(key, value === true ? "" : value);
-  }
-  node.append(...children.flat().filter(child => child !== null && child !== undefined && child !== false));
-  return node;
-}
 
 function route() {
   teardown();
@@ -77,8 +68,11 @@ function startScreen() {
 }
 
 // ---------------------------------------------------------------------------------------------------
-// Project: variant, parts, zones and references on the left; the stage on the right.
+// Project: variant, parts, zones and references on the left; the stage in the middle; when painting, the
+// timeline under the stage and the recipe panel on the right.
 
+const WORKS = [["zones", "Strefy"], ["paint", "Malowanie"]];
+const NEUTRAL = "#8b8e93";      // what has no zone is shown in this grey while zones are being drawn
 const TOOLS = [["orbit", "Obrót"], ["brush", "Pędzel"], ["patch", "Płat"], ["erase", "Gumka"]];
 const VIEWS = [["zones", "Strefy"], ["patches", "Płaty"], ["relief", "Relief"]];
 const SAVE_DELAY = 400;
@@ -87,7 +81,10 @@ const RETRY_DELAY = 3000;
 function projectScreen(slug) {
   const state = {
     plan: null, selected: null, mode: "part",
+    work: "zones",              // "zones": dividing parts into zones; "paint": recipes and the timeline
     tool: "orbit", radius: 2, stayInPatch: false, onlyEmpty: false, view: "zones",
+    position: null,             // the timeline stop the user chose; null = the last one, the finished figure
+    recipe: null,               // the recipe the panel shows
   };
   let fetching = false;
   let stale = false;
@@ -101,7 +98,15 @@ function projectScreen(slug) {
   let shown = "";               // what the stage currently holds, so a plan refresh does not reload it
   let strokeOpen = false;
   let assembledTicket = 0;
-  const lodmaps = new Map();    // lodmap url -> Promise<Uint32Array>
+  const figure = new Map();     // variant/part -> { rev, zones, lodmap, lodmasks }: what colours the assembled figure
+
+  // What the recipes resolve to with the paints owned now. Fetched again when stepsKey(plan) changes.
+  const steps = { key: null, rev: 0, loading: false, profile: { id: null, stages: ["primer"] }, recipes: {}, inventory: null };
+  let paints = [];              // the owned paints, for choosing one by hand
+  let positions = [];           // the timeline's stops for what is on screen
+  let position = null;          // where the timeline stands among them
+  let lookKey = "";             // what the painted part currently shows, so it is repainted only on a change
+  const changeSeq = new Map();  // recipe id -> number of the latest change sent
 
   // -- skeleton -----------------------------------------------------------------------------------
 
@@ -123,7 +128,15 @@ function projectScreen(slug) {
     part: h("button", { type: "button", onclick: () => setMode("part") }, "Komponent"),
     assembled: h("button", { type: "button", onclick: () => setMode("assembled") }, "Złożona figurka"),
   };
+  const workButtons = Object.fromEntries(WORKS.map(([id, label]) =>
+    [id, h("button", { type: "button", onclick: () => setWork(id) }, label)]));
   const info = h("span", { class: "info" });
+  const timelineBar = createTimeline({ onMove: goTo });
+  const panel = createRecipePanel({
+    selectRecipe, createRecipe: () => attempt(addRecipe()), deleteRecipe: id => attempt(removeRecipe(id)), changeRecipe,
+    setPrimer: hex => attempt(setPrimer(hex)), toggleDone: (...mark) => attempt(toggleDone(...mark)), goTo,
+    refreshInventory: () => attempt(refreshInventory()),
+  });
 
   const toolButtons = Object.fromEntries(TOOLS.map(([id, label]) =>
     [id, h("button", { type: "button", onclick: () => setTool(id) }, label)]));
@@ -184,14 +197,22 @@ function projectScreen(slug) {
     h("div", { class: "toolbar" },
       h("div", { class: "segmented", role: "group", "aria-label": "Tryb widoku" },
         modeButtons.part, modeButtons.assembled),
+      h("div", { class: "segmented", role: "group", "aria-label": "Praca" }, Object.values(workButtons)),
       info),
     paintBar,
-    h("div", { class: "stage" }, canvas, hint));
-  root.append(h("div", { class: "project" }, side, main));
+    h("div", { class: "stage" }, canvas, hint),
+    timelineBar.element);
+  const screen = h("div", { class: "project" }, side, main, panel.element);
+  root.append(screen);
 
   const viewer = createViewer(canvas);
   viewer.onPick(select);
   viewer.onStroke(onStroke);
+  viewer.onFaceClick(onFaceClick);
+  api.getInventory().then(answer => {
+    paints = answer.paints;
+    if (!closed && state.plan) render();
+  }).catch(console.error);
 
   const stopWatching = api.watchPlan(slug, revision => {
     if (!state.plan || revision !== state.plan.revision) refresh();
@@ -240,6 +261,146 @@ function projectScreen(slug) {
     render();
   }
 
+  function setWork(work) {
+    state.work = work;
+    render();
+  }
+
+  function goTo(key) {
+    state.position = key;
+    render();
+  }
+
+  // A request the user started failed: say so in the console and show what the server really has.
+  function attempt(promise) {
+    promise.catch(failure => { console.error(failure); if (!closed) refresh(); });
+  }
+
+  // -- recipes ------------------------------------------------------------------------------------
+
+  async function loadSteps() {
+    if (steps.loading) return;
+    steps.loading = true;
+    const key = stepsKey(state.plan);
+    try {
+      const fresh = await api.getSteps(slug);
+      Object.assign(steps, { rev: steps.rev + 1, profile: fresh.profile, recipes: fresh.recipes, inventory: fresh.inventory });
+    } catch (failure) {
+      console.error(failure);
+    } finally {
+      steps.key = key;                       // also after a failure: the next change of the recipes asks again
+      steps.loading = false;
+    }
+    if (!closed) render();
+  }
+
+  // The server's answer to a recipe change: take it over at once, the plan stream confirms it later.
+  function applyRecipe({ recipe, steps: resolved }) {
+    const list = state.plan.recipes;
+    const at = list.findIndex(known => known.id === recipe.id);
+    if (at < 0) list.push(recipe); else list[at] = recipe;
+    steps.recipes[recipe.id] = resolved;
+    steps.key = stepsKey(state.plan);
+    steps.rev += 1;
+  }
+
+  async function changeRecipe(id, changes) {
+    const turn = (changeSeq.get(id) ?? 0) + 1;
+    changeSeq.set(id, turn);
+    try {
+      const answer = await api.updateRecipe(slug, id, changes);
+      if (closed || changeSeq.get(id) !== turn) return;      // a later change is on its way and carries this one
+      applyRecipe(answer);
+      render();
+    } catch (failure) {
+      console.error(failure);
+      if (!closed) refresh();
+    }
+  }
+
+  // A new recipe; given a zone, it is named and coloured after the zone and the zone uses it.
+  async function addRecipe(zone = null) {
+    const target = paint;
+    const answer = await api.createRecipe(slug, zone ? { name: zone.name, base: zone.color } : {});
+    applyRecipe(answer);
+    state.recipe = answer.recipe.id;
+    if (zone && target) await api.updateZone(slug, target.variant, target.part.id, zone.id, { recipe: answer.recipe.id });
+    await refresh();
+  }
+
+  async function removeRecipe(id) {
+    await api.deleteRecipe(slug, id);
+    if (state.recipe === id) state.recipe = null;
+    await refresh();
+  }
+
+  function selectRecipe(id) {
+    state.recipe = id;
+    render();
+  }
+
+  async function setPrimer(hex) {
+    const settings = await api.updateSettings(slug, { primer: hex });
+    state.plan.primer = settings.primer;
+    render();
+  }
+
+  async function toggleDone(recipeId, step, done) {
+    const variantId = state.plan.active_variant, partId = state.selected;
+    const { progress } = await api.setProgress(slug, variantId, partId, { recipe: recipeId, step, done });
+    const part = activeVariant(state.plan)?.parts.find(candidate => candidate.id === partId);
+    if (part && state.plan.active_variant === variantId) part.progress = progress;
+    render();
+  }
+
+  async function refreshInventory() {
+    const answer = await api.refreshInventory();
+    paints = answer.paints;
+    steps.key = null;                          // other paints, other steps
+    render();
+  }
+
+  function setZoneRecipe(zone, value) {
+    if (value === "+") { attempt(addRecipe(zone)); return; }
+    if (value) state.recipe = value;
+    editZone(zone.id, { recipe: value || null });
+  }
+
+  // A click on the model picks the zone under the pointer, and with it the recipe the panel shows.
+  function onFaceClick(face) {
+    const zone = paint?.part.zones.find(candidate => candidate.id === paint.edit.zones[face]);
+    if (!zone) return;
+    paint.activeZone = zone.id;
+    if (zone.recipe) state.recipe = zone.recipe;
+    render();
+  }
+
+  // -- what the model shows -----------------------------------------------------------------------
+
+  function stageFor(part) {
+    return buildStage({
+      zones: part.zones, stepsByRecipe: steps.recipes, key: position, stages: steps.profile.stages,
+      primer: state.plan.primer,
+    });
+  }
+
+  function lookOf(part) {
+    return state.work === "paint" ? { view: "paint", stage: stageFor(part) } : { view: state.view };
+  }
+
+  function lookKeyOf(part) {
+    return state.work === "paint"
+      ? JSON.stringify(["paint", position, steps.rev, state.plan.primer, part.zones.map(zone => [zone.id, zone.recipe])])
+      : `zones:${state.view}`;
+  }
+
+  // The steps of every recipe used by what is on screen: they decide the timeline's stops.
+  function stepsOnScreen(variant, selected) {
+    const parts = !variant ? [] : state.mode === "part" ? (selected ? [selected] : []) : assembledParts(variant);
+    const ids = new Set(parts.flatMap(part => part.zones.map(zone => zone.recipe)));
+    return [...ids].filter(id => id && steps.recipes[id]).map(id => steps.recipes[id]);
+  }
+
   // -- tools --------------------------------------------------------------------------------------
 
   function canPaint() {
@@ -253,8 +414,7 @@ function projectScreen(slug) {
 
   function setView(view) {
     state.view = view;
-    viewer.setPaintData({ view });
-    syncTools();
+    render();
   }
 
   function syncTools() {
@@ -270,7 +430,8 @@ function projectScreen(slug) {
     fillButton.disabled = !canPaint();
     undoButton.disabled = !paint?.edit.canUndo;
     redoButton.disabled = !paint?.edit.canRedo;
-    viewer.setTool({ tool: state.tool, radius: state.radius, stayInPatch: state.stayInPatch });
+    // While painting steps are looked at, the model is only turned (and clicked to pick a zone).
+    viewer.setTool({ tool: state.work === "paint" ? "orbit" : state.tool, radius: state.radius, stayInPatch: state.stayInPatch });
   }
 
   function onStroke({ phase, faces }) {
@@ -434,7 +595,8 @@ function projectScreen(slug) {
     if (paint.activeZone === null || !zones.some(z => z.id === paint.activeZone)) {
       paint.activeZone = zones[0]?.id ?? null;
     }
-    const key = JSON.stringify([paint.key, zones, paint.activeZone, paint.confirm,
+    const recipes = state.plan.recipes.map(recipe => [recipe.id, recipe.name]);
+    const key = JSON.stringify([paint.key, zones, paint.activeZone, paint.confirm, recipes,
       zones.map(z => Math.round((paint.shares.get(z.id) ?? 0) * 1000))]);
     if (key === drawn.zones || zonesBox.contains(document.activeElement) && document.activeElement.tagName === "INPUT") return;
     drawn.zones = key;
@@ -444,10 +606,10 @@ function projectScreen(slug) {
       h("ul", { class: "zone-list" }, zones.map(zone => h("li", {
         class: "zone", "aria-current": zone.id === paint.activeZone ? "true" : null,
         onclick: event => {
-          if (event.target.closest("button, input[type=color]")) return;
+          if (event.target.closest("button, input[type=color], select")) return;
           paint.activeZone = zone.id;
-          renderZones();
-          syncTools();
+          if (zone.recipe) state.recipe = zone.recipe;
+          render();
         },
       },
       h("input", {
@@ -468,7 +630,14 @@ function projectScreen(slug) {
         : h("button", {
           type: "button", class: "plain icon", title: "Usuń strefę", "aria-label": `Usuń strefę ${zone.name}`,
           onclick: () => { paint.confirm = zone.id; renderZones(); },
-        }, "×")))),
+        }, "×"),
+      h("select", {
+        class: "zone-recipe", "aria-label": `Receptura strefy ${zone.name}`, title: "Receptura: jak malować tę strefę",
+        onchange: event => setZoneRecipe(zone, event.target.value),
+      },
+      h("option", { value: "" }, "— bez receptury —"),
+      recipes.map(([id, name]) => h("option", { value: id, selected: id === zone.recipe }, name)),
+      h("option", { value: "+" }, "＋ Nowa z tej strefy"))))),
       h("button", { type: "button", class: "plain add", onclick: addZone }, "＋ Strefa"));
   }
 
@@ -508,7 +677,8 @@ function projectScreen(slug) {
     minInput.value = String(part.segmentation.min_area_fraction * 100);
     showCut();
     cutCount.textContent = `${part.patches} płatów`;
-    viewer.showPaint(mesh, { view: state.view, zones: paint.edit.zones, zoneRgb: zoneColors(part) });
+    lookKey = lookKeyOf(part);
+    viewer.showPaint(mesh, { zones: paint.edit.zones, zoneRgb: zoneColors(part), ...lookOf(part) });
     render();
   }
 
@@ -539,14 +709,36 @@ function projectScreen(slug) {
     }
   }
 
+  // What colouring a part of the figure needs. The zone array is fetched again only when it has changed,
+  // so moving the timeline over the whole figure costs no request.
+  async function figureData(variant, part) {
+    const key = `${variant.id}/${part.id}`;
+    const known = figure.get(key);
+    if (known?.rev === part.zones_rev) return known;
+    const [lodmap, lodmasks, zones] = await Promise.all([
+      known?.lodmap ?? fetchArray(api.fileUrl(slug, sidecarPath(part, "lodmap")), Uint32Array),
+      known?.lodmasks ?? fetchArray(api.fileUrl(slug, sidecarPath(part, "lodmasks")), Uint8Array),
+      api.getZoneFaces(slug, variant.id, part.id),
+    ]);
+    const data = { rev: part.zones_rev, zones, lodmap, lodmasks };
+    figure.set(key, data);
+    return data;
+  }
+
   async function assembledPart(variant, part) {
     const base = { id: part.id, url: api.fileUrl(slug, part.mesh_lod) };
     if (!paintable(part) || part.zones.length === 0) return base;
-    const mapUrl = api.fileUrl(slug, sidecarPath(part, "lodmap"));
-    if (!lodmaps.has(mapUrl)) lodmaps.set(mapUrl, fetchArray(mapUrl, Uint32Array));
-    const [lodmap, zones] = await Promise.all([lodmaps.get(mapUrl), api.getZoneFaces(slug, variant.id, part.id)]);
+    const data = await figureData(variant, part);
+    if (state.work === "paint") {
+      const stage = stageFor(part);
+      if (stage.byZone.size === 0) return base;              // no recipe on this part: primer
+      return {
+        ...base, faceRgb: lodStageColors(data.lodmap, data.zones, data.lodmasks, stage),
+        colorKey: `${part.zones_rev}:${lookKeyOf(part)}`,
+      };
+    }
     return {
-      ...base, faceRgb: lodFaceColors(lodmap, zones, zoneColors(part)),
+      ...base, faceRgb: lodFaceColors(data.lodmap, data.zones, zoneColors(part)),
       colorKey: `${part.zones_rev}:${JSON.stringify(part.zones.map(z => z.color))}`,
     };
   }
@@ -572,7 +764,9 @@ function projectScreen(slug) {
       return;
     }
     const parts = assembledParts(variant);
-    const key = `assembled:${variant.id}:` + parts.map(p => `${p.id}@${p.zones_rev}:${p.zones.map(z => z.color)}`).join(",");
+    const look = state.work === "paint" ? `paint:${position}:${steps.rev}:${state.plan.primer}` : "zones";
+    const key = `assembled:${variant.id}:${look}:`
+      + parts.map(p => `${p.id}@${p.zones_rev}:${p.zones.map(z => [z.color, z.recipe])}`).join(",");
     if (key === shown) {
       viewer.setSelected(selected.id);
       return;
@@ -593,6 +787,12 @@ function projectScreen(slug) {
     if (event.key === "Escape") closeLightbox();
     const typing = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)
       && document.activeElement.type !== "range" && document.activeElement.type !== "checkbox";
+    const arrow = event.key === "ArrowLeft" ? -1 : event.key === "ArrowRight" ? 1 : 0;
+    if (arrow && state.work === "paint" && !typing && document.activeElement?.type !== "range"
+        && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      if (timelineBar.nudge(arrow)) event.preventDefault();
+      return;
+    }
     if (typing || !(event.metaKey || event.ctrlKey)) return;
     if (event.key.toLowerCase() === "z") {
       event.preventDefault();
@@ -657,6 +857,16 @@ function projectScreen(slug) {
     for (const [mode, button] of Object.entries(modeButtons)) {
       button.setAttribute("aria-pressed", String(state.mode === mode));
     }
+    for (const [work, button] of Object.entries(workButtons)) {
+      button.setAttribute("aria-pressed", String(state.work === work));
+    }
+    if (steps.key !== stepsKey(plan)) loadSteps();
+    const painting = state.work === "paint";
+    const stages = steps.profile.stages;
+    positions = timeline(stages, stepsOnScreen(variant, selected));
+    // Until the steps have arrived there is only the primer to stand on; the choice is kept for when they do.
+    position = settle(positions, state.position, stages);
+    viewer.setPrimer(painting ? plan.primer : NEUTRAL);
     info.textContent = selected
       ? `${selected.name} · ${selected.tris.toLocaleString("pl-PL")} trójkątów`
         + (selected.tris_source > selected.tris ? ` (z ${selected.tris_source.toLocaleString("pl-PL")})` : "")
@@ -664,9 +874,30 @@ function projectScreen(slug) {
     hint.textContent = !variant ? "Wybierz wariant" : selected ? "" : "Przetwarzanie części…";
 
     syncViewer(variant, selected);
-    paintBar.hidden = !(paint && state.mode === "part");
+    if (paint && state.mode === "part" && lookKeyOf(paint.part) !== lookKey) {
+      lookKey = lookKeyOf(paint.part);
+      viewer.setPaintData(lookOf(paint.part));
+    }
+    paintBar.hidden = !(paint && state.mode === "part") || painting;
     renderZones();
     syncTools();
+
+    timelineBar.element.hidden = !painting;
+    timelineBar.update(positions, position);
+    screen.classList.toggle("with-panel", painting);
+    panel.element.hidden = !painting;
+    if (!painting) return;
+    if (!plan.recipes.some(recipe => recipe.id === state.recipe)) {
+      const active = paint?.part.zones.find(zone => zone.id === paint.activeZone)?.recipe;
+      state.recipe = active ?? selected?.zones.find(zone => zone.recipe)?.recipe ?? plan.recipes[0]?.id ?? null;
+    }
+    const recipe = plan.recipes.find(candidate => candidate.id === state.recipe) ?? null;
+    panel.update({
+      plan, recipe, steps: (recipe && steps.recipes[recipe.id]) ?? [], part: selected, position, stages, paints,
+      inventory: steps.inventory,
+      usedBy: !recipe || !variant ? [] : variant.parts.flatMap(part =>
+        part.zones.filter(zone => zone.recipe === recipe.id).map(zone => `${part.name} · ${zone.name}`)),
+    });
   }
 
   function partsList(variant) {
@@ -682,11 +913,19 @@ function projectScreen(slug) {
           onclick: () => select(part.id),
         },
         h("span", { class: "name", title: part.name }, part.name),
-        h("span", { class: "status" }, part.outlier ? "pominięty"
-          : part.status === "ready" && part.zones.length ? `${part.zones.length} ${zoneWord(part.zones.length)}`
-            : STATUS_LABEL[part.status]),
+        partStatus(part),
         part.status === "error" ? h("span", { class: "detail" }, part.error) : null)))),
     ];
+  }
+
+  // Beside a part's name: its state, then how many zones it has, then how many painting steps are done.
+  function partStatus(part) {
+    if (part.outlier) return h("span", { class: "status" }, "pominięty");
+    if (part.status !== "ready" || part.zones.length === 0) return h("span", { class: "status" }, STATUS_LABEL[part.status]);
+    const marks = progressOf(part, steps.recipes);
+    return marks.total
+      ? h("span", { class: "status", title: `Zrobione kroki malowania: ${marks.done} z ${marks.total}` }, `${marks.done}/${marks.total}`)
+      : h("span", { class: "status" }, `${part.zones.length} ${zoneWord(part.zones.length)}`);
   }
 
   function referenceRows(refs) {
@@ -698,7 +937,7 @@ function projectScreen(slug) {
           h("img", { src: api.fileUrl(slug, reference.file), alt: reference.id, loading: "lazy" }))))));
   }
 
-  window.__planner = { viewer, state, get paint() { return paint; } };   // for checks from the console
+  window.__planner = { viewer, state, steps, get paint() { return paint; }, get position() { return position; } };   // for checks from the console
 
   return () => {
     closed = true;

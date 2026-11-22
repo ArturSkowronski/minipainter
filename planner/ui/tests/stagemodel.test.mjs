@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-  FORMAT_LABEL, HOW, STAGE_LABEL, WHERE, buildStage, compile, exposure, mixText, opsAt, progressOf, settle, shade,
-  stepLabel, stepsKey, timeline,
+  FORMAT_LABEL, HOW, STAGE_LABEL, WHERE, buildStage, compile, exposure, mixText, nearestFirst, opsAt, progressOf,
+  settle, shade, stepAt, stepLabel, stepsKey, timeline,
 } from "../stagemodel.js";
 
 const STAGES = ["primer", "base", "layers", "shade", "lining", "highlight", "ink"];
@@ -172,4 +172,19 @@ test("the stage of a part: what each zone shows at a position", () => {
   const out = new Uint8Array(3);
   shade(stage.byZone.get(1).ops, stage.byZone.get(1).count, 0, 1, 1, stage.primer, out, 0);
   assert.deepEqual(Array.from(out), [208, 72, 56]);
+});
+
+test("the step a recipe is at when the timeline stands somewhere", () => {
+  assert.equal(stepAt(two, "primer", STAGES), null);
+  assert.equal(stepAt(two, "base", STAGES).key, "base");
+  assert.equal(stepAt(two, "layer:4", STAGES).key, "layer:2");
+  assert.equal(stepAt(two, "lining", STAGES).key, "shade");
+  assert.equal(stepAt(two, "ink", STAGES).key, "highlight");
+  assert.equal(stepAt([], "base", STAGES), null);
+});
+
+test("paints nearest a colour come first", () => {
+  const paints = [{ id: "blue", hex: "#2a5caa" }, { id: "red", hex: "#b3202a" }, { id: "orange", hex: "#e05a20" }];
+  assert.deepEqual(nearestFirst(paints, "#c82828").map(p => p.id), ["red", "orange", "blue"]);
+  assert.deepEqual(paints.map(p => p.id), ["blue", "red", "orange"]);       // the list given is left alone
 });

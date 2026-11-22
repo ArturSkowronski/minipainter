@@ -48,4 +48,5 @@ test("sidecar files sit beside the mesh", () => {
   assert.equal(sidecarPath(part, "patches"), "meshes/1-10-scale-split/body.patches.u32");
   assert.equal(sidecarPath(part, "masks"), "meshes/1-10-scale-split/body.masks.u8");
   assert.equal(sidecarPath(part, "lodmap"), "meshes/1-10-scale-split/body.lodmap.u32");
+  assert.equal(sidecarPath(part, "lodmasks"), "meshes/1-10-scale-split/body.lodmasks.u8");
 });

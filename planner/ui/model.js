@@ -44,7 +44,9 @@ export function paintable(part) {
   return !!part && part.status === "ready" && part.patches !== null && part.patches !== undefined;
 }
 
-const SIDECAR = { patches: ".patches.u32", masks: ".masks.u8", lodmap: ".lodmap.u32", stats: ".patches.json" };
+const SIDECAR = {
+  patches: ".patches.u32", masks: ".masks.u8", lodmap: ".lodmap.u32", lodmasks: ".lodmasks.u8", stats: ".patches.json",
+};
 
 // Workspace path of one of a part's analysis files.
 export function sidecarPath(part, kind) {

@@ -154,6 +154,26 @@ export function shade(ops, count, cavity, ridge, up, primer, out, offset) {
   out[offset] = r + 0.5; out[offset + 1] = g + 0.5; out[offset + 2] = b + 0.5;
 }
 
+// The step a recipe is at once the timeline stands at `key`: the last one applied, or null before the base.
+export function stepAt(steps, key, stages) {
+  const order = allKeys(stages);
+  const limit = order.indexOf(key);
+  let found = null;
+  for (const step of steps) if (order.indexOf(step.key) <= limit) found = step;
+  return found;
+}
+
+// A copy of the paint list with those closest to a colour first (a quick measure, good enough to order a list).
+export function nearestFirst(paints, hex) {
+  const [r, g, b] = hexToRgb(hex);
+  const gap = paint => {
+    const [pr, pg, pb] = hexToRgb(paint.hex);
+    const mean = (r + pr) / 2;
+    return (2 + mean / 256) * (r - pr) ** 2 + 4 * (g - pg) ** 2 + (2 + (255 - mean) / 256) * (b - pb) ** 2;
+  };
+  return paints.map(paint => [gap(paint), paint]).sort((a, b) => a[0] - b[0]).map(pair => pair[1]);
+}
+
 // What the painted view needs for one part: the primer, and per zone the steps that apply at `key`.
 // Zones without a recipe (or with one that is gone) are left out and stay primer-coloured.
 export function buildStage({ zones, stepsByRecipe, key, stages, primer }) {

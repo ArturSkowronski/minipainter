@@ -105,3 +105,50 @@ h1, h2 { margin: 0; font-weight: 600; }
 .plain.add { width: 100%; }
 .confirm { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; }
 .small { font-size: 0.8rem; margin: 0 0 0.5rem; }
+
+/* painting: the recipe panel on the right and the timeline under the stage */
+.project.with-panel { grid-template-columns: 19rem minmax(0, 1fr) 24rem; }
+.panel { background: var(--panel); border-left: 1px solid var(--line); overflow-y: auto; display: flex; flex-direction: column; gap: 1.1rem; padding: 1rem; font-size: 0.85rem; }
+.panel section { display: flex; flex-direction: column; gap: 0.4rem; }
+.panel .label { margin-bottom: 0; }
+.panel select, .panel input[type="text"], .panel input[type="search"], .panel textarea { width: 100%; min-width: 0; padding: 0.35rem 0.45rem; background: var(--bg); border: 1px solid var(--line); border-radius: 5px; font: inherit; color: inherit; }
+.panel textarea { resize: vertical; }
+.panel input[type="color"] { width: 1.9rem; height: 1.7rem; padding: 0; border: 1px solid var(--line); border-radius: 4px; background: none; cursor: pointer; flex: none; }
+.panel input[type="color"]:disabled { opacity: 0.55; cursor: default; }
+.panel .pair { align-items: center; }
+.chooser select { flex: 1; }
+.recipe-form .field { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) auto; align-items: center; gap: 0.5rem; }
+.recipe-form .field input[type="range"] { width: 100%; }
+.recipe-form .field output { min-width: 1rem; text-align: right; }
+.recipe-form .field.check, .colours .field { display: inline-flex; }
+.colours, .switches { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 1rem; }
+.step-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.step { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; gap: 0.5rem; align-items: start; padding: 0.4rem 0.45rem; border: 1px solid transparent; border-radius: 5px; cursor: pointer; }
+.step:hover { background: var(--bg); }
+.step[aria-current="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.step[data-done="true"] .step-title { color: var(--muted); text-decoration: line-through; }
+.step input[type="checkbox"] { margin-top: 0.2rem; }
+.swatch { display: inline-block; width: 1.25rem; height: 1.25rem; border: 1px solid var(--line); border-radius: 4px; flex: none; }
+.swatch.tiny { width: 0.8rem; height: 0.8rem; vertical-align: -2px; }
+.swatch.auto { background: repeating-linear-gradient(45deg, var(--line) 0 4px, transparent 4px 8px); }
+.step-title { display: flex; align-items: baseline; gap: 0.4rem; font-weight: 600; }
+.tag { padding: 0 0.25rem; border: 1px solid var(--accent); border-radius: 3px; color: var(--accent); font-size: 0.68rem; font-weight: 400; }
+.step-paint { overflow-wrap: anywhere; }
+.warn { color: var(--wait); }
+.step-detail { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.4rem; }
+.step-detail p { margin: 0; }
+.plain.small { padding: 0.15rem 0.45rem; font-size: 0.78rem; }
+.picker { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 0.35rem; padding: 0.5rem; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; cursor: default; }
+.paint-list { list-style: none; margin: 0; padding: 0; max-height: 15rem; overflow-y: auto; }
+.paint-list button { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.5rem; padding: 0.25rem 0.3rem; background: none; border: 0; border-radius: 4px; text-align: left; cursor: pointer; }
+.paint-list button:hover { background: var(--accent-soft); }
+.inventory { display: block; }
+.zone-recipe { grid-column: 1 / -1; padding: 0.2rem 0.3rem !important; font-size: 0.8rem; }
+
+.timeline { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.6rem 1rem 0.5rem; border-top: 1px solid var(--line); background: var(--panel); }
+.track { flex: 1; min-width: 0; padding: 0 2rem; }
+.track input[type="range"] { display: block; width: 100%; margin: 0.15rem 0 0; }
+.stops { position: relative; height: 1.5rem; margin-top: 0.3rem; }
+.stop { position: absolute; top: 0; transform: translateX(-50%); padding: 0.05rem 0.35rem; background: none; border: 0; border-radius: 4px; color: var(--muted); font-size: 0.75rem; white-space: nowrap; cursor: pointer; }
+.stop:hover { color: var(--fg); }
+.stop[aria-current="true"] { background: var(--accent); color: var(--panel); }
