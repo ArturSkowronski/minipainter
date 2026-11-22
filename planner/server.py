@@ -17,6 +17,7 @@ import webbrowser
 import uvicorn
 
 from wpm.app import APP_NAME, create_app
+from wpm.inventory import Inventory
 
 HOST = "127.0.0.1"
 DEFAULT_PORT = 8770
@@ -80,7 +81,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Port {args.port} is in use by another program.", file=sys.stderr)
         return 1
 
-    server = uvicorn.Server(uvicorn.Config(create_app(), host=HOST, port=args.port,
+    server = uvicorn.Server(uvicorn.Config(create_app(inventory=Inventory()), host=HOST, port=args.port,
                                            log_level="warning", timeout_graceful_shutdown=2))
     exit_code = [0]
 

@@ -6,6 +6,7 @@ from starlette.testclient import TestClient
 
 from tests.packages import flat, spiderman
 from wpm.app import create_app, plan_events
+from wpm.inventory import Inventory
 from wpm.jobs import Processor
 from wpm.profiles.nomnom import scan
 from wpm.workspace import Project, get_project
@@ -18,9 +19,18 @@ def processor():
     p.shutdown()
 
 
+def _paint(pid, fmt, hex_):
+    return {"id": pid, "name": pid.title(), "provider": "test", "format": fmt, "hex": hex_}
+
+
+PAINTS = [_paint("light-red", "opaque_layer", "#e8705a"), _paint("red", "opaque_base", "#b3202a"),
+          _paint("red-wash", "wash", "#5a1a1a")]
+
+
 @pytest.fixture
 def client(processor):
-    with TestClient(create_app(processor, allowed_hosts=["testserver"])) as c:
+    app = create_app(processor, allowed_hosts=["testserver"], inventory=Inventory.fixed(PAINTS))
+    with TestClient(app) as c:
         yield c
 
 
@@ -218,3 +228,133 @@ def test_page_files_are_always_revalidated(client):
     # The page is edited in place; a browser must not keep running last hour's script.
     assert client.get("/").headers["cache-control"] == "no-cache"
     assert client.get("/index.html").headers["cache-control"] == "no-cache"
+
+
+# -- recipes, steps, progress, inventory ---------------------------------------------------------------
+
+RED = {"name": "Czerwień", "base": "#b3202a", "highlight": "#e8705a"}
+
+
+def keys(steps):
+    return [s["key"] for s in steps]
+
+
+def test_recipe_routes_and_steps(client, part_url):
+    project = part_url.split("/variants/")[0]
+    made = client.post(f"{project}/recipes", json=RED)
+    assert made.status_code == 200
+    recipe, steps = made.json()["recipe"], made.json()["steps"]
+    assert recipe["id"] == "r1" and recipe["name"] == "Czerwień" and recipe["layers"] == 2
+    assert keys(steps) == ["base", "layer:1", "layer:2", "shade", "highlight"]
+    assert steps[0]["paint"]["id"] == "red" and steps[3]["paint"]["id"] == "red-wash"
+    assert [m["parts"] for m in steps[1]["mix"]] == [2, 1]
+
+    patched = client.patch(f"{project}/recipes/r1", json={"layers": 3}).json()
+    assert patched["recipe"]["layers"] == 3 and keys(patched["steps"])[1:4] == ["layer:1", "layer:2", "layer:3"]
+    assert client.get(project).json()["recipes"] == [patched["recipe"]]
+
+    listed = client.get(f"{project}/steps").json()
+    assert listed["profile"] == {"id": "layered", "stages": ["primer", "base", "layers", "shade", "lining", "highlight", "ink"]}
+    assert listed["recipes"] == {"r1": patched["steps"]}
+    assert listed["inventory"]["state"] == "ok" and listed["inventory"]["count"] == 3
+
+    assert client.post(f"{project}/recipes", json={}).json()["recipe"]["id"] == "r2"
+    assert client.delete(f"{project}/recipes/r1").json() == {}
+    assert list(client.get(f"{project}/steps").json()["recipes"]) == ["r2"]
+
+
+def test_recipe_route_errors(client, part_url):
+    project = part_url.split("/variants/")[0]
+    client.post(f"{project}/recipes", json=RED)
+    bad = client.post(f"{project}/recipes", json={"layers": 9})
+    assert bad.status_code == 400 and bad.json() == {"error": "Nieprawidłowe dane."}
+    assert client.patch(f"{project}/recipes/r1", json={"mode": "magic"}).status_code == 400
+    assert client.patch(f"{project}/recipes/r9", json={"layers": 1}).status_code == 404
+    assert client.delete(f"{project}/recipes/r9").status_code == 404
+    assert client.post(f"{project}/recipes", content="name=x", headers={"content-type": "text/plain"}).status_code == 415
+    assert client.patch(f"{project}/recipes/r1", content="x", headers={"content-type": "text/plain"}).status_code == 415
+    for url in ("/api/projects/nope/steps", "/api/projects/nope/recipes/r1"):
+        assert client.get(url).status_code in (404, 405)
+    assert client.post("/api/projects/nope/recipes", json={}).status_code == 404
+    assert len(client.get(project).json()["recipes"]) == 1
+
+
+def test_a_zone_is_linked_to_a_recipe(client, part_url):
+    project = part_url.split("/variants/")[0]
+    client.post(f"{project}/recipes", json=RED)
+    client.post(f"{part_url}/zones", json={})
+    assert client.patch(f"{part_url}/zones/1", json={"recipe": "r1"}).json()["recipe"] == "r1"
+    assert client.patch(f"{part_url}/zones/1", json={"name": "Pas"}).json()["recipe"] == "r1"
+    assert client.get(project).json()["variants"][0]["parts"][0]["zones"][0]["recipe"] == "r1"
+    assert client.patch(f"{part_url}/zones/1", json={"recipe": "r9"}).status_code == 400
+    assert client.patch(f"{part_url}/zones/1", json={"recipe": None}).json()["recipe"] is None
+
+
+def test_progress_route(client, part_url):
+    project = part_url.split("/variants/")[0]
+    client.post(f"{project}/recipes", json=RED)
+    mark = {"recipe": "r1", "step": "base", "done": True}
+    assert client.put(f"{part_url}/progress", json=mark).json() == {"progress": {"r1": ["base"]}}
+    assert client.put(f"{part_url}/progress", json=mark).json() == {"progress": {"r1": ["base"]}}
+    assert client.get(project).json()["variants"][0]["parts"][0]["progress"] == {"r1": ["base"]}
+    assert client.put(f"{part_url}/progress", json={**mark, "done": False}).json() == {"progress": {}}
+    assert client.put(f"{part_url}/progress", json={**mark, "step": "primer"}).status_code == 400
+    assert client.put(f"{part_url}/progress", json={"recipe": "r1", "step": "base"}).status_code == 400
+    assert client.put(f"{part_url}/progress", json={**mark, "recipe": "r9"}).status_code == 404
+    assert client.put(f"{part_url}/progress", content="x", headers={"content-type": "text/plain"}).status_code == 415
+    assert client.put(part_url.replace("/parts/a", "/parts/nope") + "/progress", json=mark).status_code == 404
+
+
+def test_settings_route(client, part_url):
+    project = part_url.split("/variants/")[0]
+    assert client.patch(f"{project}/settings", json={"primer": "#101010"}).json() == {
+        "primer": "#101010", "bottle_distance": 0.04}
+    assert client.get(project).json()["primer"] == "#101010"
+    assert client.patch(f"{project}/settings", json={"primer": "black"}).status_code == 400
+    assert client.patch(f"{project}/settings", json={"nope": 1}).status_code == 400
+    assert client.patch("/api/projects/nope/settings", json={}).status_code == 404
+
+
+def test_inventory_routes(client):
+    listed = client.get("/api/inventory").json()
+    assert listed["paints"] == PAINTS and listed["status"]["state"] == "ok" and listed["status"]["count"] == 3
+    again = client.post("/api/inventory/refresh", json={})
+    assert again.status_code == 200 and again.json()["paints"] == PAINTS
+    assert client.post("/api/inventory/refresh", content="x", headers={"content-type": "text/plain"}).status_code == 415
+
+
+def test_without_minipainter_the_steps_still_come(processor, tmp_path):
+    def broken(command, **options):
+        raise FileNotFoundError("node")
+
+    inventory = Inventory(["mpaint"], broken)
+    with TestClient(create_app(processor, allowed_hosts=["testserver"], inventory=inventory)) as c:
+        slug = c.post("/api/projects", json={"path": str(flat(tmp_path / "src"))}).json()["slug"]
+        made = c.post(f"/api/projects/{slug}/recipes", json=RED)
+        assert made.status_code == 200 and all(s["paint"] is None for s in made.json()["steps"])
+        assert made.json()["steps"][0]["color"] == "#b3202a"
+        listed = c.get(f"/api/projects/{slug}/steps").json()
+        assert listed["inventory"]["state"] == "error" and listed["inventory"]["error"]
+        assert c.get("/api/inventory").json() == {"status": listed["inventory"], "paints": []}
+
+
+def test_the_inventory_is_read_when_the_server_starts(processor):
+    import time
+    calls = []
+
+    def runner(command, **options):
+        calls.append(command)
+        raise FileNotFoundError("node")
+
+    inventory = Inventory(["mpaint"], runner)
+    with TestClient(create_app(processor, allowed_hosts=["testserver"], inventory=inventory)):
+        deadline = time.monotonic() + 5
+        while inventory.status()["state"] == "unread" and time.monotonic() < deadline:
+            time.sleep(0.01)
+        assert calls == [["mpaint"]]
+
+
+def test_an_app_built_without_an_inventory_runs_nothing(processor, tmp_path):
+    with TestClient(create_app(processor, allowed_hosts=["testserver"])) as c:
+        assert c.get("/api/inventory").json() == {
+            "status": {"state": "ok", "count": 0, "loaded": None, "error": None}, "paints": []}

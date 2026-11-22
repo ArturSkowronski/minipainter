@@ -2,6 +2,7 @@
 import asyncio
 import contextlib
 import json
+import threading
 from collections.abc import AsyncIterator
 from pathlib import Path
 
@@ -13,7 +14,8 @@ from starlette.responses import FileResponse, JSONResponse, Response, StreamingR
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
 
-from wpm import zones
+from wpm import layers, recipes, zones
+from wpm.inventory import Inventory
 from wpm.jobs import Processor
 from wpm.profiles import detect
 from wpm.workspace import Project, get_project, list_projects
@@ -42,6 +44,10 @@ class _PageFiles(StaticFiles):
         response = await super().get_response(path, scope)
         response.headers["Cache-Control"] = "no-cache"
         return response
+
+
+class _NotJson(Exception):
+    """The request body is not JSON at all."""
 
 
 def _error(status: int, message: str) -> JSONResponse:
@@ -86,9 +92,14 @@ async def plan_events(project: Project) -> AsyncIterator[str]:
         unsubscribe()
 
 
-def create_app(processor: Processor | None = None, allowed_hosts: list[str] | None = None) -> Starlette:
-    """`allowed_hosts` adds Host names accepted besides this machine's own (tests use it)."""
+def create_app(processor: Processor | None = None, allowed_hosts: list[str] | None = None,
+               inventory: Inventory | None = None) -> Starlette:
+    """`allowed_hosts` adds Host names accepted besides this machine's own (tests use it).
+
+    Without an `inventory` the app knows no paints and runs no command; `server.py` passes the real one.
+    """
     processor = processor or Processor()
+    inventory = inventory or Inventory.fixed([])
     # Refusing foreign Host headers stops DNS-rebinding pages from reading plans and reference images.
     hosts = Middleware(TrustedHostMiddleware, allowed_hosts=LOCAL_HOSTS + (allowed_hosts or []))
 
@@ -169,24 +180,29 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
             return _error(404, NOT_FOUND)
         return FileResponse(target, media_type=media)
 
-    # -- zones of one part ---------------------------------------------------------------------
-
-    def zone_route(handler):
-        """Resolve the project and part of the URL; KeyError becomes 404, ValueError 400."""
+    def project_route(handler):
+        """Resolve the project of the URL; KeyError becomes 404, ValueError 400, a non-JSON body 415."""
         async def route(request: Request):
             project = project_or_none(request)
             if project is None:
                 return _error(404, NOT_FOUND)
-            where = (project, request.path_params["variant"], request.path_params["part"])
             try:
-                return await handler(request, *where)
+                return await handler(request, project)
             except KeyError:
                 return _error(404, NOT_FOUND)
             except zones.Conflict:
                 return _error(409, CONFLICT)
+            except _NotJson:
+                return _error(415, NOT_JSON)
             except ValueError:
                 return _error(400, BAD_INPUT)
         return route
+
+    def zone_route(handler):
+        """The same for the routes of one part."""
+        async def route(request: Request, project: Project):
+            return await handler(request, project, request.path_params["variant"], request.path_params["part"])
+        return project_route(route)
 
     def zone_id(request: Request) -> int:
         try:
@@ -200,6 +216,57 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
             raise ValueError("JSON expected")
         return body
 
+    async def strict_json(request: Request) -> dict:
+        body = await _body(request)
+        if body is None:
+            raise _NotJson()
+        return body
+
+    # -- recipes and what they resolve to --------------------------------------------------------
+
+    async def resolved(project: Project, only: str | None = None) -> dict[str, list]:
+        """Recipe id -> its steps, with the paints owned right now."""
+        paints = await asyncio.to_thread(inventory.paints)        # the first call may run minipainter
+        plan = project.snapshot()
+        return {r["id"]: layers.resolve(r, paints, plan["stage_profile"], plan["bottle_distance"])
+                for r in plan["recipes"] if only in (None, r["id"])}
+
+    async def with_steps(project: Project, recipe: dict) -> JSONResponse:
+        return JSONResponse({"recipe": recipe, "steps": (await resolved(project, recipe["id"]))[recipe["id"]]})
+
+    @project_route
+    async def steps(request, project):
+        profile = layers.STAGE_PROFILES[project.snapshot()["stage_profile"]]
+        return JSONResponse({"profile": profile, "recipes": await resolved(project), "inventory": inventory.status()})
+
+    @project_route
+    async def create_recipe(request, project):
+        return await with_steps(project, recipes.create_recipe(project, await strict_json(request)))
+
+    @project_route
+    async def update_recipe(request, project):
+        changes = await strict_json(request)
+        return await with_steps(project, recipes.update_recipe(project, request.path_params["recipe"], changes))
+
+    @project_route
+    async def delete_recipe(request, project):
+        recipes.delete_recipe(project, request.path_params["recipe"])
+        return JSONResponse({})
+
+    @project_route
+    async def settings(request, project):
+        return JSONResponse(recipes.update_settings(project, await strict_json(request)))
+
+    async def inventory_list(request: Request):
+        paints = await asyncio.to_thread(inventory.paints)
+        return JSONResponse({"status": inventory.status(), "paints": paints})
+
+    async def inventory_refresh(request: Request):
+        if await _body(request) is None:
+            return _error(415, NOT_JSON)
+        await asyncio.to_thread(inventory.refresh)
+        return JSONResponse({"status": inventory.status(), "paints": inventory.paints()})
+
     @zone_route
     async def create_zone(request, project, variant, part):
         body = await json_body(request)
@@ -208,8 +275,14 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
     @zone_route
     async def update_zone(request, project, variant, part):
         body = await json_body(request)
-        return JSONResponse(zones.update_zone(project, variant, part, zone_id(request),
-                                              body.get("name"), body.get("color")))
+        return JSONResponse(zones.update_zone(project, variant, part, zone_id(request), body.get("name"),
+                                              body.get("color"), body.get("recipe", zones.UNSET)))
+
+    @zone_route
+    async def put_progress(request, project, variant, part):
+        body = await strict_json(request)
+        return JSONResponse({"progress": recipes.set_progress(
+            project, variant, part, body.get("recipe"), body.get("step"), body.get("done"))})
 
     @zone_route
     async def delete_zone(request, project, variant, part):
@@ -237,6 +310,8 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
 
     @contextlib.asynccontextmanager
     async def lifespan(app: Starlette):
+        # Read the owned paints now, off the event loop, so the first recipe does not wait for it.
+        threading.Thread(target=inventory.paints, name="wpm-inventory", daemon=True).start()
         yield
         processor.shutdown()
 
@@ -247,6 +322,14 @@ def create_app(processor: Processor | None = None, allowed_hosts: list[str] | No
         Route("/api/projects/{slug}", plan),
         Route("/api/projects/{slug}/variant", choose_variant, methods=["POST"]),
         Route("/api/projects/{slug}/events", events),
+        Route("/api/inventory", inventory_list, methods=["GET"]),
+        Route("/api/inventory/refresh", inventory_refresh, methods=["POST"]),
+        Route("/api/projects/{slug}/steps", steps, methods=["GET"]),
+        Route("/api/projects/{slug}/recipes", create_recipe, methods=["POST"]),
+        Route("/api/projects/{slug}/recipes/{recipe}", update_recipe, methods=["PATCH"]),
+        Route("/api/projects/{slug}/recipes/{recipe}", delete_recipe, methods=["DELETE"]),
+        Route("/api/projects/{slug}/settings", settings, methods=["PATCH"]),
+        Route(PART + "/progress", put_progress, methods=["PUT"]),
         Route(PART + "/zones", create_zone, methods=["POST"]),
         Route(PART + "/zones/{zone}", update_zone, methods=["PATCH"]),
         Route(PART + "/zones/{zone}", delete_zone, methods=["DELETE"]),
