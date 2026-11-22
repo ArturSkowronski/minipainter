@@ -12,9 +12,11 @@ from collections.abc import Callable
 from pathlib import Path
 
 from wpm.analysis import DEFAULT_ANGLE, DEFAULT_MIN_AREA_FRACTION, analysis_files
+from wpm.layers import DEFAULT_BOTTLE_DISTANCE, DEFAULT_PROFILE
 from wpm.profiles.base import Package, slugify
 
-PLAN_VERSION = 2
+PLAN_VERSION = 3
+DEFAULT_PRIMER = "#8b8e93"      # primer grey
 _projects: dict[str, "Project"] = {}
 _registry_lock = threading.Lock()
 
@@ -33,11 +35,18 @@ def project_slug(root: Path) -> str:
     return f"{slugify(Path(root).name)}-{digest}"
 
 
-def _zone_fields() -> dict:
-    """What version 2 added to every part: its patches and its zones."""
+def _part_fields() -> dict:
+    """What later versions added to every part: patches and zones (2), progress marks (3)."""
     return {"patches": None, "patches_rev": 0,
             "segmentation": {"angle": DEFAULT_ANGLE, "min_area_fraction": DEFAULT_MIN_AREA_FRACTION},
-            "zones": [], "zones_rev": 0}
+            "zones": [], "zones_rev": 0,
+            "progress": {}}                      # recipe id -> keys of the steps done on this part
+
+
+def _painting_fields() -> dict:
+    """What version 3 added to the plan: how the figure is painted."""
+    return {"primer": DEFAULT_PRIMER, "stage_profile": DEFAULT_PROFILE, "bottle_distance": DEFAULT_BOTTLE_DISTANCE,
+            "recipes": [], "recipe_seq": 0}
 
 
 def _part_entry(variant_id: str, part) -> dict:
@@ -46,18 +55,26 @@ def _part_entry(variant_id: str, part) -> dict:
         "status": "pending", "error": None, "outlier": False,
         "mesh": f"meshes/{variant_id}/{part.id}.glb", "mesh_lod": f"meshes/{variant_id}/{part.id}.lod.glb",
         "tris_source": None, "tris": None, "tris_lod": None, "bbox": None,
-        **_zone_fields(),
+        **_part_fields(),
     }
 
 
 def migrate(plan: dict) -> bool:
     """Bring an older plan up to PLAN_VERSION in place. Returns whether anything changed."""
     changed = plan.get("version") != PLAN_VERSION
+    for key, value in _painting_fields().items():
+        if key not in plan:
+            plan[key] = value
+            changed = True
     for variant in plan["variants"]:
         for part in variant["parts"]:
-            for key, value in _zone_fields().items():
+            for key, value in _part_fields().items():
                 if key not in part:
                     part[key] = value
+                    changed = True
+            for zone in part["zones"]:
+                if "recipe" not in zone:
+                    zone["recipe"] = None
                     changed = True
     plan["version"] = PLAN_VERSION
     return changed
@@ -121,7 +138,7 @@ class Project:
             if project is None:
                 plan = {"version": PLAN_VERSION, "revision": 1, "profile": package.profile,
                         "name": package.name, "source": str(package.root), "active_variant": None,
-                        "references": [], "variants": []}
+                        "references": [], "variants": [], **_painting_fields()}
                 _merge(plan, package)
                 project = _projects[slug] = cls(slug, plan)
                 project._save()

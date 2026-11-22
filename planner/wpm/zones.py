@@ -15,16 +15,16 @@ from wpm.analysis import analyse_part
 from wpm.workspace import Project, find_part
 
 MAX_ZONES = 255
+UNSET = object()        # "leave the zone's recipe as it is", since None means "no recipe"
 # Distinct on primer grey, and from each other.
 PALETTE = ("#c0392b", "#2a6fbb", "#f1c40f", "#27ae60", "#8e44ad", "#e67e22",
            "#16a085", "#d35485", "#7f8c2d", "#34495e", "#e8d5b5", "#6d4c41")
 _HEX = re.compile(r"#[0-9a-f]{6}")
-_lock = threading.Lock()
+_lock = threading.Lock()          # zone edits are rare and small: one at a time keeps file and plan in step
 
 
 class Conflict(Exception):
     """The stored zones changed since the revision the caller based its data on."""
-          # zone edits are rare and small: one at a time keeps file and plan in step
 
 
 def _faces_path(project: Project, variant_id: str, part_id: str) -> Path:
@@ -68,7 +68,8 @@ def create_zone(project: Project, variant_id: str, part_id: str,
             raise ValueError("too many zones")
         zone = {"id": zone_id,
                 "name": _clean_name(name) if name is not None else f"Strefa {zone_id}",
-                "color": _clean_color(color) if color is not None else PALETTE[(zone_id - 1) % len(PALETTE)]}
+                "color": _clean_color(color) if color is not None else PALETTE[(zone_id - 1) % len(PALETTE)],
+                "recipe": None}
 
         def apply(plan: dict) -> None:
             part = find_part(plan, variant_id, part_id)
@@ -79,15 +80,24 @@ def create_zone(project: Project, variant_id: str, part_id: str,
 
 
 def update_zone(project: Project, variant_id: str, part_id: str, zone_id: int,
-                name: str | None = None, color: str | None = None) -> dict:
+                name: str | None = None, color: str | None = None, recipe=UNSET) -> dict:
+    """Change a zone's name, colour or recipe (`recipe=None` unlinks it; an unknown recipe is a ValueError)."""
     with _lock:
         changes = {}
         if name is not None:
             changes["name"] = _clean_name(name)
         if color is not None:
             changes["color"] = _clean_color(color)
-        _zone(project.part(variant_id, part_id), zone_id)            # KeyError before anything changes
-        project.update(lambda plan: _zone(find_part(plan, variant_id, part_id), zone_id).update(changes))
+        if recipe is not UNSET:
+            changes["recipe"] = recipe
+
+        def apply(plan: dict) -> None:
+            zone = _zone(find_part(plan, variant_id, part_id), zone_id)          # KeyError before anything changes
+            if changes.get("recipe") is not None and all(r["id"] != changes["recipe"] for r in plan["recipes"]):
+                raise ValueError("there is no such recipe")
+            zone.update(changes)
+
+        project.update(apply)
         return _zone(project.part(variant_id, part_id), zone_id)
 
 

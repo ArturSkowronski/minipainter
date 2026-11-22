@@ -21,7 +21,7 @@ def test_create_writes_a_plan_inside_the_data_dir(tmp_path):
         "outlier": False, "mesh": "meshes/1-10-scale-split/body.glb",
         "mesh_lod": "meshes/1-10-scale-split/body.lod.glb",
         "tris_source": None, "tris": None, "tris_lod": None, "bbox": None,
-        "patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0,
+        "patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0, "progress": {},
         "segmentation": {"angle": 30.0, "min_area_fraction": 0.0001}}
     assert plan["references"][0] == {
         "id": "colored-01", "role": "colour", "source": str(root / "Render Images" / "Colored_01.jpg"),
@@ -139,7 +139,7 @@ def test_recheck_requeues_failures_and_missing_meshes_but_not_running_work(tmp_p
     assert p.recheck() is False and p.snapshot()["revision"] == before + 1
 
 
-NEW_PART_FIELDS = {"patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0,
+NEW_PART_FIELDS = {"patches": None, "patches_rev": 0, "zones": [], "zones_rev": 0, "progress": {},
                    "segmentation": {"angle": 30.0, "min_area_fraction": 0.0001}}
 
 
@@ -159,9 +159,9 @@ def test_version_1_plans_gain_zone_fields_on_load(tmp_path):
     path.write_text(json.dumps(old))
     workspace._projects.clear()
     plan = Project.load(p.slug).snapshot()
-    assert plan["version"] == 2
+    assert plan["version"] == workspace.PLAN_VERSION
     assert all({k: part[k] for k in NEW_PART_FIELDS} == NEW_PART_FIELDS for part in plan["variants"][0]["parts"])
-    assert json.loads(path.read_text())["version"] == 2
+    assert json.loads(path.read_text())["version"] == workspace.PLAN_VERSION
 
 
 def test_ready_without_analysis_files_is_reset_on_load(tmp_path):

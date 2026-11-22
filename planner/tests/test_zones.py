@@ -23,8 +23,8 @@ def project(tmp_path):
 def test_zone_ids_names_and_colours(project):
     first = zones.create_zone(project, "src", "a")
     second = zones.create_zone(project, "src", "a", name="  Czerwień kostiumu ", color="#B3202A")
-    assert first == {"id": 1, "name": "Strefa 1", "color": zones.PALETTE[0]}
-    assert second == {"id": 2, "name": "Czerwień kostiumu", "color": "#b3202a"}
+    assert first == {"id": 1, "name": "Strefa 1", "color": zones.PALETTE[0], "recipe": None}
+    assert second == {"id": 2, "name": "Czerwień kostiumu", "color": "#b3202a", "recipe": None}
     assert project.part("src", "a")["zones"] == [first, second]
     assert project.part("src", "b")["zones"] == []
     assert len(zones.PALETTE) == 12 and len(set(zones.PALETTE)) == 12
@@ -41,7 +41,7 @@ def test_the_smallest_free_id_is_reused(project):
 def test_update_validates(project):
     zones.create_zone(project, "src", "a")
     assert zones.update_zone(project, "src", "a", 1, name="Błękit", color="#2a5caa") == {
-        "id": 1, "name": "Błękit", "color": "#2a5caa"}
+        "id": 1, "name": "Błękit", "color": "#2a5caa", "recipe": None}
     assert zones.update_zone(project, "src", "a", 1, name="Tylko nazwa")["color"] == "#2a5caa"
     for bad in ({"name": "   "}, {"name": "x" * 61}, {"color": "red"}, {"color": "#12345"}):
         with pytest.raises(ValueError):
