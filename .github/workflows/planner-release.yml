@@ -1,0 +1,54 @@
+name: Planner release
+
+# A tag planner-vX.Y.Z releases the planner on its own: tests, then a GitHub release with planner/ as
+# an archive. minipainter's tags are vX.Y.Z (release.yml); neither pattern matches the other's tags.
+on:
+  push:
+    tags: ['planner-v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v10.3.3
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22.x'
+
+      - name: The tag is the version in planner/pyproject.toml
+        id: version
+        run: |
+          version="$(sed -n 's/^version = "\(.*\)"$/\1/p' planner/pyproject.toml)"
+          if [ "planner-v${version}" != "${GITHUB_REF_NAME}" ]; then
+            echo "::error::tag ${GITHUB_REF_NAME} does not match planner/pyproject.toml version ${version}"
+            exit 1
+          fi
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Tests
+        working-directory: planner
+        run: |
+          uv sync --locked
+          uv run pytest
+          node --test ui/tests/*.test.mjs
+
+      - name: Archive planner/
+        run: |
+          git archive --format=tar.gz --prefix="minipainter-planner-${VERSION}/" \
+            -o "minipainter-planner-${VERSION}.tar.gz" "HEAD:planner"
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+
+      # --latest=false: "Latest" on the repository page stays with the minipainter package.
+      - name: GitHub release
+        run: |
+          gh release create "${GITHUB_REF_NAME}" "minipainter-planner-${VERSION}.tar.gz" \
+            --title "Planner ${VERSION}" --latest=false \
+            --notes "The figure-painting planner, unpacked from the archive: \`uv run server.py\`. It reads paints from minipainter (\`npm i -g minipainter\`). Changes: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commits/${GITHUB_REF_NAME}/planner"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}

@@ -461,6 +461,12 @@ After this, your local inventory and the deployed MCP stay in sync via
 `mpaint sync push` (upload local → remote) and `mpaint sync pull --force`
 (overwrite local from remote).
 
+## Planner
+
+[`planner/`](planner/README.md) holds a second project that builds on the paint catalogue: a locally hosted
+browser app for planning how to paint a 3D-printed figure, zone by zone and layer by layer, with the paints
+you own. It has its own tests and its own releases (`planner-vX.Y.Z`) and is not part of the npm package.
+
 ## License
 
 [MIT](LICENSE) © Artur Skowronski

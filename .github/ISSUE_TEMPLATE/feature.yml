@@ -1,0 +1,24 @@
+name: Feature
+description: A new capability or a change in behaviour
+labels: [feature]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What you are trying to do
+      description: The situation at the painting desk or in the agent workflow, and what gets in the way today.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: What the command, tool or output should look like. An example invocation and its output is the most useful form.
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: Observable conditions that tell us this is finished.
+      placeholder: |
+        - `mpaint …` prints …
+        - the MCP tool `…` returns …

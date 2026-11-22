@@ -1,0 +1,27 @@
+name: Planner
+
+# Tests of the figure-painting planner in planner/. The minipainter package has ci.yml.
+on:
+  push:
+    branches: [master]
+    paths: ['planner/**', '.github/workflows/planner.yml']
+  pull_request:
+    branches: [master]
+    paths: ['planner/**', '.github/workflows/planner.yml']
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: planner
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v10.3.3
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22.x'
+      - run: uv sync --locked
+      - run: uv run pytest
+      - run: node --test ui/tests/*.test.mjs

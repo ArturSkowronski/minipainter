@@ -1,0 +1,41 @@
+name: Bug
+description: Something behaves wrong in the CLI, TUI, an MCP server or the planner
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you ran or asked, what you got, and what you expected instead.
+      placeholder: |
+        `mpaint match color "#d2c29b"` prints … but I expected …
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Exact commands or MCP tool calls, with their output.
+      render: shell
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where
+      options:
+        - CLI (mpaint / minipainter)
+        - TUI
+        - MCP over stdio (minipainter-mcp)
+        - MCP over HTTP (self-hosted or Fly)
+        - ChatGPT connector (/mcp/v3)
+        - Website
+        - Planner (planner/)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version and environment
+      description: Output of `npm view minipainter version` or the installed version, plus Node version and OS.
+      placeholder: minipainter 0.10.0, Node 22, macOS
