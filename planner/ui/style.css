@@ -153,3 +153,22 @@ h1, h2 { margin: 0; font-weight: 600; }
 .stop:hover { color: var(--fg); }
 .stop[aria-current="true"] { background: var(--accent); color: var(--panel); }
 .problem { margin: 0; padding: 0.45rem 0.6rem; border: 1px solid var(--bad); border-radius: 5px; color: var(--bad); }
+
+/* the plan of a part: what happens now, then every colour with its steps */
+.now-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; }
+.now-list li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.5rem; align-items: start; padding: 0.3rem 0.45rem; border: 1px solid var(--line); border-radius: 5px; cursor: pointer; }
+.now-list li:hover { border-color: var(--accent); }
+.now-list .swatch[data-idle="true"] { opacity: 0.35; }
+.now-line { margin: 0; }
+.plan-label { margin-top: 0.7rem; }
+.block { display: flex; flex-direction: column; gap: 0.2rem; padding: 0.35rem; border: 1px solid var(--line); border-radius: 6px; }
+.block[aria-current="true"] { border-color: var(--accent); }
+.block-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.5rem; align-items: center; padding: 0.25rem 0.3rem; background: none; border: 0; border-radius: 4px; text-align: left; cursor: pointer; }
+.block-head:hover { background: var(--bg); }
+.block-head strong, .block-head .muted { display: block; }
+.block-head .small { margin: 0; }
+.stop .short, .stops.tight .stop .full { display: none; }
+.stops.tight .stop .short { display: inline; }
+.toolbar .segmented { flex: none; }
+.segmented button { white-space: nowrap; }
+.toolbar .info { min-width: 0; }

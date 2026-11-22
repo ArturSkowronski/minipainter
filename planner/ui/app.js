@@ -8,7 +8,7 @@ import {
 } from "./model.js";
 import { loadPaintMesh, lodFaceColors, lodStageColors } from "./paintmesh.js";
 import { createRecipePanel } from "./recipepanel.js";
-import { buildStage, progressOf, settle, stepsKey, timeline } from "./stagemodel.js";
+import { buildStage, paintPlan, progressOf, settle, stepLabel, stepsKey, timeline } from "./stagemodel.js";
 import { createTimeline } from "./timeline.js";
 import { createViewer } from "./viewer.js";
 import { ZoneEdit, dropUnknownZones, hexToRgb, unassignedFaces, zoneShares } from "./zonesmodel.js";
@@ -72,6 +72,10 @@ function startScreen() {
 // timeline under the stage and the recipe panel on the right.
 
 const WORKS = [["zones", "Strefy"], ["paint", "Malowanie"]];
+const SHOWS = [
+  ["stage", "Ten etap", "Farba tego etapu tam, gdzie trafia; reszta figurki przygaszona"],
+  ["result", "Wynik", "Figurka po tym etapie"],
+];
 const NEUTRAL = "#8b8e93";      // what has no zone is shown in this grey while zones are being drawn
 const TOOLS = [["orbit", "Obrót"], ["brush", "Pędzel"], ["patch", "Płat"], ["erase", "Gumka"]];
 const VIEWS = [["zones", "Strefy"], ["patches", "Płaty"], ["relief", "Relief"]];
@@ -84,6 +88,7 @@ function projectScreen(slug) {
     work: "zones",              // "zones": dividing parts into zones; "paint": recipes and the timeline
     tool: "orbit", radius: 2, stayInPatch: false, onlyEmpty: false, view: "zones",
     position: null,             // the timeline stop the user chose; null = the last one, the finished figure
+    show: "stage",              // "stage": where this stage's paint goes, the rest muted; "result": the figure after it
     recipe: null,               // the recipe the panel shows
   };
   let fetching = false;
@@ -132,7 +137,11 @@ function projectScreen(slug) {
   const workButtons = Object.fromEntries(WORKS.map(([id, label]) =>
     [id, h("button", { type: "button", onclick: () => setWork(id) }, label)]));
   const info = h("span", { class: "info" });
-  const timelineBar = createTimeline({ onMove: goTo });
+  const showButtons = Object.fromEntries(SHOWS.map(([id, label, title]) =>
+    [id, h("button", { type: "button", title, onclick: () => { state.show = id; render(); } }, label)]));
+  const showGroup = h("div", { class: "segmented", role: "group", "aria-label": "Co pokazuje model", hidden: true },
+    Object.values(showButtons));
+  const timelineBar = createTimeline({ onMove: key => goTo(key) });
   const panel = createRecipePanel({
     selectRecipe, createRecipe: () => attempt(addRecipe()), deleteRecipe: id => attempt(removeRecipe(id)), changeRecipe,
     setPrimer: hex => attempt(setPrimer(hex)), toggleDone: (...mark) => attempt(toggleDone(...mark)), goTo,
@@ -199,6 +208,7 @@ function projectScreen(slug) {
       h("div", { class: "segmented", role: "group", "aria-label": "Tryb widoku" },
         modeButtons.part, modeButtons.assembled),
       h("div", { class: "segmented", role: "group", "aria-label": "Praca" }, Object.values(workButtons)),
+      showGroup,
       info),
     paintBar,
     h("div", { class: "stage" }, canvas, hint),
@@ -267,8 +277,10 @@ function projectScreen(slug) {
     render();
   }
 
-  function goTo(key) {
+  // Move the timeline; a step clicked in the plan also brings its recipe into the panel.
+  function goTo(key, recipeId = null) {
     state.position = key;
+    if (recipeId) state.recipe = recipeId;
     render();
   }
 
@@ -397,7 +409,7 @@ function projectScreen(slug) {
   function stageFor(part) {
     return buildStage({
       zones: part.zones, stepsByRecipe: steps.recipes, key: position, stages: steps.profile.stages,
-      primer: state.plan.primer,
+      primer: state.plan.primer, focus: state.show === "stage",
     });
   }
 
@@ -407,14 +419,16 @@ function projectScreen(slug) {
 
   function lookKeyOf(part) {
     return state.work === "paint"
-      ? JSON.stringify(["paint", position, steps.rev, state.plan.primer, part.zones.map(zone => [zone.id, zone.recipe])])
+      ? JSON.stringify(["paint", state.show, position, steps.rev, state.plan.primer, part.zones.map(zone => [zone.id, zone.recipe])])
       : `zones:${state.view}`;
   }
 
-  // The steps of every recipe used by what is on screen: they decide the timeline's stops.
+  // The steps of every recipe used by what is on screen, and of the one the panel shows: they decide the
+  // timeline's stops.
   function stepsOnScreen(variant, selected) {
     const parts = !variant ? [] : state.mode === "part" ? (selected ? [selected] : []) : assembledParts(variant);
     const ids = new Set(parts.flatMap(part => part.zones.map(zone => zone.recipe)));
+    if (state.work === "paint") ids.add(state.recipe);
     return [...ids].filter(id => id && steps.recipes[id]).map(id => steps.recipes[id]);
   }
 
@@ -781,7 +795,7 @@ function projectScreen(slug) {
       return;
     }
     const parts = assembledParts(variant);
-    const look = state.work === "paint" ? `paint:${position}:${steps.rev}:${state.plan.primer}` : "zones";
+    const look = state.work === "paint" ? `paint:${state.show}:${position}:${steps.rev}:${state.plan.primer}` : "zones";
     const key = `assembled:${variant.id}:${look}:`
       + parts.map(p => `${p.id}@${p.zones_rev}:${p.zones.map(z => [z.color, z.recipe])}`).join(",");
     if (key === shown) {
@@ -895,6 +909,8 @@ function projectScreen(slug) {
 
     timelineBar.element.hidden = !painting;
     timelineBar.update(positions, position);
+    showGroup.hidden = !painting;
+    for (const [id, button] of Object.entries(showButtons)) button.setAttribute("aria-pressed", String(id === state.show));
     screen.classList.toggle("with-panel", painting);
     panel.element.hidden = !painting;
     if (!painting) return;
@@ -906,6 +922,8 @@ function projectScreen(slug) {
     panel.update({
       plan, recipe, steps: (recipe && steps.recipes[recipe.id]) ?? [], part: selected, position, stages, paints,
       inventory: steps.inventory, problem,
+      painting: paintPlan(selected, plan.recipes, steps.recipes, recipe?.id ?? null),
+      positionLabel: stepLabel(positions.find(stop => stop.key === position) ?? { stage: "primer" }),
       usedBy: !recipe || !variant ? [] : variant.parts.flatMap(part =>
         part.zones.filter(zone => zone.recipe === recipe.id).map(zone => `${part.name} · ${zone.name}`)),
     });
@@ -954,6 +972,7 @@ function projectScreen(slug) {
     closed = true;
     if (paint) save(paint);
     stopWatching();
+    timelineBar.dispose();
     window.removeEventListener("keydown", onKey);
     closeLightbox();
     viewer.dispose();

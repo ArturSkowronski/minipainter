@@ -89,6 +89,7 @@ export function settle(positions, key, stages) {
 
 const BASE = 0, LAYER = 1, SHADE = 2, LINING = 3, HIGHLIGHT = 4, INK = 5;
 const KIND = { base: BASE, layers: LAYER, shade: SHADE, lining: LINING, highlight: HIGHLIGHT, ink: INK };
+const MUTED = 190;        // the light grey that everything outside the focused step leans towards
 
 // How much a point catches paint that is put on raised, upward surfaces: 0 deep in a recess, 1 on a ridge
 // facing up. cavity and ridge are 0..1, up is the y of the surface normal. Facing up counts most: on a sculpt
@@ -119,15 +120,25 @@ export function opsAt(ops, key, stages) {
   return count;
 }
 
+export const NOTHING_HERE = -2;     // as `focus`: this recipe has no step at the stage shown
+
 // The colour of one point after the first `count` steps, written to out[offset..offset + 2] as sRGB bytes.
-export function shade(ops, count, cavity, ridge, up, primer, out, offset) {
+//
+// `focus` chooses between two pictures. -1: the result, the model as it looks after those steps. An index
+// into ops: the stage view — that step's paint at full strength where the step puts it, and everything else
+// drained of colour, so that a stage reads at a glance even when its paint is close to the one before.
+// NOTHING_HERE: the stage view of a zone the stage does not touch.
+export function shade(ops, count, cavity, ridge, up, primer, out, offset, focus = -1) {
   let r = primer[0], g = primer[1], b = primer[2];
+  if (count === 0) { out[offset] = r; out[offset + 1] = g; out[offset + 2] = b; return; }
   const open = count > 1 ? exposure(cavity, ridge, up) : 0;
+  let reached = 0;                    // how much of the focused step's paint lands on this point
   for (let i = 0; i < count; i++) {
     const op = ops[i];
     let w;
     switch (op.kind) {
       case BASE:
+        w = 1;
         r = op.r; g = op.g; b = op.b;
         break;
       case LAYER:
@@ -140,16 +151,26 @@ export function shade(ops, count, cavity, ridge, up, primer, out, offset) {
         r += (0.3 * r + 0.4 * op.r - r) * w; g += (0.3 * g + 0.4 * op.g - g) * w; b += (0.3 * b + 0.4 * op.b - b) * w;
         break;
       case LINING:
-        if (cavity >= op.threshold) {
-          r += (op.r - r) * 0.9; g += (op.g - g) * 0.9; b += (op.b - b) * 0.9;
-        }
+        w = cavity >= op.threshold ? 1 : 0;
+        r += (op.r - r) * 0.9 * w; g += (op.g - g) * 0.9 * w; b += (op.b - b) * 0.9 * w;
         break;
       case HIGHLIGHT:
         w = smooth(0.6, 0.9, ridge);
         r += (op.r - r) * w; g += (op.g - g) * w; b += (op.b - b) * w;
         break;
       default:      // INK: a transparent film of the ink's colour
+        w = 1;
         r += (r * op.r / 255 - r) * 0.55; g += (g * op.g / 255 - g) * 0.55; b += (b * op.b / 255 - b) * 0.55;
+    }
+    if (i === focus) reached = w;
+  }
+  if (focus !== -1) {
+    // Drain the colour and flatten the contrast of what is there; then lay the stage's paint over it.
+    const grey = 0.3 * r + 0.59 * g + 0.11 * b;
+    r = (r + (grey - r) * 0.9 + MUTED) / 2; g = (g + (grey - g) * 0.9 + MUTED) / 2; b = (b + (grey - b) * 0.9 + MUTED) / 2;
+    if (focus >= 0) {
+      const op = ops[focus];
+      r += (op.r - r) * reached; g += (op.g - g) * reached; b += (op.b - b) * reached;
     }
   }
   out[offset] = r + 0.5; out[offset + 1] = g + 0.5; out[offset + 2] = b + 0.5;
@@ -177,7 +198,8 @@ export function nearestFirst(paints, hex) {
 
 // What the painted view needs for one part: the primer, and per zone the steps that apply at `key`.
 // Zones without a recipe (or with one that is gone) are left out and stay primer-coloured.
-export function buildStage({ zones, stepsByRecipe, key, stages, primer }) {
+// With `focus`, each entry also says which of its steps is the stage itself (see shade).
+export function buildStage({ zones, stepsByRecipe, key, stages, primer, focus = false }) {
   const compiled = new Map();
   const byZone = new Map();
   for (const zone of zones) {
@@ -185,11 +207,41 @@ export function buildStage({ zones, stepsByRecipe, key, stages, primer }) {
     if (!steps) continue;
     if (!compiled.has(zone.recipe)) {
       const ops = compile(steps);
-      compiled.set(zone.recipe, { ops, count: opsAt(ops, key, stages) });
+      const count = opsAt(ops, key, stages);
+      const own = ops.findIndex(op => op.key === key);
+      compiled.set(zone.recipe, { ops, count, focus: !focus ? -1 : own >= 0 && own < count ? own : NOTHING_HERE });
     }
     byZone.set(zone.id, compiled.get(zone.recipe));
   }
   return { primer: hexToRgb(primer), byZone };
+}
+
+// The painting of one part written out: one block per colour (recipe) used on it, in the order of its
+// zones, with the areas (zone names) the colour covers. The recipe the panel shows gets a block even when
+// no zone of this part uses it. `unassigned` are the zones still without a recipe.
+export function paintPlan(part, recipes, stepsByRecipe, shownId) {
+  const blocks = [];
+  const unassigned = [];
+  const known = new Map(recipes.map(recipe => [recipe.id, recipe]));
+  const block = id => {
+    let found = blocks.find(candidate => candidate.recipe.id === id);
+    if (!found) blocks.push(found = { recipe: known.get(id), zones: [], steps: stepsByRecipe[id] ?? [] });
+    return found;
+  };
+  for (const zone of part?.zones ?? []) {
+    if (known.has(zone.recipe)) block(zone.recipe).zones.push(zone.name);
+    else unassigned.push(zone.name);
+  }
+  if (known.has(shownId)) block(shownId);
+  return { blocks, unassigned };
+}
+
+// For each block of a plan: the step that is the stage at `key` (null when that colour has nothing to do at
+// this stage) and the last step done by then (null before its base).
+export function stageSummary(blocks, key, stages) {
+  return blocks.map(({ recipe, zones, steps }) => ({
+    recipe, zones, step: steps.find(step => step.key === key) ?? null, last: stepAt(steps, key, stages),
+  }));
 }
 
 // Steps done and steps there are, over the recipes a part's zones use.

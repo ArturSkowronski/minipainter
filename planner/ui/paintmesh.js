@@ -95,7 +95,7 @@ export async function loadPaintMesh({ meshUrl, patchesUrl, masksUrl }) {
           if (!recipe || recipe.count === 0) { flat(face, stage.primer); return; }
           for (let corner = face * 3; corner < face * 3 + 3; corner++) {
             shade(recipe.ops, recipe.count, cornerCavity[corner], cornerRidge[corner], cornerUp[corner],
-              stage.primer, color, corner * 3);
+              stage.primer, color, corner * 3, recipe.focus);
           }
         }
         : face => flat(face, faceColor(view, face, data));
@@ -134,7 +134,7 @@ export function lodStageColors(lodmap, zones, lodmasks, stage) {
       rgb[at] = stage.primer[0]; rgb[at + 1] = stage.primer[1]; rgb[at + 2] = stage.primer[2];
     } else {
       shade(recipe.ops, recipe.count, lodmasks[at] / 255, lodmasks[at + 1] / 255, (lodmasks[at + 2] - 128) / 127,
-        stage.primer, rgb, at);
+        stage.primer, rgb, at, recipe.focus);
     }
   }
   return rgb;

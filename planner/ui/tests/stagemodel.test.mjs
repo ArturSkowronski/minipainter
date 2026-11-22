@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-  FORMAT_LABEL, HOW, STAGE_LABEL, WHERE, buildStage, compile, exposure, mixText, nearestFirst, opsAt, progressOf,
-  settle, shade, stepAt, stepLabel, stepsKey, timeline,
+  FORMAT_LABEL, HOW, NOTHING_HERE, STAGE_LABEL, WHERE, buildStage, compile, exposure, mixText, nearestFirst, opsAt,
+  paintPlan, progressOf, settle, shade, stageSummary, stepAt, stepLabel, stepsKey, timeline,
 } from "../stagemodel.js";
 
 const STAGES = ["primer", "base", "layers", "shade", "lining", "highlight", "ink"];
@@ -188,4 +188,85 @@ test("paints nearest a colour come first", () => {
   const paints = [{ id: "blue", hex: "#2a5caa" }, { id: "red", hex: "#b3202a" }, { id: "orange", hex: "#e05a20" }];
   assert.deepEqual(nearestFirst(paints, "#c82828").map(p => p.id), ["red", "orange", "blue"]);
   assert.deepEqual(paints.map(p => p.id), ["blue", "red", "orange"]);       // the list given is left alone
+});
+
+// -- "this stage" view: where the paint of the stage on the timeline goes -----------------------------
+
+function focused(steps, key, point = {}) {
+  const stage = buildStage({ zones: [{ id: 1, recipe: "r" }], stepsByRecipe: { r: steps }, key, stages: STAGES, primer: "#8b8e93", focus: true });
+  const entry = stage.byZone.get(1);
+  const out = new Uint8Array(3);
+  shade(entry.ops, entry.count, point.cavity ?? 0, point.ridge ?? 0, point.up ?? 0, stage.primer, out, 0, entry.focus);
+  return Array.from(out);
+}
+const spread = rgb => Math.max(...rgb) - Math.min(...rgb);
+
+test("the stage view shows this stage's paint in full where it goes and mutes the rest", () => {
+  const three = layered(3);
+  // Layer 3 reaches an exposed point: there it is the layer's own colour, not a blend with what is under it.
+  assert.deepEqual(focused(three, "layer:3", { ridge: 0.7, up: 1 }), [208, 72, 56]);
+  // An ordinary point is not reached by layer 3: nearly colourless, and clearly not the result's red.
+  const untouched = focused(three, "layer:3");
+  assert.ok(spread(untouched) < 30, String(untouched));
+  assert.ok(spread(shaded(three, "layer:3")) > 100);
+  // The first layer does reach it.
+  assert.deepEqual(focused(three, "layer:1"), [208, 72, 56]);
+  // Base: the whole zone in the base paint, whatever the relief.
+  assert.deepEqual(focused(three, "base", { cavity: 1 }), [179, 32, 42]);
+  // Shade: the wash itself in a recess, close to colourless on open surface.
+  assert.deepEqual(focused(three, "shade", { cavity: 0.8 }), [90, 26, 26]);
+  assert.ok(spread(focused(three, "shade")) < 45);
+  // Highlight: only the edge.
+  assert.deepEqual(focused(three, "highlight", { ridge: 1 }), [232, 112, 90]);
+  assert.ok(spread(focused(three, "highlight")) < 30);
+});
+
+test("a zone with nothing to do at this stage is muted as a whole", () => {
+  // The recipe has two layers; the timeline stands on a fourth that another recipe has.
+  const stage = buildStage({ zones: [{ id: 1, recipe: "r" }], stepsByRecipe: { r: two }, key: "layer:4", stages: STAGES, primer: "#8b8e93", focus: true });
+  assert.equal(stage.byZone.get(1).focus, NOTHING_HERE);
+  assert.ok(spread(focused(two, "layer:4", { ridge: 1, up: 1 })) < 30);
+  assert.ok(spread(focused(two, "lining", { cavity: 1 })) < 30);
+  // Without the stage view nothing is muted, and the entry says so.
+  const plain = buildStage({ zones: [{ id: 1, recipe: "r" }], stepsByRecipe: { r: two }, key: "layer:4", stages: STAGES, primer: "#8b8e93" });
+  assert.equal(plain.byZone.get(1).focus, -1);
+  // On the primer everything is primer in both views.
+  assert.deepEqual(focused(two, "primer", { cavity: 1 }), PRIMER);
+});
+
+test("the stage view finds the step of the stage in each recipe", () => {
+  const stage = buildStage({
+    zones: [{ id: 1, recipe: "a" }, { id: 2, recipe: "b" }], stepsByRecipe: { a: two, b: four }, key: "lining",
+    stages: STAGES, primer: "#8b8e93", focus: true,
+  });
+  assert.equal(stage.byZone.get(1).focus, NOTHING_HERE);
+  assert.equal(stage.byZone.get(2).ops[stage.byZone.get(2).focus].key, "lining");
+});
+
+// -- the painting written out per area ---------------------------------------------------------------
+
+const RECIPES = [{ id: "r1", name: "Czerwień", base: "#b3202a" }, { id: "r2", name: "Błękit", base: "#2a5caa" },
+  { id: "r3", name: "Czerń", base: "#1b1b1d" }];
+
+test("the plan of a part lists every colour with the areas it covers", () => {
+  const part = { zones: [{ id: 1, name: "Tors", recipe: "r1" }, { id: 2, name: "Panele", recipe: "r2" },
+    { id: 3, name: "Maska", recipe: "r1" }, { id: 4, name: "Pasek", recipe: null }, { id: 5, name: "Stare", recipe: "gone" }] };
+  const plan = paintPlan(part, RECIPES, { r1: two, r2: four, r3: layered(0) }, "r3");
+  assert.deepEqual(plan.blocks.map(block => [block.recipe.id, block.zones, block.steps.length]),
+    [["r1", ["Tors", "Maska"], 5], ["r2", ["Panele"], 8], ["r3", [], 3]]);     // the shown recipe comes last, unused here
+  assert.deepEqual(plan.unassigned, ["Pasek", "Stare"]);
+  assert.deepEqual(paintPlan(part, RECIPES, { r1: two, r2: four }, "r1").blocks.map(block => block.recipe.id), ["r1", "r2"]);
+  assert.deepEqual(paintPlan(null, RECIPES, { r1: two }, null), { blocks: [], unassigned: [] });
+  // A recipe whose steps have not arrived yet still shows, without steps.
+  assert.deepEqual(paintPlan({ zones: [] }, RECIPES, {}, "r2").blocks.map(block => [block.recipe.id, block.steps]), [["r2", []]]);
+});
+
+test("what each colour gets at the stage the timeline stands on", () => {
+  const { blocks } = paintPlan({ zones: [{ id: 1, name: "Tors", recipe: "r1" }, { id: 2, name: "Panele", recipe: "r2" }] },
+    RECIPES, { r1: two, r2: four }, null);
+  const at = key => stageSummary(blocks, key, STAGES).map(row => [row.recipe.id, row.step?.key ?? null, row.last?.key ?? null]);
+  assert.deepEqual(at("layer:2"), [["r1", "layer:2", "layer:2"], ["r2", "layer:2", "layer:2"]]);
+  assert.deepEqual(at("layer:3"), [["r1", null, "layer:2"], ["r2", "layer:3", "layer:3"]]);
+  assert.deepEqual(at("lining"), [["r1", null, "shade"], ["r2", "lining", "lining"]]);
+  assert.deepEqual(at("primer"), [["r1", null, null], ["r2", null, null]]);
 });

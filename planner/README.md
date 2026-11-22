@@ -75,9 +75,19 @@ far from the colour asked for, and says so when you own nothing of the kind it n
 The **timeline** has one stop per stage of what is on screen (as many layer stops as the recipe with the most
 layers); drag it, click a stop, or use ← and →. The model shows where each stage puts paint: layers climb
 towards raised and upward-facing surfaces, shade gathers in recesses, lining follows the deepest grooves,
-highlight sits on edges. It is an indication of where and roughly what colour, not a render. The step the
-timeline stands on is opened in the panel with where and how to apply it and a note of your own. The same
+highlight sits on edges. It is an indication of where and roughly what colour, not a render. The same
 timeline drives "Złożona figurka".
+
+The model shows a stage in one of two ways (toolbar, next to "Malowanie"). **"Ten etap"** shows the paint of
+that stage at full strength exactly where it goes and drains the colour from everything else, so a stage reads
+at a glance even when its paint is close to the previous one; a zone with nothing to do at that stage is grey
+as a whole. **"Wynik"** shows the figure as it looks after the stage.
+
+The panel writes the painting of the selected part out per colour: under "Teraz" what each colour gets at the
+stage the timeline stands on (or that it has nothing to do there), and under "Plan malowania" one block per
+recipe used on the part, with the areas it covers and all its steps in order. The step that is the current
+stage is opened with where and how to apply it and a note of your own. Clicking a step moves the timeline to
+it and brings its recipe into the settings above.
 
 Tick a step when it is done on the selected part; the part list shows done/all. Clicking the model picks the
 zone under the pointer. "Podkład" sets the primer colour of the whole figure.

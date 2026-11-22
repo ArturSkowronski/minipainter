@@ -1,7 +1,7 @@
 // The right-hand panel of the painting view: the primer, one recipe's settings, and its steps with the
 // paints they resolve to. It shows what it is given and reports what the user did; it calls no server.
 import { h } from "./dom.js";
-import { FORMAT_LABEL, HOW, WHERE, mixText, nearestFirst, stepAt, stepLabel } from "./stagemodel.js";
+import { FORMAT_LABEL, HOW, WHERE, mixText, nearestFirst, stageSummary, stepLabel } from "./stagemodel.js";
 
 const MODES = [["auto", "automatycznie"], ["bottles", "wolę gotowe farby"], ["mixes", "wolę mieszanki"]];
 const OPTIONAL = [["shade", "Cień"], ["lining", "Linie"], ["highlight", "Rozjaśnienie"], ["ink", "Tusz"]];
@@ -12,10 +12,10 @@ const TINT_ORDER = { shade: ["wash", "contrast", "ink"], lining: ["wash", "ink",
 const FAR = 0.08;      // OKLab distance beyond which the nearest owned paint is not really the colour asked for
 
 // actions: selectRecipe(id), createRecipe(), deleteRecipe(id), changeRecipe(id, changes), setPrimer(hex),
-//          toggleDone(recipeId, stepKey, done), goTo(stepKey), refreshInventory()
+//          toggleDone(recipeId, stepKey, done), goTo(stepKey, recipeId), refreshInventory()
 export function createRecipePanel(actions) {
   let view = null;         // what update() was last given
-  let picker = null;       // key of the step whose paint list is open
+  let picker = null;       // "<recipe id>|<step key>" of the step whose paint list is open
   let filter = "";
   let confirming = null;   // id of the recipe whose deletion is being asked about
   let drawnSteps = "";
@@ -154,9 +154,9 @@ export function createRecipePanel(actions) {
     return [...paints].sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name, "pl"));
   }
 
-  function fillPaints(list, step) {
+  function fillPaints(list, step, recipe) {
     const pinKey = step.stage === "layers" ? `layer:${step.index}/${step.of}` : step.key;
-    const pin = value => { picker = null; filter = ""; change({ pins: { [pinKey]: value } }); };
+    const pin = value => { picker = null; filter = ""; actions.changeRecipe(recipe.id, { pins: { [pinKey]: value } }); };
     const wanted = filter.trim().toLowerCase();
     list.replaceChildren(
       h("li", {}, h("button", { type: "button", onclick: () => pin(null) }, h("span", { class: "swatch auto" }), "Automatycznie")),
@@ -166,27 +166,29 @@ export function createRecipePanel(actions) {
           h("span", { class: "muted" }, FORMAT_LABEL[paint.format] ?? paint.format)))));
   }
 
-  function pickerBox(step) {
+  function pickerBox(step, recipe) {
     const list = h("ul", { class: "paint-list" });
-    fillPaints(list, step);
+    fillPaints(list, step, recipe);
     return h("div", { class: "picker" },
       h("input", {
         type: "search", placeholder: "Szukaj farby", value: filter, "aria-label": "Szukaj farby",
-        oninput: event => { filter = event.target.value; fillPaints(list, step); },
+        oninput: event => { filter = event.target.value; fillPaints(list, step, recipe); },
       }),
       list);
   }
 
-  function stepRow(step, current) {
-    const { recipe, part } = view;
+  // One step of one colour. `current`: it is the stage the timeline stands on, so it is opened.
+  function stepRow(step, recipe, current) {
+    const { part } = view;
     const done = !!part?.progress?.[recipe.id]?.includes(step.key);
+    const id = `${recipe.id}|${step.key}`;
     return h("li", {
       class: "step", "aria-current": current ? "true" : null, "data-done": String(done),
-      onclick: event => { if (!event.target.closest("button, input, textarea, .picker")) actions.goTo(step.key); },
+      onclick: event => { if (!event.target.closest("button, input, textarea, .picker")) actions.goTo(step.key, recipe.id); },
     },
     part ? h("input", {
       type: "checkbox", checked: done, title: `Zrobione na części ${part.name}`,
-      "aria-label": `${stepLabel(step)} zrobione na części ${part.name}`,
+      "aria-label": `${recipe.name}: ${stepLabel(step)} zrobione na części ${part.name}`,
       onchange: event => actions.toggleDone(recipe.id, step.key, event.target.checked),
     }) : h("span"),
     h("span", { class: "swatch", style: `background:${step.color}` }),
@@ -202,32 +204,63 @@ export function createRecipePanel(actions) {
         h("p", {}, h("span", { class: "muted" }, "Jak: "), HOW[step.stage]),
         h("textarea", {
           rows: 2, maxLength: 500, placeholder: "Własna uwaga do tego etapu", "aria-label": "Uwaga do etapu", value: step.note,
-          onchange: event => change({ notes: { [step.stage]: event.target.value } }),
+          onchange: event => actions.changeRecipe(recipe.id, { notes: { [step.stage]: event.target.value } }),
         })) : null),
     h("button", {
-      type: "button", class: "plain small", "aria-expanded": String(picker === step.key),
-      onclick: () => { picker = picker === step.key ? null : step.key; filter = ""; drawnSteps = ""; drawSteps(); },
+      type: "button", class: "plain small", "aria-expanded": String(picker === id),
+      onclick: () => { picker = picker === id ? null : id; filter = ""; drawnSteps = ""; drawSteps(); },
     }, "zmień"),
-    picker === step.key ? pickerBox(step) : null);
+    picker === id ? pickerBox(step, recipe) : null);
+  }
+
+  // What each colour of the part gets at the stage the timeline stands on.
+  function nowList() {
+    const { position, stages, painting } = view;
+    if (position === "primer") return h("p", { class: "now-line" }, "Podkład na całej figurce.");
+    return h("ul", { class: "now-list" }, stageSummary(painting.blocks, position, stages).map(({ recipe, step, last }) =>
+      h("li", { onclick: () => actions.selectRecipe(recipe.id) },
+        h("span", { class: "swatch", style: `background:${step ? step.color : recipe.base}`, "data-idle": String(!step) }),
+        h("div", {},
+          h("strong", {}, recipe.name),
+          h("div", { class: step ? "step-paint" : "muted" },
+            step ? paintLine(step) : last ? `nic na tym etapie — skończone na: ${stepLabel(last).toLowerCase()}` : "jeszcze nic")))));
+  }
+
+  // One colour of the part: where it goes, and all its steps in order.
+  function blockBox({ recipe, zones, steps }) {
+    const { position } = view;
+    return h("div", { class: "block", "aria-current": recipe.id === view.recipe?.id ? "true" : null },
+      h("button", { type: "button", class: "block-head", onclick: () => actions.selectRecipe(recipe.id) },
+        h("span", { class: "swatch", style: `background:${recipe.base}` }),
+        h("span", {},
+          h("strong", {}, recipe.name),
+          h("span", { class: "muted small" }, zones.length ? `obszar: ${zones.join(", ")}` : "żadna strefa tej części jej nie używa"))),
+      steps.length
+        ? h("ol", { class: "step-list" }, steps.map(step => stepRow(step, recipe, step.key === position)))
+        : h("p", { class: "muted small" }, "wczytywanie kroków…"));
   }
 
   function drawSteps() {
-    const { recipe, steps, part, position, stages } = view;
-    stepsBox.hidden = !recipe;
-    if (!recipe) { drawnSteps = ""; return; }
-    const current = stepAt(steps, position, stages)?.key ?? null;
+    const { part, position, painting } = view;
+    const { blocks, unassigned } = painting;
+    stepsBox.hidden = blocks.length === 0 && unassigned.length === 0;
+    if (stepsBox.hidden) { drawnSteps = ""; return; }
     // A failed change is part of the key: the list is drawn again from what the server has, so a tick that
     // was not saved does not stay.
-    const key = JSON.stringify([recipe.id, steps, part?.id, part?.progress?.[recipe.id], current, picker,
-      view.paints.length, view.problem.count]);
+    const key = JSON.stringify([blocks.map(block => [block.recipe.id, block.recipe.name, block.recipe.base, block.zones, block.steps]),
+      unassigned, part?.id, part?.progress, position, view.recipe?.id, picker, view.paints.length, view.problem.count]);
     const typing = stepsBox.contains(document.activeElement) && ["TEXTAREA", "INPUT"].includes(document.activeElement.tagName)
       && document.activeElement.type !== "checkbox";
     if (key === drawnSteps || typing) return;
     drawnSteps = key;
-    if (picker && !steps.some(step => step.key === picker)) picker = null;
+    if (picker && !blocks.some(block => block.steps.some(step => `${block.recipe.id}|${step.key}` === picker))) picker = null;
     stepsBox.replaceChildren(
-      h("span", { class: "label" }, part ? `Kroki · ${part.name}` : "Kroki"),
-      h("ol", { class: "step-list" }, steps.map(step => stepRow(step, step.key === current))));
+      h("span", { class: "label" }, `Teraz · ${view.positionLabel}`),
+      blocks.length ? nowList() : null,
+      h("span", { class: "label plan-label" }, part ? `Plan malowania · ${part.name}` : "Plan malowania"),
+      ...blocks.map(blockBox),
+      unassigned.length ? h("p", { class: "muted small" },
+        `Bez receptury: ${unassigned.join(", ")}. Wybierz ją pod nazwą strefy na liście stref.`) : null);
   }
 
   function drawInventory() {
@@ -242,7 +275,8 @@ export function createRecipePanel(actions) {
 
   return {
     element,
-    // view: { plan, recipe (or null), steps (of that recipe), usedBy: [text], part (or null), position, stages,
+    // view: { plan, recipe (the one whose settings are shown, or null), steps (of that recipe), usedBy: [text],
+    //         part (or null), position, positionLabel, stages, painting (stagemodel.paintPlan of the part),
     //         paints: [paint], inventory: status, problem: { text (or null), count } }
     update(next) {
       view = next;
