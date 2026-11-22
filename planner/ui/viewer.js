@@ -4,9 +4,9 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import { loadGeometry } from "./geometry.js";
-import { PRIMER_RGB, facesInBrush } from "./zonesmodel.js";
+import { PRIMER_RGB, facesInBrush, hexToRgb } from "./zonesmodel.js";
 
-const PRIMER = 0x8b8e93;       // primer grey: the colour an unpainted part has on the desk
+const PRIMER = "#8b8e93";      // primer grey: the colour an unpainted part has on the desk
 const FOV = 35;
 const MARGIN = 1.15;
 const DEFAULT_DIRECTION = new THREE.Vector3(0.55, 0.3, 1).normalize();
@@ -22,7 +22,7 @@ function loadAssembledGeometry(url) {
       const color = new Uint8Array(geometry.attributes.position.count * 3);
       for (let i = 0; i < color.length; i += 3) color.set(PRIMER_RGB, i);
       geometry.setAttribute("color", new THREE.BufferAttribute(color, 3, true));
-      geometry.userData.colorKey = null;                   // null = primer everywhere
+      geometry.userData.colorKey = "primer:" + PRIMER;     // what it is painted with, see colour()
       geometry.boundingBox = indexed.boundingBox.clone();
       geometry.boundingSphere = indexed.boundingSphere.clone();
       return geometry;
@@ -49,12 +49,24 @@ export function createViewer(canvas) {
   scene.add(group);
 
   const primer = new THREE.MeshStandardMaterial({ color: PRIMER, ...SURFACE });
+  let primerHex = PRIMER;
+  let primerRgb = PRIMER_RGB;
   // Vertex colours carry the paint; the material colour only dims or keeps them.
   const painted = new THREE.MeshStandardMaterial({ color: 0xffffff, vertexColors: true, ...SURFACE });
   const dimmed = new THREE.MeshStandardMaterial({ color: 0x8a8a8a, vertexColors: true, ...SURFACE });
   const chosen = new THREE.MeshStandardMaterial({
     color: 0xffffff, vertexColors: true, emissiveIntensity: 0.22, ...SURFACE,
   });
+  // The colour buffers hold sRGB bytes (what a hex colour says); three.js lights in linear light and takes
+  // vertex colours as already linear, which would show every paint too pale. Convert in the shader.
+  for (const material of [painted, dimmed, chosen]) {
+    material.onBeforeCompile = shader => {
+      shader.vertexShader = shader.vertexShader.replace("#include <color_vertex>", `#include <color_vertex>
+        #ifdef USE_COLOR
+          vColor.rgb = mix(vColor.rgb / 12.92, pow((vColor.rgb + 0.055) / 1.055, vec3(2.4)), step(0.04045, vColor.rgb));
+        #endif`);
+    };
+  }
 
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
@@ -190,7 +202,8 @@ export function createViewer(canvas) {
 
   // -- painting ---------------------------------------------------------------------------------
 
-  let paint = null;            // { mesh: PaintMesh, view, zones, zoneRgb }
+  let paint = null;            // { mesh: PaintMesh, view, zones, zoneRgb, stage }: the mesh and its look
+  let faceClick = () => {};
   let tool = { tool: "orbit", radius: 2, stayInPatch: false };
   let onStroke = () => {};
   let stroke = null;           // { patch, patchesDone }
@@ -217,11 +230,12 @@ export function createViewer(canvas) {
   ring.visible = false;
   scene.add(ring);
 
-  function showPaint(paintMesh, { view, zones, zoneRgb }) {
+  // look: { view, zones, zoneRgb, stage } as paintMesh.recolor takes it.
+  function showPaint(paintMesh, look) {
     clear();
     mode = "paint";
-    paint = { mesh: paintMesh, view, zones, zoneRgb };
-    paintMesh.recolor(null, view, zones, zoneRgb);
+    paint = { mesh: paintMesh, stage: null, ...look };
+    paintMesh.recolor(null, paint);
     add("paint", null, paintMesh.geometry);
     idMesh.geometry = paintMesh.geometry;
     idMesh.visible = true;
@@ -229,7 +243,7 @@ export function createViewer(canvas) {
     frame(true);
   }
 
-  // New zone array, zone colours or view mode: repaint everything.
+  // New zone array, zone colours, view mode or stage: repaint everything.
   function setPaintData(changes) {
     if (!paint) return;
     Object.assign(paint, changes);
@@ -238,7 +252,7 @@ export function createViewer(canvas) {
 
   function refreshColors(faces) {
     if (!paint) return;
-    paint.mesh.recolor(faces, paint.view, paint.zones, paint.zoneRgb);
+    paint.mesh.recolor(faces, paint);
     requestRender();
   }
 
@@ -374,19 +388,30 @@ export function createViewer(canvas) {
 
   function colour(mesh, part) {
     // The geometry is cached across visits, so what it is painted with is remembered on it.
-    if (mesh.geometry.userData.colorKey === (part.colorKey ?? null)) return;
-    mesh.geometry.userData.colorKey = part.colorKey ?? null;
+    const key = part.faceRgb ? part.colorKey : "primer:" + primerHex;
+    if (mesh.geometry.userData.colorKey === key) return;
+    mesh.geometry.userData.colorKey = key;
     const attribute = mesh.geometry.attributes.color;
     const target = attribute.array;
     for (let face = 0, i = 0; i < target.length; face++, i += 9) {
       const from = part.faceRgb ? face * 3 : -1;
       for (let corner = 0; corner < 9; corner += 3) {
-        target[i + corner] = from < 0 ? PRIMER_RGB[0] : part.faceRgb[from];
-        target[i + corner + 1] = from < 0 ? PRIMER_RGB[1] : part.faceRgb[from + 1];
-        target[i + corner + 2] = from < 0 ? PRIMER_RGB[2] : part.faceRgb[from + 2];
+        target[i + corner] = from < 0 ? primerRgb[0] : part.faceRgb[from];
+        target[i + corner + 1] = from < 0 ? primerRgb[1] : part.faceRgb[from + 1];
+        target[i + corner + 2] = from < 0 ? primerRgb[2] : part.faceRgb[from + 2];
       }
     }
     attribute.needsUpdate = true;
+    requestRender();
+  }
+
+  // The colour of everything that carries no paint: unanalysed parts, and figure parts without colours.
+  function setPrimer(hex) {
+    if (hex === primerHex) return;
+    primerHex = hex;
+    primerRgb = hexToRgb(hex);
+    primer.color.set(hex);
+    if (mode === "assembled") for (const mesh of meshes.values()) if (!mesh.userData.painted) colour(mesh, {});
     requestRender();
   }
 
@@ -404,12 +429,16 @@ export function createViewer(canvas) {
       if (wanted.get(id)?.url !== mesh.userData.url) remove(id);
     }
     if (meshes.size === 0) framedRadius = 0;
-    for (const [id, mesh] of meshes) colour(mesh, wanted.get(id));
+    const paintIt = (mesh, part) => {
+      mesh.userData.painted = !!part.faceRgb;
+      colour(mesh, part);
+    };
+    for (const [id, mesh] of meshes) paintIt(mesh, wanted.get(id));
     restyle();
     await Promise.all(parts.filter(part => !meshes.has(part.id)).map(async part => {
       const geometry = await loadAssembledGeometry(part.url);
       if (mine !== generation || meshes.has(part.id)) return;
-      colour(add(part.id, part.url, geometry), part);      // the figure appears piece by piece
+      paintIt(add(part.id, part.url, geometry), part);     // the figure appears piece by piece
       frame(false);
     }));
   }
@@ -426,8 +455,14 @@ export function createViewer(canvas) {
   function onPointerUp(event) {
     const start = down;
     down = null;
-    if (!start || mode !== "assembled") return;
+    if (!start || (mode !== "assembled" && mode !== "paint")) return;
     if (Math.hypot(event.clientX - start.x, event.clientY - start.y) >= 4) return;   // that was a drag
+    if (mode === "paint") {
+      if (tool.tool !== "orbit") return;                     // the tools have their own use for a click
+      const face = pickFace(event.clientX, event.clientY);
+      if (face >= 0) faceClick(face);
+      return;
+    }
     const box = canvas.getBoundingClientRect();
     pointer.set(((event.clientX - box.left) / box.width) * 2 - 1, -((event.clientY - box.top) / box.height) * 2 + 1);
     raycaster.setFromCamera(pointer, camera);
@@ -481,6 +516,8 @@ export function createViewer(canvas) {
     refreshColors,
     setTool,
     onStroke(callback) { onStroke = callback; },
+    onFaceClick(callback) { faceClick = callback; },
+    setPrimer,
     pickFace,
     showAssembled,
     setSelected,

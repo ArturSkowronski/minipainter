@@ -3,6 +3,7 @@
 import * as THREE from "three";
 
 import { fetchArray, loadGeometry } from "./geometry.js";
+import { shade } from "./stagemodel.js";
 import { PRIMER_RGB, buildPatchIndex, faceColor, queueFaceUpload } from "./zonesmodel.js";
 
 export async function loadPaintMesh({ meshUrl, patchesUrl, masksUrl }) {
@@ -24,6 +25,10 @@ export async function loadPaintMesh({ meshUrl, patchesUrl, masksUrl }) {
   const areas = new Float32Array(faceCount);
   const cavity = new Uint8Array(faceCount);
   const ridge = new Uint8Array(faceCount);
+  // The same per corner, for the painted view: paint fades across a face, it does not step at its edges.
+  const cornerCavity = new Float32Array(faceCount * 3);
+  const cornerRidge = new Float32Array(faceCount * 3);
+  const cornerUp = new Float32Array(faceCount * 3);
 
   for (let face = 0; face < faceCount; face++) {
     const id = face + 1;                                   // 0 is "nothing here"
@@ -42,6 +47,9 @@ export async function loadPaintMesh({ meshUrl, patchesUrl, masksUrl }) {
       faceId[out + 2] = (id >> 16) & 255;
       cavitySum += vertexMasks[vertex * 2];
       ridgeSum += vertexMasks[vertex * 2 + 1];
+      cornerCavity[face * 3 + corner] = vertexMasks[vertex * 2] / 255;
+      cornerRidge[face * 3 + corner] = vertexMasks[vertex * 2 + 1] / 255;
+      cornerUp[face * 3 + corner] = sourceNormal[vertex * 3 + 1];
     }
     cavity[face] = Math.round(cavitySum / 3);
     ridge[face] = Math.round(ridgeSum / 3);
@@ -71,15 +79,26 @@ export async function loadPaintMesh({ meshUrl, patchesUrl, masksUrl }) {
     patchIndex: buildPatchIndex(patches),
 
     // Rewrite the colour of the given faces (or of all, with null) and upload only the touched range.
-    recolor(faces, mode, zones, zoneRgb) {
+    // look: { view: "zones" | "patches" | "relief" | "paint", zones, zoneRgb, stage } — `stage` (see
+    // stagemodel.buildStage) is what the painted view shows.
+    recolor(faces, { view, zones, zoneRgb, stage }) {
       const data = { zones, zoneRgb, patches: this.patches, cavity, ridge };
       let first = 0, last = faceCount - 1;
-      const paint = face => {
-        const rgb = faceColor(mode, face, data);
+      const flat = (face, rgb) => {
         for (let i = face * 9; i < face * 9 + 9; i += 3) {
           color[i] = rgb[0]; color[i + 1] = rgb[1]; color[i + 2] = rgb[2];
         }
       };
+      const paint = view === "paint"
+        ? face => {
+          const recipe = stage.byZone.get(zones[face]);
+          if (!recipe || recipe.count === 0) { flat(face, stage.primer); return; }
+          for (let corner = face * 3; corner < face * 3 + 3; corner++) {
+            shade(recipe.ops, recipe.count, cornerCavity[corner], cornerRidge[corner], cornerUp[corner],
+              stage.primer, color, corner * 3);
+          }
+        }
+        : face => flat(face, faceColor(view, face, data));
       if (faces === null) {
         for (let face = 0; face < faceCount; face++) paint(face);
       } else {
@@ -102,6 +121,23 @@ export async function loadPaintMesh({ meshUrl, patchesUrl, masksUrl }) {
 
     dispose() { geometry.dispose(); },
   };
+}
+
+// The painted view of the assembled-view mesh: one colour per face, from the zone of the preview face it maps
+// to and that face's relief (lodmasks: cavity, ridge, up as bytes per face).
+export function lodStageColors(lodmap, zones, lodmasks, stage) {
+  const rgb = new Uint8Array(lodmap.length * 3);
+  for (let face = 0; face < lodmap.length; face++) {
+    const recipe = stage.byZone.get(zones[lodmap[face]]);
+    const at = face * 3;
+    if (!recipe || recipe.count === 0) {
+      rgb[at] = stage.primer[0]; rgb[at + 1] = stage.primer[1]; rgb[at + 2] = stage.primer[2];
+    } else {
+      shade(recipe.ops, recipe.count, lodmasks[at] / 255, lodmasks[at + 1] / 255, (lodmasks[at + 2] - 128) / 127,
+        stage.primer, rgb, at);
+    }
+  }
+  return rgb;
 }
 
 // Colours for the lighter assembled-view mesh: each of its faces takes the zone of the preview face it maps to.
