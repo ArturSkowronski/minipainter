@@ -150,13 +150,26 @@ def lod_map(vertices: np.ndarray, faces: np.ndarray, lod_vertices: np.ndarray, l
     return tree.query(lod_vertices[lod_faces].astype(np.float64).mean(1))[1].astype(np.uint32)
 
 
+def lod_masks(vertices: np.ndarray, faces: np.ndarray, cavity: np.ndarray, ridge: np.ndarray,
+              lodmap: np.ndarray) -> np.ndarray:
+    """Per assembled-view face, from the preview face it maps to: cavity, ridge, and `up` (uint8, n x 3).
+
+    `up` is the y of the face normal as round(y * 127) + 128: 255 looks straight up, 1 straight down.
+    """
+    mapped = faces[lodmap]
+    normals, _ = _face_geometry(vertices, mapped)
+    return np.stack([np.round(cavity[mapped].mean(1)), np.round(ridge[mapped].mean(1)),
+                     np.round(normals[:, 1] * 127) + 128], axis=1).astype(np.uint8)
+
+
 def analysis_files(mesh: Path) -> dict[str, Path]:
     """The sidecar files of a preview mesh `p.glb`."""
     base = mesh.with_suffix("")
     return {"patches": base.with_name(base.name + ".patches.u32"),
             "masks": base.with_name(base.name + ".masks.u8"),
             "stats": base.with_name(base.name + ".patches.json"),
-            "lodmap": base.with_name(base.name + ".lodmap.u32")}
+            "lodmap": base.with_name(base.name + ".lodmap.u32"),
+            "lodmasks": base.with_name(base.name + ".lodmasks.u8")}
 
 
 def _write(path: Path, data: bytes) -> None:
@@ -176,6 +189,8 @@ def analyse_part(mesh: Path, lod: Path, angle: float = DEFAULT_ANGLE,
     files = analysis_files(mesh)
     _write(files["masks"], np.stack([cavity, ridge], axis=1).tobytes())
     _write(files["stats"], json.dumps(patch_stats(vertices, faces, patches), separators=(",", ":")).encode())
-    _write(files["lodmap"], lod_map(vertices, faces, lod_vertices, lod_faces).astype("<u4").tobytes())
+    lodmap = lod_map(vertices, faces, lod_vertices, lod_faces)
+    _write(files["lodmap"], lodmap.astype("<u4").tobytes())
+    _write(files["lodmasks"], lod_masks(vertices, faces, cavity, ridge, lodmap).tobytes())
     _write(files["patches"], patches.astype("<u4").tobytes())        # last: its presence means "analysed"
     return {"patches": int(patches.max()) + 1}

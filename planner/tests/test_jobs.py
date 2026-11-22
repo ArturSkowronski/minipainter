@@ -173,3 +173,26 @@ def test_a_ready_part_without_a_patch_count_gets_one(project_of_flat, proc):
     proc.wait_idle(30)
     part = p.snapshot()["variants"][0]["parts"][0]
     assert part["status"] == "ready" and part["patches"] == 6
+
+
+def test_a_part_analysed_before_the_figure_relief_existed_is_analysed_again(project_of_flat, proc):
+    from wpm import workspace
+    from wpm.analysis import analysis_files
+    p = project_of_flat
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    part = p.snapshot()["variants"][0]["parts"][0]
+    meshes = [p.file(part["mesh"]), p.file(part["mesh_lod"])]
+    stamps = [m.stat().st_mtime_ns for m in meshes]
+    patches = analysis_files(meshes[0])["patches"].read_bytes()
+    analysis_files(meshes[0])["lodmasks"].unlink()
+    workspace._projects.clear()
+    p = Project.load(p.slug)
+    assert p.snapshot()["variants"][0]["parts"][0]["status"] == "pending"
+    proc.enqueue_variant(p, "src")
+    proc.wait_idle(30)
+    after = p.snapshot()["variants"][0]["parts"][0]
+    assert after["status"] == "ready" and after["patches"] == part["patches"]
+    assert [m.stat().st_mtime_ns for m in meshes] == stamps
+    assert analysis_files(meshes[0])["lodmasks"].exists()
+    assert analysis_files(meshes[0])["patches"].read_bytes() == patches

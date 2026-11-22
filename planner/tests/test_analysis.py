@@ -96,9 +96,40 @@ def test_analyse_part_writes_sidecars(tmp_path):
     result = analyse_part(tmp_path / "p.glb", tmp_path / "p.lod.glb", 30.0, 1e-4)
     files = analysis_files(tmp_path / "p.glb")
     assert {k: p.name for k, p in files.items()} == {
-        "patches": "p.patches.u32", "masks": "p.masks.u8", "stats": "p.patches.json", "lodmap": "p.lodmap.u32"}
+        "patches": "p.patches.u32", "masks": "p.masks.u8", "stats": "p.patches.json", "lodmap": "p.lodmap.u32",
+        "lodmasks": "p.lodmasks.u8"}
     assert result == {"patches": 6}
     assert files["patches"].stat().st_size == 4 * 12 and files["masks"].stat().st_size == 2 * 8
     assert files["lodmap"].stat().st_size == 4 * 12 and len(json.loads(files["stats"].read_text())) == 6
     assert np.array_equal(np.fromfile(files["lodmap"], dtype="<u4"), np.arange(12))
     assert not list(tmp_path.glob("*.tmp"))
+
+
+def test_relief_of_the_assembled_view_mesh(tmp_path):
+    # Three bytes per assembled-view face: cavity, ridge, and how much the face looks up.
+    v, f = cube()
+    write_glb(tmp_path / "p.glb", v, f)
+    write_glb(tmp_path / "p.lod.glb", v, f)
+    analyse_part(tmp_path / "p.glb", tmp_path / "p.lod.glb", 30.0, 1e-4)
+    relief = np.fromfile(analysis_files(tmp_path / "p.glb")["lodmasks"], dtype=np.uint8).reshape(-1, 3)
+    assert len(relief) == 12
+    cavity, ridge = masks(v, f)
+    assert np.array_equal(relief[:, 0], np.round(cavity[f].mean(1)).astype(np.uint8))
+    assert np.array_equal(relief[:, 1], np.round(ridge[f].mean(1)).astype(np.uint8)) and relief[:, 1].min() > 0
+    assert relief[:, 2].tolist() == [128, 128, 128, 128, 1, 1, 255, 255, 128, 128, 128, 128]
+
+
+def test_relief_follows_the_face_map(tmp_path):
+    v, f = icosphere(3)
+    lv, lf = icosphere(1)
+    write_glb(tmp_path / "p.glb", v, f)
+    write_glb(tmp_path / "p.lod.glb", lv, lf)
+    analyse_part(tmp_path / "p.glb", tmp_path / "p.lod.glb", 30.0, 1e-4)
+    files = analysis_files(tmp_path / "p.glb")
+    relief = np.fromfile(files["lodmasks"], dtype=np.uint8).reshape(-1, 3)
+    mapping = np.fromfile(files["lodmap"], dtype="<u4")
+    assert len(relief) == len(lf) == 80
+    tri = v[f[mapping]].astype(np.float64)
+    normal = np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0])
+    up = np.round(normal[:, 1] / np.linalg.norm(normal, axis=1) * 127) + 128
+    assert np.array_equal(relief[:, 2], up.astype(np.uint8)) and relief[:, 2].min() < 40 and relief[:, 2].max() > 215
